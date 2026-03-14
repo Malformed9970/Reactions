@@ -309,18 +309,6 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "Hacks:SetCamMaxZoom(0.5,50)\nself.used = true",
-						gVar = "ACR_RikuWAR3_CD",
-						name = "Set Zoom Hack",
-						uuid = "e4b8429e-4b18-78f8-b880-00ed0b645e31",
-						version = 2.1,
-					},
-				},
-				
-				{
-					data = 
-					{
-						aType = "Lua",
 						actionLua = "local profile = gACRSelectedProfiles[TensorCore.mGetPlayer().job]\n\nfor i = 1, 5 do\n    TensorCore.API.TensorACR.setHotbarEnabled(\"ACR_\" .. profile .. \"_Hotbar_DutyAction\" .. i, false)\nend\nself.used = true",
 						conditions = 
 						{
