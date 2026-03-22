@@ -44,7 +44,6 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
  
 **OnMapChange**
 - Disable/Enable Duty Hotbars when entering relevant Maps
-- Disable/Enable AnyoneCore TensorReaction Log Sorting for Variant Maps
 
 **Quantum | Target Selector**
 - Works in 99 boss, Normal and Quantum
@@ -67,3 +66,6 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 **World Overlay**
 - Countdown timer on all automatically detected AoE events
 
+**Generic Gaze Handler**
+- Automatically looks away from any target with a Gaze VFX
+- Ends LockFace 250ms after Gaze has finished
