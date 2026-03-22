@@ -344,46 +344,6 @@ local tbl =
 						version = 2.1,
 					},
 				},
-				
-				{
-					data = 
-					{
-						aType = "Lua",
-						actionLua = "AnyoneCore.Settings.autoSortLogs = true\nself.used = true",
-						conditions = 
-						{
-							
-							{
-								"df74efb9-4705-7052-b131-02edb2689619",
-								false,
-							},
-						},
-						gVar = "ACR_RikuWAR3_CD",
-						name = "Enable Log Sorting",
-						uuid = "99e65b46-b1cf-a81c-bf91-7aff40c43104",
-						version = 2.1,
-					},
-				},
-				
-				{
-					data = 
-					{
-						aType = "Lua",
-						actionLua = "AnyoneCore.Settings.autoSortLogs = false\nself.used = true",
-						conditions = 
-						{
-							
-							{
-								"df74efb9-4705-7052-b131-02edb2689619",
-								true,
-							},
-						},
-						gVar = "ACR_RikuWAR3_CD",
-						name = "Disable Log Sorting",
-						uuid = "f2302e3f-07c3-1c52-b373-955e93ec94f6",
-						version = 2.1,
-					},
-				},
 			},
 			conditions = 
 			{
@@ -761,7 +721,7 @@ local tbl =
 			uuid = "e2ab71de-e8d9-3696-b02d-275f5a56bb3c",
 			version = 2,
 		},
-		inheritedIndex = 15,
+		inheritedIndex = 14,
 	},
 	
 	{
@@ -1303,6 +1263,137 @@ local tbl =
 				{
 					data = 
 					{
+						aType = "Lua",
+						actionLua = "local targetID = eventArgs.primaryEntityID\nlocal entity = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\nlocal delayMs = 10000\nlocal heading = (TensorCore.getHeadingToTarget(player.pos, entity.pos) + math.pi)\n\ndata.ljActiveGazes = data.ljActiveGazes or {}\n\nif entity.castinginfo then\n    local maxTime = entity.castinginfo.casttime or 10\n    local elapsedTime = entity.castinginfo.channeltime or 0\n    delayMs = ((maxTime - elapsedTime) * 1000) + 250 \nend\n\ndata.ljActiveGazes[targetID] = Now() + delayMs\nd(\"Gaze Tracker: Added entity \" .. tostring(entity.name) .. \" | Active Gazes: \" .. tostring(table.size(data.ljActiveGazes)))\nd(\"Start LockFace\")\n\nTensorCore.API.TensorACR.setLockFaceHeading(heading)\nTensorCore.API.TensorACR.toggleLockFace(true)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"10c14f8e-6820-cbbb-a0f6-efdc3ec9237b",
+								false,
+							},
+							
+							{
+								"c5886579-38cb-7ba9-9684-67a22930846b",
+								true,
+							},
+						},
+						gVar = "ACR_RikuWAR3_CD",
+						uuid = "6beb0923-b879-03d5-9b24-5cfee10f2e67",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local dutyInfo = Duty:GetActiveDutyInfo()\nif not dutyInfo then return false end\n\nlocal highEndKeywords = {\"Extreme\", \"Minstrel\", \"Savage\", \"Unreal\", \"Chaotic\", \"Ultimate\"}\n\nfor _, keyword in ipairs(highEndKeywords) do\n    if dutyInfo.name:find(keyword) then\n        return true\n    end\nend\n\nreturn false",
+						dequeueIfLuaFalse = true,
+						name = "In Highend Duty",
+						uuid = "10c14f8e-6820-cbbb-a0f6-efdc3ec9237b",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						comparator = 3,
+						dequeueIfLuaFalse = true,
+						eventIntValue = 218,
+						uuid = "c5886579-38cb-7ba9-9684-67a22930846b",
+						version = 3,
+					},
+				},
+			},
+			eventType = 27,
+			name = "Lj: World | Avoid Gaze",
+			uuid = "9b395348-13a3-ecea-9141-d712cb2a9b74",
+			version = 2,
+		},
+		inheritedIndex = 24,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local currentTime = Now()\n\nfor entID, unlockTime in pairs(data.ljActiveGazes) do\n    if currentTime > unlockTime then\n        data.ljActiveGazes[entID] = nil\n        d(\"Gaze Tracker: Gaze \" .. tostring(entID) .. \" resolved.\")\n    end\nend\n\nif table.size(data.ljActiveGazes) == 0 then\n    TensorCore.API.TensorACR.toggleLockFace(false)\n    d(\"Gaze Tracker: All gazes finished. End LockFace.\")\n    \n    data.ljActiveGazes = nil\nend\n\nself.eventConditionMismatch = true\nself.used = true\n",
+						conditions = 
+						{
+							
+							{
+								"7484c6ae-8ef0-a59b-a76b-8e96b0d169f1",
+								false,
+							},
+							
+							{
+								"efc279c1-1b95-9478-a1e5-e1415c44f8eb",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						uuid = "7e06448e-14c1-e612-8e2f-cae3ce2edf8c",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local dutyInfo = Duty:GetActiveDutyInfo()\nif not dutyInfo then return false end\n\nlocal highEndKeywords = {\"Extreme\", \"Minstrel\", \"Savage\", \"Unreal\", \"Chaotic\", \"Ultimate\"}\n\nfor _, keyword in ipairs(highEndKeywords) do\n    if dutyInfo.name:find(keyword) then\n        return true\n    end\nend\n\nreturn false",
+						dequeueIfLuaFalse = true,
+						name = "In Highend Duty",
+						uuid = "7484c6ae-8ef0-a59b-a76b-8e96b0d169f1",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return data.ljActiveGazes ~= nil and table.size(data.ljActiveGazes) > 0",
+						dequeueIfLuaFalse = true,
+						name = "Gaze Var",
+						uuid = "efc279c1-1b95-9478-a1e5-e1415c44f8eb",
+						version = 3,
+					},
+				},
+			},
+			name = "Lj: World | Avoid Gaze End",
+			uuid = "1826f265-ba7b-e515-81fb-0acf19f30ca5",
+			version = 2,
+		},
+		inheritedIndex = 25,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
 						actionID = 46942,
 						conditions = 
 						{
@@ -1648,7 +1739,7 @@ local tbl =
 			uuid = "3c0d1ba7-f030-135c-bca1-33f5d01cb92a",
 			version = 2,
 		},
-		inheritedIndex = 24,
+		inheritedIndex = 15,
 	}, 
 	inheritedProfiles = 
 	{
