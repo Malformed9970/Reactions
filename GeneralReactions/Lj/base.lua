@@ -1662,7 +1662,6 @@ local tbl =
 						category = "Party",
 						comparator = 2,
 						conditionType = 2,
-						hpType = 2,
 						hpValue = 55,
 						name = "DT - HP <= 55% HP",
 						partyTargetType = "Detection Target",
