@@ -3376,7 +3376,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal currentTime = Now()\nlocal buffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Invul\",  ids = { 1302, 3039 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff\nfor _, buffData in ipairs(buffsToTrack) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff ~= nil then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff ~= nil then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff ~= nil then\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    local timerMs = math.floor(activeBuff.duration * 1000)\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 2.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
+						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent or ent.pvpteam == player.pvpteam then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\nlocal buffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Invul\",  ids = { 1302, 3039 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff\nfor _, buffData in ipairs(buffsToTrack) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff ~= nil then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff ~= nil then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff ~= nil then\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    local timerMs = math.floor(activeBuff.duration * 1000)\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 2.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
 						conditions = 
 						{
 							
@@ -3415,6 +3415,19 @@ local tbl =
 				{
 					data = 
 					{
+						category = "Lua",
+						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.detectionTargetID)\nlocal player = TensorCore.mGetPlayer()\n\nreturn ent ~= nil and ent.pvpteam ~= player.pvpteam\n",
+						name = "Enemy",
+						partyTargetSubType = 1,
+						uuid = "82b360f0-1fe7-c701-851d-a7e95574eec4",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
 						buffCheckType = 5,
 						buffID = 1240,
 						buffIDList = 
@@ -3436,30 +3449,12 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Lua",
-						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.detectionTargetID)\nlocal player = TensorCore.mGetPlayer()\n\nreturn ent ~= nil and ent.pvpteam ~= player.pvpteam\n",
-						name = "Enemy",
-						partyTargetSubType = 1,
-						uuid = "82b360f0-1fe7-c701-851d-a7e95574eec4",
-						version = 3,
-					},
-					inheritedIndex = 3,
-				},
-				
-				{
-					data = 
-					{
 						category = "Filter",
 						conditions = 
 						{
 							
 							{
 								"f11d1d88-6957-f1a5-bde9-649984b4286a",
-								true,
-							},
-							
-							{
-								"82b360f0-1fe7-c701-851d-a7e95574eec4",
 								true,
 							},
 						},
