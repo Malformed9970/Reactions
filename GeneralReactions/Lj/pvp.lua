@@ -3457,6 +3457,11 @@ local tbl =
 								"f11d1d88-6957-f1a5-bde9-649984b4286a",
 								true,
 							},
+							
+							{
+								"82b360f0-1fe7-c701-851d-a7e95574eec4",
+								true,
+							},
 						},
 						filterTargetType = "ContentID",
 						matchAnyBuff = true,
