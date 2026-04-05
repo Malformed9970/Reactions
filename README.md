@@ -74,11 +74,11 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 - Toggle CD off on Mammets
 - Automatically Guard & Recuperate when standing in enemy mech Laser X Sword/Flarethrower
 
-**CC specific:**
+**PvP CC specific:**
 - TTS for enemy Ninja with their LB active (as in they have the buff from killing someone and looking to chain)
 - Automatically say Hello at start of the match
 
-**General PvP**
+**General PvP:**
 - Toggle Assist when exiting or entering PvP map
 - Guard MCH LB, try to Guard NIN LB
 - Recuperate if NIN LB targeted at you and below 70% HP
