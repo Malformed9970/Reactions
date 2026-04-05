@@ -2322,6 +2322,7 @@ local tbl =
 							3039,
 							3054,
 							1302,
+							394,
 						},
 						matchAnyBuff = true,
 						name = "Target: Buff Check",
@@ -2343,6 +2344,7 @@ local tbl =
 							3039,
 							3054,
 							1302,
+							394,
 						},
 						category = "Party",
 						name = "Enemy: Missing Buffs",
@@ -3376,7 +3378,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent or ent.pvpteam == player.pvpteam then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\nlocal buffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Invul\",  ids = { 1302, 3039 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff\nfor _, buffData in ipairs(buffsToTrack) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff ~= nil then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff ~= nil then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff ~= nil then\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    local timerMs = math.floor(activeBuff.duration * 1000)\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 2.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
+						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent or ent.pvpteam == player.pvpteam then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\nlocal buffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff\nfor _, buffData in ipairs(buffsToTrack) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff ~= nil then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff ~= nil then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff ~= nil then\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    local timerMs = math.floor(activeBuff.duration * 1000)\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 2.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
 						conditions = 
 						{
 							
@@ -3435,6 +3437,7 @@ local tbl =
 							1240,
 							3039,
 							1302,
+							394,
 						},
 						category = "Party",
 						matchAnyBuff = true,
@@ -3603,7 +3606,7 @@ local tbl =
 			uuid = "15c3c3d6-66cc-96ef-95fe-a850d6bcdfc7",
 			version = 2,
 		},
-		inheritedIndex = 21,
+		inheritedIndex = 22,
 	}, 
 	inheritedProfiles = 
 	{
