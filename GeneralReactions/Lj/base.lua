@@ -570,7 +570,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "local elist = TensorCore.entityList(\"myparty\")\nelist[Player.id] = TensorCore.mGetPlayer() -- add myself to the party xd\n\nfor _, ent in pairs(elist) do\n    if not ent.alive then \n        return true \n    end\nend\n\nreturn false",
+						conditionLua = "local party = TensorCore.entityList(\"Party\")\n\nfor _, ent in pairs(party) do\n    if not ent.alive then \n        return true \n    end\nend\n\nreturn false",
 						name = "Party Member Died",
 						uuid = "6e40b1dc-3f06-5d29-9010-71cbfe4fb2d8",
 						version = 3,
@@ -1067,124 +1067,6 @@ local tbl =
 			},
 			name = "Lj: Quantum | Target Selector",
 			uuid = "19000f80-c532-f934-8064-b5795cabdfe2",
-			version = 2,
-		},
-	},
-	
-	{
-		data = 
-		{
-			actions = 
-			{
-				
-				{
-					data = 
-					{
-						aType = "Lua",
-						actionLua = "self.used = true",
-						conditions = 
-						{
-							
-							{
-								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
-								true,
-							},
-							
-							{
-								"31fc26ba-33c6-3697-be69-04ace2cf732f",
-								true,
-							},
-							
-							{
-								"21801a39-f772-9e60-a675-2c120844cfd0",
-								true,
-							},
-						},
-						gVar = "ACR_RikuWAR3_CD",
-						uuid = "9e3c368c-8fab-24e5-9fea-e6c08f0e01ed",
-						version = 2.1,
-					},
-					inheritedIndex = 1,
-				},
-				
-				{
-					data = 
-					{
-						actionID = 29054,
-						allowInterrupt = true,
-						conditions = 
-						{
-							
-							{
-								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
-								true,
-							},
-							
-							{
-								"31fc26ba-33c6-3697-be69-04ace2cf732f",
-								true,
-							},
-							
-							{
-								"21801a39-f772-9e60-a675-2c120844cfd0",
-								true,
-							},
-						},
-						gVar = "ACR_TensorMagnum3_CD",
-						ignoreWeaveRules = true,
-						uuid = "8fd5e789-4a5f-ad80-9be5-bba03463e2e2",
-						version = 2.1,
-					},
-				},
-			},
-			conditions = 
-			{
-				
-				{
-					data = 
-					{
-						category = "Lua",
-						conditionLua = "return IsPVPMap()",
-						dequeueIfLuaFalse = true,
-						name = "PVP Map",
-						uuid = "f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
-						version = 3,
-					},
-				},
-				
-				{
-					data = 
-					{
-						category = "Event",
-						dequeueIfLuaFalse = true,
-						eventArgType = 2,
-						eventSpellID = 29415,
-						name = "Marksman's Spite",
-						uuid = "31fc26ba-33c6-3697-be69-04ace2cf732f",
-						version = 3,
-					},
-					inheritedIndex = 2,
-				},
-				
-				{
-					data = 
-					{
-						category = "Party",
-						conditionType = 10,
-						dequeueIfLuaFalse = true,
-						eventArgType = 3,
-						inGroupTargetType = "Self",
-						name = "Targeted at Me",
-						partyTargetType = "Event Target",
-						uuid = "21801a39-f772-9e60-a675-2c120844cfd0",
-						version = 3,
-					},
-				},
-			},
-			eventType = 2,
-			name = "Lj: PvP | Guard MCH LB",
-			throttleTime = 1000,
-			uuid = "bf97a3d6-d9f7-ca22-ab9a-af4c94fc4085",
 			version = 2,
 		},
 	},
