@@ -618,12 +618,22 @@ local tbl =
 							},
 							
 							{
+								"0179d548-ccb7-0218-b24a-63fb55c4a810",
+								true,
+							},
+							
+							{
 								"4fb06c9f-685d-a42b-9e14-edea0ba9ca03",
 								true,
 							},
 							
 							{
 								"3ccdf6f5-0c3b-1fb4-bc69-3ca2918bc734",
+								false,
+							},
+							
+							{
+								"ea66ad84-21d0-9e10-b11b-7ed9440de3ed",
 								false,
 							},
 							
@@ -666,6 +676,19 @@ local tbl =
 				{
 					data = 
 					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "0179d548-ccb7-0218-b24a-63fb55c4a810",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
 						buffCheckType = 2,
 						buffID = 1420,
 						category = "Self",
@@ -686,6 +709,18 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 3,
+				},
+				
+				{
+					data = 
+					{
+						channelCheckSpellID = 29055,
+						conditionType = 7,
+						name = "Target: Standard-issue Elixir",
+						uuid = "ea66ad84-21d0-9e10-b11b-7ed9440de3ed",
+						version = 3,
+					},
+					inheritedIndex = 5,
 				},
 				
 				{
@@ -970,6 +1005,11 @@ local tbl =
 							},
 							
 							{
+								"c8f59f34-8cc0-6795-88e5-dde808ffb454",
+								true,
+							},
+							
+							{
 								"4fb06c9f-685d-a42b-9e14-edea0ba9ca03",
 								true,
 							},
@@ -1014,6 +1054,19 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "c8f59f34-8cc0-6795-88e5-dde808ffb454",
+						version = 3,
+					},
+					inheritedIndex = 2,
 				},
 				
 				{
@@ -1303,6 +1356,11 @@ local tbl =
 							},
 							
 							{
+								"058ebad1-5aa7-c9ce-8b28-6c7221af1019",
+								true,
+							},
+							
+							{
 								"7d8e8ddd-9e37-a678-9927-a25de6b266a9",
 								true,
 							},
@@ -1324,6 +1382,11 @@ local tbl =
 							
 							{
 								"3b853ce6-b975-baa6-b647-61c5316ff121",
+								true,
+							},
+							
+							{
+								"058ebad1-5aa7-c9ce-8b28-6c7221af1019",
 								true,
 							},
 							
@@ -1359,6 +1422,19 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "058ebad1-5aa7-c9ce-8b28-6c7221af1019",
+						version = 3,
+					},
+					inheritedIndex = 2,
 				},
 				
 				{
@@ -1466,6 +1542,11 @@ local tbl =
 							},
 							
 							{
+								"00bf10ee-435c-a2e8-aa70-61cb7f9173da",
+								true,
+							},
+							
+							{
 								"8ed7ada0-02ac-6db7-9865-f2bc2bc8812f",
 								true,
 							},
@@ -1477,6 +1558,16 @@ local tbl =
 							
 							{
 								"b3c626b9-b3b5-7fb5-a674-7527b4180cce",
+								true,
+							},
+							
+							{
+								"85afd386-c483-5ef5-af5c-38c3daa07c57",
+								false,
+							},
+							
+							{
+								"98713046-bee7-6709-9d5f-ab10a5ff8772",
 								true,
 							},
 						},
@@ -1501,12 +1592,22 @@ local tbl =
 							},
 							
 							{
+								"00bf10ee-435c-a2e8-aa70-61cb7f9173da",
+								true,
+							},
+							
+							{
 								"93661930-7e95-f135-ae32-729ef95cf4f7",
 								true,
 							},
 							
 							{
 								"9958f1fc-8cde-dcdb-b209-e921682a4452",
+								true,
+							},
+							
+							{
+								"98713046-bee7-6709-9d5f-ab10a5ff8772",
 								true,
 							},
 						},
@@ -1536,6 +1637,19 @@ local tbl =
 						uuid = "49c5c323-ea4f-95fa-9da9-99273e6c5828",
 						version = 3,
 					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "00bf10ee-435c-a2e8-aa70-61cb7f9173da",
+						version = 3,
+					},
+					inheritedIndex = 2,
 				},
 				
 				{
@@ -1586,6 +1700,31 @@ local tbl =
 						hpValue = 99,
 						name = "Self: HP <= 99%",
 						uuid = "b3c626b9-b3b5-7fb5-a674-7527b4180cce",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						channelCheckSpellID = 29055,
+						conditionType = 10,
+						name = "Self: Standard-issue Elixir",
+						uuid = "85afd386-c483-5ef5-af5c-38c3daa07c57",
+						version = 3,
+					},
+					inheritedIndex = 7,
+				},
+				
+				{
+					data = 
+					{
+						buffCheckType = 2,
+						buffID = 3054,
+						category = "Self",
+						name = "Self: No Guard",
+						uuid = "98713046-bee7-6709-9d5f-ab10a5ff8772",
 						version = 3,
 					},
 				},
@@ -1837,6 +1976,11 @@ local tbl =
 							},
 							
 							{
+								"ec298f2d-593c-d853-9443-ef773d32486b",
+								false,
+							},
+							
+							{
 								"12c3af37-3cf4-8692-a47c-06065abd135c",
 								true,
 							},
@@ -1995,6 +2139,19 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 3,
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						channelCheckSpellID = 29055,
+						conditionType = 10,
+						name = "Self: Standard-issue Elixir",
+						uuid = "ec298f2d-593c-d853-9443-ef773d32486b",
+						version = 3,
+					},
+					inheritedIndex = 7,
 				},
 				
 				{
@@ -2238,6 +2395,11 @@ local tbl =
 							},
 							
 							{
+								"56567c6a-bd47-599a-a8d6-95b3de8074b4",
+								true,
+							},
+							
+							{
 								"9ce74680-c33b-a114-b33e-a1e5bbfa3022",
 								true,
 							},
@@ -2260,6 +2422,11 @@ local tbl =
 							
 							{
 								"21f92df0-2f0c-c6c3-b0c5-f690574a3461",
+								true,
+							},
+							
+							{
+								"56567c6a-bd47-599a-a8d6-95b3de8074b4",
 								true,
 							},
 							
@@ -2297,6 +2464,19 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "56567c6a-bd47-599a-a8d6-95b3de8074b4",
+						version = 3,
+					},
+					inheritedIndex = 2,
 				},
 				
 				{
@@ -2623,6 +2803,11 @@ local tbl =
 							},
 							
 							{
+								"0efbcdc5-3297-65f0-aa91-e0abdc8dc600",
+								true,
+							},
+							
+							{
 								"44128d03-06b0-14d1-9fc0-82ce4f605a75",
 								true,
 							},
@@ -2655,6 +2840,19 @@ local tbl =
 				{
 					data = 
 					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "0efbcdc5-3297-65f0-aa91-e0abdc8dc600",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
 						buffCheckType = 5,
 						buffID = 1240,
 						buffIDList = 
@@ -2669,7 +2867,7 @@ local tbl =
 						eventArgType = 2,
 						eventSpellID = 29055,
 						matchAnyBuff = true,
-						name = "Standard-issue Elixir",
+						name = "Enemy: Standard-issue Elixir",
 						partyTargetType = "Detection Target",
 						uuid = "f11d1d88-6957-f1a5-bde9-649984b4286a",
 						version = 3,
@@ -2947,6 +3145,11 @@ local tbl =
 							},
 							
 							{
+								"93fb6aab-008b-7b97-aca4-ca078bd876b4",
+								true,
+							},
+							
+							{
 								"cef6aa3a-7ca8-0dab-b718-66cee54f0ec3",
 								true,
 							},
@@ -2973,6 +3176,11 @@ local tbl =
 							
 							{
 								"01bf16fe-1001-e0b5-b19e-13893da00ce9",
+								true,
+							},
+							
+							{
+								"93fb6aab-008b-7b97-aca4-ca078bd876b4",
 								true,
 							},
 							
@@ -3007,6 +3215,19 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "93fb6aab-008b-7b97-aca4-ca078bd876b4",
+						version = 3,
+					},
+					inheritedIndex = 2,
 				},
 				
 				{
@@ -3525,6 +3746,86 @@ local tbl =
 						version = 2.1,
 					},
 				},
+				
+				{
+					data = 
+					{
+						actionID = 43248,
+						conditions = 
+						{
+							
+							{
+								"3b508280-ffe4-3401-ba07-def2652791fd",
+								true,
+							},
+							
+							{
+								"59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
+								true,
+							},
+							
+							{
+								"c8b1048e-5219-cff1-a1cc-daa2e0263d97",
+								true,
+							},
+							
+							{
+								"9907254c-b7d5-93f4-ae57-c5c42ab7a82d",
+								true,
+							},
+							
+							{
+								"91a67de6-9ef6-5f50-ab5e-78f5f06f4d9d",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						ignoreWeaveRules = true,
+						targetType = "Detection Target",
+						uuid = "8a0fcdea-ec32-9dd7-8a85-47cf875947b2",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						actionID = 43251,
+						conditions = 
+						{
+							
+							{
+								"3b508280-ffe4-3401-ba07-def2652791fd",
+								true,
+							},
+							
+							{
+								"59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
+								true,
+							},
+							
+							{
+								"7c336ab4-992d-4885-8eb2-7d4b1057e808",
+								true,
+							},
+							
+							{
+								"0b96fa2c-c8d6-35cf-859c-89cbca8a9018",
+								true,
+							},
+							
+							{
+								"1775b902-b84a-ade3-a351-4097e017264b",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						ignoreWeaveRules = true,
+						targetType = "Detection Target",
+						uuid = "fe042b98-0383-b083-8968-d5ae7a45a9c0",
+						version = 2.1,
+					},
+				},
 			},
 			conditions = 
 			{
@@ -3570,6 +3871,32 @@ local tbl =
 				{
 					data = 
 					{
+						buffID = 4488,
+						category = "Self",
+						dequeueIfLuaFalse = true,
+						name = "Self Buff: Smite",
+						uuid = "c8b1048e-5219-cff1-a1cc-daa2e0263d97",
+						version = 3,
+					},
+					inheritedIndex = 4,
+				},
+				
+				{
+					data = 
+					{
+						buffID = 4491,
+						category = "Self",
+						dequeueIfLuaFalse = true,
+						name = "Self Buff: Eagle Eye Shot",
+						uuid = "7c336ab4-992d-4885-8eb2-7d4b1057e808",
+						version = 3,
+					},
+					inheritedIndex = 5,
+				},
+				
+				{
+					data = 
+					{
 						actionCDValue = 1,
 						actionID = 43250,
 						category = "Self",
@@ -3584,8 +3911,95 @@ local tbl =
 				{
 					data = 
 					{
+						actionCDValue = 1,
+						actionID = 43248,
+						category = "Self",
+						comparator = 2,
+						conditionType = 4,
+						name = "CD: Smite",
+						uuid = "9907254c-b7d5-93f4-ae57-c5c42ab7a82d",
+						version = 3,
+					},
+					inheritedIndex = 6,
+				},
+				
+				{
+					data = 
+					{
+						actionCDValue = 1,
+						actionID = 43251,
+						category = "Self",
+						comparator = 2,
+						conditionType = 4,
+						name = "CD: Eagle Eye Shot",
+						uuid = "0b96fa2c-c8d6-35cf-859c-89cbca8a9018",
+						version = 3,
+					},
+					inheritedIndex = 7,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.detectionTargetID)\nlocal player = TensorCore.mGetPlayer()\n\nreturn ent ~= nil and ent.pvpteam ~= player.pvpteam and ent.los2\n",
+						name = "Enemy: LoS",
+						partyTargetSubType = 1,
+						uuid = "ba247631-4688-85a4-a0c4-54e6765161ae",
+						version = 3,
+					},
+					inheritedIndex = 7,
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						comparator = 2,
+						conditionType = 4,
+						inRangeValue = 10,
+						name = "Enemy: Range <= 10y",
+						partyTargetType = "Detection Target",
+						uuid = "9922f191-cf99-0e8a-a13b-1a17f7780ccb",
+						version = 3,
+					},
+					inheritedIndex = 8,
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						comparator = 2,
+						conditionType = 4,
+						inRangeValue = 40,
+						name = "Enemy: Range <= 40y",
+						partyTargetType = "Detection Target",
+						uuid = "4786fa42-0845-a7f8-bbf6-5701819a82fc",
+						version = 3,
+					},
+					inheritedIndex = 11,
+				},
+				
+				{
+					data = 
+					{
+						buffID = 3054,
+						category = "Party",
+						name = "Enemy: Guard",
+						partyTargetType = "Detection Target",
+						uuid = "d7600536-13b8-1f61-8736-81e35a2cb3c5",
+						version = 3,
+					},
+					inheritedIndex = 12,
+				},
+				
+				{
+					data = 
+					{
 						conditionType = 3,
 						hpValue = 1,
+						name = "Target: HP => 1%",
 						uuid = "748ffe88-3c9e-b1ed-ac2a-d19198ff9e55",
 						version = 3,
 					},
@@ -3595,9 +4009,84 @@ local tbl =
 				{
 					data = 
 					{
+						category = "Party",
+						comparator = 2,
+						conditionType = 2,
+						hpValue = 25,
+						name = "Enemy: HP <= 25%",
+						partyTargetType = "Detection Target",
+						uuid = "ad4339be-4543-925c-b5de-68d92f136c17",
+						version = 3,
+					},
+					inheritedIndex = 8,
+				},
+				
+				{
+					data = 
+					{
 						category = "Self",
 						conditionType = 7,
 						uuid = "6485c559-23a0-554f-9f62-8c810dc20464",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"ba247631-4688-85a4-a0c4-54e6765161ae",
+								true,
+							},
+							
+							{
+								"9922f191-cf99-0e8a-a13b-1a17f7780ccb",
+								true,
+							},
+							
+							{
+								"ad4339be-4543-925c-b5de-68d92f136c17",
+								true,
+							},
+						},
+						filterTargetType = "ContentID",
+						name = "F - Enemy <= 10y Range + <= 25% HP",
+						partyTargetContentID = 0,
+						uuid = "91a67de6-9ef6-5f50-ab5e-78f5f06f4d9d",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"ba247631-4688-85a4-a0c4-54e6765161ae",
+								true,
+							},
+							
+							{
+								"4786fa42-0845-a7f8-bbf6-5701819a82fc",
+								true,
+							},
+							
+							{
+								"d7600536-13b8-1f61-8736-81e35a2cb3c5",
+								true,
+							},
+						},
+						filterTargetType = "ContentID",
+						name = "F - Enemy <= 40y Range + Guard",
+						partyTargetContentID = 0,
+						uuid = "1775b902-b84a-ade3-a351-4097e017264b",
 						version = 3,
 					},
 				},
