@@ -67,8 +67,22 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 - Automatically looks away from any target with a Gaze VFX
 - Ends LockFace 250ms after Gaze has finished
 
-**PvP**
-**Rival Wings specific:**
+**General PvP:**
+- Toggle Assist when exiting or entering PvP map
+- Guard MCH LB, try to Guard NIN LB
+- Recuperate if NIN LB targeted at you and below 70% HP
+- Recuperate if NIN LB is active near you to keep hp above 70% HP
+- Automatically retarget based on enemy buffs (Chiten, Invulnerability etc.)
+- Force untarget Chiten even if no other target available
+- Priority Target anybody trying to elixir heal
+- Toggle CD based on target Guard
+- Draws 25y and 5y max range based on Ranged/Melee job respectively
+- Draws green target lines from your party (not alliance or team) to their targets
+- Draws red lines from all enemies targeting you
+- World Text highlighting Chiten and Invul usage on enemies
+- Spam role buffs in combat like Bravery. Use Smite and Eagle Eye Shot
+  
+**PvP Rival Wings specific:**
 - Priority Target Mechs
 - Priority Target Goblin Mercs
 - Toggle CD off on Mammets
@@ -78,16 +92,7 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 - TTS for enemy Ninja with their LB active (as in they have the buff from killing someone and looking to chain)
 - Automatically say Hello at start of the match
 
-**General PvP:**
-- Toggle Assist when exiting or entering PvP map
-- Guard MCH LB, try to Guard NIN LB
-- Recuperate if NIN LB targeted at you and below 70% HP
-- Recuperate if NIN LB is active near you to keep hp above 70% HP
-- Automatically retarget based on enemy buffs (Chiten, Invulnerability etc.)
-- Force untarget Chiten even if no other target available
-- Priority Target anybody trying to exlir heal
-- Toggle CD based on target Guard
-- Draws 25y and 5y max range based on Ranged/Melee job respectively
+
 - Draws green target lines from your party (not alliance or team) to their targets
 - Draws red lines from all enemies targeting you
 - World Text highlighting Chiten and Invul usage on enemies
