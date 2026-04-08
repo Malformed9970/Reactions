@@ -570,7 +570,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "local party = TensorCore.entityList(\"Party\")\n\nfor _, ent in pairs(party) do\n    if not ent.alive then \n        return true \n    end\nend\n\nreturn false",
+						conditionLua = "local party = TensorCore.entityList(\"myparty\") -- Do not use Party as it doesn't work for this\nparty[Player.id] = TensorCore.mGetPlayer() -- add myself to the party xd\n\nfor _, ent in pairs(party) do\n    if not ent.alive then \n        return true \n    end\nend\n\nreturn false",
 						name = "Party Member Died",
 						uuid = "6e40b1dc-3f06-5d29-9010-71cbfe4fb2d8",
 						version = 3,
