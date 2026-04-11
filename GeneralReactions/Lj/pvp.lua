@@ -2178,11 +2178,445 @@ local tbl =
 					},
 				},
 			},
-			name = "Lj: PvP | LB | Ninja",
+			name = "Lj: PvP | LB | Enemy NIN Active",
 			uuid = "ad452ec0-37a5-82ab-ad7b-de7c801d86b6",
 			version = 2,
 		},
 		inheritedIndex = 11,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						actionID = 29054,
+						allowInterrupt = true,
+						conditions = 
+						{
+							
+							{
+								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
+								true,
+							},
+							
+							{
+								"0d4f6789-878e-72a1-b090-69cf2f3242c3",
+								true,
+							},
+							
+							{
+								"d0977c20-4cc5-d2a6-97a7-adf970bc71df",
+								true,
+							},
+							
+							{
+								"21801a39-f772-9e60-a675-2c120844cfd0",
+								true,
+							},
+							
+							{
+								"d3dbb6e1-bece-f69e-b614-664e5d0a602a",
+								true,
+							},
+						},
+						endIfUsed = true,
+						gVar = "ACR_TensorMagnum3_CD",
+						ignoreWeaveRules = true,
+						uuid = "bd2b54f2-ac66-8e98-91f8-d139ba88d705",
+						version = 2.1,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						actionID = 29711,
+						allowInterrupt = true,
+						conditions = 
+						{
+							
+							{
+								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
+								true,
+							},
+							
+							{
+								"0d4f6789-878e-72a1-b090-69cf2f3242c3",
+								true,
+							},
+							
+							{
+								"85b82f7a-ea69-5eb6-87c2-268a26855245",
+								true,
+							},
+							
+							{
+								"21801a39-f772-9e60-a675-2c120844cfd0",
+								true,
+							},
+							
+							{
+								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
+								true,
+							},
+						},
+						gVar = "ACR_RikuAST3_CD",
+						ignoreWeaveRules = true,
+						uuid = "89520a7b-0b8b-83ed-b772-d8fafdb08609",
+						version = 2.1,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						actionID = 29497,
+						allowInterrupt = true,
+						conditions = 
+						{
+							
+							{
+								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
+								true,
+							},
+							
+							{
+								"0d4f6789-878e-72a1-b090-69cf2f3242c3",
+								true,
+							},
+							
+							{
+								"d0977c20-4cc5-d2a6-97a7-adf970bc71df",
+								true,
+							},
+							
+							{
+								"21801a39-f772-9e60-a675-2c120844cfd0",
+								true,
+							},
+							
+							{
+								"e89c0e35-0932-9996-86e2-a0a6d93c0d71",
+								true,
+							},
+							
+							{
+								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
+								true,
+							},
+							
+							{
+								"517c2217-e097-57da-9776-86ce1d706430",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						ignoreWeaveRules = true,
+						uuid = "8fd5e789-4a5f-ad80-9be5-bba03463e2e2",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						actionID = 29069,
+						allowInterrupt = true,
+						conditions = 
+						{
+							
+							{
+								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
+								true,
+							},
+							
+							{
+								"0d4f6789-878e-72a1-b090-69cf2f3242c3",
+								true,
+							},
+							
+							{
+								"d0977c20-4cc5-d2a6-97a7-adf970bc71df",
+								true,
+							},
+							
+							{
+								"21801a39-f772-9e60-a675-2c120844cfd0",
+								true,
+							},
+							
+							{
+								"bc8c8ba6-60b2-3e21-a559-ecf9a527630a",
+								true,
+							},
+							
+							{
+								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
+								true,
+							},
+							
+							{
+								"517c2217-e097-57da-9776-86ce1d706430",
+								true,
+							},
+						},
+						gVar = "ACR_TensorRuin3_CD",
+						ignoreWeaveRules = true,
+						uuid = "ad3b2e4a-ac5f-8cdd-b4d9-d6422df376f0",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						actionID = 29097,
+						allowInterrupt = true,
+						conditions = 
+						{
+							
+							{
+								"f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
+								true,
+							},
+							
+							{
+								"0d4f6789-878e-72a1-b090-69cf2f3242c3",
+								true,
+							},
+							
+							{
+								"d0977c20-4cc5-d2a6-97a7-adf970bc71df",
+								true,
+							},
+							
+							{
+								"21801a39-f772-9e60-a675-2c120844cfd0",
+								true,
+							},
+							
+							{
+								"29b2107a-af6f-59d3-b836-fbe2a57e6838",
+								true,
+							},
+							
+							{
+								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
+								true,
+							},
+							
+							{
+								"517c2217-e097-57da-9776-86ce1d706430",
+								true,
+							},
+						},
+						gVar = "ACR_TensorRuin3_CD",
+						ignoreWeaveRules = true,
+						uuid = "d03dd3d5-59ee-62f4-becd-d588d09c97bc",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return IsPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "0d4f6789-878e-72a1-b090-69cf2f3242c3",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 29415,
+						name = "Marksman's Spite",
+						uuid = "31fc26ba-33c6-3697-be69-04ace2cf732f",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 29515,
+						name = "Seiton Tenchu",
+						uuid = "85b82f7a-ea69-5eb6-87c2-268a26855245",
+						version = 3,
+					},
+					inheritedIndex = 3,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						spellIDList = 
+						{
+							29515,
+							29415,
+						},
+						uuid = "d0977c20-4cc5-d2a6-97a7-adf970bc71df",
+						version = 3,
+					},
+					inheritedIndex = 4,
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						conditionType = 10,
+						dequeueIfLuaFalse = true,
+						eventArgType = 3,
+						inGroupTargetType = "Self",
+						name = "Targeted at Me",
+						partyTargetType = "Event Target",
+						uuid = "21801a39-f772-9e60-a675-2c120844cfd0",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						actionCDValue = 1,
+						actionID = 29054,
+						category = "Self",
+						conditionType = 4,
+						dequeueIfLuaFalse = true,
+						name = "Self: CD Guard",
+						uuid = "bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
+						version = 3,
+					},
+					inheritedIndex = 8,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.getLBGauge() >= 10000 and TensorCore.getLBGauge() < 20000",
+						dequeueIfLuaFalse = true,
+						name = "LB1 Gauge",
+						uuid = "517c2217-e097-57da-9776-86ce1d706430",
+						version = 3,
+					},
+					inheritedIndex = 9,
+				},
+				
+				{
+					data = 
+					{
+						buffCheckType = 2,
+						buffID = 3054,
+						category = "Self",
+						matchAnyBuff = true,
+						name = "Self: Missing Guard Buff",
+						partyTargetNumber = 0,
+						uuid = "d3dbb6e1-bece-f69e-b614-664e5d0a602a",
+						version = 3,
+					},
+					inheritedIndex = 9,
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						comparator = 2,
+						conditionType = 2,
+						hpValue = 70,
+						name = "Self: HP <= 70%",
+						uuid = "c4246bf2-6f5f-c761-8d3f-e1401d62d0f8",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 13,
+						dequeueIfLuaFalse = true,
+						jobValue = "DRAGOON",
+						name = "Self: DRG",
+						uuid = "e89c0e35-0932-9996-86e2-a0a6d93c0d71",
+						version = 3,
+					},
+					inheritedIndex = 10,
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 13,
+						dequeueIfLuaFalse = true,
+						jobValue = "DARKKNIGHT",
+						name = "Self: DRK",
+						uuid = "29b2107a-af6f-59d3-b836-fbe2a57e6838",
+						version = 3,
+					},
+					inheritedIndex = 10,
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 13,
+						dequeueIfLuaFalse = true,
+						jobValue = "PALADIN",
+						name = "Self: PLD",
+						uuid = "bc8c8ba6-60b2-3e21-a559-ecf9a527630a",
+						version = 3,
+					},
+					inheritedIndex = 10,
+				},
+			},
+			eventType = 2,
+			name = "Lj: PvP | LB | Defend against LBs",
+			uuid = "86bcef7b-50e5-082f-971d-d5c3fd7d03ee",
+			version = 2,
+		},
+		inheritedIndex = 12,
 	},
 	
 	{
@@ -2368,12 +2802,13 @@ local tbl =
 					},
 				},
 			},
+			enabled = false,
 			eventType = 2,
 			name = "Lj: PvP | LB | Guard",
 			uuid = "97c161b8-82c2-a45a-a192-1955d8a9ce3c",
 			version = 2,
 		},
-		inheritedIndex = 12,
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -2781,7 +3216,7 @@ local tbl =
 			uuid = "374bd26d-c4ea-e88e-a601-1da2cb34a2b6",
 			version = 2,
 		},
-		inheritedIndex = 13,
+		inheritedIndex = 14,
 	},
 	
 	{
@@ -3122,7 +3557,7 @@ local tbl =
 			uuid = "7f97e235-ee9c-a9f7-a2eb-c7a50050e8b3",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 15,
 	},
 	
 	{
@@ -3258,7 +3693,7 @@ local tbl =
 			uuid = "652fe8d9-229a-e0fc-83eb-858b670aa321",
 			version = 2,
 		},
-		inheritedIndex = 15,
+		inheritedIndex = 16,
 	},
 	
 	{
@@ -3307,7 +3742,7 @@ local tbl =
 			uuid = "82396a12-a25a-d0ce-8a9d-85182210f8e5",
 			version = 2,
 		},
-		inheritedIndex = 16,
+		inheritedIndex = 17,
 	},
 	
 	{
@@ -3586,7 +4021,7 @@ local tbl =
 			uuid = "e3fdc640-4b68-659a-a6b5-63fb14708b84",
 			version = 2,
 		},
-		inheritedIndex = 18,
+		inheritedIndex = 19,
 	},
 	
 	{
@@ -3694,7 +4129,7 @@ local tbl =
 			uuid = "57d43549-0906-9a6e-9c34-555e2e79e0b2",
 			version = 2,
 		},
-		inheritedIndex = 19,
+		inheritedIndex = 20,
 	},
 	
 	{
@@ -3717,6 +4152,11 @@ local tbl =
 							
 							{
 								"59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
+								true,
+							},
+							
+							{
+								"479017e8-87a5-9f29-b37a-e46310a7581a",
 								true,
 							},
 							
@@ -3765,6 +4205,11 @@ local tbl =
 							},
 							
 							{
+								"479017e8-87a5-9f29-b37a-e46310a7581a",
+								true,
+							},
+							
+							{
 								"c8b1048e-5219-cff1-a1cc-daa2e0263d97",
 								true,
 							},
@@ -3801,6 +4246,11 @@ local tbl =
 							
 							{
 								"59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
+								true,
+							},
+							
+							{
+								"479017e8-87a5-9f29-b37a-e46310a7581a",
 								true,
 							},
 							
@@ -3854,6 +4304,19 @@ local tbl =
 						version = 3,
 					},
 					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						buffCheckType = 2,
+						buffID = 3054,
+						category = "Self",
+						name = "Self: No Guard",
+						uuid = "479017e8-87a5-9f29-b37a-e46310a7581a",
+						version = 3,
+					},
+					inheritedIndex = 3,
 				},
 				
 				{
@@ -3997,6 +4460,25 @@ local tbl =
 				{
 					data = 
 					{
+						buffCheckType = 6,
+						buffIDList = 
+						{
+							394,
+							1302,
+							3039,
+						},
+						category = "Party",
+						name = "Enemy: Invul Buffs Missing",
+						partyTargetType = "Detection Target",
+						uuid = "280e4fc5-4b9f-8f74-bf67-e1ece54ff2c7",
+						version = 3,
+					},
+					inheritedIndex = 14,
+				},
+				
+				{
+					data = 
+					{
 						conditionType = 3,
 						hpValue = 1,
 						name = "Target: HP => 1%",
@@ -4012,8 +4494,8 @@ local tbl =
 						category = "Party",
 						comparator = 2,
 						conditionType = 2,
-						hpValue = 25,
-						name = "Enemy: HP <= 25%",
+						hpValue = 33,
+						name = "Enemy: HP <= 33%",
 						partyTargetType = "Detection Target",
 						uuid = "ad4339be-4543-925c-b5de-68d92f136c17",
 						version = 3,
@@ -4049,12 +4531,18 @@ local tbl =
 							},
 							
 							{
+								"280e4fc5-4b9f-8f74-bf67-e1ece54ff2c7",
+								true,
+							},
+							
+							{
 								"ad4339be-4543-925c-b5de-68d92f136c17",
 								true,
 							},
 						},
+						filterTargetSubtype = "Lowest HP",
 						filterTargetType = "ContentID",
-						name = "F - Enemy <= 10y Range + <= 25% HP",
+						name = "F - Enemy <= 10y Range + <= 33% HP",
 						partyTargetContentID = 0,
 						uuid = "91a67de6-9ef6-5f50-ab5e-78f5f06f4d9d",
 						version = 3,
@@ -4079,12 +4567,12 @@ local tbl =
 							},
 							
 							{
-								"d7600536-13b8-1f61-8736-81e35a2cb3c5",
+								"280e4fc5-4b9f-8f74-bf67-e1ece54ff2c7",
 								true,
 							},
 						},
 						filterTargetType = "ContentID",
-						name = "F - Enemy <= 40y Range + Guard",
+						name = "F - Enemy <= 40y Range",
 						partyTargetContentID = 0,
 						uuid = "1775b902-b84a-ade3-a351-4097e017264b",
 						version = 3,
