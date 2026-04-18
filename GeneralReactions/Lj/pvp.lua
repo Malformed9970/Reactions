@@ -677,9 +677,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "0179d548-ccb7-0218-b24a-63fb55c4a810",
 						version = 3,
 					},
@@ -1060,9 +1060,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "c8f59f34-8cc0-6795-88e5-dde808ffb454",
 						version = 3,
 					},
@@ -1428,9 +1428,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "058ebad1-5aa7-c9ce-8b28-6c7221af1019",
 						version = 3,
 					},
@@ -1643,9 +1643,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "00bf10ee-435c-a2e8-aa70-61cb7f9173da",
 						version = 3,
 					},
@@ -1656,7 +1656,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return eventArgs.aoeID == 9974",
+						conditionLua = "if eventArgs.aoeID == 9974 then\n    local player = TensorCore.mGetPlayer()  \n    local dist = TensorCore.getDistance2d(eventArgs, player.pos)\n    if dist <= eventArgs.aoeLength then\n        local headingToPlayer = TensorCore.getHeadingToTarget(eventArgs, player.pos)\n        local angleDiff = math.abs(headingToPlayer - eventArgs.heading)\n        if angleDiff > math.pi then\n            angleDiff = (math.pi * 2) - angleDiff\n        end\n\n        -- A 120-degree cone means 60 degrees (math.pi / 3) on either side\n        return angleDiff <= (math.pi / 3)\n    end\nend\n\nreturn false",
 						dequeueIfLuaFalse = true,
 						name = "Laser X Sword",
 						uuid = "8ed7ada0-02ac-6db7-9865-f2bc2bc8812f",
@@ -1669,7 +1669,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return eventArgs.aoeID == 9978",
+						conditionLua = "if eventArgs.aoeID == 9978 then\n    local player = TensorCore.mGetPlayer()\n    local dist = TensorCore.getDistance2d(eventArgs, player.pos)\n    if dist <= eventArgs.aoeLength then\n        local headingToPlayer = TensorCore.getHeadingToTarget(eventArgs, player.pos)\n        local angleDiff = math.abs(headingToPlayer - eventArgs.heading)\n        if angleDiff > math.pi then\n            angleDiff = (math.pi * 2) - angleDiff\n        end\n\n        -- A 90-degree cone means 45 degrees (math.pi / 4) on either side\n        return angleDiff <= (math.pi / 4)\n    end\nend\n\nreturn false",
 						dequeueIfLuaFalse = true,
 						name = "Flarethrower",
 						uuid = "93661930-7e95-f135-ae32-729ef95cf4f7",
@@ -1800,7 +1800,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "66abe741-958b-9b2e-ae56-509c85e307bd",
@@ -1813,9 +1813,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "3fa8ea45-c4f9-4e71-9eba-ef17f6fdf983",
 						version = 3,
 					},
@@ -1904,7 +1904,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "66abe741-958b-9b2e-ae56-509c85e307bd",
@@ -1919,7 +1919,7 @@ local tbl =
 						category = "Lua",
 						conditionLua = "return eventArgs.line.code == 57",
 						dequeueIfLuaFalse = true,
-						name = "Chat",
+						name = "System Channel",
 						uuid = "a23c452f-8c73-68d6-875c-f27c1b8a24e0",
 						version = 3,
 					},
@@ -2052,7 +2052,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "9bbac16e-0d08-4d20-911a-d4fbda712245",
@@ -2093,9 +2093,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "c61005ce-7dbf-a77b-a24e-95f1fc281220",
 						version = 3,
 					},
@@ -2223,6 +2223,11 @@ local tbl =
 								"d3dbb6e1-bece-f69e-b614-664e5d0a602a",
 								true,
 							},
+							
+							{
+								"76a64398-8d61-7201-bd70-a21880629ab0",
+								true,
+							},
 						},
 						endIfUsed = true,
 						gVar = "ACR_TensorMagnum3_CD",
@@ -2303,17 +2308,17 @@ local tbl =
 							},
 							
 							{
-								"e89c0e35-0932-9996-86e2-a0a6d93c0d71",
-								true,
-							},
-							
-							{
 								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
 								true,
 							},
 							
 							{
 								"517c2217-e097-57da-9776-86ce1d706430",
+								true,
+							},
+							
+							{
+								"e89c0e35-0932-9996-86e2-a0a6d93c0d71",
 								true,
 							},
 						},
@@ -2353,17 +2358,17 @@ local tbl =
 							},
 							
 							{
-								"bc8c8ba6-60b2-3e21-a559-ecf9a527630a",
-								true,
-							},
-							
-							{
 								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
 								true,
 							},
 							
 							{
 								"517c2217-e097-57da-9776-86ce1d706430",
+								true,
+							},
+							
+							{
+								"bc8c8ba6-60b2-3e21-a559-ecf9a527630a",
 								true,
 							},
 						},
@@ -2403,17 +2408,17 @@ local tbl =
 							},
 							
 							{
-								"29b2107a-af6f-59d3-b836-fbe2a57e6838",
-								true,
-							},
-							
-							{
 								"bfa599a0-947b-3e85-a45c-5f8f4ec72f33",
 								true,
 							},
 							
 							{
 								"517c2217-e097-57da-9776-86ce1d706430",
+								true,
+							},
+							
+							{
+								"29b2107a-af6f-59d3-b836-fbe2a57e6838",
 								true,
 							},
 						},
@@ -2431,7 +2436,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "f20be9b5-6eaa-6c13-beaf-880fa5d9da15",
@@ -2443,13 +2448,41 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "0d4f6789-878e-72a1-b090-69cf2f3242c3",
 						version = 3,
 					},
 					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 12,
+						dequeueIfLuaFalse = true,
+						localMapIDList = 
+						{
+							1032,
+							1033,
+							1034,
+							1058,
+							1059,
+							1060,
+							1116,
+							1117,
+							1138,
+							1139,
+							1293,
+							1294,
+						},
+						name = "CC Maps",
+						uuid = "33f45103-2b30-ce38-83c0-84856ad1f049",
+						version = 3,
+					},
+					inheritedIndex = 3,
 				},
 				
 				{
@@ -2531,11 +2564,13 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Lua",
-						conditionLua = "return TensorCore.getLBGauge() >= 10000 and TensorCore.getLBGauge() < 20000",
-						dequeueIfLuaFalse = true,
-						name = "LB1 Gauge",
-						uuid = "517c2217-e097-57da-9776-86ce1d706430",
+						buffCheckType = 2,
+						buffID = 3054,
+						category = "Self",
+						matchAnyBuff = true,
+						name = "Self: Missing Guard Buff",
+						partyTargetNumber = 0,
+						uuid = "d3dbb6e1-bece-f69e-b614-664e5d0a602a",
 						version = 3,
 					},
 					inheritedIndex = 9,
@@ -2545,12 +2580,25 @@ local tbl =
 					data = 
 					{
 						buffCheckType = 2,
-						buffID = 3054,
+						buffID = 3021,
 						category = "Self",
 						matchAnyBuff = true,
-						name = "Self: Missing Guard Buff",
+						name = "Self: Missing Unguarded Debuff",
 						partyTargetNumber = 0,
-						uuid = "d3dbb6e1-bece-f69e-b614-664e5d0a602a",
+						uuid = "76a64398-8d61-7201-bd70-a21880629ab0",
+						version = 3,
+					},
+					inheritedIndex = 10,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.getLBGauge() == 10000",
+						dequeueIfLuaFalse = true,
+						name = "LB1 Gauge",
+						uuid = "517c2217-e097-57da-9776-86ce1d706430",
 						version = 3,
 					},
 					inheritedIndex = 9,
@@ -2589,12 +2637,12 @@ local tbl =
 						category = "Self",
 						conditionType = 13,
 						dequeueIfLuaFalse = true,
-						jobValue = "DARKKNIGHT",
-						name = "Self: DRK",
-						uuid = "29b2107a-af6f-59d3-b836-fbe2a57e6838",
+						jobValue = "PALADIN",
+						name = "Self: PLD",
+						uuid = "bc8c8ba6-60b2-3e21-a559-ecf9a527630a",
 						version = 3,
 					},
-					inheritedIndex = 10,
+					inheritedIndex = 14,
 				},
 				
 				{
@@ -2603,9 +2651,9 @@ local tbl =
 						category = "Self",
 						conditionType = 13,
 						dequeueIfLuaFalse = true,
-						jobValue = "PALADIN",
-						name = "Self: PLD",
-						uuid = "bc8c8ba6-60b2-3e21-a559-ecf9a527630a",
+						jobValue = "DARKKNIGHT",
+						name = "Self: DRK",
+						uuid = "29b2107a-af6f-59d3-b836-fbe2a57e6838",
 						version = 3,
 					},
 					inheritedIndex = 10,
@@ -2719,9 +2767,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "0d4f6789-878e-72a1-b090-69cf2f3242c3",
 						version = 3,
 					},
@@ -2892,7 +2940,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "21f92df0-2f0c-c6c3-b0c5-f690574a3461",
@@ -2905,9 +2953,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "56567c6a-bd47-599a-a8d6-95b3de8074b4",
 						version = 3,
 					},
@@ -3263,7 +3311,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "21f92df0-2f0c-c6c3-b0c5-f690574a3461",
@@ -3276,9 +3324,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "0efbcdc5-3297-65f0-aa91-e0abdc8dc600",
 						version = 3,
 					},
@@ -3643,7 +3691,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "01bf16fe-1001-e0b5-b19e-13893da00ce9",
@@ -3656,9 +3704,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "93fb6aab-008b-7b97-aca4-ca078bd876b4",
 						version = 3,
 					},
@@ -3728,7 +3776,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "de4e6183-498b-5312-93d1-cf10ffc99e11",
@@ -3755,7 +3803,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local party = TensorCore.getEntityGroupList(\"Party\")\nlocal enemies = TensorCore.getEntityGroupList(\"Enemy\")\nlocal drawer = TensorCore.getStaticDrawer(4278255360, 1.0)\nlocal activeEnemies = {}\n\nfor _, enemy in pairs(enemies) do\n    activeEnemies[enemy.id] = enemy\nend\n\nfor _, member in pairs(party) do\n    if member.alive and member.targetid ~= nil then\n        local target = activeEnemies[member.targetid]\n        if target then\n            drawer:addLine(\n                member.pos.x, member.pos.y, member.pos.z,\n                target.pos.x, target.pos.y, target.pos.z,\n                3.0, 3.0\n            )\n        end\n    end\nend\n\nself.used = true\n",
+						actionLua = "local party = TensorCore.getEntityGroupList(\"Party\")\nlocal enemies = TensorCore.getEntityGroupList(\"Enemy\")\nlocal drawer = TensorCore.getStaticDrawer(4278255360, 1.0)\nlocal activeEnemies = {}\n\nfor _, enemy in pairs(enemies) do\n    activeEnemies[enemy.id] = enemy\nend\n\nfor _, member in pairs(party) do\n    if member.alive and member.targetid ~= nil then\n        local target = activeEnemies[member.targetid]\n        if target then\n            drawer:addLine(\n                member.pos.x, member.pos.y, member.pos.z,\n                target.pos.x, target.pos.y, target.pos.z,\n                3.0, 3.0\n            )\n        end\n    end\nend\n\nself.used = true",
 						conditions = 
 						{
 							
@@ -3777,7 +3825,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "de4e6183-498b-5312-93d1-cf10ffc99e11",
@@ -3877,7 +3925,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "32454d08-b746-c2ae-8ccd-ea1691ffefca",
@@ -4061,7 +4109,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "21f92df0-2f0c-c6c3-b0c5-f690574a3461",
@@ -4130,6 +4178,146 @@ local tbl =
 			version = 2,
 		},
 		inheritedIndex = 20,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						actionID = 29055,
+						actionLua = "eventArgs.detectionTargetID = eventArgs.entityID",
+						allowInterrupt = true,
+						conditions = 
+						{
+							
+							{
+								"c296bfa6-2037-b4b1-9be1-e74f49f208e2",
+								true,
+							},
+							
+							{
+								"f4550245-cd73-c161-a7ad-364d880405d9",
+								true,
+							},
+							
+							{
+								"b31ab2c6-e21b-9f59-988e-f72d68bac396",
+								true,
+							},
+							
+							{
+								"eddd8629-49f8-72df-9eab-f5dac63ec430",
+								true,
+							},
+							
+							{
+								"7ca2e99a-bac9-f1f2-9313-8026071fcab7",
+								true,
+							},
+							
+							{
+								"2646331b-f8b0-81ff-9fe8-b8c7c9bd926b",
+								true,
+							},
+						},
+						gVar = "ACR_RikuWAR3_CD",
+						ignoreWeaveRules = true,
+						uuid = "675d5656-bd7e-07b7-a711-603b979f0d20",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "c296bfa6-2037-b4b1-9be1-e74f49f208e2",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						dequeueIfLuaFalse = true,
+						name = "Bot Enabled",
+						uuid = "f4550245-cd73-c161-a7ad-364d880405d9",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 29066,
+						name = "Event: Guardian",
+						uuid = "b31ab2c6-e21b-9f59-988e-f72d68bac396",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 9,
+						dequeueIfLuaFalse = true,
+						inGroupTargetType = "Self",
+						name = "Self: Event Target",
+						partyTargetType = "Event Target",
+						uuid = "eddd8629-49f8-72df-9eab-f5dac63ec430",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						buffID = 1302,
+						category = "Party",
+						name = "Event Entity: Has Hallowed Ground",
+						partyTargetType = "Event Entity",
+						uuid = "7ca2e99a-bac9-f1f2-9313-8026071fcab7",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						comparator = 2,
+						conditionType = 2,
+						hpValue = 40,
+						name = "Self: HP <= 40%",
+						uuid = "2646331b-f8b0-81ff-9fe8-b8c7c9bd926b",
+						version = 3,
+					},
+				},
+			},
+			eventType = 2,
+			name = "LJ: PvP | Heal under Cover",
+			uuid = "8ed86155-9c72-b584-a6b0-3c30fddadff5",
+			version = 2,
+		},
 	},
 	
 	{
@@ -4284,7 +4472,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return IsPVPMap()",
+						conditionLua = "return TensorCore.isPVPMap()",
 						dequeueIfLuaFalse = true,
 						name = "PVP Map",
 						uuid = "3b508280-ffe4-3401-ba07-def2652791fd",
@@ -4297,9 +4485,9 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
 						dequeueIfLuaFalse = true,
-						name = "Assist Enabled",
+						name = "Bot Enabled",
 						uuid = "59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
 						version = 3,
 					},
