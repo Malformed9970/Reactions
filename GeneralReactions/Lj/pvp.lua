@@ -608,6 +608,176 @@ local tbl =
 				{
 					data = 
 					{
+						aType = "Lua",
+						actionLua = "ljCCData = {}\nljCCData.Party = {}\nljCCData.Enemy = {}\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"412e7ce4-a828-9890-934d-01c61342bde8",
+								true,
+							},
+						},
+						gVar = "ACR_RikuNIN3_CD",
+						name = "Clear Table Data",
+						uuid = "7af0c9f5-d0ec-d5c4-a444-3f80ce5b4ceb",
+						version = 2.1,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local jobMap = {\n    [19] = \"PLD\", [20] = \"MNK\", [21] = \"WAR\", [22] = \"DRG\", [23] = \"BRD\",\n    [24] = \"WHM\", [25] = \"BLM\", [27] = \"SMN\", [28] = \"SCH\", [30] = \"NIN\",\n    [31] = \"MCH\", [32] = \"DRK\", [33] = \"AST\", [34] = \"SAM\", [35] = \"RDM\",\n    [37] = \"GNB\", [38] = \"DNC\", [39] = \"RPR\", [40] = \"SGE\", [41] = \"VPR\",\n    [42] = \"PCT\"\n}\n\n-- Custom sort priority mapping\nlocal jobPriority = {\n    [19] = 1,  [21] = 2,  [32] = 3,  [37] = 4,  -- Tanks\n    [24] = 5,  [28] = 6,  [33] = 7,  [40] = 8,  -- Healers\n    [20] = 9,  [22] = 10, [30] = 11, [34] = 12, [39] = 13, [41] = 14, -- Melee\n    [23] = 15, [31] = 16, [38] = 17, -- Ranged\n    [25] = 18, [27] = 19, [35] = 20, [42] = 21  -- Casters\n}\n\nlocal function getJobAbbr(jobId)\n    return jobMap[jobId] or tostring(jobId)\nend\n\nlocal party = TensorCore.getEntityGroupList(\"Party\") or {}\nlocal enemies = TensorCore.getEntityGroupList(\"Enemy\") or {}\nlocal localPlayer = TensorCore.mGetPlayer()\nlocal myId = localPlayer and localPlayer.id or 0\n\n-- Process Party\nlocal tempParty = {}\nfor _, p in pairs(party) do\n    table.insert(tempParty, { id = p.id, job = p.job, name = getJobAbbr(p.job) })\nend\n\ntable.sort(tempParty, function(a, b)\n    -- You are always at the top\n    if a.id == myId then return true end\n    if b.id == myId then return false end\n    \n    local pA = jobPriority[a.job] or 99\n    local pB = jobPriority[b.job] or 99\n    \n    if pA == pB then return a.name < b.name end\n    return pA < pB\nend)\nljCCData.Party = tempParty\n\n-- Process Enemy\nlocal tempEnemy = {}\nfor _, e in pairs(enemies) do\n    table.insert(tempEnemy, { id = e.id, job = e.job, name = getJobAbbr(e.job) })\nend\n\ntable.sort(tempEnemy, function(a, b)\n    local pA = jobPriority[a.job] or 99\n    local pB = jobPriority[b.job] or 99\n    \n    if pA == pB then return a.name < b.name end\n    return pA < pB\nend)\nljCCData.Enemy = tempEnemy\n\n--d(\"CC Teams Initialized, Sorted, and Cached.\")\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"412e7ce4-a828-9890-934d-01c61342bde8",
+								true,
+							},
+						},
+						gVar = "ACR_RikuNIN3_CD",
+						name = "Populate Table Data",
+						uuid = "b613f871-0914-70d9-b80d-c1e51cf75cac",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 12,
+						dequeueIfLuaFalse = true,
+						localMapIDList = 
+						{
+							1032,
+							1033,
+							1034,
+							1058,
+							1059,
+							1060,
+							1116,
+							1117,
+							1138,
+							1139,
+							1293,
+							1294,
+							1357,
+							1358,
+						},
+						name = "CC Maps",
+						uuid = "412e7ce4-a828-9890-934d-01c61342bde8",
+						version = 3,
+					},
+				},
+			},
+			eventType = 11,
+			name = "LJ: CC | Data | Get Participants",
+			throttleTime = 32000,
+			timeout = 45,
+			uuid = "38266338-193d-d0be-a961-cf2abda5c7fb",
+			version = 2,
+		},
+		inheritedIndex = 5,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "if ljCCData.PartyLocked == nil then ljCCData.PartyLocked = true end\nif ljCCData.EnemyLocked == nil then ljCCData.EnemyLocked = true end\n\n-- Grab the live data to check ranges and target connections\nlocal liveParty = TensorCore.getEntityGroupList(\"Party\") or {}\nlocal liveEnemies = TensorCore.getEntityGroupList(\"Enemy\") or {}\n\n-- === Configuration ===\nlocal barWidth = 65\nlocal barHeight = 52\nlocal maxTargets = 5\nlocal textYOffset = 12 \n-- =====================\n\nlocal function renderListWithButtons(listData, liveAllies, liveOpponents, listIdPrefix, canTarget)\n    for i, entData in ipairs(listData) do\n        local targetingCount = 0\n        local isAliveAndInRange = false\n        \n        -- Verify if the cached entity is currently within entity range and alive\n        for _, curEnt in pairs(liveAllies) do\n            if curEnt.id == entData.id and curEnt.alive then\n                isAliveAndInRange = true\n                break\n            end\n        end\n        \n        if isAliveAndInRange then\n            for _, opp in pairs(liveOpponents) do\n                if opp.alive and opp.targetid == entData.id then\n                    targetingCount = targetingCount + 1\n                end\n            end\n        end\n\n        GUI:PushID(listIdPrefix .. tostring(entData.id))\n        GUI:BeginGroup()\n        \n        local startY = GUI:GetCursorPosY()\n        \n        -- Up Button\n        if GUI:Button(\"^\", 20, barHeight) then\n            if i > 1 then\n                local movedItem = table.remove(listData, i)\n                table.insert(listData, i - 1, movedItem)\n            end\n        end\n        \n        GUI:SameLine()\n        \n        -- Down Button\n        if GUI:Button(\"v\", 20, barHeight) then\n            if i < #listData then\n                local movedItem = table.remove(listData, i)\n                table.insert(listData, i + 1, movedItem)\n            end\n        end\n        \n        GUI:SameLine()\n        \n        GUI:SetCursorPosY(startY + textYOffset)\n        GUI:Text(entData.name)\n        \n        -- Make the Job Name clickable if allowed\n        if canTarget and GUI:IsItemHovered() then\n            GUI:SetMouseCursor(GUI.MouseCursor_Hand)\n            if GUI:IsItemClicked() then\n                TensorCore.mGetPlayer():SetTarget(entData.id)\n            end\n        end\n        \n        -- Reset Y position back to the top for the progress bar\n        GUI:SameLine(85)\n        GUI:SetCursorPosY(startY)\n        \n        -- Color logic based on threat level\n        if targetingCount >= 3 then\n            GUI:PushStyleColor(GUI.Col_PlotHistogram, 1, 0.2, 0.2, 1) -- Red\n        elseif targetingCount > 0 then\n            GUI:PushStyleColor(GUI.Col_PlotHistogram, 1, 1, 0.2, 1) -- Yellow\n        else\n            GUI:PushStyleColor(GUI.Col_PlotHistogram, 0.5, 0.5, 0.5, 1) -- Grey\n        end\n        \n        local fraction = math.min(1.0, targetingCount / maxTargets)\n        GUI:ProgressBar(fraction, barWidth, barHeight, tostring(targetingCount))\n        \n        -- Make the Progress Bar clickable if allowed\n        if canTarget and GUI:IsItemHovered() then\n            GUI:SetMouseCursor(GUI.MouseCursor_Hand)\n            if GUI:IsItemClicked() then\n                TensorCore.mGetPlayer():SetTarget(entData.id)\n            end\n        end\n        \n        GUI:PopStyleColor()\n        GUI:EndGroup()\n        GUI:PopID()\n    end\nend\n\n-- Determine Window Flags for Party\nlocal partyFlags = GUI.WindowFlags_AlwaysAutoResize\nif ljCCData.PartyLocked then\n    partyFlags = partyFlags + GUI.WindowFlags_NoMove\nend\n\n-- Draw the persistent Party Window (Targeting disabled)\nGUI:Begin(\"Party Targets\", nil, partyFlags)\nif ljCCData.Party then\n    renderListWithButtons(ljCCData.Party, liveParty, liveEnemies, \"Party_\", false)\nend\nGUI:Separator()\nljCCData.PartyLocked = GUI:Checkbox(\"Lock Window\", ljCCData.PartyLocked)\nGUI:End()\n\n-- Determine Window Flags for Enemy\nlocal enemyFlags = GUI.WindowFlags_AlwaysAutoResize\nif ljCCData.EnemyLocked then\n    enemyFlags = enemyFlags + GUI.WindowFlags_NoMove\nend\n\n-- Draw the persistent Enemy Window (Targeting enabled)\nGUI:Begin(\"Enemy Targets\", nil, enemyFlags)\nif ljCCData.Enemy then\n    renderListWithButtons(ljCCData.Enemy, liveEnemies, liveParty, \"Enemy_\", true)\nend\nGUI:Separator()\nljCCData.EnemyLocked = GUI:Checkbox(\"Lock Window\", ljCCData.EnemyLocked)\nGUI:End()\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"46b2e6f0-876e-57d3-82e7-01a800100f20",
+								true,
+							},
+							
+							{
+								"c515fd44-ae92-2226-b111-549078228028",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						uuid = "6fd1dae5-3eae-6645-96e1-ef640a04df45",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 12,
+						dequeueIfLuaFalse = true,
+						localMapIDList = 
+						{
+							1032,
+							1033,
+							1034,
+							1058,
+							1059,
+							1060,
+							1116,
+							1117,
+							1138,
+							1139,
+							1293,
+							1294,
+							1357,
+							1358,
+						},
+						name = "CC Maps",
+						uuid = "46b2e6f0-876e-57d3-82e7-01a800100f20",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return ljCCData ~= nil and ljCCData.Party ~= nil and ljCCData.Enemy ~= nil",
+						name = "Table Vars Initialized",
+						uuid = "c515fd44-ae92-2226-b111-549078228028",
+						version = 3,
+					},
+				},
+			},
+			eventType = 13,
+			name = "Lj: CC | GUI | Target Counter",
+			uuid = "c46a6c50-4893-54f2-852f-e3eb91b33c26",
+			version = 2,
+		},
+		inheritedIndex = 6,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
 						aType = "Misc",
 						conditions = 
 						{
@@ -983,7 +1153,7 @@ local tbl =
 			uuid = "d27f6f56-9a8a-455c-89a6-0adaa21e0a86",
 			version = 2,
 		},
-		inheritedIndex = 5,
+		inheritedIndex = 7,
 	},
 	
 	{
@@ -1333,7 +1503,7 @@ local tbl =
 			uuid = "0ec88ca0-cdf4-d740-bb3d-e1df624ccaaf",
 			version = 2,
 		},
-		inheritedIndex = 6,
+		inheritedIndex = 8,
 	},
 	
 	{
@@ -1519,7 +1689,7 @@ local tbl =
 			uuid = "465292e4-8338-277d-ad48-c44adfe7cbe0",
 			version = 2,
 		},
-		inheritedIndex = 7,
+		inheritedIndex = 9,
 	},
 	
 	{
@@ -1734,7 +1904,7 @@ local tbl =
 			uuid = "777258da-b427-f2e9-9cdf-6cf8ad56ecee",
 			version = 2,
 		},
-		inheritedIndex = 8,
+		inheritedIndex = 10,
 	},
 	
 	{
@@ -1827,7 +1997,7 @@ local tbl =
 			uuid = "14ba2766-86e9-e977-bfb0-4f5531308d4c",
 			version = 2,
 		},
-		inheritedIndex = 9,
+		inheritedIndex = 11,
 	},
 	
 	{
@@ -1943,7 +2113,7 @@ local tbl =
 			uuid = "5cc6f157-e779-1ea1-a6e5-8f03e85ae32e",
 			version = 2,
 		},
-		inheritedIndex = 10,
+		inheritedIndex = 12,
 	},
 	
 	{
@@ -2081,6 +2251,8 @@ local tbl =
 							1139,
 							1293,
 							1294,
+							1357,
+							1358,
 						},
 						name = "CC Maps",
 						uuid = "b55ab72a-5ff7-7a61-a596-b4a417c3b9b6",
@@ -2182,7 +2354,7 @@ local tbl =
 			uuid = "ad452ec0-37a5-82ab-ad7b-de7c801d86b6",
 			version = 2,
 		},
-		inheritedIndex = 11,
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -2460,34 +2632,6 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Self",
-						conditionType = 12,
-						dequeueIfLuaFalse = true,
-						localMapIDList = 
-						{
-							1032,
-							1033,
-							1034,
-							1058,
-							1059,
-							1060,
-							1116,
-							1117,
-							1138,
-							1139,
-							1293,
-							1294,
-						},
-						name = "CC Maps",
-						uuid = "33f45103-2b30-ce38-83c0-84856ad1f049",
-						version = 3,
-					},
-					inheritedIndex = 3,
-				},
-				
-				{
-					data = 
-					{
 						category = "Event",
 						dequeueIfLuaFalse = true,
 						eventArgType = 2,
@@ -2664,7 +2808,7 @@ local tbl =
 			uuid = "86bcef7b-50e5-082f-971d-d5c3fd7d03ee",
 			version = 2,
 		},
-		inheritedIndex = 12,
+		inheritedIndex = 14,
 	},
 	
 	{
@@ -2856,7 +3000,7 @@ local tbl =
 			uuid = "97c161b8-82c2-a45a-a192-1955d8a9ce3c",
 			version = 2,
 		},
-		inheritedIndex = 13,
+		inheritedIndex = 15,
 	},
 	
 	{
@@ -3264,7 +3408,7 @@ local tbl =
 			uuid = "374bd26d-c4ea-e88e-a601-1da2cb34a2b6",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 16,
 	},
 	
 	{
@@ -3605,7 +3749,7 @@ local tbl =
 			uuid = "7f97e235-ee9c-a9f7-a2eb-c7a50050e8b3",
 			version = 2,
 		},
-		inheritedIndex = 15,
+		inheritedIndex = 17,
 	},
 	
 	{
@@ -3741,7 +3885,7 @@ local tbl =
 			uuid = "652fe8d9-229a-e0fc-83eb-858b670aa321",
 			version = 2,
 		},
-		inheritedIndex = 16,
+		inheritedIndex = 18,
 	},
 	
 	{
@@ -3790,7 +3934,7 @@ local tbl =
 			uuid = "82396a12-a25a-d0ce-8a9d-85182210f8e5",
 			version = 2,
 		},
-		inheritedIndex = 17,
+		inheritedIndex = 19,
 	},
 	
 	{
@@ -4069,7 +4213,7 @@ local tbl =
 			uuid = "e3fdc640-4b68-659a-a6b5-63fb14708b84",
 			version = 2,
 		},
-		inheritedIndex = 19,
+		inheritedIndex = 21,
 	},
 	
 	{
@@ -4177,7 +4321,7 @@ local tbl =
 			uuid = "57d43549-0906-9a6e-9c34-555e2e79e0b2",
 			version = 2,
 		},
-		inheritedIndex = 20,
+		inheritedIndex = 22,
 	},
 	
 	{
@@ -4771,7 +4915,7 @@ local tbl =
 			uuid = "15c3c3d6-66cc-96ef-95fe-a850d6bcdfc7",
 			version = 2,
 		},
-		inheritedIndex = 22,
+		inheritedIndex = 24,
 	}, 
 	inheritedProfiles = 
 	{
