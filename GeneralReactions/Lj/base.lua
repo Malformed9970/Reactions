@@ -1159,6 +1159,11 @@ local tbl =
 								"c5886579-38cb-7ba9-9684-67a22930846b",
 								true,
 							},
+							
+							{
+								"219829a1-d2b4-b322-890e-1b530a44d348",
+								true,
+							},
 						},
 						gVar = "ACR_RikuWAR3_CD",
 						uuid = "6beb0923-b879-03d5-9b24-5cfee10f2e67",
@@ -1190,6 +1195,16 @@ local tbl =
 						dequeueIfLuaFalse = true,
 						eventIntValue = 218,
 						uuid = "c5886579-38cb-7ba9-9684-67a22930846b",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 7,
+						uuid = "219829a1-d2b4-b322-890e-1b530a44d348",
 						version = 3,
 					},
 				},
@@ -1445,8 +1460,8 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
-						name = "Assist Enabled",
+						conditionLua = "return FFXIV_Common_BotRunning or (KitanoiFuncs and KitanoiFuncs.AreKitanoiAddonsRunning()) or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						name = "Bot Enabled",
 						uuid = "6625b085-e682-6937-b10f-d88d17f25b9d",
 						version = 3,
 					},
