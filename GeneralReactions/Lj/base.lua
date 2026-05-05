@@ -65,72 +65,6 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local obsCommandPath = string.format('\"%s\" /server=%s /stoprecording', \n    AnyoneCore.Settings.obsCommandPath, \n    AnyoneCore.Settings.obsServerInfo\n)\n\nlocal handle = io.popen(obsCommandPath)\nif handle then\n    handle:close()\nend\n\nself.used = true",
-						conditions = 
-						{
-							
-							{
-								"1a34ae05-c14f-3f29-919d-fb56e8e9027d",
-								true,
-							},
-							
-							{
-								"a967c59f-f536-d157-a6e5-ec2efbc5b78e",
-								true,
-							},
-						},
-						gVar = "ACR_TensorMagnum3_CD",
-						uuid = "03522db8-5990-ae4a-aff6-a7b2a5cfa847",
-						version = 2.1,
-					},
-				},
-			},
-			conditions = 
-			{
-				
-				{
-					data = 
-					{
-						category = "Lua",
-						conditionLua = "local dutyInfo = Duty:GetActiveDutyInfo()\nif not dutyInfo then return false end\n\nlocal highEndKeywords = {\"Extreme\", \"Minstrel\", \"Savage\", \"Unreal\", \"Chaotic\", \"Ultimate\"}\n\nfor _, keyword in ipairs(highEndKeywords) do\n    if dutyInfo.name:find(keyword) then\n        return true\n    end\nend\n\nreturn false",
-						dequeueIfLuaFalse = true,
-						name = "In Highend Duty",
-						uuid = "1a34ae05-c14f-3f29-919d-fb56e8e9027d",
-						version = 3,
-					},
-					inheritedIndex = 1,
-				},
-				
-				{
-					data = 
-					{
-						category = "Lua",
-						conditionLua = "local exitIDs = {\n    [2006235] = true, [2000139] = true, [2000370] = true, [2000275] = true, \n    [2001610] = true, [2001871] = true, [2000683] = true, [2000605] = true, \n    [2000788] = true, [2000596] = true, [2001161] = true, [2000493] = true\n}\n\nlocal entity = TensorCore.mGetEntity(eventArgs.entityID)\n\nif eventArgs.isVisible and not eventArgs.wasVisible then\n    if exitIDs[entity.contentID] then\n        return true\n    end\nend\n\nreturn false",
-						dequeueIfLuaFalse = true,
-						name = "Exit Found",
-						uuid = "a967c59f-f536-d157-a6e5-ec2efbc5b78e",
-						version = 3,
-					},
-				},
-			},
-			eventType = 22,
-			name = "Lj: End OBS",
-			uuid = "43cd2fd7-3f76-18f5-978b-afbe342ecbe4",
-			version = 2,
-		},
-		inheritedIndex = 23,
-	},
-	
-	{
-		data = 
-		{
-			actions = 
-			{
-				
-				{
-					data = 
-					{
-						aType = "Lua",
 						actionLua = "ml_global_information.ToggleRun()\nself.used = true",
 						conditions = 
 						{
@@ -1151,6 +1085,11 @@ local tbl =
 						{
 							
 							{
+								"715ef1e2-eb78-fb50-9037-b5c483c79ece",
+								true,
+							},
+							
+							{
 								"10c14f8e-6820-cbbb-a0f6-efdc3ec9237b",
 								false,
 							},
@@ -1164,6 +1103,11 @@ local tbl =
 								"219829a1-d2b4-b322-890e-1b530a44d348",
 								true,
 							},
+							
+							{
+								"3fc4a180-f5de-c78a-83a7-304882ea972b",
+								true,
+							},
 						},
 						gVar = "ACR_RikuWAR3_CD",
 						uuid = "6beb0923-b879-03d5-9b24-5cfee10f2e67",
@@ -1173,6 +1117,19 @@ local tbl =
 			},
 			conditions = 
 			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "715ef1e2-eb78-fb50-9037-b5c483c79ece",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
 				
 				{
 					data = 
@@ -1208,6 +1165,17 @@ local tbl =
 						version = 3,
 					},
 				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.mGetEntity(eventArgs.primaryEntityID).aggropercentage > 0",
+						name = "Combat with Gaze Entity",
+						uuid = "3fc4a180-f5de-c78a-83a7-304882ea972b",
+						version = 3,
+					},
+				},
 			},
 			eventType = 27,
 			name = "Lj: World | Avoid Gaze",
@@ -1232,6 +1200,11 @@ local tbl =
 						{
 							
 							{
+								"492694b5-1e9b-e7f9-9e97-ec283930ebbe",
+								true,
+							},
+							
+							{
 								"7484c6ae-8ef0-a59b-a76b-8e96b0d169f1",
 								false,
 							},
@@ -1249,6 +1222,19 @@ local tbl =
 			},
 			conditions = 
 			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning",
+						dequeueIfLuaFalse = true,
+						name = "Assist Enabled",
+						uuid = "492694b5-1e9b-e7f9-9e97-ec283930ebbe",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
 				
 				{
 					data = 
