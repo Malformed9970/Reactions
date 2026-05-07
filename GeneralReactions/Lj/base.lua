@@ -925,12 +925,51 @@ local tbl =
 					data = 
 					{
 						category = "Filter",
+						filterTargetType = "ContentID",
+						name = "F - Nails",
+						partyTargetContentID = 14042,
+						uuid = "9ae42868-9b03-b53a-a0e0-d4113f256468",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						filterTargetSubtype = "Highest HP",
+						filterTargetType = "ContentID",
+						name = "F - Adds",
+						partyTargetContentID = 14039,
+						uuid = "86444aec-84dc-a94d-a96a-e8de70879292",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"9ae42868-9b03-b53a-a0e0-d4113f256468",
+								true,
+							},
+							
+							{
+								"86444aec-84dc-a94d-a96a-e8de70879292",
+								true,
+							},
+						},
 						matchAnyBuff = true,
 						name = "F - Adds OR Nails Exist",
 						partyTargetNumber = 0,
 						uuid = "261043e7-929b-2eb9-aa8d-8d84b88fa1b8",
 						version = 3,
 					},
+					inheritedIndex = 11,
 				},
 			},
 			name = "Lj: Quantum | Target Selector",
