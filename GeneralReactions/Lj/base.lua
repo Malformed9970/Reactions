@@ -731,6 +731,7 @@ local tbl =
 								false,
 							},
 						},
+						endIfUsed = true,
 						gVar = "ACR_TensorMagnum3_CD",
 						name = "Target Dark Boss",
 						setTarget = true,
@@ -778,6 +779,7 @@ local tbl =
 								false,
 							},
 						},
+						endIfUsed = true,
 						gVar = "ACR_TensorMagnum3_CD",
 						name = "Target Light Boss",
 						setTarget = true,
@@ -810,6 +812,7 @@ local tbl =
 								true,
 							},
 						},
+						endIfUsed = true,
 						gVar = "ACR_TensorMagnum3_CD",
 						name = "Target Adds or Nail",
 						setTarget = true,
@@ -921,76 +924,7 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Party",
-						comparator = 2,
-						conditionType = 4,
-						inGroupTargetType = "Melee DPS",
-						inRangeValue = 3.5,
-						name = "Melee Range",
-						partyTargetType = "Detection Target",
-						uuid = "08f7141d-46a4-eb17-9f00-65805bcea673",
-						version = 3,
-					},
-					inheritedIndex = 9,
-				},
-				
-				{
-					data = 
-					{
 						category = "Filter",
-						conditions = 
-						{
-							
-							{
-								"08f7141d-46a4-eb17-9f00-65805bcea673",
-								true,
-							},
-						},
-						filterTargetType = "ContentID",
-						name = "F - Adds",
-						partyTargetContentID = 14039,
-						uuid = "5b262d09-83e6-326d-865f-952f01d520c7",
-						version = 3,
-					},
-				},
-				
-				{
-					data = 
-					{
-						category = "Filter",
-						conditions = 
-						{
-							
-							{
-								"08f7141d-46a4-eb17-9f00-65805bcea673",
-								true,
-							},
-						},
-						filterTargetType = "ContentID",
-						name = "F - Nails",
-						partyTargetContentID = 14042,
-						uuid = "bffab478-527f-a4d8-b650-f69929fb93aa",
-						version = 3,
-					},
-				},
-				
-				{
-					data = 
-					{
-						category = "Filter",
-						conditions = 
-						{
-							
-							{
-								"5b262d09-83e6-326d-865f-952f01d520c7",
-								true,
-							},
-							
-							{
-								"bffab478-527f-a4d8-b650-f69929fb93aa",
-								true,
-							},
-						},
 						matchAnyBuff = true,
 						name = "F - Adds OR Nails Exist",
 						partyTargetNumber = 0,
