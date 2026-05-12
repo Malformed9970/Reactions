@@ -686,6 +686,7 @@ local tbl =
 								true,
 							},
 						},
+						endIfUsed = true,
 						gVar = "ACR_TensorMagnum3_CD",
 						name = "Stop Moving",
 						stopMoving = true,
