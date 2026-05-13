@@ -24,9 +24,6 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 - Disables Assist if countdown is cancelled
 - Disables Assist if countdown is too short (set to 5s, easily adjustable via GUI condition)
 
-**OBS**
-- Disables recording when Boss is killed, relies on AnyoneCore OBS integration
-
 **OnDeath & OnWipe**
 - Disable Assist on Death
 - Food Reminder when wiping
