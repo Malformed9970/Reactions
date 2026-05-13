@@ -1364,7 +1364,7 @@ local tbl =
 					data = 
 					{
 						aType = "Alert",
-						alertText = "Simon Says: Keep Moving",
+						alertText = "Keep Moving",
 						conditions = 
 						{
 							
@@ -1394,7 +1394,7 @@ local tbl =
 					data = 
 					{
 						aType = "Alert",
-						alertText = "Simon Says: Look at Boss",
+						alertText = "Look at Boss",
 						conditions = 
 						{
 							
@@ -1424,7 +1424,7 @@ local tbl =
 					data = 
 					{
 						aType = "Alert",
-						alertText = "Simon Says: Look away from Boss",
+						alertText = "Look away from Boss",
 						conditions = 
 						{
 							
