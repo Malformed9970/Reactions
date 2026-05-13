@@ -67,7 +67,7 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 - Automatically looks away from any target with a Gaze VFX
 - Ends LockFace 250ms after Gaze has finished
 
-**TTS*
+**TTS**
 - Automatic Raidwide detection
 - Stack, Spread, TB detection
 - Various other marker support
