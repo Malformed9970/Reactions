@@ -67,6 +67,11 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 - Automatically looks away from any target with a Gaze VFX
 - Ends LockFace 250ms after Gaze has finished
 
+**TTS*
+- Automatic Raidwide detection
+- Stack, Spread, TB detection
+- Various other marker support
+
 **General PvP:**
 - Toggle Assist when exiting or entering PvP map
 - Guard MCH LB, try to Guard NIN LB
@@ -91,9 +96,7 @@ Various reactions that I use in my Prepull for all jobs with this inherited prof
 **PvP CC specific:**
 - TTS for enemy Ninja with their LB active (as in they have the buff from killing someone and looking to chain)
 - Automatically say Hello at start of the match
+- Focus Target Tracker, identify how many targets are selecting each player, change your target to an enemy at the click of a button
 
 
-- Draws green target lines from your party (not alliance or team) to their targets
-- Draws red lines from all enemies targeting you
-- World Text highlighting Chiten and Invul usage on enemies
-- Spam role buffs in combat like Bravery
+
