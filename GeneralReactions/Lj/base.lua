@@ -438,7 +438,7 @@ local tbl =
 			uuid = "cb262b9e-a027-e674-81ae-eb21fd482da7",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -527,7 +527,7 @@ local tbl =
 			uuid = "61204f8a-2db5-d890-bad7-c34845aff828",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -587,7 +587,7 @@ local tbl =
 			uuid = "a9b5e472-2430-eb97-a980-1ba25dd5b92b",
 			version = 2,
 		},
-		inheritedIndex = 13,
+		inheritedIndex = 12,
 	},
 	
 	{
@@ -655,7 +655,7 @@ local tbl =
 			uuid = "e2ab71de-e8d9-3696-b02d-275f5a56bb3c",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -1240,6 +1240,519 @@ local tbl =
 			version = 2,
 		},
 		inheritedIndex = 25,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						actionLua = "local text = \"Tank Buster on \" .. eventArgs.entityID\nTensorCore.addAlertText(5000, text, 1, 1, false)\nself.used = true",
+						alertText = "Tank Buster on {entity:Event Entity}",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"4245fe15-9a3f-c8d4-a19d-101830f3a472",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Tank Buster",
+						uuid = "69088f8d-43b1-5396-9fee-cff0b0f14793",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Stack on {entity:Event Entity}",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"10c9ae96-43fc-62b5-a6b8-1388433fc039",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Stack",
+						uuid = "7c062a88-5536-bb63-87fe-9ff9becb02c0",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Spread",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"a98a3ee1-a9fa-8527-9186-389e0d126ed8",
+								true,
+							},
+							
+							{
+								"cca46ce3-86a2-8d5a-9979-8dec07181243",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Spread",
+						uuid = "cdb3a0b3-ef72-32c6-b015-dca01cc22fad",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Stop Everything",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"a98a3ee1-a9fa-8527-9186-389e0d126ed8",
+								true,
+							},
+							
+							{
+								"5b7eeb83-bf44-6c3d-8ffc-4173e72ce085",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Stop Everything",
+						uuid = "00ccca00-8dd7-8172-9347-9deefdf1bdca",
+						version = 2.1,
+					},
+					inheritedIndex = 4,
+				},
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Simon Says: Keep Moving",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"a98a3ee1-a9fa-8527-9186-389e0d126ed8",
+								true,
+							},
+							
+							{
+								"458023aa-7f58-dfa5-9ab9-37a27f063d06",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Keep Moving",
+						uuid = "03ba9f3e-0f57-d9f5-99b3-6ea5c2ffccf3",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Simon Says: Look at Boss",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"a98a3ee1-a9fa-8527-9186-389e0d126ed8",
+								true,
+							},
+							
+							{
+								"74e3c978-7973-258f-8674-218fe0ef091c",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Look at Boss",
+						uuid = "c15275e3-11d5-7093-a205-f5120243d230",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Simon Says: Look away from Boss",
+						conditions = 
+						{
+							
+							{
+								"63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+								false,
+							},
+							
+							{
+								"a98a3ee1-a9fa-8527-9186-389e0d126ed8",
+								true,
+							},
+							
+							{
+								"48967971-08b9-d263-a7c7-ac1b64de4dc1",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Look away from Boss",
+						uuid = "ec3d2fc5-9c5b-71ef-8dd7-9702d11a93e5",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local dutyInfo = Duty:GetActiveDutyInfo()\nif not dutyInfo then return false end\n\nlocal highEndKeywords = {\"Extreme\", \"Minstrel\", \"Savage\", \"Unreal\", \"Chaotic\", \"Ultimate\"}\n\nfor _, keyword in ipairs(highEndKeywords) do\n    if dutyInfo.name:find(keyword) then\n        return true\n    end\nend\n\nreturn false",
+						dequeueIfLuaFalse = true,
+						name = "In Highend Content",
+						uuid = "63eb6ec9-d08e-902c-b4b5-c77d5653f41d",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 9,
+						name = "Self: Event Entity",
+						partyTargetType = "Event Entity",
+						uuid = "a98a3ee1-a9fa-8527-9186-389e0d126ed8",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							198,
+							218,
+							230,
+							259,
+							343,
+							344,
+							381,
+							615,
+							570,
+							498,
+							471,
+							243,
+							256,
+							259,
+							314,
+							341,
+							342,
+							343,
+							344,
+							412,
+							463,
+							464,
+							465,
+							467,
+							468,
+							475,
+						},
+						name = "Markers: Tank Busters",
+						uuid = "4245fe15-9a3f-c8d4-a19d-101830f3a472",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							62,
+							161,
+							318,
+							305,
+							93,
+							100,
+							113,
+							132,
+							221,
+							266,
+							289,
+							316,
+							317,
+							719,
+							161,
+						},
+						name = "Markers: Stack",
+						uuid = "10c9ae96-43fc-62b5-a6b8-1388433fc039",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							96,
+							139,
+							315,
+							558,
+							466,
+							215,
+							95,
+							101,
+							108,
+							120,
+							129,
+							130,
+							135,
+							139,
+							138,
+							140,
+							141,
+							169,
+							189,
+							196,
+							220,
+							233,
+							310,
+							311,
+							324,
+							328,
+							329,
+							345,
+							353,
+							371,
+							372,
+							373,
+							375,
+							376,
+							385,
+							450,
+							466,
+							712,
+							558,
+						},
+						name = "Markers: Spread",
+						uuid = "cca46ce3-86a2-8d5a-9979-8dec07181243",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							682,
+						},
+						name = "Markers: Stop Everything",
+						uuid = "5b7eeb83-bf44-6c3d-8ffc-4173e72ce085",
+						version = 3,
+					},
+					inheritedIndex = 5,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							683,
+						},
+						name = "Markers: Keep Moving",
+						uuid = "458023aa-7f58-dfa5-9ab9-37a27f063d06",
+						version = 3,
+					},
+					inheritedIndex = 6,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							681,
+						},
+						name = "Markers: Look at Boss",
+						uuid = "74e3c978-7973-258f-8674-218fe0ef091c",
+						version = 3,
+					},
+					inheritedIndex = 7,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						eventArgType = 3,
+						markerIDList = 
+						{
+							680,
+						},
+						name = "Markers: Look away from Boss",
+						uuid = "48967971-08b9-d263-a7c7-ac1b64de4dc1",
+						version = 3,
+					},
+					inheritedIndex = 8,
+				},
+			},
+			eventType = 4,
+			name = "Lj: World | TTS | OnEntityMarkerAdd",
+			uuid = "08eff1f2-96bc-4f2c-b7f0-c27246a74fd4",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertText = "Raidwide",
+						conditions = 
+						{
+							
+							{
+								"af4d2d93-32e2-2d1d-bf7e-6db614738b19",
+								false,
+							},
+							
+							{
+								"ebbc6ec2-d05a-d7ad-b2c6-18d9db464144",
+								true,
+							},
+							
+							{
+								"b95d02f0-40f6-8254-99c1-1042a2ac159e",
+								false,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Raidwide",
+						uuid = "9916e894-9888-9af9-9b11-de57631e702a",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local dutyInfo = Duty:GetActiveDutyInfo()\nif not dutyInfo then return false end\n\nlocal highEndKeywords = {\"Extreme\", \"Minstrel\", \"Savage\", \"Unreal\", \"Chaotic\", \"Ultimate\"}\n\nfor _, keyword in ipairs(highEndKeywords) do\n    if dutyInfo.name:find(keyword) then\n        return true\n    end\nend\n\nreturn false",
+						dequeueIfLuaFalse = true,
+						name = "In Highend Content",
+						uuid = "af4d2d93-32e2-2d1d-bf7e-6db614738b19",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "if TensorCore.Avoidance.inUnavoidableAOE(TensorCore.mGetPlayer().id) then\n    if (eventArgs.aoeCastType == 2 or eventArgs.aoeCastType == 5 or eventArgs.aoeCastType == 7) and eventArgs.aoeLength >= 30 then\n        return true\n    end\nend\n\nreturn false",
+						dequeueIfLuaFalse = true,
+						name = "Self: In Raidwide",
+						uuid = "ebbc6ec2-d05a-d7ad-b2c6-18d9db464144",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return eventArgs.friendly",
+						dequeueIfLuaFalse = true,
+						name = "AoE: Friendly",
+						uuid = "b95d02f0-40f6-8254-99c1-1042a2ac159e",
+						version = 3,
+					},
+				},
+			},
+			eventType = 18,
+			name = "Lj: World | TTS | Raidwide",
+			uuid = "103632d8-41b0-e702-9ae0-316801b7a72f",
+			version = 2,
+		},
 	},
 	
 	{
