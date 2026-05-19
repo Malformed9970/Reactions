@@ -630,7 +630,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local jobMap = {\n    [19] = \"PLD\", [20] = \"MNK\", [21] = \"WAR\", [22] = \"DRG\", [23] = \"BRD\",\n    [24] = \"WHM\", [25] = \"BLM\", [27] = \"SMN\", [28] = \"SCH\", [30] = \"NIN\",\n    [31] = \"MCH\", [32] = \"DRK\", [33] = \"AST\", [34] = \"SAM\", [35] = \"RDM\",\n    [37] = \"GNB\", [38] = \"DNC\", [39] = \"RPR\", [40] = \"SGE\", [41] = \"VPR\",\n    [42] = \"PCT\"\n}\n\n-- Custom sort priority mapping\nlocal jobPriority = {\n    [19] = 1,  [21] = 2,  [32] = 3,  [37] = 4,  -- Tanks\n    [24] = 5,  [28] = 6,  [33] = 7,  [40] = 8,  -- Healers\n    [20] = 9,  [22] = 10, [30] = 11, [34] = 12, [39] = 13, [41] = 14, -- Melee\n    [23] = 15, [31] = 16, [38] = 17, -- Ranged\n    [25] = 18, [27] = 19, [35] = 20, [42] = 21  -- Casters\n}\n\nlocal function getJobAbbr(jobId)\n    return jobMap[jobId] or tostring(jobId)\nend\n\nlocal party = TensorCore.getEntityGroupList(\"Party\") or {}\nlocal enemies = TensorCore.getEntityGroupList(\"Enemy\") or {}\nlocal localPlayer = TensorCore.mGetPlayer()\nlocal myId = localPlayer and localPlayer.id or 0\n\n-- Process Party\nlocal tempParty = {}\nfor _, p in pairs(party) do\n    table.insert(tempParty, { id = p.id, job = p.job, name = getJobAbbr(p.job) })\nend\n\ntable.sort(tempParty, function(a, b)\n    -- You are always at the top\n    if a.id == myId then return true end\n    if b.id == myId then return false end\n    \n    local pA = jobPriority[a.job] or 99\n    local pB = jobPriority[b.job] or 99\n    \n    if pA == pB then return a.name < b.name end\n    return pA < pB\nend)\nljCCData.Party = tempParty\n\n-- Process Enemy\nlocal tempEnemy = {}\nfor _, e in pairs(enemies) do\n    table.insert(tempEnemy, { id = e.id, job = e.job, name = getJobAbbr(e.job) })\nend\n\ntable.sort(tempEnemy, function(a, b)\n    local pA = jobPriority[a.job] or 99\n    local pB = jobPriority[b.job] or 99\n    \n    if pA == pB then return a.name < b.name end\n    return pA < pB\nend)\nljCCData.Enemy = tempEnemy\n\n--d(\"CC Teams Initialized, Sorted, and Cached.\")\n\nself.used = true",
+						actionLua = "local jobMap = {\n    [19] = \"PLD\", [20] = \"MNK\", [21] = \"WAR\", [22] = \"DRG\", [23] = \"BRD\",\n    [24] = \"WHM\", [25] = \"BLM\", [27] = \"SMN\", [28] = \"SCH\", [30] = \"NIN\",\n    [31] = \"MCH\", [32] = \"DRK\", [33] = \"AST\", [34] = \"SAM\", [35] = \"RDM\",\n    [37] = \"GNB\", [38] = \"DNC\", [39] = \"RPR\", [40] = \"SGE\", [41] = \"VPR\",\n    [42] = \"PCT\"\n}\n\n-- Custom sort priority mapping\nlocal jobPriority = {\n    [19] = 1,  [21] = 2,  [32] = 3,  [37] = 4,  -- Tanks\n    [24] = 5,  [28] = 6,  [33] = 7,  [40] = 8,  -- Healers\n    [20] = 9,  [22] = 10, [30] = 11, [34] = 12, [39] = 13, [41] = 14, -- Melee\n    [23] = 15, [31] = 16, [38] = 17, -- Ranged\n    [25] = 18, [27] = 19, [35] = 20, [42] = 21  -- Casters\n}\n\nlocal function getJobAbbr(jobId)\n    return jobMap[jobId] or tostring(jobId)\nend\n\nlocal party = TensorCore.getEntityGroupList(\"Party\") or {}\nlocal enemies = TensorCore.getEntityGroupList(\"Enemy\") or {}\nlocal myId = TensorCore.mGetPlayer().id\n\n-- Process Party\nlocal tempParty = {}\nfor _, p in pairs(party) do\n    table.insert(tempParty, { id = p.id, job = p.job, name = getJobAbbr(p.job) })\nend\n\ntable.sort(tempParty, function(a, b)\n    -- You are always at the top\n    if a.id == myId then return true end\n    if b.id == myId then return false end\n    \n    local pA = jobPriority[a.job] or 99\n    local pB = jobPriority[b.job] or 99\n    \n    if pA == pB then return a.name < b.name end\n    return pA < pB\nend)\nljCCData.Party = tempParty\n\n-- Process Enemy\nlocal tempEnemy = {}\nfor _, e in pairs(enemies) do\n    table.insert(tempEnemy, { id = e.id, job = e.job, name = getJobAbbr(e.job) })\nend\n\ntable.sort(tempEnemy, function(a, b)\n    local pA = jobPriority[a.job] or 99\n    local pB = jobPriority[b.job] or 99\n    \n    if pA == pB then return a.name < b.name end\n    return pA < pB\nend)\nljCCData.Enemy = tempEnemy\n\n--d(\"CC Teams Initialized, Sorted, and Cached.\")\n\nself.used = true",
 						conditions = 
 						{
 							
@@ -1962,6 +1962,18 @@ local tbl =
 						version = 2.1,
 					},
 				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "Hacks:SetCamMaxZoom(0.5,50)\nself.used = true\n--self.eventConditionMismatch = true",
+						gVar = "ACR_RikuWAR3_CD",
+						name = "Set Zoom Hack",
+						uuid = "b9d98aa0-ef23-f000-9f2e-3f74f0f16705",
+						version = 2.1,
+					},
+				},
 			},
 			conditions = 
 			{
@@ -2114,6 +2126,113 @@ local tbl =
 			version = 2,
 		},
 		inheritedIndex = 12,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Alert",
+						alertDuration = 8000,
+						alertPriority = 2,
+						alertScale = 1,
+						alertTTS = true,
+						alertText = "Wildfire on you",
+						conditions = 
+						{
+							
+							{
+								"84af0697-245f-0481-8487-20aaf23e4309",
+								true,
+							},
+							
+							{
+								"be7e0630-0b7d-a41d-a5c5-fa7da60a8563",
+								true,
+							},
+							
+							{
+								"1cacfd79-31d8-377a-bc30-04a77f7e46b6",
+								true,
+							},
+							
+							{
+								"514e7b02-c2c4-10e4-807b-cdbe98eaf384",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						uuid = "e316f309-ae7a-410e-95be-df1ac8615893",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						dequeueIfLuaFalse = true,
+						name = "Bot Enabled",
+						uuid = "84af0697-245f-0481-8487-20aaf23e4309",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "be7e0630-0b7d-a41d-a5c5-fa7da60a8563",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventBuffID = 1323,
+						name = "Event: Wildfire",
+						uuid = "1cacfd79-31d8-377a-bc30-04a77f7e46b6",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 9,
+						dequeueIfLuaFalse = true,
+						name = "Self: Event Entity",
+						partyTargetType = "Event Entity",
+						uuid = "514e7b02-c2c4-10e4-807b-cdbe98eaf384",
+						version = 3,
+					},
+				},
+			},
+			eventType = 8,
+			name = "Lj: PvP | Alert | Bad Buff on Self",
+			uuid = "fe8ed107-b88b-c1f2-92af-77543837550e",
+			version = 2,
+		},
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -2354,7 +2473,7 @@ local tbl =
 			uuid = "ad452ec0-37a5-82ab-ad7b-de7c801d86b6",
 			version = 2,
 		},
-		inheritedIndex = 13,
+		inheritedIndex = 14,
 	},
 	
 	{
@@ -2808,7 +2927,7 @@ local tbl =
 			uuid = "86bcef7b-50e5-082f-971d-d5c3fd7d03ee",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 15,
 	},
 	
 	{
@@ -3000,7 +3119,7 @@ local tbl =
 			uuid = "97c161b8-82c2-a45a-a192-1955d8a9ce3c",
 			version = 2,
 		},
-		inheritedIndex = 15,
+		inheritedIndex = 16,
 	},
 	
 	{
@@ -3408,7 +3527,7 @@ local tbl =
 			uuid = "374bd26d-c4ea-e88e-a601-1da2cb34a2b6",
 			version = 2,
 		},
-		inheritedIndex = 16,
+		inheritedIndex = 17,
 	},
 	
 	{
@@ -3749,7 +3868,7 @@ local tbl =
 			uuid = "7f97e235-ee9c-a9f7-a2eb-c7a50050e8b3",
 			version = 2,
 		},
-		inheritedIndex = 17,
+		inheritedIndex = 18,
 	},
 	
 	{
@@ -3885,7 +4004,7 @@ local tbl =
 			uuid = "652fe8d9-229a-e0fc-83eb-858b670aa321",
 			version = 2,
 		},
-		inheritedIndex = 18,
+		inheritedIndex = 19,
 	},
 	
 	{
@@ -3934,7 +4053,7 @@ local tbl =
 			uuid = "82396a12-a25a-d0ce-8a9d-85182210f8e5",
 			version = 2,
 		},
-		inheritedIndex = 19,
+		inheritedIndex = 20,
 	},
 	
 	{
@@ -4213,7 +4332,7 @@ local tbl =
 			uuid = "e3fdc640-4b68-659a-a6b5-63fb14708b84",
 			version = 2,
 		},
-		inheritedIndex = 21,
+		inheritedIndex = 22,
 	},
 	
 	{
@@ -4226,7 +4345,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent or ent.pvpteam == player.pvpteam then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\nlocal buffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff\nfor _, buffData in ipairs(buffsToTrack) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff ~= nil then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff ~= nil then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff ~= nil then\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    local timerMs = math.floor(activeBuff.duration * 1000)\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 2.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
+						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\n\n-- Buffs to track on Enemy players\nlocal enemyBuffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Scales\", ids = { 4096 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } }\n}\n\n-- Buffs to track on Friendly players (your team)\nlocal friendlyBuffsToTrack = {\n    { name = \"Wildfire\", ids = { 1323 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\n-- Determine which list of buffs to check based on team\nlocal isFriendly = (ent.pvpteam == player.pvpteam)\nlocal buffsToCheck = isFriendly and friendlyBuffsToTrack or enemyBuffsToTrack\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff from the selected list\nfor _, buffData in ipairs(buffsToCheck) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff then\n    local duration = activeBuff.duration or 0\n    if duration <= 0 then \n        duration = 10 -- Fallback duration\n    end\n    \n    local timerMs = math.floor(duration * 1000)\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 1.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
 						conditions = 
 						{
 							
@@ -4240,7 +4359,9 @@ local tbl =
 								true,
 							},
 						},
+						endIfUsed = true,
 						gVar = "ACR_TensorMagnum3_CD",
+						name = "Lua",
 						uuid = "c16ed0fb-e9ca-2db6-8b2c-d2d9a439c6de",
 						version = 2.1,
 					},
@@ -4265,19 +4386,6 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Lua",
-						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.detectionTargetID)\nlocal player = TensorCore.mGetPlayer()\n\nreturn ent ~= nil and ent.pvpteam ~= player.pvpteam\n",
-						name = "Enemy",
-						partyTargetSubType = 1,
-						uuid = "82b360f0-1fe7-c701-851d-a7e95574eec4",
-						version = 3,
-					},
-					inheritedIndex = 2,
-				},
-				
-				{
-					data = 
-					{
 						buffCheckType = 5,
 						buffID = 1240,
 						buffIDList = 
@@ -4286,10 +4394,12 @@ local tbl =
 							3039,
 							1302,
 							394,
+							4096,
+							1323,
 						},
 						category = "Party",
 						matchAnyBuff = true,
-						name = "Enemy: Buff Check",
+						name = "Buff Checks",
 						partyTargetType = "Detection Target",
 						uuid = "f11d1d88-6957-f1a5-bde9-649984b4286a",
 						version = 3,
@@ -4321,7 +4431,7 @@ local tbl =
 			uuid = "57d43549-0906-9a6e-9c34-555e2e79e0b2",
 			version = 2,
 		},
-		inheritedIndex = 22,
+		inheritedIndex = 23,
 	},
 	
 	{
@@ -4469,55 +4579,6 @@ local tbl =
 		{
 			actions = 
 			{
-				
-				{
-					data = 
-					{
-						actionID = 43250,
-						conditions = 
-						{
-							
-							{
-								"3b508280-ffe4-3401-ba07-def2652791fd",
-								true,
-							},
-							
-							{
-								"59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
-								true,
-							},
-							
-							{
-								"479017e8-87a5-9f29-b37a-e46310a7581a",
-								true,
-							},
-							
-							{
-								"50e00861-4c0c-a2f8-963e-0bb4096e83b8",
-								true,
-							},
-							
-							{
-								"6dfbb1f4-d480-d3f4-9064-f24c6ee45778",
-								true,
-							},
-							
-							{
-								"748ffe88-3c9e-b1ed-ac2a-d19198ff9e55",
-								true,
-							},
-							
-							{
-								"6485c559-23a0-554f-9f62-8c810dc20464",
-								true,
-							},
-						},
-						gVar = "ACR_TensorMagnum3_CD",
-						ignoreWeaveRules = true,
-						uuid = "aef5bc42-bfe6-a681-84e0-a27132780481",
-						version = 2.1,
-					},
-				},
 				
 				{
 					data = 
@@ -4911,11 +4972,239 @@ local tbl =
 					},
 				},
 			},
+			enabled = false,
 			name = "Lj: PvP | Role Buffs",
 			uuid = "15c3c3d6-66cc-96ef-95fe-a850d6bcdfc7",
 			version = 2,
 		},
-		inheritedIndex = 24,
+		inheritedIndex = 25,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Misc",
+						actionID = 43250,
+						conditions = 
+						{
+							
+							{
+								"3b508280-ffe4-3401-ba07-def2652791fd",
+								true,
+							},
+							
+							{
+								"59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
+								true,
+							},
+							
+							{
+								"b3132983-72af-0769-acd9-3e71d2ea6036",
+								true,
+							},
+							
+							{
+								"1775b902-b84a-ade3-a351-4097e017264b",
+								true,
+							},
+						},
+						gVar = "ACR_TensorMagnum3_CD",
+						ignoreWeaveRules = true,
+						setTarget = true,
+						targetType = "Detection Target",
+						uuid = "aef5bc42-bfe6-a681-84e0-a27132780481",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "3b508280-ffe4-3401-ba07-def2652791fd",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						dequeueIfLuaFalse = true,
+						name = "Bot Enabled",
+						uuid = "59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
+						version = 3,
+					},
+					inheritedIndex = 2,
+				},
+				
+				{
+					data = 
+					{
+						buffCheckType = 2,
+						buffID = 3054,
+						category = "Lua",
+						conditionLua = "return TensorCore.mGetTarget() == nil",
+						name = "Self: No Target",
+						uuid = "479017e8-87a5-9f29-b37a-e46310a7581a",
+						version = 3,
+					},
+					inheritedIndex = 3,
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.detectionTargetID)\nlocal player = TensorCore.mGetPlayer()\n\nreturn ent ~= nil and ent.pvpteam ~= player.pvpteam and ent.los2\n",
+						name = "Enemy: LoS",
+						partyTargetSubType = 1,
+						uuid = "ba247631-4688-85a4-a0c4-54e6765161ae",
+						version = 3,
+					},
+					inheritedIndex = 7,
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						comparator = 2,
+						conditionType = 4,
+						inRangeValue = 25,
+						name = "Enemy: Range <= 25y",
+						partyTargetType = "Detection Target",
+						uuid = "4786fa42-0845-a7f8-bbf6-5701819a82fc",
+						version = 3,
+					},
+					inheritedIndex = 11,
+				},
+				
+				{
+					data = 
+					{
+						buffID = 3054,
+						category = "Party",
+						name = "Enemy: Guard",
+						partyTargetType = "Detection Target",
+						uuid = "d7600536-13b8-1f61-8736-81e35a2cb3c5",
+						version = 3,
+					},
+					inheritedIndex = 12,
+				},
+				
+				{
+					data = 
+					{
+						buffCheckType = 6,
+						buffIDList = 
+						{
+							394,
+							1302,
+							3039,
+						},
+						category = "Party",
+						name = "Enemy: Invul Buffs Missing",
+						partyTargetType = "Detection Target",
+						uuid = "280e4fc5-4b9f-8f74-bf67-e1ece54ff2c7",
+						version = 3,
+					},
+					inheritedIndex = 14,
+				},
+				
+				{
+					data = 
+					{
+						conditionType = 6,
+						hpValue = 1,
+						inRangeValue = 25,
+						name = "Target: Range => 25y",
+						uuid = "748ffe88-3c9e-b1ed-ac2a-d19198ff9e55",
+						version = 3,
+					},
+					inheritedIndex = 4,
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"479017e8-87a5-9f29-b37a-e46310a7581a",
+								true,
+							},
+							
+							{
+								"748ffe88-3c9e-b1ed-ac2a-d19198ff9e55",
+								true,
+							},
+						},
+						matchAnyBuff = true,
+						name = "OR: Max Range",
+						partyTargetNumber = 0,
+						uuid = "b3132983-72af-0769-acd9-3e71d2ea6036",
+						version = 3,
+					},
+					inheritedIndex = 10,
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"ba247631-4688-85a4-a0c4-54e6765161ae",
+								true,
+							},
+							
+							{
+								"4786fa42-0845-a7f8-bbf6-5701819a82fc",
+								true,
+							},
+							
+							{
+								"d7600536-13b8-1f61-8736-81e35a2cb3c5",
+								false,
+							},
+							
+							{
+								"280e4fc5-4b9f-8f74-bf67-e1ece54ff2c7",
+								true,
+							},
+						},
+						filterTargetType = "ContentID",
+						name = "F - Enemy <= 25y Range",
+						partyTargetContentID = 0,
+						uuid = "1775b902-b84a-ade3-a351-4097e017264b",
+						version = 3,
+					},
+				},
+			},
+			name = "Lj: PvP | HM Target Helper",
+			uuid = "91ea61f5-efab-eead-b737-4e21468f7710",
+			version = 2,
+		},
+		inheritedIndex = 26,
 	}, 
 	inheritedProfiles = 
 	{
