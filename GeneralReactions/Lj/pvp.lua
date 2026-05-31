@@ -678,6 +678,7 @@ local tbl =
 					},
 				},
 			},
+			enabled = false,
 			eventType = 11,
 			name = "LJ: CC | Data | Get Participants",
 			throttleTime = 32000,
@@ -1962,18 +1963,6 @@ local tbl =
 						version = 2.1,
 					},
 				},
-				
-				{
-					data = 
-					{
-						aType = "Lua",
-						actionLua = "Hacks:SetCamMaxZoom(0.5,50)\nself.used = true\n--self.eventConditionMismatch = true",
-						gVar = "ACR_RikuWAR3_CD",
-						name = "Set Zoom Hack",
-						uuid = "b9d98aa0-ef23-f000-9f2e-3f74f0f16705",
-						version = 2.1,
-					},
-				},
 			},
 			conditions = 
 			{
@@ -2138,18 +2127,13 @@ local tbl =
 					data = 
 					{
 						aType = "Alert",
-						alertDuration = 8000,
+						alertDuration = 7000,
 						alertPriority = 2,
 						alertScale = 1,
 						alertTTS = true,
 						alertText = "Wildfire on you",
 						conditions = 
 						{
-							
-							{
-								"84af0697-245f-0481-8487-20aaf23e4309",
-								true,
-							},
 							
 							{
 								"be7e0630-0b7d-a41d-a5c5-fa7da60a8563",
@@ -2160,13 +2144,9 @@ local tbl =
 								"1cacfd79-31d8-377a-bc30-04a77f7e46b6",
 								true,
 							},
-							
-							{
-								"514e7b02-c2c4-10e4-807b-cdbe98eaf384",
-								true,
-							},
 						},
 						gVar = "ACR_TensorMagnum3_CD",
+						name = "Alert: Wildfire",
 						uuid = "e316f309-ae7a-410e-95be-df1ac8615893",
 						version = 2.1,
 					},
@@ -2174,19 +2154,6 @@ local tbl =
 			},
 			conditions = 
 			{
-				
-				{
-					data = 
-					{
-						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
-						dequeueIfLuaFalse = true,
-						name = "Bot Enabled",
-						uuid = "84af0697-245f-0481-8487-20aaf23e4309",
-						version = 3,
-					},
-					inheritedIndex = 2,
-				},
 				
 				{
 					data = 
@@ -2204,30 +2171,18 @@ local tbl =
 				{
 					data = 
 					{
-						category = "Event",
-						dequeueIfLuaFalse = true,
+						buffCheckType = 3,
+						buffDuration = 8,
+						buffID = 1323,
+						category = "Self",
 						eventArgType = 2,
 						eventBuffID = 1323,
-						name = "Event: Wildfire",
+						name = "Buff: Wildfire",
 						uuid = "1cacfd79-31d8-377a-bc30-04a77f7e46b6",
 						version = 3,
 					},
 				},
-				
-				{
-					data = 
-					{
-						category = "Self",
-						conditionType = 9,
-						dequeueIfLuaFalse = true,
-						name = "Self: Event Entity",
-						partyTargetType = "Event Entity",
-						uuid = "514e7b02-c2c4-10e4-807b-cdbe98eaf384",
-						version = 3,
-					},
-				},
 			},
-			eventType = 8,
 			name = "Lj: PvP | Alert | Bad Buff on Self",
 			uuid = "fe8ed107-b88b-c1f2-92af-77543837550e",
 			version = 2,
@@ -3249,6 +3204,7 @@ local tbl =
 							3054,
 							1302,
 							394,
+							4096,
 						},
 						matchAnyBuff = true,
 						name = "Target: Buff Check",
@@ -3271,6 +3227,7 @@ local tbl =
 							3054,
 							1302,
 							394,
+							4096,
 						},
 						category = "Party",
 						name = "Enemy: Missing Buffs",
@@ -4972,7 +4929,6 @@ local tbl =
 					},
 				},
 			},
-			enabled = false,
 			name = "Lj: PvP | Role Buffs",
 			uuid = "15c3c3d6-66cc-96ef-95fe-a850d6bcdfc7",
 			version = 2,
