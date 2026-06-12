@@ -43,8 +43,8 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 29,
-				name = "[Draw] Knockback Preposition",
+				mechanicTime = 29.049409090909,
+				name = "[Lj Draw] Draw North",
 				timelineIndex = 3,
 				timerOffset = 1,
 				uuid = "91a37a2c-1c54-9492-aa2f-2a7b2f0ad1e7",
@@ -89,13 +89,14 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetCurrentRole() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Role Set",
 							uuid = "c5bafdfa-4352-f094-9392-198940ca1a79",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 37.953,
-				name = "[Draw] Wavecannon Spots",
+				mechanicTime = 37.998204658947,
+				name = "[Lj Draw] Draw Wavecannon",
 				timelineIndex = 6,
 				uuid = "5256c151-0318-5a08-ab65-c1d14d55f3ca",
 				version = 2,
@@ -139,13 +140,14 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetLightParty() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Light Party Set",
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 80.063,
-				name = "[Draw] Light Party Stacks",
+				mechanicTime = 80.107886783566,
+				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 16,
 				uuid = "8c775e64-8f5c-613e-b510-ac62a4acc88f",
 				version = 2,
@@ -189,13 +191,14 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetLightParty() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Light Party Set",
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 100.233,
-				name = "[Draw] Light Party Stacks",
+				mechanicTime = 100.27213839858,
+				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 20,
 				timerOffset = -1,
 				uuid = "49a0fee7-5a25-63a0-9c5e-ea4accec281b",
@@ -240,13 +243,14 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetCurrentRole() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Light Party Set",
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 109.655,
-				name = "[Draw] Light Party Stacks",
+				mechanicTime = 109.75522549205,
+				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 23,
 				timerOffset = -1,
 				uuid = "8c38ff89-58b5-ae31-8ea8-e749e3a5838b",
@@ -254,7 +258,7 @@ local tbl =
 			},
 		},
 	},
-	[33] = 
+	[35] = 
 	{
 		
 		{
@@ -275,9 +279,40 @@ local tbl =
 									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
 									true,
 								},
+								
+								{
+									"723f1a71-86ff-e49f-8ef5-62184183033b",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
+							name = "2x2",
 							uuid = "a7a394f6-4eda-07b7-a707-bb5ad36ea4fa",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 6000 \nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target X and Z coordinates based on Role\nlocal myRole = GetCurrentRole()\nlocal isSupport = { [\"MT\"] = true, [\"OT\"] = true, [\"H1\"] = true, [\"H2\"] = true }\n\nlocal targetX = 106\nlocal targetZ = 106\n\nif isSupport[myRole] then\n    targetX = 94\n    targetZ = 94\nend\n\nlocal targetPos = { x = targetX, y = 0, z = targetZ }\n\n-- Calculate exact heading and distance from player to target\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Dynamic sizing to make the arrow stretch exactly from player to coordinate\nlocal tipLength = 1.5\nlocal baseLength = totalDistance - tipLength\n\n-- Static widths keep the arrow sleek regardless of how long it stretches\nlocal baseWidth = 1\nlocal tipWidth = 3\n\nlocal colorStart = 0xFF00FFFF\nlocal colorMid = 0xFF0088FF\nlocal colorEnd = 0xFF0000FF\nlocal colorOutline = 0xFFFFFFFF\nlocal outlineThickness = 2\n\nlocal drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n\nif baseLength > 0 then\n    local renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    drawer:addTimedArrow(\n        timeout, \n        sourcePos.x, sourcePos.y, sourcePos.z, \n        heading, \n        baseLength, baseWidth, tipLength, tipWidth, \n        0, nil, renderFlags\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
+									true,
+								},
+								
+								{
+									"bb58c5ac-1622-a80f-875b-f41598d897d8",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Freaky CW",
+							uuid = "d45a2e22-c5fc-96fd-94db-e86c4d9a65ac",
 							version = 2.1,
 						},
 					},
@@ -291,20 +326,100 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetCurrentRole() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Light Party Set",
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 2",
+							dequeueIfLuaFalse = true,
+							name = "2x2",
+							uuid = "723f1a71-86ff-e49f-8ef5-62184183033b",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
+							dequeueIfLuaFalse = true,
+							name = "Freaky CW",
+							uuid = "bb58c5ac-1622-a80f-875b-f41598d897d8",
+							version = 3,
+						},
+					},
 				},
-				mechanicTime = 161.999,
-				name = "[Draw] Light Party Stacks",
-				timelineIndex = 33,
+				mechanicTime = 162.0816713953,
+				name = "[Lj Draw] Light Party Stacks",
+				timelineIndex = 35,
 				uuid = "446aa024-96f3-88d6-a884-9cadcc94085a",
 				version = 2,
 			},
 		},
 	},
-	[35] = 
+	[36] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local sourceEnt = TensorCore.mGetEntity(eventArgs.sourceEntityID)\nif sourceEnt.pos.x < 100.0 then\n    data.ljGraven3Tether = \"Confused\"\n\tSendTextCommand(\"/e Confused\")\nelse\n    data.ljGraven3Tether = \"Sleepy\"\n\tSendTextCommand(\"/e Sleepy\")\nend\n\nself.used = true\n",
+							conditions = 
+							{
+								
+								{
+									"675a7082-0ae1-f4ba-a5bc-9d4252a57a77",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "39b43baf-f1dc-319e-bccd-7e59c4d187f1",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return eventArgs.newTetherID == 45 and eventArgs.newTargetID == TensorCore.mGetPlayer().id",
+							dequeueIfLuaFalse = true,
+							name = "Tether On Me",
+							uuid = "675a7082-0ae1-f4ba-a5bc-9d4252a57a77",
+							version = 3,
+						},
+					},
+				},
+				eventType = 15,
+				mechanicTime = 163.32796551294,
+				name = "[Lj Data] Get Tethers",
+				timeRange = true,
+				timelineIndex = 36,
+				timerEndOffset = 2,
+				timerStartOffset = -2,
+				uuid = "cb79b48b-2d01-7a87-9006-79f6a344da34",
+				version = 2,
+			},
+		},
+	},
+	[37] = 
 	{
 		
 		{
@@ -332,7 +447,37 @@ local tbl =
 								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
+							name = "2x2",
 							uuid = "a7a394f6-4eda-07b7-a707-bb5ad36ea4fa",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal myRole = GetCurrentRole()\n\n-- Define the cardinal pairs based on logged positions\n-- Confused = Outer position, Sleepy = Inner position\nlocal spots = {\n    North = { outer = { x = 100.0, y = 0, z = 84.0 },  inner = { x = 100.0, y = 0, z = 93 } },\n    East  = { outer = { x = 115, y = 0, z = 100.0 }, inner = { x = 107.0, y = 0, z = 100.0 } },\n    South = { outer = { x = 100.0, y = 0, z = 116.5 }, inner = { x = 100.0, y = 0, z = 107.0 } },\n    West  = { outer = { x = 84.0,  y = 0, z = 100.0 }, inner = { x = 93,  y = 0, z = 100.0 } }\n}\n\n-- Assign specific roles to their coordinate pairs\nlocal roleToPair = {\n    [\"MT\"] = spots.North, [\"R1\"] = spots.North,\n    [\"H2\"] = spots.East,  [\"M2\"] = spots.East,\n    [\"H1\"] = spots.South, [\"M1\"] = spots.South,\n    [\"OT\"] = spots.West,  [\"R2\"] = spots.West\n}\n\nlocal targetPos = nil\nlocal myPair = roleToPair[myRole]\nlocal tetherType = data.ljGraven3Tether\n\n-- Route player to the correct inner/outer position dynamically\nif myPair and tetherType then\n    if tetherType == \"Confused\" then\n        targetPos = myPair.outer\n    elseif tetherType == \"Sleepy\" then\n        targetPos = myPair.inner\n    end\nend\n\nif targetPos then\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    if totalDistance > 1.5 then\n        local drawer = TensorCore.getStaticDrawer(0xFF00FF00, 2)\n\n        -- Draw the line from the player to the spot\n        drawer:addLine(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            targetPos.x, targetPos.y, targetPos.z,\n            3 -- line thickness\n        )\n\n        -- Draw the green target circle at the destination\n        drawer:addCircle(\n            targetPos.x, targetPos.y, targetPos.z,\n            1 -- radius\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
+									true,
+								},
+								
+								{
+									"c47442ce-2bc1-e429-a369-8290d01f802e",
+									true,
+								},
+								
+								{
+									"4c9b852f-a462-e475-bac2-748f04f42434",
+									true,
+								},
+							},
+							name = "Freaky",
+							uuid = "749b0e81-a683-b443-bd31-dde468c06320",
 							version = 2.1,
 						},
 					},
@@ -346,6 +491,7 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetCurrentRole() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Role Set",
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
 							version = 3,
 						},
@@ -355,18 +501,43 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
+							conditionLua = "return data.ljGraven3Tether ~= nil",
+							name = "Tether Var",
+							uuid = "c47442ce-2bc1-e429-a369-8290d01f802e",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
 							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 2",
 							dequeueIfLuaFalse = true,
+							name = "2x2",
 							uuid = "c356788b-c5f1-2e92-89c8-6b4cd35b401f",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
+							dequeueIfLuaFalse = true,
+							name = "Freaky CW",
+							uuid = "4c9b852f-a462-e475-bac2-748f04f42434",
 							version = 3,
 						},
 					},
 				},
 				eventType = 12,
-				mechanicTime = 167.546,
-				name = "[Draw] Arrow Positions",
+				mechanicTime = 167.50697614245,
+				name = "[Lj Draw] Arrow Positions",
 				timeRange = true,
-				timelineIndex = 35,
+				timelineIndex = 37,
 				timerEndOffset = 6.5,
 				timerOffset = 1,
 				timerStartOffset = 0.20000000298023,
@@ -375,7 +546,7 @@ local tbl =
 			},
 		},
 	},
-	[62] = 
+	[65] = 
 	{
 		
 		{
@@ -398,15 +569,15 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 318.092,
-				name = "[Draw] Arrow to A Waymark",
-				timelineIndex = 62,
+				mechanicTime = 320.06983989625,
+				name = "[Lj Draw] Arrow to A Waymark",
+				timelineIndex = 65,
 				uuid = "2e119935-ffe6-5cae-837b-577c117e3618",
 				version = 2,
 			},
 		},
 	},
-	[74] = 
+	[79] = 
 	{
 		
 		{
@@ -448,16 +619,16 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 420.123,
-				name = "[Draw] Arrow to Boss",
-				timelineIndex = 74,
+				mechanicTime = 422.77413759872,
+				name = "[Lj Draw] Arrow to Boss",
+				timelineIndex = 79,
 				timerOffset = -3,
 				uuid = "12089b8f-4a71-f6be-b499-46319a83ba8f",
 				version = 2,
 			},
 		},
 	},
-	[77] = 
+	[82] = 
 	{
 		
 		{
@@ -499,9 +670,9 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 445.717,
-				name = "[Draw] Arrow to Crystals",
-				timelineIndex = 77,
+				mechanicTime = 448.37598916737,
+				name = "[Lj Draw] Arrow to Crystals",
+				timelineIndex = 82,
 				timerOffset = 1,
 				uuid = "120176a5-3e78-95f9-92bb-6ccd460d37a9",
 				version = 2,
@@ -512,7 +683,7 @@ local tbl =
 	{
 	},
 	timelineName = "dmu",
-	version = "1.5.1",
+	version = "1.5.2",
 }
 
 
