@@ -43,7 +43,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 29.049409090909,
+				mechanicTime = 29.068796296296,
 				name = "[Lj Draw] Draw North",
 				timelineIndex = 3,
 				timerOffset = 1,
@@ -95,7 +95,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 37.998204658947,
+				mechanicTime = 38.018521725162,
 				name = "[Lj Draw] Draw Wavecannon",
 				timelineIndex = 6,
 				uuid = "5256c151-0318-5a08-ab65-c1d14d55f3ca",
@@ -146,7 +146,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 80.107886783566,
+				mechanicTime = 80.132388171917,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 16,
 				uuid = "8c775e64-8f5c-613e-b510-ac62a4acc88f",
@@ -197,7 +197,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 100.27213839858,
+				mechanicTime = 100.29827456459,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 20,
 				timerOffset = -1,
@@ -249,7 +249,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 109.75522549205,
+				mechanicTime = 109.78136165806,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 23,
 				timerOffset = -1,
@@ -356,7 +356,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 162.0816713953,
+				mechanicTime = 162.21376854684,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 35,
 				uuid = "446aa024-96f3-88d6-a884-9cadcc94085a",
@@ -408,7 +408,7 @@ local tbl =
 					},
 				},
 				eventType = 15,
-				mechanicTime = 163.32796551294,
+				mechanicTime = 163.46549581957,
 				name = "[Lj Data] Get Tethers",
 				timeRange = true,
 				timelineIndex = 36,
@@ -457,7 +457,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal myRole = GetCurrentRole()\n\n-- Define the cardinal pairs based on logged positions\n-- Confused = Outer position, Sleepy = Inner position\nlocal spots = {\n    North = { outer = { x = 100.0, y = 0, z = 84.0 },  inner = { x = 100.0, y = 0, z = 93 } },\n    East  = { outer = { x = 115, y = 0, z = 100.0 }, inner = { x = 107.0, y = 0, z = 100.0 } },\n    South = { outer = { x = 100.0, y = 0, z = 116.5 }, inner = { x = 100.0, y = 0, z = 107.0 } },\n    West  = { outer = { x = 84.0,  y = 0, z = 100.0 }, inner = { x = 93,  y = 0, z = 100.0 } }\n}\n\n-- Assign specific roles to their coordinate pairs\nlocal roleToPair = {\n    [\"MT\"] = spots.North, [\"R1\"] = spots.North,\n    [\"H2\"] = spots.East,  [\"M2\"] = spots.East,\n    [\"H1\"] = spots.South, [\"M1\"] = spots.South,\n    [\"OT\"] = spots.West,  [\"R2\"] = spots.West\n}\n\nlocal targetPos = nil\nlocal myPair = roleToPair[myRole]\nlocal tetherType = data.ljGraven3Tether\n\n-- Route player to the correct inner/outer position dynamically\nif myPair and tetherType then\n    if tetherType == \"Confused\" then\n        targetPos = myPair.outer\n    elseif tetherType == \"Sleepy\" then\n        targetPos = myPair.inner\n    end\nend\n\nif targetPos then\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    if totalDistance > 1.5 then\n        local drawer = TensorCore.getStaticDrawer(0xFF00FF00, 2)\n\n        -- Draw the line from the player to the spot\n        drawer:addLine(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            targetPos.x, targetPos.y, targetPos.z,\n            3 -- line thickness\n        )\n\n        -- Draw the green target circle at the destination\n        drawer:addCircle(\n            targetPos.x, targetPos.y, targetPos.z,\n            1 -- radius\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal myRole = GetCurrentRole()\n\n-- Define the cardinal pairs based on logged positions\n-- Confused = Outer position, Sleepy = Inner position\nlocal spots = {\n    North = { outer = { x = 100.0, y = 0, z = 84.0 },  inner = { x = 100.0, y = 0, z = 93 } },\n    East  = { outer = { x = 115, y = 0, z = 100.0 }, inner = { x = 107.0, y = 0, z = 100.0 } },\n    South = { outer = { x = 100.0, y = 0, z = 116.5 }, inner = { x = 100.0, y = 0, z = 107.0 } },\n    West  = { outer = { x = 84.0,  y = 0, z = 100.0 }, inner = { x = 93,  y = 0, z = 100.0 } }\n}\n\n-- Assign specific roles to their coordinate pairs\nlocal roleToPair = {\n    [\"MT\"] = spots.North, [\"R1\"] = spots.North,\n    [\"H2\"] = spots.East,  [\"M2\"] = spots.East,\n    [\"H1\"] = spots.South, [\"M1\"] = spots.South,\n    [\"OT\"] = spots.West,  [\"R2\"] = spots.West\n}\n\nlocal targetPos = nil\nlocal myPair = roleToPair[myRole]\nlocal tetherType = data.ljGraven3Tether\n\n-- Route player to the correct inner/outer position dynamically\nif myPair and tetherType then\n    if tetherType == \"Confused\" then\n        targetPos = myPair.outer\n    elseif tetherType == \"Sleepy\" then\n        targetPos = myPair.inner\n    end\nend\n\nif targetPos then\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    if totalDistance > 1 then\n        local drawer = TensorCore.getStaticDrawer(0xFF00FF00, 2)\n\n        -- Draw the line from the player to the spot\n        drawer:addLine(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            targetPos.x, targetPos.y, targetPos.z,\n            3 -- line thickness\n        )\n\n        -- Draw the green target circle at the destination\n        drawer:addCircle(\n            targetPos.x, targetPos.y, targetPos.z,\n            1 -- radius\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -476,6 +476,7 @@ local tbl =
 									true,
 								},
 							},
+							gVar = "ACR_RikuSGE3_CD",
 							name = "Freaky",
 							uuid = "749b0e81-a683-b443-bd31-dde468c06320",
 							version = 2.1,
@@ -534,7 +535,7 @@ local tbl =
 					},
 				},
 				eventType = 12,
-				mechanicTime = 167.50697614245,
+				mechanicTime = 167.63283020578,
 				name = "[Lj Draw] Arrow Positions",
 				timeRange = true,
 				timelineIndex = 37,
@@ -546,7 +547,7 @@ local tbl =
 			},
 		},
 	},
-	[65] = 
+	[64] = 
 	{
 		
 		{
@@ -569,15 +570,15 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 320.06983989625,
+				mechanicTime = 320.17829988571,
 				name = "[Lj Draw] Arrow to A Waymark",
-				timelineIndex = 65,
+				timelineIndex = 64,
 				uuid = "2e119935-ffe6-5cae-837b-577c117e3618",
 				version = 2,
 			},
 		},
 	},
-	[79] = 
+	[78] = 
 	{
 		
 		{
@@ -619,16 +620,16 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 422.77413759872,
+				mechanicTime = 422.94901643665,
 				name = "[Lj Draw] Arrow to Boss",
-				timelineIndex = 79,
+				timelineIndex = 78,
 				timerOffset = -3,
 				uuid = "12089b8f-4a71-f6be-b499-46319a83ba8f",
 				version = 2,
 			},
 		},
 	},
-	[82] = 
+	[81] = 
 	{
 		
 		{
@@ -670,9 +671,9 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 448.37598916737,
+				mechanicTime = 448.55231029428,
 				name = "[Lj Draw] Arrow to Crystals",
-				timelineIndex = 82,
+				timelineIndex = 81,
 				timerOffset = 1,
 				uuid = "120176a5-3e78-95f9-92bb-6ccd460d37a9",
 				version = 2,
@@ -683,7 +684,7 @@ local tbl =
 	{
 	},
 	timelineName = "dmu",
-	version = "1.5.2",
+	version = "1.5.3",
 }
 
 
