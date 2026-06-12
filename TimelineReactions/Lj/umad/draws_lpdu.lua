@@ -377,7 +377,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local sourceEnt = TensorCore.mGetEntity(eventArgs.sourceEntityID)\nif sourceEnt.pos.x < 100.0 then\n    data.ljGraven3Tether = \"Confused\"\n\tSendTextCommand(\"/e Confused\")\nelse\n    data.ljGraven3Tether = \"Sleepy\"\n\tSendTextCommand(\"/e Sleepy\")\nend\n\nself.used = true\n",
+							actionLua = "local sourceEnt = TensorCore.mGetEntity(eventArgs.sourceEntityID)\nif sourceEnt.pos.x < 100.0 then\n    data.ljGraven3Tether = \"Confused\"\nelse\n    data.ljGraven3Tether = \"Sleepy\"\nend\n\nself.used = true\n",
 							conditions = 
 							{
 								
