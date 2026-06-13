@@ -43,7 +43,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 29.068796296296,
+				mechanicTime = 29.055627118644,
 				name = "[Lj Draw] Draw North",
 				timelineIndex = 3,
 				timerOffset = 1,
@@ -95,7 +95,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 38.018521725162,
+				mechanicTime = 38.009110319101,
 				name = "[Lj Draw] Draw Wavecannon",
 				timelineIndex = 6,
 				uuid = "5256c151-0318-5a08-ab65-c1d14d55f3ca",
@@ -146,7 +146,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 80.132388171917,
+				mechanicTime = 80.119924511538,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 16,
 				uuid = "8c775e64-8f5c-613e-b510-ac62a4acc88f",
@@ -197,7 +197,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 100.29827456459,
+				mechanicTime = 100.28882140732,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 20,
 				timerOffset = -1,
@@ -249,7 +249,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 109.78136165806,
+				mechanicTime = 109.77078168892,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 23,
 				timerOffset = -1,
@@ -258,7 +258,7 @@ local tbl =
 			},
 		},
 	},
-	[35] = 
+	[32] = 
 	{
 		
 		{
@@ -356,15 +356,15 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 162.21376854684,
+				mechanicTime = 162.30000106391,
 				name = "[Lj Draw] Light Party Stacks",
-				timelineIndex = 35,
+				timelineIndex = 32,
 				uuid = "446aa024-96f3-88d6-a884-9cadcc94085a",
 				version = 2,
 			},
 		},
 	},
-	[36] = 
+	[33] = 
 	{
 		
 		{
@@ -408,10 +408,10 @@ local tbl =
 					},
 				},
 				eventType = 15,
-				mechanicTime = 163.46549581957,
+				mechanicTime = 163.5464500435,
 				name = "[Lj Data] Get Tethers",
 				timeRange = true,
-				timelineIndex = 36,
+				timelineIndex = 33,
 				timerEndOffset = 2,
 				timerStartOffset = -2,
 				uuid = "cb79b48b-2d01-7a87-9006-79f6a344da34",
@@ -419,7 +419,7 @@ local tbl =
 			},
 		},
 	},
-	[37] = 
+	[34] = 
 	{
 		
 		{
@@ -535,10 +535,10 @@ local tbl =
 					},
 				},
 				eventType = 12,
-				mechanicTime = 167.63283020578,
+				mechanicTime = 167.70966934405,
 				name = "[Lj Draw] Arrow Positions",
 				timeRange = true,
-				timelineIndex = 37,
+				timelineIndex = 34,
 				timerEndOffset = 6.5,
 				timerOffset = 1,
 				timerStartOffset = 0.20000000298023,
@@ -547,7 +547,7 @@ local tbl =
 			},
 		},
 	},
-	[64] = 
+	[63] = 
 	{
 		
 		{
@@ -570,15 +570,15 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 320.17829988571,
+				mechanicTime = 321.43044797279,
 				name = "[Lj Draw] Arrow to A Waymark",
-				timelineIndex = 64,
-				uuid = "2e119935-ffe6-5cae-837b-577c117e3618",
+				timelineIndex = 63,
+				uuid = "88496909-0224-a0ae-b77a-cd32fc0c5495",
 				version = 2,
 			},
 		},
 	},
-	[78] = 
+	[75] = 
 	{
 		
 		{
@@ -620,16 +620,16 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 422.94901643665,
+				mechanicTime = 424.01187360019,
 				name = "[Lj Draw] Arrow to Boss",
-				timelineIndex = 78,
+				timelineIndex = 75,
 				timerOffset = -3,
 				uuid = "12089b8f-4a71-f6be-b499-46319a83ba8f",
 				version = 2,
 			},
 		},
 	},
-	[81] = 
+	[78] = 
 	{
 		
 		{
@@ -671,9 +671,9 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 448.55231029428,
+				mechanicTime = 449.619980195,
 				name = "[Lj Draw] Arrow to Crystals",
-				timelineIndex = 81,
+				timelineIndex = 78,
 				timerOffset = 1,
 				uuid = "120176a5-3e78-95f9-92bb-6ccd460d37a9",
 				version = 2,
@@ -684,7 +684,7 @@ local tbl =
 	{
 	},
 	timelineName = "dmu",
-	version = "1.5.3",
+	version = "1.5.4",
 }
 
 
