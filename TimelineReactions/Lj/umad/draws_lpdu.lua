@@ -547,7 +547,7 @@ local tbl =
 			},
 		},
 	},
-	[63] = 
+	[64] = 
 	{
 		
 		{
@@ -570,10 +570,10 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 321.43044797279,
+				mechanicTime = 322.02158831652,
 				name = "[Lj Draw] Arrow to A Waymark",
-				timelineIndex = 63,
-				uuid = "88496909-0224-a0ae-b77a-cd32fc0c5495",
+				timelineIndex = 64,
+				uuid = "4c31f755-6e64-8a32-ac8d-4bda4afe8845",
 				version = 2,
 			},
 		},
@@ -591,7 +591,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local timeout = 6000 \nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target coordinate based on Role\nlocal myRole = GetCurrentRole()\n\n-- Define the two groups\nlocal isExdeathGroup = { [\"OT\"] = true, [\"H2\"] = true, [\"R1\"] = true, [\"R2\"] = true }\nlocal isChaosGroup = { [\"MT\"] = true, [\"H1\"] = true, [\"M1\"] = true, [\"M2\"] = true }\n\nlocal targetPos\n\n-- Assign the fixed destination coordinates based on the group\nif isExdeathGroup[myRole] then\n    targetPos = { x = 108.000, y = 0.000, z = 100.000 } -- Exdeath\nelseif isChaosGroup[myRole] then\n    targetPos = { x = 92.000, y = 0.000, z = 100.000 } -- Chaos\nend\n\n-- Proceed only if the role matched one of the groups\nif targetPos then\n    -- Calculate exact heading and distance from the player to the fixed spot\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity Scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale) \n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n\n    local baseLength = totalDistance - tipLength\n    local renderFlags = \n\n    -- Draw the Arrow\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addTimedArrow(\n            timeout, \n            sourcePos.x, sourcePos.y, sourcePos.z, \n            heading, \n            baseLength, baseWidth, tipLength, tipWidth, \n            0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local timeout = 7000 \nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target coordinate based on Role\nlocal myRole = GetCurrentRole()\n\n-- Define the two groups\nlocal isExdeathGroup = { [\"OT\"] = true, [\"H2\"] = true, [\"R1\"] = true, [\"R2\"] = true }\nlocal isChaosGroup = { [\"MT\"] = true, [\"H1\"] = true, [\"M1\"] = true, [\"M2\"] = true }\n\nlocal targetPos\n\n-- Assign the fixed destination coordinates based on the group\nif isExdeathGroup[myRole] then\n    targetPos = { x = 108.000, y = 0.000, z = 100.000 } -- Exdeath\nelseif isChaosGroup[myRole] then\n    targetPos = { x = 92.000, y = 0.000, z = 100.000 } -- Chaos\nend\n\n-- Proceed only if the role matched one of the groups\nif targetPos then\n    -- Calculate exact heading and distance from the player to the fixed spot\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity Scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale) \n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n\n    local baseLength = totalDistance - tipLength\n\n    -- Draw the Arrow\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addTimedArrow(\n            timeout, \n            sourcePos.x, sourcePos.y, sourcePos.z, \n            heading, \n            baseLength, baseWidth, tipLength, tipWidth, \n            0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -623,7 +623,7 @@ local tbl =
 				mechanicTime = 424.01187360019,
 				name = "[Lj Draw] Arrow to Boss",
 				timelineIndex = 75,
-				timerOffset = -3,
+				timerOffset = -5,
 				uuid = "12089b8f-4a71-f6be-b499-46319a83ba8f",
 				version = 2,
 			},
