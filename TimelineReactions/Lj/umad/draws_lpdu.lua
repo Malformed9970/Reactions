@@ -43,7 +43,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 29.055627118644,
+				mechanicTime = 29.049328125,
 				name = "[Lj Draw] Draw North",
 				timelineIndex = 3,
 				timerOffset = 1,
@@ -95,7 +95,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 38.009110319101,
+				mechanicTime = 38.012854917972,
 				name = "[Lj Draw] Draw Wavecannon",
 				timelineIndex = 6,
 				uuid = "5256c151-0318-5a08-ab65-c1d14d55f3ca",
@@ -146,7 +146,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 80.119924511538,
+				mechanicTime = 80.121849240769,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 16,
 				uuid = "8c775e64-8f5c-613e-b510-ac62a4acc88f",
@@ -197,7 +197,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 100.28882140732,
+				mechanicTime = 100.29172113594,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 20,
 				timerOffset = -1,
@@ -249,7 +249,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 109.77078168892,
+				mechanicTime = 109.77404737751,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 23,
 				timerOffset = -1,
@@ -356,7 +356,7 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 162.30000106391,
+				mechanicTime = 162.3021905977,
 				name = "[Lj Draw] Light Party Stacks",
 				timelineIndex = 32,
 				uuid = "446aa024-96f3-88d6-a884-9cadcc94085a",
@@ -408,7 +408,7 @@ local tbl =
 					},
 				},
 				eventType = 15,
-				mechanicTime = 163.5464500435,
+				mechanicTime = 163.54778319029,
 				name = "[Lj Data] Get Tethers",
 				timeRange = true,
 				timelineIndex = 33,
@@ -535,7 +535,7 @@ local tbl =
 					},
 				},
 				eventType = 12,
-				mechanicTime = 167.70966934405,
+				mechanicTime = 167.71168967762,
 				name = "[Lj Draw] Arrow Positions",
 				timeRange = true,
 				timelineIndex = 34,
@@ -570,7 +570,7 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 322.02158831652,
+				mechanicTime = 321.78311722413,
 				name = "[Lj Draw] Arrow to A Waymark",
 				timelineIndex = 64,
 				uuid = "4c31f755-6e64-8a32-ac8d-4bda4afe8845",
@@ -578,7 +578,7 @@ local tbl =
 			},
 		},
 	},
-	[75] = 
+	[76] = 
 	{
 		
 		{
@@ -615,21 +615,22 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetCurrentRole() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Role Set",
 							uuid = "064ab097-39cb-d8a0-9652-f1bd5bfad9c2",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 424.01187360019,
+				mechanicTime = 424.39347120621,
 				name = "[Lj Draw] Arrow to Boss",
-				timelineIndex = 75,
+				timelineIndex = 76,
 				timerOffset = -5,
 				uuid = "12089b8f-4a71-f6be-b499-46319a83ba8f",
 				version = 2,
 			},
 		},
 	},
-	[78] = 
+	[79] = 
 	{
 		
 		{
@@ -666,16 +667,141 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return GetCurrentRole() ~= nil",
 							dequeueIfLuaFalse = true,
+							name = "Role Set",
 							uuid = "a0225b2c-4cb9-7884-9db9-620a44267b80",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 449.619980195,
+				mechanicTime = 450.00390950196,
 				name = "[Lj Draw] Arrow to Crystals",
-				timelineIndex = 78,
+				timelineIndex = 79,
 				timerOffset = 1,
 				uuid = "120176a5-3e78-95f9-92bb-6ccd460d37a9",
+				version = 2,
+			},
+		},
+	},
+	[90] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 6000\nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\nlocal targetContentID = 2015292 -- Wind Crystal\nlocal targetEntity = nil  \nlocal entityList = TensorCore.entityList(\"contentid=\" .. targetContentID)\n\nif table.valid(entityList) then\n    for _, entity in pairs(entityList) do\n        targetEntity = entity\n        break\n    end\nend\n\nif targetEntity ~= nil then\n    -- Calculate opposite position of the Wind Crystal\n    local centerX = 100.0\n    local centerZ = 100.0\n    local targetPos = { \n        x = centerX + (centerX - targetEntity.pos.x), \n        y = targetEntity.pos.y, \n        z = centerZ + (centerZ - targetEntity.pos.z) \n    }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale) \n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addTimedArrow(\n            timeout, \n            sourcePos.x, sourcePos.y, sourcePos.z, \n            heading, \n            baseLength, baseWidth, tipLength, tipWidth, \n            0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"a0225b2c-4cb9-7884-9db9-620a44267b80",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "c9dd2649-2492-fe24-aac7-9148d86367f9",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return GetCurrentRole() == \"R1\"",
+							dequeueIfLuaFalse = true,
+							name = "Self: R1",
+							uuid = "a0225b2c-4cb9-7884-9db9-620a44267b80",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 498.85079039671,
+				name = "[Lj Draw] Arrow to Bait",
+				timelineIndex = 90,
+				timerOffset = 1,
+				uuid = "d0547bcb-e638-aab8-ac8a-d0ed841e0b78",
+				version = 2,
+			},
+		},
+	},
+	[91] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 7700\nlocal player = TensorCore.mGetPlayer()\nlocal targetEntity = TensorCore.mGetEntity(eventArgs.entityID)\nlocal myRole = GetCurrentRole()\n\nif targetEntity ~= nil and myRole ~= nil then\n    local roleAngles = {\n        [\"H1\"] = -45, [\"H2\"] = -45, -- Far Left\n        [\"MT\"] = -15, [\"OT\"] = -15, -- Mid Left\n        [\"M1\"] = 15,  [\"M2\"] = 15,  -- Mid Right\n        [\"R1\"] = 45,  [\"R2\"] = 45   -- Far Right\n    }\n\n    local angleOffset = roleAngles[myRole]\n\n    if angleOffset then\n        local centerX = 100.0\n        local centerZ = 100.0\n        local radius = 5.0 -- Shared radius to stack the role pairs\n\n        -- Determine the angle from the entity towards the center of the arena (Relative South)\n        local dx = centerX - targetEntity.pos.x\n        local dz = centerZ - targetEntity.pos.z\n        local baseAngle = math.atan2(dx, dz) \n\n        -- Apply the role's specific spread offset\n        local finalAngle = baseAngle + math.rad(angleOffset)\n\n        local destPos = {\n            x = targetEntity.pos.x + (radius * math.sin(finalAngle)),\n            y = targetEntity.pos.y,\n            z = targetEntity.pos.z + (radius * math.cos(finalAngle))\n        }\n\n        local heading = TensorCore.getHeadingToTarget(player.pos, destPos)\n        local totalDistance = TensorCore.getDistance2d(player.pos, destPos)\n        local scale = math.min(1, totalDistance / 15)\n        local baseWidth = math.max(0.5, 1 * scale) \n        local tipWidth = math.max(1.5, 5 * scale)\n        local tipLength = math.max(2, 3 * scale)\n        local baseLength = totalDistance - tipLength\n\n        if baseLength > 0 then\n            local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n            arrowDrawer:addTimedArrow(\n                timeout, \n                player.pos.x, player.pos.y, player.pos.z, \n                heading, \n                baseLength, baseWidth, tipLength, tipWidth, \n                0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n            )\n        end\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"27c30f8d-5374-c890-9e3d-9aef3b3c13af",
+									true,
+								},
+								
+								{
+									"4309361d-7d58-2019-990e-f081251313e5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "8eb6f957-15c0-c1ab-bcf3-59276b4513ab",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return GetCurrentRole() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "27c30f8d-5374-c890-9e3d-9aef3b3c13af",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							eventArgType = 2,
+							eventSpellID = 47891,
+							name = "Event Spell ID: Vacuum Wave",
+							uuid = "4309361d-7d58-2019-990e-f081251313e5",
+							version = 3,
+						},
+					},
+				},
+				eventType = 3,
+				mechanicTime = 507.31761539671,
+				name = "[Lj Draw] Draw Vacuum KB Preposition",
+				timeRange = true,
+				timelineIndex = 91,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "87b1398d-f809-94e7-b6c3-f66b03d7534f",
 				version = 2,
 			},
 		},
@@ -684,7 +810,7 @@ local tbl =
 	{
 	},
 	timelineName = "dmu",
-	version = "1.5.4",
+	version = "1.5.5",
 }
 
 
