@@ -934,6 +934,229 @@ local tbl =
 			},
 		},
 	},
+	[107] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljEarthquakeRole = \"DPS\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"41d53325-2cb4-602f-bc3c-22aa179f10ba",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set DPS",
+							uuid = "bc11c41b-97e6-89f9-86f2-e85a41913b64",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljEarthquakeRole = \"Support\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"41d53325-2cb4-602f-bc3c-22aa179f10ba",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set Support",
+							uuid = "0b02563f-3412-9776-9139-d6a58c3196f3",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljInLine = \"First\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"ccfeb826-b3da-8071-a821-22a32244b1af",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set First in Line",
+							uuid = "bff96f10-3908-c8d7-80aa-72e5c588bd43",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljInLine = \"Second\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"bbd05f55-8f9a-1dea-bfad-f2d9a5e642be",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set Second in Line",
+							uuid = "d2a5cafd-6919-afa5-a4c9-c1c42fe677da",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljInLine = \"Third\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d3314c52-265c-68e6-8da3-e3615ffaa14c",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set Third in Line",
+							uuid = "10730296-0501-0242-8c8d-48b5f4985747",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljAccretion = true\n--TensorCore.sendParsedChatMessage(\"/e {color:255,0,0} Accretion true\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e1c2964f-06c6-e444-9eec-621de08be1cd",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set Accretion True",
+							uuid = "4a6b1032-54e9-9973-a77f-9f0535fba6eb",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljAccretion = false\n--TensorCore.sendParsedChatMessage(\"/e {color:0,255,0} Accretion false\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e1c2964f-06c6-e444-9eec-621de08be1cd",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Set Accretion False",
+							uuid = "05d1cce8-7757-482b-ad90-248f8a82bf58",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self Group: DPS",
+							partyTargetType = "DPS",
+							uuid = "41d53325-2cb4-602f-bc3c-22aa179f10ba",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 3004,
+							category = "Self",
+							dequeueIfLuaFalse = true,
+							name = "Self Buff: First in Line",
+							uuid = "ccfeb826-b3da-8071-a821-22a32244b1af",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 3005,
+							category = "Self",
+							dequeueIfLuaFalse = true,
+							name = "Self Buff: Second in Line",
+							uuid = "bbd05f55-8f9a-1dea-bfad-f2d9a5e642be",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 3006,
+							category = "Self",
+							dequeueIfLuaFalse = true,
+							name = "Self Buff: Third in Line",
+							uuid = "d3314c52-265c-68e6-8da3-e3615ffaa14c",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 1604,
+							category = "Self",
+							dequeueIfLuaFalse = true,
+							name = "Self Buff: Accretion",
+							uuid = "e1c2964f-06c6-e444-9eec-621de08be1cd",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 557.21788210262,
+				name = "[Lj Data] Init Earthquake",
+				timelineIndex = 107,
+				timerOffset = 6,
+				uuid = "dfd846c1-4d5d-a8e8-9090-4718dc6a1208",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+	},
 	[113] = 
 	{
 		
@@ -963,10 +1186,65 @@ local tbl =
 				name = "[Lj Draw] Arrow to Big Kefka (Thanks megaminx)",
 				timeRange = true,
 				timelineIndex = 113,
-				timerEndOffset = 200,
+				timerEndOffset = 137,
 				timerOffset = -10,
-				timerStartOffset = -20,
+				timerStartOffset = -10,
 				uuid = "5309b48e-f955-b13d-8196-5ad042a7c83d",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local myRole = data.ljEarthquakeRole\nlocal myLine = data.ljInLine\nlocal hasAccretion = data.ljAccretion\n\nlocal targetIndex = 0\n\nif myLine == \"First\" or myLine == \"One\" then\n    if myRole == \"DPS\" and not hasAccretion then targetIndex = 1\n    elseif myRole == \"Support\" and not hasAccretion then targetIndex = 2\n    elseif hasAccretion then targetIndex = 3 end\nelseif myLine == \"Second\" or myLine == \"Two\" then\n    if myRole == \"DPS\" and not hasAccretion then targetIndex = 4\n    elseif myRole == \"Support\" and not hasAccretion then targetIndex = 5\n    elseif hasAccretion then targetIndex = 6 end\nelseif myLine == \"Third\" or myLine == \"Three\" then\n    if myRole == \"DPS\" then targetIndex = 7\n    elseif myRole == \"Support\" then targetIndex = 8 end\nend\n\nif targetIndex == 0 then\n    self.used = true\n    return\nend\n\n-- Convert the flat 1-8 index into a Set # and a target index within that Set\nlocal setTargetIndex = targetIndex\nlocal my_assigned_set = 1\nif targetIndex > 6 then \n    my_assigned_set = 3\n    setTargetIndex = targetIndex - 6\nelseif targetIndex > 3 then \n    my_assigned_set = 2 \n    setTargetIndex = targetIndex - 3\nend\n\nlocal kfk = nil\nlocal elist = TensorCore.entityList('contentid=7131')\nif table.valid(elist) then\n    for k, v in pairs(elist) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent and Argus.getEntityModel(ent) == 19504 then\n            kfk = ent\n            break\n        end\n    end\nend\n\nif not kfk then\n    self.used = true\n    return\nend\n\nif type(data.ljEarthquakeSets) ~= \"table\" then\n    data.ljEarthquakeSets = { {}, {}, {} }\n    data.ljSeenTetherIDs = {}\n    data.ljSetAngles = {}\n    data.ljTotalTethersSeen = 0\nend\n\nlocal bh_ents = TensorCore.entityList('contentid=8343')\nif table.valid(bh_ents) then\n    for k, v in pairs(bh_ents) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent then\n            if not data.ljSeenTetherIDs[ent.id] then\n                local tethers = Argus.getTethersOnEnt(ent.id)\n                local has_tether = false\n                if table.valid(tethers) then\n                    for _, tether in pairs(tethers) do\n                        if tether.type == 84 then\n                            has_tether = true\n                            break\n                        end\n                    end\n                end\n                \n                if has_tether then\n                    data.ljSeenTetherIDs[ent.id] = true\n                    data.ljTotalTethersSeen = data.ljTotalTethersSeen + 1\n                    \n                    local assign_set = 1\n                    if data.ljTotalTethersSeen > 6 then assign_set = 3\n                    elseif data.ljTotalTethersSeen > 3 then assign_set = 2 end\n                    \n                    table.insert(data.ljEarthquakeSets[assign_set], {\n                        id = ent.id,\n                        x = ent.pos.x,\n                        z = ent.pos.z\n                    })\n                    \n                    if not data.ljSetAngles[assign_set] then\n                        local b_ang = -kfk.pos.h - 0.05\n                        if b_ang < 0 then b_ang = b_ang + (2 * math.pi) end\n                        data.ljSetAngles[assign_set] = b_ang\n                    end\n                end\n            end\n        end\n    end\nend\n\nlocal set_entities = data.ljEarthquakeSets[my_assigned_set]\nlocal set_angle = data.ljSetAngles[my_assigned_set]\n\nif set_entities and #set_entities > 0 and set_angle then\n    local sorted_list = {}\n    for _, bh_data in ipairs(set_entities) do\n        local ang = math.atan2(bh_data.x - 100.0, 100.0 - bh_data.z)\n        if ang < 0 then ang = ang + (2 * math.pi) end\n        \n        local diff = (ang - set_angle) % (2 * math.pi)\n        table.insert(sorted_list, { id = bh_data.id, angle_diff = diff })\n    end\n\n    table.sort(sorted_list, function(a, b)\n        return a.angle_diff < b.angle_diff\n    end)\n\n    if setTargetIndex <= #sorted_list then\n        local activeBH = TensorCore.mGetEntity(sorted_list[setTargetIndex].id)\n        local player = TensorCore.mGetPlayer()\n        \n        if player and activeBH then\n            local tethers = Argus.getTethersOnEnt(activeBH.id)\n            local tetherTargetID = nil\n            \n            if table.valid(tethers) then\n                for _, tether in pairs(tethers) do\n                    if tether.type == 84 then\n                        tetherTargetID = tether.partnerid\n                        break\n                    end\n                end\n            end\n            \n            if tetherTargetID and tetherTargetID ~= player.id then\n                local tetherTarget = TensorCore.mGetEntity(tetherTargetID)\n                \n                if tetherTarget then\n                    -- Calculate a point 1/4th of the way from the Black Hole to its target\n                    local targetPos = {\n                        x = activeBH.pos.x + (tetherTarget.pos.x - activeBH.pos.x) * 0.25,\n                        y = activeBH.pos.y + (tetherTarget.pos.y - activeBH.pos.y) * 0.25,\n                        z = activeBH.pos.z + (tetherTarget.pos.z - activeBH.pos.z) * 0.25\n                    }\n                    \n                    local heading = TensorCore.getHeadingToTarget(player.pos, targetPos)\n                    local totalDistance = TensorCore.getDistance2d(player.pos, targetPos)\n                    \n                    local scale = math.min(1, totalDistance / 15)\n                    local baseWidth = math.max(0.5, 1 * scale) \n                    local tipWidth = math.max(1.5, 5 * scale)\n                    local tipLength = math.max(2, 3 * scale)\n                    \n                    local baseLength = totalDistance - tipLength\n                    \n                    if baseLength > 0 then\n                        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n                        if arrowDrawer then\n                            arrowDrawer:addArrow(\n                                player.pos.x, player.pos.y, player.pos.z, \n                                heading,\n                                baseLength, baseWidth, tipLength, tipWidth, \n                                false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n                            )\n                        end\n                    end\n                end\n            end\n        end\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"37431219-37df-681d-9d0e-0110c7349d56",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "DPS > Support > Accretion",
+							uuid = "3dfd73ec-3c67-32c8-a84a-1fec379a3bdd",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 5452,
+							category = "Self",
+							name = "Self Buff: Missing Unbecoming",
+							uuid = "37431219-37df-681d-9d0e-0110c7349d56",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				eventType = 12,
+				mechanicTime = 578.27023501273,
+				name = "[Lj Draw] Arrow to Wormhole",
+				timeRange = true,
+				timelineIndex = 113,
+				timerEndOffset = 137,
+				timerOffset = -1,
+				timerStartOffset = -1,
+				uuid = "1c78ee56-c792-fbe4-a45e-8246954f5a95",
 				version = 2,
 			},
 		},
