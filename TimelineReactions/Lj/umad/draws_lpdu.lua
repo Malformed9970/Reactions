@@ -1091,7 +1091,6 @@ local tbl =
 						{
 							category = "Self",
 							conditionType = 9,
-							dequeueIfLuaFalse = true,
 							name = "Self Group: DPS",
 							partyTargetType = "DPS",
 							uuid = "41d53325-2cb4-602f-bc3c-22aa179f10ba",
@@ -1140,7 +1139,6 @@ local tbl =
 						{
 							buffID = 1604,
 							category = "Self",
-							dequeueIfLuaFalse = true,
 							name = "Self Buff: Accretion",
 							uuid = "e1c2964f-06c6-e444-9eec-621de08be1cd",
 							version = 3,
@@ -1235,10 +1233,9 @@ local tbl =
 						},
 					},
 				},
-				enabled = false,
 				eventType = 12,
 				mechanicTime = 578.27023501273,
-				name = "[Lj Draw] Arrow to Wormhole",
+				name = "[Lj Draw] Arrow to Black Hole",
 				timeRange = true,
 				timelineIndex = 113,
 				timerEndOffset = 137,
