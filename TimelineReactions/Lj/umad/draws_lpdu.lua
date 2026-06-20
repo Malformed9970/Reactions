@@ -1233,6 +1233,7 @@ local tbl =
 						},
 					},
 				},
+				enabled = false,
 				eventType = 12,
 				mechanicTime = 578.27023501273,
 				name = "[Lj Draw] Arrow to Black Hole",
