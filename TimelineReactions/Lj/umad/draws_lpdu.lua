@@ -1,5 +1,38 @@
 local tbl = 
 {
+	
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "-- >>> SET YOUR ROLE HERE <<<\n-- Valid values: \"MT\", \"OT\", \"H1\", \"H2\", \"M1\", \"M2\", \"R1\", \"R2\"\nlocal myRole = \"MT\"\n\n-- DO NOT TOUCH ANYTHING BELOW THIS IF YOU DON'T KNOW WHAT YOU'RE DOING\n-- ==========================================\n-- GLOBAL: GetCurrentRole()\n-- Returns the role string this client is assigned to (e.g. \"MT\").\n-- ==========================================\nif not GetCurrentRole then\n    function GetCurrentRole()\n        return myRole\n    end\nend\n\n-- ==========================================\n-- GLOBAL: GetLightParty(roleStr)\n-- Returns 1 for Light Party 1 (MT, H1, M1, R1),\n--         2 for Light Party 2 (OT, H2, M2, R2),\n--         0 if unknown.\n-- @param roleStr string (optional): defaults to GetCurrentRole().\n-- ==========================================\nif not GetLightParty then\n    function GetLightParty(roleStr)\n        local targetRole = roleStr or (GetCurrentRole and GetCurrentRole())\n        if targetRole == \"MT\" or targetRole == \"H1\" or targetRole == \"M1\" or targetRole == \"R1\" then return 1 end\n        if targetRole == \"OT\" or targetRole == \"H2\" or targetRole == \"M2\" or targetRole == \"R2\" then return 2 end\n        return 0\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "8903f3e7-6f1e-d3d7-a4a4-9b37630c95d1",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				enabled = false,
+				mechanicTime = 15.261765625,
+				name = "[Lj Data] Set Role & Globals",
+				timelineIndex = 1,
+				timerOffset = -15,
+				uuid = "c9a63d6c-1f38-b435-ab0f-429f2b1d0505",
+				version = 2,
+			},
+		},
+	}, 
 	[3] = 
 	{
 		
@@ -938,6 +971,39 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "for i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and uuid then\n        Argus.deleteTimedShape(uuid)\n        break\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 163.54778319029,
+				name = "[Lj Draw] Delete Teletrounce Arrow",
+				timeRange = true,
+				timelineIndex = 33,
+				timerEndOffset = 5,
+				timerOffset = -2,
+				timerStartOffset = -4,
+				uuid = "cfa881c7-45b1-ac97-994b-36179d9abdee",
+				version = 2,
+			},
+		},
 	},
 	[34] = 
 	{
@@ -1139,6 +1205,41 @@ local tbl =
 			},
 		},
 	},
+	[35] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "for i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and uuid then\n        Argus.deleteTimedShape(uuid)\n        break\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 173.37050637968,
+				name = "[Lj Draw] Delete Teletrounce Circle",
+				timeRange = true,
+				timelineIndex = 35,
+				timerEndOffset = 2,
+				timerOffset = -2,
+				uuid = "a1aaa66d-4a2f-503d-8cf5-13396174ee2c",
+				version = 2,
+			},
+		},
+	},
 	[41] = 
 	{
 		
@@ -1170,6 +1271,43 @@ local tbl =
 				timerEndOffset = 24,
 				timerStartOffset = 3,
 				uuid = "c82fa154-ac96-3a16-acc6-87efd7b7f1b5",
+				version = 2,
+			},
+		},
+	},
+	[44] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local ahead = 5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 5)\n        end\n        break\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 257.94281774788,
+				name = "[Lj Draw] Line to Bait",
+				randomOffset = 5,
+				timeRange = true,
+				timelineIndex = 44,
+				timerEndOffset = 5,
+				timerOffset = -5,
+				timerStartOffset = 0.5,
+				uuid = "5627de4b-a77c-3bcf-bf30-48f0809d4f79",
 				version = 2,
 			},
 		},
@@ -1209,6 +1347,43 @@ local tbl =
 			},
 		},
 	},
+	[50] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local ahead = 5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 5)\n        end\n        break\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 278.89733564761,
+				name = "[Lj Draw] Line to Bait",
+				randomOffset = 5,
+				timeRange = true,
+				timelineIndex = 50,
+				timerEndOffset = 5,
+				timerOffset = -5,
+				timerStartOffset = 0.5,
+				uuid = "daa7cd95-03a4-86e2-8431-eb12f2d8faf4",
+				version = 2,
+			},
+		},
+	},
 	[53] = 
 	{
 		
@@ -1240,6 +1415,43 @@ local tbl =
 				timerEndOffset = 20,
 				timerStartOffset = 5,
 				uuid = "d5725a3e-beff-5b2e-84c7-5c400f429642",
+				version = 2,
+			},
+		},
+	},
+	[56] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local ahead = 5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 5)\n        end\n        break\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 299.97907895232,
+				name = "[Lj Draw] Line to Bait",
+				randomOffset = 5,
+				timeRange = true,
+				timelineIndex = 56,
+				timerEndOffset = 5,
+				timerOffset = -5,
+				timerStartOffset = 0.5,
+				uuid = "426c7d2b-0802-693f-bcf8-c63e718b29fd",
 				version = 2,
 			},
 		},
@@ -2468,6 +2680,11 @@ local tbl =
 									"baccdfab-101d-00c5-891f-b8f2ab46e3ef",
 									true,
 								},
+								
+								{
+									"ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "ad52dea3-1b34-c7fd-bf4e-b020dd556631",
@@ -2489,12 +2706,93 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return GetLightParty() == 1",
+							dequeueIfLuaFalse = true,
+							name = "Group 1",
+							uuid = "ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 705.28176295466,
-				name = "[Lj Data] Flip Roles",
+				name = "[Lj Data] Flip Roles G1",
 				timelineIndex = 141,
 				timerOffset = -0.25,
 				uuid = "c3b6d2c4-fa53-1725-a587-c8a6e4343d4a",
+				version = 2,
+			},
+		},
+	},
+	[143] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljP3Stack = (data.ljP3Stack == \"Support\") and \"DPS\" or \"Support\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"baccdfab-101d-00c5-891f-b8f2ab46e3ef",
+									true,
+								},
+								
+								{
+									"ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "ad52dea3-1b34-c7fd-bf4e-b020dd556631",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljP3Stack ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Stack Set",
+							uuid = "baccdfab-101d-00c5-891f-b8f2ab46e3ef",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return GetLightParty() == 2",
+							dequeueIfLuaFalse = true,
+							name = "Group 2",
+							uuid = "ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 706.58990945806,
+				name = "[Lj Data] Flip Roles G2",
+				timelineIndex = 143,
+				timerOffset = -0.25,
+				uuid = "f326cacd-cb74-aa06-88b9-3901054dfb49",
 				version = 2,
 			},
 		},
