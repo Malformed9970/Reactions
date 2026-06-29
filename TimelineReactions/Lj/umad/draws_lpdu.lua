@@ -823,7 +823,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local timeout = 6000 \nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target X coordinate based on Role\nlocal myRole = GetCurrentRole()\nlocal isSupport = { [\"MT\"] = true, [\"OT\"] = true, [\"H1\"] = true, [\"H2\"] = true }\n\nlocal targetX = 104\nif isSupport[myRole] then\n    targetX = 96\nend\n\nlocal targetPos = { x = targetX, y = 0, z = 100 }\n\n-- Calculate exact heading and distance from player to target\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Dynamic sizing to make the arrow stretch exactly from player to coordinate\nlocal tipLength = 1.5\nlocal baseLength = totalDistance - tipLength\n\n-- Static widths keep the arrow sleek regardless of how long it stretches\nlocal baseWidth = 1\nlocal tipWidth = 3\n\nlocal colorStart = 0xFF00FFFF\nlocal colorMid = 0xFF0088FF\nlocal colorEnd = 0xFF0000FF\nlocal colorOutline = 0xFFFFFFFF\nlocal outlineThickness = 2\n\nlocal drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n\nif baseLength > 0 then\n    local renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    drawer:addTimedArrow(\n        timeout, \n        sourcePos.x, sourcePos.y, sourcePos.z, \n        heading, \n        baseLength, baseWidth, tipLength, tipWidth, \n        0, nil, renderFlags\n    )\nend\n\nself.used = true",
+							actionLua = "local timeout = 5500 \nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target X coordinate based on Role\nlocal myRole = GetCurrentRole()\nlocal isSupport = { [\"MT\"] = true, [\"OT\"] = true, [\"H1\"] = true, [\"H2\"] = true }\n\nlocal targetX = 104\nif isSupport[myRole] then\n    targetX = 96\nend\n\nlocal targetPos = { x = targetX, y = 0, z = 100 }\n\n-- Calculate exact heading and distance from player to target\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Dynamic sizing to make the arrow stretch exactly from player to coordinate\nlocal tipLength = 1.5\nlocal baseLength = totalDistance - tipLength\n\n-- Static widths keep the arrow sleek regardless of how long it stretches\nlocal baseWidth = 1\nlocal tipWidth = 3\n\nlocal colorStart = 0xFF00FFFF\nlocal colorMid = 0xFF0088FF\nlocal colorEnd = 0xFF0000FF\nlocal colorOutline = 0xFFFFFFFF\nlocal outlineThickness = 2\n\nlocal drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n\nif baseLength > 0 then\n    local renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    drawer:addTimedArrow(\n        timeout, \n        sourcePos.x, sourcePos.y, sourcePos.z, \n        heading, \n        baseLength, baseWidth, tipLength, tipWidth, \n        0, nil, renderFlags\n    )\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -1253,7 +1253,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 5)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1288,7 +1288,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local ahead = 5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 5)\n        end\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local ahead = 4 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1325,7 +1325,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 5)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1360,7 +1360,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local ahead = 5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 5)\n        end\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local ahead = 4 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1397,7 +1397,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 5)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1432,7 +1432,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local ahead = 5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 5)\n        end\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local ahead = 4 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1469,7 +1469,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 5)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1822,31 +1822,6 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target coordinate based on Role\nlocal myRole = GetCurrentRole()\n\n-- Define the boss group\nlocal isBossGroup = { [\"OT\"] = true, [\"H2\"] = true, [\"R1\"] = true, [\"R2\"] = true }\n\nlocal targetPos\n\n-- Assign the destination coordinates based on the dynamically detected entity\nif isBossGroup[myRole] then\n    local targetEntity = TensorCore.mGetEntity(eventArgs.detectionTargetID)\n    if targetEntity then\n        targetPos = targetEntity.pos\n    end\nend\n\n-- Proceed only if the role matched and the target entity position was found\nif targetPos then\n    -- Calculate exact heading and distance from the player to the target spot\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity Scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale) \n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n\n    local baseLength = totalDistance - tipLength\n\n    -- Draw the Arrow\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z, \n            heading, \n            baseLength, baseWidth, tipLength, tipWidth, \n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"064ab097-39cb-d8a0-9652-f1bd5bfad9c2",
-									true,
-								},
-								
-								{
-									"1c873dd6-1af0-eef4-85b3-0492aa8fec1f",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Exdeath",
-							uuid = "a48e13c4-8a20-9de0-8ef4-8d3c5b6f3e2c",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
 							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target coordinate based on Role\nlocal myRole = GetCurrentRole()\n\n-- Define the boss group\nlocal isBossGroup = { [\"MT\"] = true, [\"H1\"] = true, [\"M1\"] = true, [\"M2\"] = true }\n\nlocal targetPos\n\n-- Assign the destination coordinates based on the dynamically detected entity\nif isBossGroup[myRole] then\n    local targetEntity = TensorCore.mGetEntity(eventArgs.detectionTargetID)\n    if targetEntity then\n        targetPos = targetEntity.pos\n    end\nend\n\n-- Proceed only if the role matched and the target entity position was found\nif targetPos then\n    -- Calculate exact heading and distance from the player to the target spot\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity Scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale) \n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n\n    local baseLength = totalDistance - tipLength\n\n    -- Draw the Arrow\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z, \n            heading, \n            baseLength, baseWidth, tipLength, tipWidth, \n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
@@ -1909,7 +1884,7 @@ local tbl =
 				},
 				eventType = 12,
 				mechanicTime = 544.89209076626,
-				name = "[Lj Draw] Arrow to Boss",
+				name = "[Lj Draw] Arrow to Chaos",
 				timeRange = true,
 				timelineIndex = 104,
 				timerOffset = -5,
@@ -2243,7 +2218,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local firstRole = \"DPS\" -- ONLY CHANGE THIS VALUE IF YOU KNOW WHAT YOU'RE DOING. SET THIS TO \"Support\" IF YOU WANT SUPPORTS TO GO FIRST INSTEAD OF DPS. Case sensitive. If you don't know what this means, leave it as \"DPS\".\n\n\n-- ==========================================\n-- Do not change anything below this line\n-- ==========================================\n\nlocal myRole = data.ljEarthquakeRole\nlocal myOrder = data.ljInLine\nlocal hasAccretion = data.ljAccretion\nlocal secondRole = firstRole == \"DPS\" and \"Support\" or \"DPS\"\n\nlocal waveMapping = {\n    [1]  = { [1] = firstRole .. \":First\" },\n    [2]  = { [1] = firstRole .. \":First\", [2] = secondRole .. \":First\" },\n    [3]  = { [1] = firstRole .. \":First\", [2] = secondRole .. \":First\", [3] = \"Accretion:First\" },\n    [4]  = { [1] = firstRole .. \":Second\", [2] = secondRole .. \":First\", [3] = \"Accretion:First\" },\n    [5]  = { [1] = firstRole .. \":Second\", [2] = secondRole .. \":Second\", [3] = \"Accretion:First\" },\n    [6]  = { [1] = firstRole .. \":Second\", [2] = secondRole .. \":Second\", [3] = \"Accretion:Second\" },\n    [7]  = { [1] = firstRole .. \":Third\", [2] = secondRole .. \":Second\", [3] = \"Accretion:Second\" },\n    [8]  = { [1] = firstRole .. \":Third\", [2] = secondRole .. \":Third\", [3] = \"Accretion:Second\" },\n    [9]  = { [1] = firstRole .. \":Third\", [2] = secondRole .. \":Third\" },\n    [10] = { [1] = secondRole .. \":Third\" }\n}\n\nlocal kfk = nil\nlocal elist = TensorCore.entityList('contentid=7131')\nif table.valid(elist) then\n    for k, v in pairs(elist) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent and Argus.getEntityModel(ent) == 19504 then\n            kfk = ent\n            break\n        end\n    end\nend\n\nif not kfk then\n    self.used = true\n    return\nend\n\nlocal current_wave = data.ljEarthquakeWave or 1\nif current_wave < 1 or current_wave > 10 then\n    self.used = true\n    return\nend\n\nlocal current_orbs = {}\nlocal bh_ents = TensorCore.entityList('alive,contentid=8343')\nif table.valid(bh_ents) then\n    for k, v in pairs(bh_ents) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent then\n            local tethers = Argus.getTethersOnEnt(ent.id)\n            if table.valid(tethers) then\n                for _, tether in pairs(tethers) do\n                    if tether.type == 84 then\n                        table.insert(current_orbs, {\n                            id = ent.id,\n                            x = ent.pos.x, y = ent.pos.y, z = ent.pos.z,\n                            tetherTargetID = tether.partnerid\n                        })\n                        break\n                    end\n                end\n            end\n        end\n    end\nend\n\nif #current_orbs == 0 then\n    self.used = true\n    return\nend\n\nlocal function normAngle2Pi(a)\n    while a < 0 do a = a + 2 * math.pi end\n    while a >= 2 * math.pi do a = a - 2 * math.pi end\n    return a\nend\n\nlocal center = data.arenaCenter or { x = 100, y = 0, z = 100 }\nlocal NORTH_ARROW_LEN = 18\nlocal NORTH_BUFFER_RAD = math.rad(25)\nlocal NORTH_SNAP_RAD = math.rad(8)\n\nlocal northHeading = normAngle2Pi(tonumber(kfk.pos.h) + math.pi)\nlocal northTip = TensorCore.getPosInDirection(center, northHeading, NORTH_ARROW_LEN)\nif not northTip then\n    self.used = true\n    return\nend\n\n-- Clockwise-from-north angle for a world position (x = East, z = South).\nlocal function clockwiseAngle(x, z)\n    return math.atan2(x - center.x, -(z - center.z))\nend\n\nlocal northAngle = clockwiseAngle(northTip.x, northTip.z)\n\nfor _, orb in ipairs(current_orbs) do\n    local cw = normAngle2Pi(clockwiseAngle(orb.x, orb.z) - northAngle + NORTH_BUFFER_RAD)\n    if cw > 2 * math.pi - NORTH_SNAP_RAD then\n        cw = 0\n    end\n    orb.cw = cw\nend\n\ntable.sort(current_orbs, function(a, b)\n    return a.cw < b.cw\nend)\n\nlocal my_prio_str = (hasAccretion and \"Accretion\" or myRole) .. \":\" .. myOrder\nlocal my_target_idx = nil\n\nlocal wave_setup = waveMapping[current_wave]\nif wave_setup then\n    for idx, role_str in pairs(wave_setup) do\n        if role_str == my_prio_str then\n            my_target_idx = idx\n            break\n        end\n    end\nend\n\nif not my_target_idx then\n    self.used = true\n    return\nend\n\nlocal activeBH_data = current_orbs[my_target_idx]\nif not activeBH_data then\n    self.used = true\n    return\nend\n\nlocal player = TensorCore.mGetPlayer()\n\n\nlocal targetPos\n\nif activeBH_data.tetherTargetID == player.id then\n    -- We already hold the correct tether: point at a spot clockwise of the orb and pulled in\n    -- toward arena centre to keep uptime on the boss.\n    data.ljHeldWave = current_wave\n\n    local STAND_CW_DIST = 6    -- yalms clockwise (tangential) of the orb\n    local STAND_IN_DIST = 14   -- yalms pulled in toward arena centre\n\n    local dx = activeBH_data.x - center.x\n    local dz = activeBH_data.z - center.z\n    local dist = math.sqrt(dx * dx + dz * dz)\n    if dist < 0.01 then\n        self.used = true\n        return\n    end\n\n    local radX, radZ = dx / dist, dz / dist   -- radial outward unit (centre -> orb)\n    local tanX, tanZ = -radZ, radX            -- clockwise tangent unit\n\n    targetPos = {\n        x = activeBH_data.x + tanX * STAND_CW_DIST - radX * STAND_IN_DIST,\n        y = activeBH_data.y,\n        z = activeBH_data.z + tanZ * STAND_CW_DIST - radZ * STAND_IN_DIST\n    }\nelse\n    -- Once we've soaked our orb this wave it drops out and the remaining orbs re-index, so the\n    -- assigned slot briefly resolves to a neighbour until ljEarthquakeWave ticks over. Don't\n    -- redirect to it -- we're done this wave.\n    if data.ljHeldWave == current_wave then\n        self.used = true\n        return\n    end\n\n    -- Heading out to grab the tether: aim at the midpoint between the orb and its current holder.\n    local tetherTarget = TensorCore.mGetEntity(activeBH_data.tetherTargetID)\n    if not tetherTarget then\n        self.used = true\n        return\n    end\n\n    targetPos = {\n        x = activeBH_data.x + (tetherTarget.pos.x - activeBH_data.x) * 0.5,\n        y = activeBH_data.y + (tetherTarget.pos.y - activeBH_data.y) * 0.5,\n        z = activeBH_data.z + (tetherTarget.pos.z - activeBH_data.z) * 0.5\n    }\nend\n\nlocal heading = TensorCore.getHeadingToTarget(player.pos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(player.pos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 1 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    if arrowDrawer then\n        arrowDrawer:addArrow(\n            player.pos.x, player.pos.y, player.pos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "-- ==========================================\n-- This follows your AnyoneCore options, set to DPS or Support first in there rather than in script here and it'll automatically adjust\n-- ==========================================\n\nlocal strategy = AnyoneCore.Settings.Reactions.dmu.p3BlackHoleSolverStrategy\nlocal firstRole = (strategy == 2 and \"DPS\") or \"Support\"\nlocal myRole = data.ljEarthquakeRole\nlocal myOrder = data.ljInLine\nlocal hasAccretion = data.ljAccretion\nlocal secondRole = firstRole == \"DPS\" and \"Support\" or \"DPS\"\n\nlocal waveMapping = {\n    [1]  = { [1] = firstRole .. \":First\" },\n    [2]  = { [1] = firstRole .. \":First\", [2] = secondRole .. \":First\" },\n    [3]  = { [1] = firstRole .. \":First\", [2] = secondRole .. \":First\", [3] = \"Accretion:First\" },\n    [4]  = { [1] = firstRole .. \":Second\", [2] = secondRole .. \":First\", [3] = \"Accretion:First\" },\n    [5]  = { [1] = firstRole .. \":Second\", [2] = secondRole .. \":Second\", [3] = \"Accretion:First\" },\n    [6]  = { [1] = firstRole .. \":Second\", [2] = secondRole .. \":Second\", [3] = \"Accretion:Second\" },\n    [7]  = { [1] = firstRole .. \":Third\", [2] = secondRole .. \":Second\", [3] = \"Accretion:Second\" },\n    [8]  = { [1] = firstRole .. \":Third\", [2] = secondRole .. \":Third\", [3] = \"Accretion:Second\" },\n    [9]  = { [1] = firstRole .. \":Third\", [2] = secondRole .. \":Third\" },\n    [10] = { [1] = secondRole .. \":Third\" }\n}\n\nlocal kfk = nil\nlocal elist = TensorCore.entityList('contentid=7131')\nif table.valid(elist) then\n    for k, v in pairs(elist) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent and Argus.getEntityModel(ent) == 19504 then\n            kfk = ent\n            break\n        end\n    end\nend\n\nif not kfk then\n    self.used = true\n    return\nend\n\nlocal current_wave = data.ljEarthquakeWave or 1\nif current_wave < 1 or current_wave > 10 then\n    self.used = true\n    return\nend\n\nlocal current_orbs = {}\nlocal bh_ents = TensorCore.entityList('alive,contentid=8343')\nif table.valid(bh_ents) then\n    for k, v in pairs(bh_ents) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent then\n            local tethers = Argus.getTethersOnEnt(ent.id)\n            if table.valid(tethers) then\n                for _, tether in pairs(tethers) do\n                    if tether.type == 84 then\n                        table.insert(current_orbs, {\n                            id = ent.id,\n                            x = ent.pos.x, y = ent.pos.y, z = ent.pos.z,\n                            tetherTargetID = tether.partnerid\n                        })\n                        break\n                    end\n                end\n            end\n        end\n    end\nend\n\nif #current_orbs == 0 then\n    self.used = true\n    return\nend\n\nlocal function normAngle2Pi(a)\n    while a < 0 do a = a + 2 * math.pi end\n    while a >= 2 * math.pi do a = a - 2 * math.pi end\n    return a\nend\n\nlocal center = data.arenaCenter or { x = 100, y = 0, z = 100 }\nlocal NORTH_ARROW_LEN = 18\nlocal NORTH_BUFFER_RAD = math.rad(25)\nlocal NORTH_SNAP_RAD = math.rad(8)\n\nlocal northHeading = normAngle2Pi(tonumber(kfk.pos.h) + math.pi)\nlocal northTip = TensorCore.getPosInDirection(center, northHeading, NORTH_ARROW_LEN)\nif not northTip then\n    self.used = true\n    return\nend\n\n-- Clockwise-from-north angle for a world position (x = East, z = South).\nlocal function clockwiseAngle(x, z)\n    return math.atan2(x - center.x, -(z - center.z))\nend\n\nlocal northAngle = clockwiseAngle(northTip.x, northTip.z)\n\nfor _, orb in ipairs(current_orbs) do\n    local cw = normAngle2Pi(clockwiseAngle(orb.x, orb.z) - northAngle + NORTH_BUFFER_RAD)\n    if cw > 2 * math.pi - NORTH_SNAP_RAD then\n        cw = 0\n    end\n    orb.cw = cw\nend\n\ntable.sort(current_orbs, function(a, b)\n    return a.cw < b.cw\nend)\n\nlocal my_prio_str = (hasAccretion and \"Accretion\" or myRole) .. \":\" .. myOrder\nlocal my_target_idx = nil\n\nlocal wave_setup = waveMapping[current_wave]\nif wave_setup then\n    for idx, role_str in pairs(wave_setup) do\n        if role_str == my_prio_str then\n            my_target_idx = idx\n            break\n        end\n    end\nend\n\nif not my_target_idx then\n    self.used = true\n    return\nend\n\nlocal activeBH_data = current_orbs[my_target_idx]\nif not activeBH_data then\n    self.used = true\n    return\nend\n\nlocal player = TensorCore.mGetPlayer()\nlocal targetPos\n\nif activeBH_data.tetherTargetID == player.id then\n    -- We already hold the correct tether: point at a spot clockwise of the orb and pulled in toward arena centre to keep uptime on the boss and consistent angles\n    data.ljHeldWave = current_wave\n\n    local STAND_CW_DIST = 6    -- yalms clockwise (tangential) of the orb\n    local STAND_IN_DIST = 14   -- yalms pulled in toward arena centre\n\n    local dx = activeBH_data.x - center.x\n    local dz = activeBH_data.z - center.z\n    local dist = math.sqrt(dx * dx + dz * dz)\n    if dist < 0.01 then\n        self.used = true\n        return\n    end\n\n    local radX, radZ = dx / dist, dz / dist   -- radial outward unit (centre -> orb)\n    local tanX, tanZ = -radZ, radX            -- clockwise tangent unit\n\n    targetPos = {\n        x = activeBH_data.x + tanX * STAND_CW_DIST - radX * STAND_IN_DIST,\n        y = activeBH_data.y,\n        z = activeBH_data.z + tanZ * STAND_CW_DIST - radZ * STAND_IN_DIST\n    }\nelse\n    -- Once we've soaked our orb this wave it drops out and the remaining orbs re-index, don't redirect as we're done\n    if data.ljHeldWave == current_wave then\n        self.used = true\n        return\n    end\n\n    -- Heading out to grab the tether: aim at the midpoint between the orb and its current holder.\n    local tetherTarget = TensorCore.mGetEntity(activeBH_data.tetherTargetID)\n    if not tetherTarget then\n        self.used = true\n        return\n    end\n\n    targetPos = {\n        x = activeBH_data.x + (tetherTarget.pos.x - activeBH_data.x) * 0.5,\n        y = activeBH_data.y + (tetherTarget.pos.y - activeBH_data.y) * 0.5,\n        z = activeBH_data.z + (tetherTarget.pos.z - activeBH_data.z) * 0.5\n    }\nend\n\nlocal heading = TensorCore.getHeadingToTarget(player.pos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(player.pos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 1 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    if arrowDrawer then\n        arrowDrawer:addArrow(\n            player.pos.x, player.pos.y, player.pos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -2266,7 +2241,7 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p3BlackHoleSolverStrategy == 2",
+							conditionLua = "return (AnyoneCore.Settings.Reactions.dmu.p3BlackHoleSolverStrategy == 2 or AnyoneCore.Settings.Reactions.dmu.p3BlackHoleSolverStrategy == 3)",
 							dequeueIfLuaFalse = true,
 							name = "Kefka Relative Option Enabled",
 							uuid = "89fe774e-1fad-214a-b598-85971659486d",
@@ -2429,7 +2404,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal cornerDist = 9.5                      -- distance from centre to each corner\nlocal offset = cornerDist / math.sqrt(2)    -- equal X/Z offset for a diagonal corner\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) corners; rotated to Kefka below.\nlocal nw = { x = center.x - offset, z = center.z - offset }  -- H1 + MT\nlocal ne = { x = center.x + offset, z = center.z - offset }  -- H2 + OT\nlocal sw = { x = center.x - offset, z = center.z + offset }  -- R1 + M1\nlocal se = { x = center.x + offset, z = center.z + offset }  -- R2 + M2\n\nlocal cornerByRole = {\n    H1 = nw, MT = nw,\n    H2 = ne, OT = ne,\n    R1 = sw, M1 = sw,\n    R2 = se, M2 = se,\n}\n\nlocal corner = cornerByRole[GetCurrentRole()]\nif corner then\n    corner.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, corner, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal cornerDist = 11                     -- distance from centre to each corner\nlocal offset = cornerDist / math.sqrt(2)    -- equal X/Z offset for a diagonal corner\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) corners; rotated to Kefka below.\nlocal nw = { x = center.x - offset, z = center.z - offset }  -- H1 + MT\nlocal ne = { x = center.x + offset, z = center.z - offset }  -- H2 + OT\nlocal sw = { x = center.x - offset, z = center.z + offset }  -- R1 + M1\nlocal se = { x = center.x + offset, z = center.z + offset }  -- R2 + M2\n\nlocal cornerByRole = {\n    H1 = nw, MT = nw,\n    H2 = ne, OT = ne,\n    R1 = sw, M1 = sw,\n    R2 = se, M2 = se,\n}\n\nlocal corner = cornerByRole[GetCurrentRole()]\nif corner then\n    corner.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, corner, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 1 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -2485,7 +2460,7 @@ local tbl =
 				timelineIndex = 138,
 				timerEndOffset = 3,
 				timerOffset = -1,
-				timerStartOffset = -1,
+				timerStartOffset = -0.25,
 				uuid = "fe3712b5-905e-f317-9177-0ff196a32e02",
 				version = 2,
 			},
@@ -2722,7 +2697,7 @@ local tbl =
 				mechanicTime = 705.28176295466,
 				name = "[Lj Data] Flip Roles G1",
 				timelineIndex = 141,
-				timerOffset = -0.25,
+				timerOffset = -0.125,
 				uuid = "c3b6d2c4-fa53-1725-a587-c8a6e4343d4a",
 				version = 2,
 			},
@@ -2791,8 +2766,365 @@ local tbl =
 				mechanicTime = 706.58990945806,
 				name = "[Lj Data] Flip Roles G2",
 				timelineIndex = 143,
-				timerOffset = -0.25,
+				timerOffset = -0.125,
 				uuid = "f326cacd-cb74-aa06-88b9-3901054dfb49",
+				version = 2,
+			},
+		},
+	},
+	[151] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljChaosAura = \"Lie\"\n--TensorCore.sendParsedChatMessage(\"/e {color:255,0,0} Chaos Lie\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"98e42c37-f3da-9951-8873-683a6373a0ef",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Chaos Lie",
+							uuid = "52a17e1a-1b5e-4cd1-b64a-20b1e471984b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljChaosAura = \"Truth\"\n--TensorCore.sendParsedChatMessage(\"/e {color:0,255,0} Chaos Truth\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2751e1ce-79f3-5c12-8d49-ad22d1aa2e5b",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Chaos Truth",
+							uuid = "1eace700-b94b-f268-aea2-f8475d50e205",
+							version = 2.1,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljExdeathAura = \"Lie\"\n--TensorCore.sendParsedChatMessage(\"/e {color:255,0,0} Exdeath Lie\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"ddbb6b21-ee24-b887-8583-b22ff7e77c59",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Exdeath Lie",
+							uuid = "8739abfb-67cc-d4c4-8ed1-f0c22377692a",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljExdeathAura = \"Truth\"\n--TensorCore.sendParsedChatMessage(\"/e {color:0,255,0} Exdeath Truth\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"b4eabe06-0c7d-f0d3-9dce-f681b4335b26",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Exdeath Truth",
+							uuid = "3d7b414a-ccc3-7c6f-804d-edbe42d423bb",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							dequeueIfLuaFalse = true,
+							eventArgType = 6,
+							eventIntValue = 2913,
+							name = "Event: Chaos Lie",
+							uuid = "98e42c37-f3da-9951-8873-683a6373a0ef",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							dequeueIfLuaFalse = true,
+							eventArgType = 6,
+							eventIntValue = 2914,
+							name = "Event: Chaos Truth",
+							uuid = "2751e1ce-79f3-5c12-8d49-ad22d1aa2e5b",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							dequeueIfLuaFalse = true,
+							eventArgType = 6,
+							eventIntValue = 2915,
+							name = "Event: Exdeath Lie",
+							uuid = "ddbb6b21-ee24-b887-8583-b22ff7e77c59",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							dequeueIfLuaFalse = true,
+							eventArgType = 6,
+							eventIntValue = 2916,
+							name = "Event: Exdeath Truth",
+							uuid = "b4eabe06-0c7d-f0d3-9dce-f681b4335b26",
+							version = 3,
+						},
+					},
+				},
+				eventType = 25,
+				loop = true,
+				mechanicTime = 812.05085714286,
+				name = "[Lj Data] Record Truth & Lie",
+				timeRange = true,
+				timelineIndex = 151,
+				timerEndOffset = 58,
+				timerStartOffset = 4,
+				uuid = "31f79052-e779-e4fe-b087-4ba109432ffb",
+				version = 2,
+			},
+		},
+	},
+	[153] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread E, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack S, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"15b8bb18-853c-d4f1-98ab-996eb7d2f7ab",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "DPS",
+							uuid = "0a729d61-7ce4-7c95-9607-2ec280c1a486",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread W, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack N, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"15b8bb18-853c-d4f1-98ab-996eb7d2f7ab",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Support",
+							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljExdeathAura ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Exdeath Aura Recorded",
+							uuid = "15b8bb18-853c-d4f1-98ab-996eb7d2f7ab",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "faba3eab-7df5-75f5-bcc8-805f8106c79a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[Lj Draw] Spread Stack Arrow",
+				timelineIndex = 153,
+				timerOffset = 1,
+				uuid = "140f2308-203d-0ac0-8b78-68420b156dd0",
+				version = 2,
+			},
+		},
+	},
+	[156] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread E, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack S, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"162df881-c016-8e8a-b363-b0f345a8c6da",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "DPS",
+							uuid = "0a729d61-7ce4-7c95-9607-2ec280c1a486",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread W, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack N, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"162df881-c016-8e8a-b363-b0f345a8c6da",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Support",
+							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljExdeathAura ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Exdeath Aura Recorded",
+							uuid = "162df881-c016-8e8a-b363-b0f345a8c6da",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "faba3eab-7df5-75f5-bcc8-805f8106c79a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 841.08843971594,
+				name = "[Lj Draw] Spread Stack Arrow",
+				timelineIndex = 156,
+				timerOffset = 1,
+				uuid = "ef0fc3d5-7870-4f0a-bf0e-f3773ff46d0f",
 				version = 2,
 			},
 		},
