@@ -31,6 +31,37 @@ local tbl =
 				uuid = "c9a63d6c-1f38-b435-ab0f-429f2b1d0505",
 				version = 2,
 			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local dmu = AnyoneCore.Settings.Reactions.dmu\n\ndmu.p1TeleTrounceStrat = 1\n\ndmu.p2ForsakenAutomaticCongaSettings = {\n    d1Spot = 1,\n    d2Spot = 2,\n    d3Spot = 3,\n    d4Spot = 4,\n    h1West = 2,\n    t1West = 2\n}\n\ndmu.p2ForsakenAutomaticPreference = 4\n\ndmu.p2ForsakenAutomaticTrounceSettings = {\n    D1Idx = 5,\n    D2Idx = 7,\n    D3Idx = 1,\n    D4Idx = 3,\n    H1Idx = 5,\n    H2Idx = 7,\n    T1Idx = 1,\n    T2Idx = 3\n}\n\ndmu.p2ForsakenAutomaticWaveSettings = {\n    d1Spot = 1,\n    d2Spot = 2,\n    d3Spot = 3,\n    d4Spot = 4,\n    h1West = 2,\n    t1West = 2\n}\n\ndmu.p2ForsakenCongaOption = 2\ndmu.p2ForsakenDpsRoleMode = 1\ndmu.p2ForsakenHelperEnabled = true\ndmu.p2ForsakenPairings = {\n    D1Partner = 7,\n    D2Partner = 8,\n    D3Partner = 5,\n    D4Partner = 6,\n    H1Partner = 1,\n    H2Partner = 2,\n    T1Partner = 3,\n    T2Partner = 4\n}\n\ndmu.p2ForsakenStrat = 12\n\ndmu.p3BlackHoleSolverStrategy = 2\n\ndmu.p4AccelFinalReminder = true\ndmu.p4HelperEnabled = true\ndmu.p4ShriekLockface = true\ndmu.p4StackSpreadOrientation = 1\n\ndmu.p5MaddeningFacing = 1\ndmu.p5TowerRotation = 1\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "72436b0d-a28a-4e51-a27b-9dbefa347f5e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				enabled = false,
+				mechanicTime = 15.261765625,
+				name = "[Lj Data] Set LPDU",
+				timelineIndex = 1,
+				timerOffset = -15,
+				uuid = "b669dc81-9d0a-9894-a562-7e61f5f1cf1c",
+				version = 2,
+			},
 		},
 	}, 
 	[3] = 
@@ -1228,6 +1259,7 @@ local tbl =
 				conditions = 
 				{
 				},
+				enabled = false,
 				eventType = 12,
 				mechanicTime = 173.37050637968,
 				name = "[Lj Draw] Delete Teletrounce Circle",
@@ -1658,11 +1690,83 @@ local tbl =
 						},
 					},
 				},
+				enabled = false,
 				mechanicTime = 450.00390950196,
-				name = "[Lj Draw] Arrow to Crystals",
+				name = "[Lj Draw] OLD Arrow to Crystals",
 				timelineIndex = 79,
 				timerOffset = 1,
 				uuid = "120176a5-3e78-95f9-92bb-6ccd460d37a9",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 9000\n\nlocal crystalNames = {\n    [2015291] = { name = \"Water\", color = 0xFFFFBF00 }, -- blue\n    [2015290] = { name = \"Fire\",  color = 0xFF1133FF }, -- red\n    [2015292] = { name = \"Wind\",  color = 0xFF55FF55 }, -- green\n}\n\nlocal roleTargets = {\n    [\"H1\"] = 2015291, [\"H2\"] = 2015291, -- Water Crystal\n    [\"R1\"] = 2015290, [\"R2\"] = 2015290, -- Fire Crystal\n    [\"MT\"] = 2015292, [\"OT\"] = 2015292, [\"M1\"] = 2015292, [\"M2\"] = 2015292  -- Wind Crystal\n}\n\nlocal contentID = eventArgs.entityContentID\nlocal info = crystalNames[contentID]\n\nAnyoneCore.addTimedWorldTextOnEnt(timeout, info.name, eventArgs.entityID, info.color, true, 1.5, 2.0)\n\nlocal myRole = GetCurrentRole()\n\nif roleTargets[myRole] == contentID then\n    local entity = TensorCore.mGetEntity(eventArgs.entityID)\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = entity.pos.x, y = entity.pos.y, z = entity.pos.z }\n\n    if myRole == \"OT\" then -- Opposite Wind\n        local centerX = 100.0\n        local centerZ = 100.0\n        targetPos.x = centerX + (centerX - targetPos.x)\n        targetPos.z = centerZ + (centerZ - targetPos.z)\n    end\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addTimedArrow(\n            timeout,\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"a0225b2c-4cb9-7884-9db9-620a44267b80",
+									true,
+								},
+								
+								{
+									"1b28bf19-6f7f-2c6e-866e-f426448ccb85",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "c9dd2649-2492-fe24-aac7-9148d86367f9",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return GetCurrentRole() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "a0225b2c-4cb9-7884-9db9-620a44267b80",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return eventArgs.entityContentID == 2015290\n    or eventArgs.entityContentID == 2015291\n    or eventArgs.entityContentID == 2015292",
+							dequeueIfLuaFalse = true,
+							name = "Crystals Spawned",
+							uuid = "1b28bf19-6f7f-2c6e-866e-f426448ccb85",
+							version = 3,
+						},
+					},
+				},
+				eventType = 29,
+				loop = true,
+				mechanicTime = 450.00390950196,
+				name = "[Lj Draw] Arrow to Crystals",
+				timeRange = true,
+				timelineIndex = 79,
+				timerEndOffset = 2,
+				timerOffset = 1,
+				timerStartOffset = -2,
+				uuid = "44a0fef8-f1b9-37f1-b679-6d457d815898",
 				version = 2,
 			},
 		},
@@ -2146,7 +2250,7 @@ local tbl =
 				name = "[Lj Draw] Arrow to Big Kefka (Thanks megaminx)",
 				timeRange = true,
 				timelineIndex = 113,
-				timerEndOffset = 114,
+				timerEndOffset = 111,
 				timerOffset = -10,
 				timerStartOffset = -10,
 				uuid = "5309b48e-f955-b13d-8196-5ad042a7c83d",
@@ -2201,7 +2305,7 @@ local tbl =
 				name = "[Lj Data] BH Tracker",
 				timeRange = true,
 				timelineIndex = 113,
-				timerEndOffset = 117,
+				timerEndOffset = 115,
 				timerStartOffset = -1,
 				uuid = "e0eb16e8-af90-26a7-acdb-2ba71db4f97b",
 				version = 2,
@@ -2228,8 +2332,28 @@ local tbl =
 								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
-							name = "DPS > Support > Accretion",
+							name = "Single Tether",
 							uuid = "3dfd73ec-3c67-32c8-a84a-1fec379a3bdd",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "-- ==========================================\n-- Double-tether variant of the Black Hole solver. Fixed priority.\n-- BH1: Support First grabs the solo tether, DPS First grabs the double.\n-- BH2/BH3: normal DPS > Support > Accretion order.\n-- BH4: Support Third grabs the double, DPS Third grabs the solo.\n-- ==========================================\n\nlocal myRole = data.ljEarthquakeRole\nlocal myOrder = data.ljInLine\nlocal hasAccretion = data.ljAccretion\n\nlocal waveMapping = {\n    [1]  = { [1] = \"Support:First\" },\n    [2]  = {},\n    [3]  = { [1] = \"DPS:First\",  [2] = \"Support:First\",  [3] = \"Accretion:First\" },\n    [4]  = { [1] = \"DPS:Second\", [2] = \"Support:First\",  [3] = \"Accretion:First\" },\n    [5]  = { [1] = \"DPS:Second\", [2] = \"Support:Second\", [3] = \"Accretion:First\" },\n    [6]  = { [1] = \"DPS:Second\", [2] = \"Support:Second\", [3] = \"Accretion:Second\" },\n    [7]  = { [1] = \"DPS:Third\",  [2] = \"Support:Second\", [3] = \"Accretion:Second\" },\n    [8]  = { [1] = \"DPS:Third\",  [2] = \"Support:Third\",  [3] = \"Accretion:Second\" },\n    [9]  = {},\n    [10] = { [1] = \"DPS:Third\" }\n}\n\n-- Waves where one role grabs BOTH tethers and stands between the two orbs.\nlocal doubleTethers = {\n    [2] = \"DPS:First\",     -- BH1: DPS takes both\n    [9] = \"Support:Third\"  -- BH4: Support takes both\n}\n\nlocal kfk = nil\nlocal elist = TensorCore.entityList('contentid=7131')\nif table.valid(elist) then\n    for k, v in pairs(elist) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent and Argus.getEntityModel(ent) == 19504 then\n            kfk = ent\n            break\n        end\n    end\nend\n\nif not kfk then\n    self.used = true\n    return\nend\n\nlocal current_wave = data.ljEarthquakeWave or 1\nif current_wave < 1 or current_wave > 10 then\n    self.used = true\n    return\nend\n\nlocal current_orbs = {}\nlocal bh_ents = TensorCore.entityList('alive,contentid=8343')\nif table.valid(bh_ents) then\n    for k, v in pairs(bh_ents) do\n        local ent = TensorCore.mGetEntity(k)\n        if ent then\n            local tethers = Argus.getTethersOnEnt(ent.id)\n            if table.valid(tethers) then\n                for _, tether in pairs(tethers) do\n                    if tether.type == 84 then\n                        table.insert(current_orbs, {\n                            id = ent.id,\n                            x = ent.pos.x, y = ent.pos.y, z = ent.pos.z,\n                            tetherTargetID = tether.partnerid\n                        })\n                        break\n                    end\n                end\n            end\n        end\n    end\nend\n\nif #current_orbs == 0 then\n    self.used = true\n    return\nend\n\nlocal function normAngle2Pi(a)\n    while a < 0 do a = a + 2 * math.pi end\n    while a >= 2 * math.pi do a = a - 2 * math.pi end\n    return a\nend\n\nlocal center = data.arenaCenter or { x = 100, y = 0, z = 100 }\nlocal NORTH_ARROW_LEN = 18\nlocal NORTH_BUFFER_RAD = math.rad(25)\nlocal NORTH_SNAP_RAD = math.rad(8)\n\nlocal northHeading = normAngle2Pi(tonumber(kfk.pos.h) + math.pi)\nlocal northTip = TensorCore.getPosInDirection(center, northHeading, NORTH_ARROW_LEN)\nif not northTip then\n    self.used = true\n    return\nend\n\n-- Clockwise-from-north angle for a world position (x = East, z = South).\nlocal function clockwiseAngle(x, z)\n    return math.atan2(x - center.x, -(z - center.z))\nend\n\nlocal northAngle = clockwiseAngle(northTip.x, northTip.z)\n\nfor _, orb in ipairs(current_orbs) do\n    local cw = normAngle2Pi(clockwiseAngle(orb.x, orb.z) - northAngle + NORTH_BUFFER_RAD)\n    if cw > 2 * math.pi - NORTH_SNAP_RAD then\n        cw = 0\n    end\n    orb.cw = cw\nend\n\ntable.sort(current_orbs, function(a, b)\n    return a.cw < b.cw\nend)\n\nlocal my_prio_str = (hasAccretion and \"Accretion\" or myRole) .. \":\" .. myOrder\nlocal player = TensorCore.mGetPlayer()\n\n-- Work out my orb(s) this wave: the whole set if I'm the double grabber, else one by CW index.\nlocal iAmDouble = doubleTethers[current_wave] == my_prio_str\nlocal myOrbs = {}\n\nif iAmDouble then\n    for _, orb in ipairs(current_orbs) do\n        myOrbs[#myOrbs + 1] = orb\n    end\nelse\n    local wave_setup = waveMapping[current_wave]\n    if wave_setup then\n        for idx, role_str in pairs(wave_setup) do\n            if role_str == my_prio_str then\n                local orb = current_orbs[idx]\n                if orb then myOrbs[1] = orb end\n                break\n            end\n        end\n    end\nend\n\nif #myOrbs == 0 then\n    self.used = true\n    return\nend\n\n-- Am I already tethered to (holding) any of my orbs?\nlocal holding = false\nfor _, orb in ipairs(myOrbs) do\n    if orb.tetherTargetID == player.id then\n        holding = true\n        break\n    end\nend\n\nlocal targetPos\n\nif iAmDouble then\n    -- Collect the tethers one at a time, then bait the midpoint once we hold both.\n    -- Once soaked they drop out and the slot re-indexes to the next wave's orbs, so suppress.\n    if not holding and data.ljHeldWave == current_wave then\n        self.used = true\n        return\n    end\n    if holding then data.ljHeldWave = current_wave end\n\n    local ungrabbed = {}\n    for _, orb in ipairs(myOrbs) do\n        if orb.tetherTargetID ~= player.id then\n            ungrabbed[#ungrabbed + 1] = orb\n        end\n    end\n\n    if #ungrabbed > 0 then\n        -- Still a tether to collect: head to the nearest one we don't hold yet, aiming at the\n        -- midpoint between it and its current holder (same as a solo grab).\n        local nearest, nearestDist\n        for _, orb in ipairs(ungrabbed) do\n            local d = TensorCore.getDistance2d(player.pos, orb)\n            if not nearestDist or d < nearestDist then\n                nearestDist = d\n                nearest = orb\n            end\n        end\n\n        local tetherTarget = TensorCore.mGetEntity(nearest.tetherTargetID)\n        if not tetherTarget then\n            self.used = true\n            return\n        end\n\n        targetPos = {\n            x = nearest.x + (tetherTarget.pos.x - nearest.x) * 0.5,\n            y = nearest.y + (tetherTarget.pos.y - nearest.y) * 0.5,\n            z = nearest.z + (tetherTarget.pos.z - nearest.z) * 0.5\n        }\n    else\n        -- Hold both: bait the exact midpoint so the tethers cross out at the edge, off the party.\n        local sumX, sumY, sumZ = 0, 0, 0\n        for _, orb in ipairs(myOrbs) do\n            sumX = sumX + orb.x\n            sumY = sumY + orb.y\n            sumZ = sumZ + orb.z\n        end\n        local n = #myOrbs\n        targetPos = { x = sumX / n, y = sumY / n, z = sumZ / n }\n    end\nelseif holding then\n    -- We hold our solo tether: point clockwise of the orb and pulled in toward centre for uptime.\n    data.ljHeldWave = current_wave\n    local orb = myOrbs[1]\n\n    local STAND_CW_DIST = 6    -- yalms clockwise (tangential) of the orb\n    local STAND_IN_DIST = 14   -- yalms pulled in toward arena centre\n\n    local dx = orb.x - center.x\n    local dz = orb.z - center.z\n    local dist = math.sqrt(dx * dx + dz * dz)\n    if dist < 0.01 then\n        self.used = true\n        return\n    end\n\n    local radX, radZ = dx / dist, dz / dist   -- radial outward unit (centre -> orb)\n    local tanX, tanZ = -radZ, radX            -- clockwise tangent unit\n\n    targetPos = {\n        x = orb.x + tanX * STAND_CW_DIST - radX * STAND_IN_DIST,\n        y = orb.y,\n        z = orb.z + tanZ * STAND_CW_DIST - radZ * STAND_IN_DIST\n    }\nelse\n    -- Heading out to grab our solo tether: aim at the midpoint between the orb and its holder.\n    -- Once soaked the slot re-indexes to a neighbour until the wave ticks over, so suppress.\n    if data.ljHeldWave == current_wave then\n        self.used = true\n        return\n    end\n\n    local orb = myOrbs[1]\n    local tetherTarget = TensorCore.mGetEntity(orb.tetherTargetID)\n    if not tetherTarget then\n        self.used = true\n        return\n    end\n\n    targetPos = {\n        x = orb.x + (tetherTarget.pos.x - orb.x) * 0.5,\n        y = orb.y + (tetherTarget.pos.y - orb.y) * 0.5,\n        z = orb.z + (tetherTarget.pos.z - orb.z) * 0.5\n    }\nend\n\nlocal heading = TensorCore.getHeadingToTarget(player.pos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(player.pos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 1 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    if arrowDrawer then\n        arrowDrawer:addArrow(\n            player.pos.x, player.pos.y, player.pos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"7430be5e-a98a-a76d-b517-4c772f8c32b8",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Double Tether",
+							uuid = "f59732cb-4e21-c30d-846a-f3a71f5de8e0",
 							version = 2.1,
 						},
 					},
@@ -2248,19 +2372,31 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p3BlackHoleSolverStrategy == 4",
+							dequeueIfLuaFalse = true,
+							name = "Double Tether Option Enabled",
+							uuid = "7430be5e-a98a-a76d-b517-4c772f8c32b8",
+							version = 3,
+						},
+					},
 				},
 				eventType = 12,
 				mechanicTime = 578.27023501273,
 				name = "[Lj Draw] Arrow to Black Hole",
 				timeRange = true,
 				timelineIndex = 113,
-				timerEndOffset = 117,
+				timerEndOffset = 115,
 				timerOffset = -1,
 				timerStartOffset = -1,
-				uuid = "1c78ee56-c792-fbe4-a45e-8246954f5a95",
+				uuid = "534567ce-28c2-65a7-90e5-8d182b91a53f",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 42,
 		},
 	},
 	[136] = 
@@ -2307,7 +2443,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local timeout = 4000\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal dist = 9.5\nlocal rot = data.ljKefkaHeading\n\nlocal designTarget = { x = center.x, y = center.y, z = center.z - dist }\nlocal rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Proximity scaling\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local colorStart = 0xFF00FFFF\n    local colorMid = 0xFF0088FF\n    local colorEnd = 0xFF0000FF\n    local colorOutline = 0xFFFFFFFF\n    local outlineThickness = 2\n\n    local drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n    drawer:addTimedArrow(\n        timeout,\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							actionLua = "local timeout = 7500\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal dist = 9.5\nlocal rot = data.ljKefkaHeading\n\nlocal designTarget = { x = center.x, y = center.y, z = center.z - dist }\nlocal rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Proximity scaling\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local colorStart = 0xFF00FFFF\n    local colorMid = 0xFF0088FF\n    local colorEnd = 0xFF0000FF\n    local colorOutline = 0xFFFFFFFF\n    local outlineThickness = 2\n\n    local drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n    drawer:addTimedArrow(\n        timeout,\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -2333,7 +2469,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local timeout = 4000\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal dist = 9.5\nlocal rot = data.ljKefkaHeading\n\nlocal designTarget = { x = center.x, y = center.y, z = center.z + dist }\nlocal rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Proximity scaling\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local colorStart = 0xFF00FFFF\n    local colorMid = 0xFF0088FF\n    local colorEnd = 0xFF0000FF\n    local colorOutline = 0xFFFFFFFF\n    local outlineThickness = 2\n\n    local drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n    drawer:addTimedArrow(\n        timeout,\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true\n",
+							actionLua = "local timeout = 7500\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal dist = 9.5\nlocal rot = data.ljKefkaHeading\n\nlocal designTarget = { x = center.x, y = center.y, z = center.z + dist }\nlocal rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Proximity scaling\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 5 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local colorStart = 0xFF00FFFF\n    local colorMid = 0xFF0088FF\n    local colorEnd = 0xFF0000FF\n    local colorOutline = 0xFFFFFFFF\n    local outlineThickness = 2\n\n    local drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\n    drawer:addTimedArrow(\n        timeout,\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true\n",
 							conditions = 
 							{
 								
@@ -2628,7 +2764,7 @@ local tbl =
 				name = "[Lj Draw] Draw Arrow to Towers/Middle",
 				timeRange = true,
 				timelineIndex = 140,
-				timerEndOffset = 8,
+				timerEndOffset = 7,
 				uuid = "0ae2b750-99a0-a6fa-8af6-dc13c80e06bb",
 				version = 2,
 			},
@@ -2948,7 +3084,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread E, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack S, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread E, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 40)  -- stack S, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -2974,7 +3110,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread W, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack N, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread W, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 40)  -- stack N, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3045,7 +3181,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread E, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack S, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread E, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack S, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3071,7 +3207,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 50)  -- spread W, ≥50s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack N, ≥50s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread W, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 40)  -- stack N, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
 							conditions = 
 							{
 								
