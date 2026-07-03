@@ -1013,7 +1013,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "for i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and uuid then\n        Argus.deleteTimedShape(uuid)\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local myColorStart = 0xFF00FFFF\nlocal myColorMid = 0xFF0088FF\nlocal myColorEnd = 0xFF0000FF\n\nlocal uuidsToDelete = {}\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid, drawColorStart, drawColorEnd = Argus.getTimedDrawBaseInfo(i)\n    \n    if shapeType == \"arrow\" and uuid then\n        -- Grab colorMid (6th return of OptArgs)\n        local _, _, _, _, _, drawColorMid = Argus.getTimedDrawOptArgs(i)\n        \n        -- If any of the colors don't match mine, mark it for deletion.\n        if drawColorStart ~= myColorStart or drawColorMid ~= myColorMid or drawColorEnd ~= myColorEnd then\n            table.insert(uuidsToDelete, uuid)\n        end\n    end\nend\n\nfor _, uuid in ipairs(uuidsToDelete) do\n    Argus.deleteTimedShape(uuid)\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
 							version = 2.1,
@@ -1028,9 +1028,9 @@ local tbl =
 				name = "[Lj Draw] Delete Teletrounce Arrow",
 				timeRange = true,
 				timelineIndex = 33,
-				timerEndOffset = 5,
+				timerEndOffset = 2,
 				timerOffset = -2,
-				timerStartOffset = -4,
+				timerStartOffset = -1,
 				uuid = "cfa881c7-45b1-ac97-994b-36179d9abdee",
 				version = 2,
 			},
@@ -3084,7 +3084,33 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread E, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 40)  -- stack S, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							actionLua = "local center     = {x = 100, y = 0, z = 100}\nlocal west       = {x = 87.5, y = 0, z = 100 }  -- spread (E/W)\nlocal north      = {x = 100,  y = 0, z = 87.5}  -- stack  (N/S)\nlocal lead       = 7   -- seconds before your debuff expires to show the spread arrow\nlocal stackDelay = 43  -- wave 1 = 43, wave 2 = 53\n\nlocal player = TensorCore.mGetPlayer()\nlocal truth  = data.ljExdeathAura == \"Truth\"\n\nlocal buff = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nlocal spread = false\nif buff then\n    spread = (buff.id == 5544)                 -- 5544 = spread, 5545 = stack\n    if not truth then spread = not spread end  -- invert unless aura is Truth\nend\n\n-- spread only in the wave your debuff resolves; otherwise stack with the team\nlocal spreadThisWave = spread and (buff.duration - lead) <= stackDelay\n\nlocal target, delay\nif spreadThisWave then\n    target = west\n    delay  = math.max(0, buff.duration - lead) * 1000  -- timed to your own debuff\nelse\n    target = north\n    delay  = stackDelay * 1000                          -- fixed stack timing for this wave\nend\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    delay, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"15b8bb18-853c-d4f1-98ab-996eb7d2f7ab",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Support",
+							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center     = {x = 100, y = 0, z = 100}\nlocal east       = {x = 112.5, y = 0, z = 100  }  -- spread (E/W)\nlocal south      = {x = 100,   y = 0, z = 112.5}  -- stack  (N/S)\nlocal lead       = 7\nlocal stackDelay = 43  -- wave 1 = 43, wave 2 = 53\n\nlocal player = TensorCore.mGetPlayer()\nlocal truth  = data.ljExdeathAura == \"Truth\"\n\nlocal buff = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nlocal spread = false\nif buff then\n    spread = (buff.id == 5544)\n    if not truth then spread = not spread end\nend\n\nlocal spreadThisWave = spread and (buff.duration - lead) <= stackDelay\n\nlocal target, delay\nif spreadThisWave then\n    target = east\n    delay  = math.max(0, buff.duration - lead) * 1000\nelse\n    target = south\n    delay  = stackDelay * 1000\nend\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    delay, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3104,31 +3130,6 @@ local tbl =
 							version = 2.1,
 						},
 						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread W, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 40)  -- stack N, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    43000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"15b8bb18-853c-d4f1-98ab-996eb7d2f7ab",
-									true,
-								},
-								
-								{
-									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
-									false,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Support",
-							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
-							version = 2.1,
-						},
 					},
 				},
 				conditions = 
@@ -3181,7 +3182,33 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread E, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 50)  -- stack S, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always S\nend\n\nlocal target = spread and {x = 112.5, y = 0, z = 100  }  -- East\n                      or  {x = 100,   y = 0, z = 112.5}  -- South\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							actionLua = "local center     = {x = 100, y = 0, z = 100}\nlocal west       = {x = 87.5, y = 0, z = 100 }  -- spread (E/W)\nlocal north      = {x = 100,  y = 0, z = 87.5}  -- stack  (N/S)\nlocal lead       = 7   -- seconds before your debuff expires to show the spread arrow\nlocal stackDelay = 43  -- wave 1 = 43, wave 2 = 53\n\nlocal player = TensorCore.mGetPlayer()\nlocal truth  = data.ljExdeathAura == \"Truth\"\n\nlocal buff = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nlocal spread = false\nif buff then\n    spread = (buff.id == 5544)                 -- 5544 = spread, 5545 = stack\n    if not truth then spread = not spread end  -- invert unless aura is Truth\nend\n\n-- spread only in the wave your debuff resolves; otherwise stack with the team\nlocal spreadThisWave = spread and (buff.duration - lead) <= stackDelay\n\nlocal target, delay\nif spreadThisWave then\n    target = west\n    delay  = math.max(0, buff.duration - lead) * 1000  -- timed to your own debuff\nelse\n    target = north\n    delay  = stackDelay * 1000                          -- fixed stack timing for this wave\nend\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    delay, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"162df881-c016-8e8a-b363-b0f345a8c6da",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Support",
+							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center     = {x = 100, y = 0, z = 100}\nlocal east       = {x = 112.5, y = 0, z = 100  }  -- spread (E/W)\nlocal south      = {x = 100,   y = 0, z = 112.5}  -- stack  (N/S)\nlocal lead       = 7\nlocal stackDelay = 53  -- wave 1 = 43, wave 2 = 53\n\nlocal player = TensorCore.mGetPlayer()\nlocal truth  = data.ljExdeathAura == \"Truth\"\n\nlocal buff = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nlocal spread = false\nif buff then\n    spread = (buff.id == 5544)\n    if not truth then spread = not spread end\nend\n\nlocal spreadThisWave = spread and (buff.duration - lead) <= stackDelay\n\nlocal target, delay\nif spreadThisWave then\n    target = east\n    delay  = math.max(0, buff.duration - lead) * 1000\nelse\n    target = south\n    delay  = stackDelay * 1000\nend\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    delay, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3201,31 +3228,6 @@ local tbl =
 							version = 2.1,
 						},
 						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal player = TensorCore.mGetPlayer()\n\nlocal has5544 = TensorCore.hasBuff(player, 5544, nil, nil, 40)  -- spread W, more than 40s left\nlocal has5545 = TensorCore.hasBuff(player, 5545, nil, nil, 40)  -- stack N, more than 40s left\n\nlocal spread\nif has5544 or has5545 then\n    spread = has5544                                              -- normal mapping\n    if data.ljExdeathAura ~= \"Truth\" then spread = not spread end -- invert only with a buff\nelse\n    spread = false                                               -- no buff → always N\nend\n\nlocal target = spread and {x = 87.5, y = 0, z = 100 }   -- West\n                      or  {x = 100,  y = 0, z = 87.5}    -- North\n\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(\n    7000,\n    center.x, center.y, center.z,\n    TensorCore.getHeadingToTarget(center, target),\n    9, 1.5, 3.5, 6,\n    53000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"162df881-c016-8e8a-b363-b0f345a8c6da",
-									true,
-								},
-								
-								{
-									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
-									false,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Support",
-							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
-							version = 2.1,
-						},
 					},
 				},
 				conditions = 
