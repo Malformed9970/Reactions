@@ -3205,22 +3205,23 @@ local tbl =
 					{
 						data = 
 						{
-							buffID = 5546,
-							category = "Self",
-							name = "Self: Acceleration Bomb Buff",
-							uuid = "2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
 							category = "Lua",
 							conditionLua = "return data.ljExdeathAura == \"Truth\"",
 							dequeueIfLuaFalse = true,
 							name = "Exdeath: Truth",
 							uuid = "274f2dad-f7c1-b419-ad16-a81bca11d777",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffID = 5546,
+							category = "Self",
+							name = "Self: Acceleration Bomb Buff",
+							uuid = "2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
 							version = 3,
 						},
 					},
@@ -3352,6 +3353,11 @@ local tbl =
 								
 								{
 									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									true,
+								},
+								
+								{
+									"c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
 									true,
 								},
 							},
