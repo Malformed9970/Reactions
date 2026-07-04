@@ -2540,7 +2540,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal cornerDist = 11                     -- distance from centre to each corner\nlocal offset = cornerDist / math.sqrt(2)    -- equal X/Z offset for a diagonal corner\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) corners; rotated to Kefka below.\nlocal nw = { x = center.x - offset, z = center.z - offset }  -- H1 + MT\nlocal ne = { x = center.x + offset, z = center.z - offset }  -- H2 + OT\nlocal sw = { x = center.x - offset, z = center.z + offset }  -- R1 + M1\nlocal se = { x = center.x + offset, z = center.z + offset }  -- R2 + M2\n\nlocal cornerByRole = {\n    H1 = nw, MT = nw,\n    H2 = ne, OT = ne,\n    R1 = sw, M1 = sw,\n    R2 = se, M2 = se,\n}\n\nlocal corner = cornerByRole[GetCurrentRole()]\nif corner then\n    corner.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, corner, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 1 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local mode = \"LPDU\"  -- \"LPDU\" or \"ZsQ\"\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal cornerDist = 11                       -- distance from centre to each corner\nlocal offset = cornerDist / math.sqrt(2)    -- equal X/Z offset for a diagonal corner\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) corners; rotated to Kefka below.\nlocal nw = { x = center.x - offset, z = center.z - offset }\nlocal ne = { x = center.x + offset, z = center.z - offset }\nlocal sw = { x = center.x - offset, z = center.z + offset }\nlocal se = { x = center.x + offset, z = center.z + offset }\n\n-- Role -> corner pairings per strat (all directions relative to Kefka).\nlocal cornerByRoleByMode = {\n    ZsQ = {\n        H1 = nw, MT = nw,\n        H2 = ne, OT = ne,\n        R1 = sw, M1 = sw,\n        R2 = se, M2 = se,\n    },\n    LPDU = {\n        MT = nw, OT = nw,\n        H1 = ne, H2 = ne,\n        M1 = sw, M2 = sw,\n        R1 = se, R2 = se,\n    },\n}\nlocal cornerByRole = cornerByRoleByMode[mode]\n\nlocal corner = cornerByRole[GetCurrentRole()]\nif corner then\n    corner.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, corner, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -2712,7 +2712,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal towerDist = 10\nlocal rot = data.ljKefkaHeading\n\n-- Design (relative-north) tower spots; rotated to Kefka below. West pair / East pair.\nlocal towerByRole = {\n    H1 = { x = center.x - towerDist, z = center.z },  -- West\n    MT = { x = center.x - towerDist, z = center.z },  -- West\n    H2 = { x = center.x + towerDist, z = center.z },  -- East\n    OT = { x = center.x + towerDist, z = center.z },  -- East\n    R1 = { x = center.x - towerDist, z = center.z },  -- West\n    M1 = { x = center.x - towerDist, z = center.z },  -- West\n    R2 = { x = center.x + towerDist, z = center.z },  -- East\n    M2 = { x = center.x + towerDist, z = center.z },  -- East\n}\n\nlocal SUPPORT = { H1 = true, H2 = true, MT = true, OT = true }\n\nlocal role = GetCurrentRole()\nlocal playerGroup = SUPPORT[role] and \"Support\" or \"DPS\"\n\n-- Group named by data.ljP3Stack stacks mid; the other group soaks the towers. This then flips later by changing the vaue of data.ljP3Stack.\nlocal designTarget\nif playerGroup == data.ljP3Stack then\n    designTarget = { x = center.x, z = center.z }\nelse\n    designTarget = towerByRole[role]\nend\n\nif designTarget then\n    designTarget.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local mode = \"LPDU\"  -- \"LPDU\" or \"ZsQ\"\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal towerDist = 10\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) tower spots; rotated to Kefka below.\nlocal westTower = { x = center.x - towerDist, z = center.z }\nlocal eastTower = { x = center.x + towerDist, z = center.z }\n\n-- Role -> tower assignment per strat (all directions relative to Kefka).\nlocal towerByRoleByMode = {\n    ZsQ = {\n        H1 = westTower, MT = westTower, R1 = westTower, M1 = westTower,\n        H2 = eastTower, OT = eastTower, R2 = eastTower, M2 = eastTower,\n    },\n    LPDU = {\n        H1 = eastTower, H2 = eastTower, M2 = eastTower, R2 = eastTower,\n        MT = westTower, OT = westTower, M1 = westTower, R1 = westTower,\n    },\n}\nlocal towerByRole = towerByRoleByMode[mode]\n\nlocal SUPPORT = { H1 = true, H2 = true, MT = true, OT = true }\n\nlocal role = GetCurrentRole()\nlocal playerGroup = SUPPORT[role] and \"Support\" or \"DPS\"\n\n-- Group named by data.ljP3Stack stacks mid; the other group soaks the towers. This then flips later by changing the vaue of data.ljP3Stack.\nlocal designTarget\nif playerGroup == data.ljP3Stack then\n    designTarget = { x = center.x, z = center.z }\nelse\n    designTarget = towerByRole[role]\nend\n\nif designTarget then\n    designTarget.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 5 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3168,6 +3168,73 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljAccelBomb = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
+									true,
+								},
+								
+								{
+									"274f2dad-f7c1-b419-ad16-a81bca11d777",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "5c32ecc6-92bc-aab9-bfe4-eb1224e52be8",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffID = 5546,
+							category = "Self",
+							name = "Self: Acceleration Bomb Buff",
+							uuid = "2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljExdeathAura == \"Truth\"",
+							dequeueIfLuaFalse = true,
+							name = "Exdeath: Truth",
+							uuid = "274f2dad-f7c1-b419-ad16-a81bca11d777",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[Lj Data] Get Accel Bomb",
+				timeRange = true,
+				timelineIndex = 153,
+				timerEndOffset = 16,
+				timerStartOffset = -1,
+				uuid = "fd1f966b-a60e-dbfc-9db3-d0dbc23998f0",
+				version = 2,
+			},
+		},
 	},
 	[156] = 
 	{
@@ -3263,6 +3330,115 @@ local tbl =
 				timelineIndex = 156,
 				timerOffset = 1,
 				uuid = "ef0fc3d5-7870-4f0a-bf0e-f3773ff46d0f",
+				version = 2,
+			},
+		},
+	},
+	[157] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Stop Everything",
+							stopAllActions = true,
+							uuid = "220568e8-2c1c-e615-840f-10b1db559f82",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									true,
+								},
+								
+								{
+									"4663a60a-faba-f023-aa6d-dd2d0807e008",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Resume Everything",
+							resumeAllActions = true,
+							uuid = "6035706f-bf33-c304-96d1-7a36c2296c40",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljAccelBomb == true",
+							dequeueIfLuaFalse = true,
+							name = "Self: Accel Bomb",
+							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 2,
+							buffID = 5546,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Acceleration Bomb Buff",
+							uuid = "c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							actionUUID = "220568e8-2c1c-e615-840f-10b1db559f82",
+							category = "Action",
+							name = "Action Used: Stop Everything",
+							uuid = "4663a60a-faba-f023-aa6d-dd2d0807e008",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 846.19462329432,
+				name = "[Lj Opti] STOP EVERYTHING",
+				throttleTime = 2500,
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = 90,
+				timerOffset = -2,
+				timerStartOffset = -3,
+				uuid = "c8135b33-eeb8-ff45-9ca2-d49178ba1afd",
 				version = 2,
 			},
 		},
