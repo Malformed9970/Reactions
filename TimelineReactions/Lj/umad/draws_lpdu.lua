@@ -44,7 +44,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local dmu = AnyoneCore.Settings.Reactions.dmu\n\ndmu.p1TeleTrounceStrat = 1\n\ndmu.p2ForsakenAutomaticCongaSettings = {\n    d1Spot = 1,\n    d2Spot = 2,\n    d3Spot = 3,\n    d4Spot = 4,\n    h1West = 2,\n    t1West = 2\n}\n\ndmu.p2ForsakenAutomaticPreference = 4\n\ndmu.p2ForsakenAutomaticTrounceSettings = {\n    D1Idx = 5,\n    D2Idx = 7,\n    D3Idx = 1,\n    D4Idx = 3,\n    H1Idx = 5,\n    H2Idx = 7,\n    T1Idx = 1,\n    T2Idx = 3\n}\n\ndmu.p2ForsakenAutomaticWaveSettings = {\n    d1Spot = 1,\n    d2Spot = 2,\n    d3Spot = 3,\n    d4Spot = 4,\n    h1West = 2,\n    t1West = 2\n}\n\ndmu.p2ForsakenCongaOption = 2\ndmu.p2ForsakenDpsRoleMode = 1\ndmu.p2ForsakenHelperEnabled = true\ndmu.p2ForsakenPairings = {\n    D1Partner = 7,\n    D2Partner = 8,\n    D3Partner = 5,\n    D4Partner = 6,\n    H1Partner = 1,\n    H2Partner = 2,\n    T1Partner = 3,\n    T2Partner = 4\n}\n\ndmu.p2ForsakenStrat = 12\n\ndmu.p3BlackHoleSolverStrategy = 2\n\ndmu.p4AccelFinalReminder = true\ndmu.p4HelperEnabled = true\ndmu.p4ShriekLockface = true\ndmu.p4StackSpreadOrientation = 1\n\ndmu.p5MaddeningFacing = 1\ndmu.p5TowerRotation = 1\n\nself.used = true",
+							actionLua = "local dmu = AnyoneCore.Settings.Reactions.dmu\n\ndmu.p1TeleTrounceStrat = 1\n\ndmu.p2ForsakenStrat = 3\n\ndmu.p3BlackHoleSolverStrategy = 2\n\ndmu.p4HelperEnabled = true\ndmu.p4StackSpreadOrientation = 1\n\ndmu.p5HelperEnabled = true\ndmu.p5MaddeningFacing = 1\ndmu.p5TowerRotation = 1\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "72436b0d-a28a-4e51-a27b-9dbefa347f5e",
 							version = 2.1,
