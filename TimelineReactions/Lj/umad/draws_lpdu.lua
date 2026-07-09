@@ -1325,7 +1325,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1360,7 +1360,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local ahead = 4 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local ahead = 3.5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1397,7 +1397,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1432,7 +1432,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local ahead = 4 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local ahead = 3.5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1469,7 +1469,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1504,7 +1504,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local ahead = 4 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
+							actionLua = "local ahead = 3.5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1541,7 +1541,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\n\n-- Collect circle positions.\nlocal circles = {}\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and x then\n        circles[#circles + 1] = { x = x, y = y, z = z }\n    end\nend\n\n-- Find a spot where two circles share the exact same ground coords.\nlocal target\nfor a = 1, #circles - 1 do\n    for b = a + 1, #circles do\n        if circles[a].x == circles[b].x and circles[a].z == circles[b].z then\n            target = circles[a]\n            break\n        end\n    end\n    if target then break end\nend\n\nif target then\n    local dx, dy, dz = playerPos.x - target.x, playerPos.y - target.y, playerPos.z - target.z\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, target.x, target.y, target.z, 4)\n    end\nend\n\nself.used = true",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -3498,11 +3498,11 @@ local tbl =
 						data = 
 						{
 							buffCheckType = 3,
-							buffDuration = 2,
+							buffDuration = 1,
 							buffID = 5546,
 							category = "Self",
 							comparator = 2,
-							name = "Self: Acceleration Bomb Buff <= 2s",
+							name = "Self: Accel Bomb Buff <= 1s",
 							uuid = "c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
 							version = 3,
 						},
@@ -3523,13 +3523,320 @@ local tbl =
 				enabled = false,
 				mechanicTime = 846.19462329432,
 				name = "[Lj Opti] STOP EVERYTHING",
-				throttleTime = 2500,
+				throttleTime = 1500,
 				timeRange = true,
 				timelineIndex = 157,
 				timerEndOffset = 90,
 				timerOffset = -2,
 				timerStartOffset = -3,
 				uuid = "c8135b33-eeb8-ff45-9ca2-d49178ba1afd",
+				version = 2,
+			},
+		},
+	},
+	[173] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 973.84072239989,
+				name = "[Lj Draw] Line to Role Stacks",
+				timeRange = true,
+				timelineIndex = 173,
+				timerEndOffset = 12,
+				uuid = "0e1b544b-d075-6339-873e-9b70dc8239b2",
+				version = 2,
+			},
+		},
+	},
+	[188] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1006.5474749784,
+				name = "[Lj Draw] Line to Role Stacks",
+				timeRange = true,
+				timelineIndex = 188,
+				timerEndOffset = 12,
+				uuid = "1e39b4c6-0bae-26a7-8d24-d368b97efc96",
+				version = 2,
+			},
+		},
+	},
+	[203] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1054.5292176297,
+				name = "[Lj Draw] Line to Role Stacks",
+				timeRange = true,
+				timelineIndex = 203,
+				timerEndOffset = 10,
+				uuid = "941e06e1-ff52-5647-87ad-542e70c58964",
+				version = 2,
+			},
+		},
+	},
+	[212] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1096.9713108088,
+				name = "[Lj Draw] Line to Role Stacks",
+				timeRange = true,
+				timelineIndex = 212,
+				timerEndOffset = 17,
+				timerStartOffset = 1,
+				uuid = "5f417c69-5caa-a27e-9f52-28c9e2c06e07",
+				version = 2,
+			},
+		},
+	},
+	[218] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal targetDist = 10\n\n-- South is +Z in FFXIV world space.\nlocal targetX = center.x\nlocal targetZ = center.z + targetDist\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = targetX, y = sourcePos.y, z = targetZ }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth  = math.max(0.5, 1 * scale)\nlocal tipWidth   = math.max(1.5, 3 * scale)\nlocal tipLength  = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "7587a9cd-948e-a6b6-9556-94b07df56d78",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1113.9009474604,
+				name = "[Lj Draw] Forsaken S",
+				timeRange = true,
+				timelineIndex = 218,
+				timerEndOffset = 11,
+				uuid = "2ea636dc-2501-f922-8bb8-15baa6d4229b",
+				version = 2,
+			},
+		},
+	},
+	[219] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal targetDist = 10    \nlocal offset = targetDist / math.sqrt(2)         -- equal X/Z split for a diagonal\n\n-- SW = West (-X) + South (+Z).\nlocal targetX = center.x - offset\nlocal targetZ = center.z + offset\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = targetX, y = sourcePos.y, z = targetZ }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth  = math.max(0.5, 1 * scale)\nlocal tipWidth   = math.max(1.5, 3 * scale)\nlocal tipLength  = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "7587a9cd-948e-a6b6-9556-94b07df56d78",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1125.2071474604,
+				name = "[Lj Draw] Forsaken SW",
+				timeRange = true,
+				timelineIndex = 219,
+				timerEndOffset = 12,
+				uuid = "f48d7af7-5b41-247d-8226-6014ab2722b1",
+				version = 2,
+			},
+		},
+	},
+	[221] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal targetDist = 10 \nlocal offset = targetDist / math.sqrt(2)         -- equal X/Z split for a diagonal\n\n-- NW = West (-X) + North (-Z).\nlocal targetX = center.x - offset\nlocal targetZ = center.z - offset\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = targetX, y = sourcePos.y, z = targetZ }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth  = math.max(0.5, 1 * scale)\nlocal tipWidth   = math.max(1.5, 3 * scale)\nlocal tipLength  = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "7587a9cd-948e-a6b6-9556-94b07df56d78",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1133.3461474604,
+				name = "[Lj Draw] Forsaken NW",
+				timeRange = true,
+				timelineIndex = 221,
+				timerEndOffset = 7,
+				uuid = "ef59eb4e-a0f7-7e78-a60a-6a7bd120ae78",
+				version = 2,
+			},
+		},
+	},
+	[223] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal targetDist = 10\nlocal offset = targetDist / math.sqrt(2)         -- equal X/Z split for a diagonal\n\n-- NE = East (+X) + North (-Z).\nlocal targetX = center.x + offset\nlocal targetZ = center.z - offset\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = targetX, y = sourcePos.y, z = targetZ }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth  = math.max(0.5, 1 * scale)\nlocal tipWidth   = math.max(1.5, 3 * scale)\nlocal tipLength  = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "7587a9cd-948e-a6b6-9556-94b07df56d78",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1141.5122474604,
+				name = "[Lj Draw] Forsaken NE",
+				timeRange = true,
+				timelineIndex = 223,
+				timerEndOffset = 7,
+				uuid = "76cf2f9b-eee6-c856-97e1-4b40f541c936",
+				version = 2,
+			},
+		},
+	},
+	[225] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal targetDist = 10\nlocal offset = targetDist / math.sqrt(2)         -- equal X/Z split for a diagonal\n\n-- SE = East (+X) + South (+Z).\nlocal targetX = center.x + offset\nlocal targetZ = center.z + offset\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = targetX, y = sourcePos.y, z = targetZ }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth  = math.max(0.5, 1 * scale)\nlocal tipWidth   = math.max(1.5, 3 * scale)\nlocal tipLength  = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "7587a9cd-948e-a6b6-9556-94b07df56d78",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1149.6575474604,
+				name = "[Lj Draw] Forsaken NE",
+				timeRange = true,
+				timelineIndex = 225,
+				timerEndOffset = 5,
+				uuid = "d0df09eb-2427-3688-adc2-be9b5729dd5e",
 				version = 2,
 			},
 		},
