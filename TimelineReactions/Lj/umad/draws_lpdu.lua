@@ -1635,6 +1635,197 @@ local tbl =
 			},
 		},
 	},
+	[67] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local arenaOrigin = { x = 100, y = 0, z = 100 }\nlocal displayDuration = 5000\nlocal displayDelay = 10000\n\ndata.ljClockwiseTrineLocations = data.ljClockwiseTrineLocations or {}\n\nlocal spawnedObject = TensorCore.mGetEntity(eventArgs.entityID)\nlocal recordedLocations = data.ljClockwiseTrineLocations\nif #recordedLocations >= 3 then\n    self.used = true\n    return\nend\n\nrecordedLocations[#recordedLocations + 1] = {\n    x = spawnedObject.pos.x,\n    y = spawnedObject.pos.y,\n    z = spawnedObject.pos.z,\n}\n\nif #recordedLocations == 3 then\n    local destination = recordedLocations[1]\n    local smallestTurn = math.huge\n\n    for index = 1, #recordedLocations do\n        local candidate = recordedLocations[index]\n        local eastwardOffset = candidate.x - arenaOrigin.x\n        local northwardOffset = arenaOrigin.z - candidate.z\n        local clockwiseTurn = math.atan2(eastwardOffset, northwardOffset)\n\n        if clockwiseTurn < 0 then\n            clockwiseTurn = clockwiseTurn + (math.pi * 2)\n        end\n\n        if clockwiseTurn < smallestTurn then\n            smallestTurn = clockwiseTurn\n            destination = candidate\n        end\n    end\n\n    local origin = TensorCore.mGetPlayer().pos\n    local travelDistance = TensorCore.getDistance2d(origin, destination)\n    local scale = math.min(1, travelDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = travelDistance - tipLength\n\n    if baseLength > 0 then\n        local heading = TensorCore.getHeadingToTarget(origin, destination)\n        local arrowDrawer = TensorCore.getCachedDrawer(\n            0xFF00FFFF,\n            0xFF0088FF,\n            0xFF0000FF,\n            0xFFFFFFFF,\n            2\n        )\n\n        arrowDrawer:addTimedArrow(\n            displayDuration,\n            origin.x, origin.y, origin.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            displayDelay, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"f1a7c30d-b35e-012e-a7e1-93a1ef6e1b8e",
+									true,
+								},
+								
+								{
+									"56ca98b2-9f3a-50fe-8428-eef29bff4fd9",
+									true,
+								},
+								
+								{
+									"c432a01f-f902-79bc-9890-b270769a04b6",
+									false,
+								},
+								
+								{
+									"1d642120-c55b-a5ac-a0c0-9d14f7a1a4ba",
+									true,
+								},
+							},
+							gVar = "ACR_TensorMagnum3_CD",
+							name = "Clockwise",
+							uuid = "5cbb9f6c-4c7a-8962-9e27-dae3ee1c7504",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local arenaOrigin = { x = 100, y = 0, z = 100 }\nlocal displayDuration = 5000\nlocal displayDelay = 10000\n\ndata.ljCounterclockwiseTrineLocations = data.ljCounterclockwiseTrineLocations or {}\n\nlocal spawnedObject = TensorCore.mGetEntity(eventArgs.entityID)\nlocal recordedLocations = data.ljCounterclockwiseTrineLocations\nif #recordedLocations >= 3 then\n    self.used = true\n    return\nend\n\nrecordedLocations[#recordedLocations + 1] = {\n    x = spawnedObject.pos.x,\n    y = spawnedObject.pos.y,\n    z = spawnedObject.pos.z,\n}\n\nif #recordedLocations == 3 then\n    local destination = recordedLocations[1]\n    local smallestTurn = math.huge\n\n    for index = 1, #recordedLocations do\n        local candidate = recordedLocations[index]\n        local westwardOffset = arenaOrigin.x - candidate.x\n        local northwardOffset = arenaOrigin.z - candidate.z\n        local counterclockwiseTurn = math.atan2(westwardOffset, northwardOffset)\n\n        if counterclockwiseTurn < 0 then\n            counterclockwiseTurn = counterclockwiseTurn + (math.pi * 2)\n        end\n\n        if counterclockwiseTurn < smallestTurn then\n            smallestTurn = counterclockwiseTurn\n            destination = candidate\n        end\n    end\n\n    local origin = TensorCore.mGetPlayer().pos\n    local travelDistance = TensorCore.getDistance2d(origin, destination)\n    local scale = math.min(1, travelDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = travelDistance - tipLength\n\n    if baseLength > 0 then\n        local heading = TensorCore.getHeadingToTarget(origin, destination)\n        local arrowDrawer = TensorCore.getCachedDrawer(\n            0xFF00FFFF,\n            0xFF0088FF,\n            0xFF0000FF,\n            0xFFFFFFFF,\n            2\n        )\n\n        arrowDrawer:addTimedArrow(\n            displayDuration,\n            origin.x, origin.y, origin.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            displayDelay, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"f1a7c30d-b35e-012e-a7e1-93a1ef6e1b8e",
+									true,
+								},
+								
+								{
+									"56ca98b2-9f3a-50fe-8428-eef29bff4fd9",
+									true,
+								},
+								
+								{
+									"c432a01f-f902-79bc-9890-b270769a04b6",
+									true,
+								},
+								
+								{
+									"1d642120-c55b-a5ac-a0c0-9d14f7a1a4ba",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Counter Clockwise",
+							uuid = "64d27cad-d625-a48b-9f21-1fd390384074",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventIntValue = 16,
+							name = "Event: A2 == 16",
+							uuid = "f1a7c30d-b35e-012e-a7e1-93a1ef6e1b8e",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							dequeueIfLuaFalse = true,
+							eventArgType = 3,
+							eventIntValue = 32,
+							name = "Event: A3 == 32",
+							uuid = "56ca98b2-9f3a-50fe-8428-eef29bff4fd9",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgOptionType = 2,
+							eventEntityContentID = 2015154,
+							name = "Event: ContentID 2015154",
+							uuid = "0077309c-948d-c8b1-8d85-8e5c93a4bcf9",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgOptionType = 2,
+							eventEntityContentID = 2015155,
+							name = "Event: ContentID 2015155",
+							uuid = "85e013db-f4ef-7eef-81b4-d286f0e485fd",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: Tank",
+							partyTargetType = "Tank",
+							uuid = "c432a01f-f902-79bc-9890-b270769a04b6",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"0077309c-948d-c8b1-8d85-8e5c93a4bcf9",
+									true,
+								},
+								
+								{
+									"85e013db-f4ef-7eef-81b4-d286f0e485fd",
+									true,
+								},
+							},
+							matchAnyBuff = true,
+							name = "F - OR Gate ContentIDs",
+							partyTargetNumber = 0,
+							uuid = "1d642120-c55b-a5ac-a0c0-9d14f7a1a4ba",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+				},
+				eventType = 19,
+				loop = true,
+				mechanicTime = 352.92100258191,
+				name = "[Lj Draw] Draw Arrow to Trine Safespot",
+				timeRange = true,
+				timelineIndex = 67,
+				timerEndOffset = 15,
+				timerStartOffset = -5,
+				uuid = "1b0ef89a-2e9f-f6c1-a18a-4517dd784975",
+				version = 2,
+			},
+			inheritedIndex = 6,
+		},
+	},
 	[76] = 
 	{
 		
@@ -3559,6 +3750,170 @@ local tbl =
 				timelineIndex = 173,
 				timerEndOffset = 12,
 				uuid = "0e1b544b-d075-6339-873e-9b70dc8239b2",
+				version = 2,
+			},
+		},
+	},
+	[180] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local state = data.ljP5FloodProjectionGuide\n\nif state == nil then\n    state = {\n        projections = {},\n        sequence = nil,\n        currentWave = 1,\n        castsInCurrentWave = 0,\n        pendingAdvanceAt = nil,\n    }\n    data.ljP5FloodProjectionGuide = state\nend\n\n-- Eight projections appear as four consecutive pairs.\nif #state.projections < 8 then\n    local projectionNumber = #state.projections + 1\n\n    state.projections[projectionNumber] = {\n        entityID = eventArgs.entityID,\n        x = eventArgs.x,\n        z = eventArgs.z,\n        heading = eventArgs.heading,\n    }\n\nend\n\n-- The first two pairs reveal the starting cardinal and rotation direction.\nif state.sequence == nil and #state.projections >= 4 then\n    local testCards = {\n        { x = 100, z = 87 },\n        { x = 113, z = 100 },\n        { x = 100, z = 113 },\n        { x = 87, z = 100 },\n    }\n\n    local function wrapCard(index)\n        return ((index - 1) % 4) + 1\n    end\n\n    local function isCardSafe(cardIndex, firstProjectionIndex)\n        local card = testCards[cardIndex]\n\n        for projectionIndex = firstProjectionIndex, firstProjectionIndex + 1 do\n            local projection = state.projections[projectionIndex]\n            local directionX = math.sin(projection.heading)\n            local directionZ = math.cos(projection.heading)\n            local offsetX = card.x - projection.x\n            local offsetZ = card.z - projection.z\n            local perpendicularDistance = math.abs(\n                offsetX * directionZ - offsetZ * directionX\n            )\n\n            if perpendicularDistance <= 5 then\n                return false\n            end\n        end\n\n        return true\n    end\n\n    local safeInFirstWave = {}\n    local safeInSecondWave = {}\n\n    for cardIndex = 1, 4 do\n        safeInFirstWave[cardIndex] = isCardSafe(cardIndex, 1)\n        safeInSecondWave[cardIndex] = isCardSafe(cardIndex, 3)\n    end\n\n    local startingCard = nil\n\n    for cardIndex = 1, 4 do\n        if safeInFirstWave[cardIndex] and safeInSecondWave[cardIndex] then\n            startingCard = cardIndex\n            break\n        end\n    end\n\n    if startingCard ~= nil then\n        local rotationDirection = 1\n\n        if not safeInSecondWave[wrapCard(startingCard + 1)] then\n            rotationDirection = -1\n        end\n\n        state.sequence = {}\n\n        for waveNumber = 1, 4 do\n            state.sequence[waveNumber] = wrapCard(\n                startingCard + rotationDirection * (waveNumber - 1)\n            )\n        end\n\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"1bb79a36-4409-66b4-89f7-b6df8e601dbc",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "971d71c6-6514-de6a-921e-d55dcc6ba834",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return eventArgs.aoeID == 49539",
+							dequeueIfLuaFalse = true,
+							name = "Event: AoE ID 49539",
+							uuid = "1bb79a36-4409-66b4-89f7-b6df8e601dbc",
+							version = 3,
+						},
+					},
+				},
+				eventType = 18,
+				loop = true,
+				mechanicTime = 990.28011146124,
+				name = "[Lj Data] Get Flood Projections",
+				timeRange = true,
+				timelineIndex = 180,
+				timerEndOffset = 10,
+				timerStartOffset = -10,
+				uuid = "ab161269-e6c2-812e-be87-7a9ce88ff70c",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local state = data.ljP5FloodProjectionGuide\n\nif state ~= nil\n    and state.sequence ~= nil\n    and state.currentWave ~= nil\n    and state.currentWave >= 1\n    and state.currentWave <= 4\n    and state.pendingAdvanceAt == nil\nthen\n    state.castsInCurrentWave = (state.castsInCurrentWave or 0) + 1\n\n    if state.castsInCurrentWave >= 2 then\n        state.castsInCurrentWave = 0\n        state.pendingAdvanceAt = (TensorReactions_CurrentTimer) + 0.25\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e1286cc9-8668-33c4-bab9-73218c3511f0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "a3e0ee3d-bd59-7e23-9c6c-d646a773d7ff",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 49769,
+							name = "Event: Spell ID 49769",
+							uuid = "e1286cc9-8668-33c4-bab9-73218c3511f0",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				loop = true,
+				mechanicTime = 990.28011146124,
+				name = "[Lj Data] Flood Tracker",
+				timeRange = true,
+				timelineIndex = 180,
+				timerEndOffset = 10,
+				timerStartOffset = -10,
+				uuid = "3fde8f8a-0abd-7707-8eec-c2ab4080ad0e",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local state = data.ljP5FloodProjectionGuide\nlocal player = TensorCore.mGetPlayer()\n\nif state.pendingAdvanceAt ~= nil\n    and (TensorReactions_CurrentTimer or 0) >= state.pendingAdvanceAt\nthen\n    state.currentWave = state.currentWave + 1\n    state.pendingAdvanceAt = nil\nend\n\nif state.currentWave > 4 then\n    self.used = true\n    return\nend\n\nlocal guideRadius = 4\nlocal safeSpots = {\n    { x = 100, z = 100 - guideRadius },\n    { x = 100 + guideRadius, z = 100 },\n    { x = 100, z = 100 + guideRadius },\n    { x = 100 - guideRadius, z = 100 },\n}\nlocal safeSpot = safeSpots[state.sequence[state.currentWave]]\nlocal green = 0xFF00FF00\nlocal drawer = TensorCore.getCachedDrawer(green, green, green, green, 1)\n\ndrawer:addLine(\n    player.pos.x,\n    player.pos.y,\n    player.pos.z,\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    4\n)\n\ndrawer:addCircle(\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    1.5,\n    false\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"21217676-55f3-72d5-97a0-875a8a3dd68f",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "1ea2ab24-87b9-96c5-b466-b146f1d9ba26",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local state = data.ljP5FloodProjectionGuide\n\nreturn state ~= nil\n    and state.sequence ~= nil\n    and state.currentWave >= 1\n    and state.currentWave <= 4",
+							dequeueIfLuaFalse = true,
+							name = "Data Vars",
+							uuid = "21217676-55f3-72d5-97a0-875a8a3dd68f",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 990.28011146124,
+				name = "[Lj Draw] Tether to Dodge Spots",
+				timeRange = true,
+				timelineIndex = 180,
+				timerEndOffset = 10,
+				timerStartOffset = -10,
+				uuid = "d4577a2c-cbac-7290-8dfd-8607b3f846c1",
 				version = 2,
 			},
 		},
