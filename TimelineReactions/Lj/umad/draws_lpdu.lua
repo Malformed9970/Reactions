@@ -103,6 +103,35 @@ local tbl =
 			},
 			inheritedIndex = 3,
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal innerRadius = 20              -- arena radius in yalms; the donut hole\nlocal outerRadius = 2000           -- far enough to swallow any off-arena draw like the stupid TBs\nlocal timeout = 1200000            -- 20 min\nlocal occlusionChannel = 0         -- default channel\nlocal drawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, Argus2.RenderFlags.FLAG_OCCLUDE)\n\ndrawer:addTimedDonut(\n    timeout,\n    center.x, center.y, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    false,   -- doNotDetect (idk if Anyone already does this, but this stops us yeeting ourselves off Arena too with safe jump)\n    Argus2.RenderFlags.FLAG_OCCLUDE\n)\n\nself.used = true",
+							gVar = "ACR_TensorRequiem3_DoTs",
+							uuid = "db198ef7-8353-e3f7-9b45-eac5269b4ec5",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 15.261765625,
+				name = "[Lj Draw] Arena Boundary Occlusion",
+				timelineIndex = 1,
+				timerOffset = -15.300000190735,
+				uuid = "816a832a-cc07-ce25-a574-0f420da516dd",
+				version = 2,
+			},
+		},
 	}, 
 	[3] = 
 	{
@@ -3759,11 +3788,11 @@ local tbl =
 						data = 
 						{
 							buffCheckType = 3,
-							buffDuration = 1,
+							buffDuration = 1.5,
 							buffID = 5546,
 							category = "Self",
 							comparator = 2,
-							name = "Self: Accel Bomb Buff <= 1s",
+							name = "Self: Accel Bomb Buff <= 1.5s",
 							uuid = "c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
 							version = 3,
 						},
@@ -3784,13 +3813,199 @@ local tbl =
 				enabled = false,
 				mechanicTime = 846.19462329432,
 				name = "[Lj Opti] STOP EVERYTHING",
-				throttleTime = 1500,
+				throttleTime = 2000,
 				timeRange = true,
 				timelineIndex = 157,
-				timerEndOffset = 90,
+				timerEndOffset = 60,
 				timerOffset = -2,
 				timerStartOffset = -3,
 				uuid = "c8135b33-eeb8-ff45-9ca2-d49178ba1afd",
+				version = 2,
+			},
+		},
+	},
+	[162] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 100 }\n\nlocal totalDistance = TensorCore.getDistance3d(sourcePos, targetPos)\nlocal heading = TensorCore.getHeadingToPos(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false,\n        Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"b6678cb3-9b60-6103-ad00-78026c5a157d",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "a92ec306-d8ad-c97e-b02f-4047569ebdfb",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 7,
+							buffDuration = 5,
+							buffIDList = 
+							{
+								5547,
+								5548,
+							},
+							category = "Self",
+							comparator = 2,
+							name = "Self: Entropy/Dynamic Field <= 5s Buff",
+							uuid = "b6678cb3-9b60-6103-ad00-78026c5a157d",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 872.48857073874,
+				name = "[Lj Draw] Draw Donut/Twister Bait Positions",
+				timeRange = true,
+				timelineIndex = 162,
+				timerEndOffset = 30,
+				timerStartOffset = -10,
+				uuid = "c4ee9f11-8b37-0459-8b6c-4d21bb53e8bc",
+				version = 2,
+			},
+		},
+	},
+	[163] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							gVar = "ACR_RikuSGE3_CD",
+							resumeAllActions = true,
+							uuid = "bb15fd04-21d0-c468-8c32-cfe6b8e30257",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 877.06989073874,
+				name = "[Lj Opti] Resume Actions",
+				timelineIndex = 163,
+				timerOffset = 1,
+				uuid = "038de2c2-d4ed-597e-a3e6-5491032e0c1e",
+				version = 2,
+			},
+		},
+	},
+	[165] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 5000\nlocal position = { x = 100, y = 1, z = 100 }\nlocal white = 0xFFFFFFFF\n\nAnyoneCore.addWorldTextCountdown(timeout, position, white, true, 1.5)\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "90b0a2d0-ab3a-b7da-bf92-d6b6191e3564",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 895.49672653853,
+				name = "[Lj Draw] Countdown",
+				timelineIndex = 165,
+				timerOffset = -2,
+				uuid = "68e8cfea-514c-428a-869f-310a8ca1eddc",
+				version = 2,
+			},
+		},
+	},
+	[166] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							gVar = "ACR_RikuSGE3_CD",
+							resumeAllActions = true,
+							uuid = "bb15fd04-21d0-c468-8c32-cfe6b8e30257",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 903.50044082329,
+				name = "[Lj Opti] Resume Actions",
+				timelineIndex = 166,
+				uuid = "6403a167-5a08-e174-a13e-b21fed6f68ca",
+				version = 2,
+			},
+		},
+	},
+	[167] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 5000\nlocal position = { x = 100, y = 1, z = 100 }\nlocal white = 0xFFFFFFFF\n\nAnyoneCore.addWorldTextCountdown(timeout, position, white, true, 1.5)\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "90b0a2d0-ab3a-b7da-bf92-d6b6191e3564",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 916.86652777982,
+				name = "[Lj Draw] Countdown",
+				timelineIndex = 167,
+				uuid = "d055c585-c4ed-61ff-8419-3303f991659b",
 				version = 2,
 			},
 		},
