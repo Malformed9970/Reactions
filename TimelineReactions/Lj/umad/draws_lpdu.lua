@@ -4007,6 +4007,7 @@ local tbl =
 				mechanicTime = 916.86652777982,
 				name = "[Lj Draw] Countdown",
 				timelineIndex = 167,
+				timerOffset = -0.5,
 				uuid = "d055c585-c4ed-61ff-8419-3303f991659b",
 				version = 2,
 			},
