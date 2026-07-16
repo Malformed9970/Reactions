@@ -3120,7 +3120,7 @@ local tbl =
 				name = "[Lj Draw] Draw Arrow to Towers/Middle",
 				timeRange = true,
 				timelineIndex = 140,
-				timerEndOffset = 7,
+				timerEndOffset = 6,
 				uuid = "0ae2b750-99a0-a6fa-8af6-dc13c80e06bb",
 				version = 2,
 			},
@@ -3362,7 +3362,6 @@ local tbl =
 						{
 							category = "Event",
 							comparator = 3,
-							dequeueIfLuaFalse = true,
 							eventArgType = 6,
 							eventIntValue = 2913,
 							name = "Event: Chaos Lie",
@@ -3376,7 +3375,6 @@ local tbl =
 						{
 							category = "Event",
 							comparator = 3,
-							dequeueIfLuaFalse = true,
 							eventArgType = 6,
 							eventIntValue = 2914,
 							name = "Event: Chaos Truth",
@@ -3391,7 +3389,6 @@ local tbl =
 						{
 							category = "Event",
 							comparator = 3,
-							dequeueIfLuaFalse = true,
 							eventArgType = 6,
 							eventIntValue = 2915,
 							name = "Event: Exdeath Lie",
@@ -3405,7 +3402,6 @@ local tbl =
 						{
 							category = "Event",
 							comparator = 3,
-							dequeueIfLuaFalse = true,
 							eventArgType = 6,
 							eventIntValue = 2916,
 							name = "Event: Exdeath Truth",
@@ -3440,7 +3436,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center    = {x = 100, y = 0, z = 100}\nlocal spreadPos = {x = 87.5, y = 0, z = 100 }  -- West\nlocal stackPos  = {x = 100,  y = 0, z = 87.5}  -- North\nlocal lead      = 7\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9, 1.5, 3.5, 6, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9, 1.5, 3.5, 6, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 87.5}  -- North\n    stackPos  = {x = 87.5, y = 0, z = 100}  -- West\nelse\n    spreadPos = {x = 87.5, y = 0, z = 100}  -- West\n    stackPos  = {x = 100, y = 0, z = 87.5}  -- North\nend\n\nlocal lead      = 8\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3466,7 +3462,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center    = {x = 100, y = 0, z = 100}\nlocal spreadPos = {x = 112.5, y = 0, z = 100  }  -- East\nlocal stackPos  = {x = 100,   y = 0, z = 112.5}  -- South\nlocal lead      = 7\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9, 1.5, 3.5, 6, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9, 1.5, 3.5, 6, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 112.5}  -- South\n    stackPos  = {x = 112.5, y = 0, z = 100}  -- East\nelse\n    spreadPos = {x = 112.5, y = 0, z = 100}  -- East\n    stackPos  = {x = 100, y = 0, z = 112.5}  -- South\nend\n\nlocal lead      = 8\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3564,7 +3560,6 @@ local tbl =
 						{
 							category = "Lua",
 							conditionLua = "return data.ljExdeathAura == \"Truth\"",
-							dequeueIfLuaFalse = true,
 							name = "Exdeath: Truth",
 							uuid = "274f2dad-f7c1-b419-ad16-a81bca11d777",
 							version = 3,
@@ -3607,7 +3602,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center    = {x = 100, y = 0, z = 100}\nlocal spreadPos = {x = 87.5, y = 0, z = 100 }  -- West\nlocal stackPos  = {x = 100,  y = 0, z = 87.5}  -- North\nlocal lead      = 7\nlocal firstIn   = 35   -- 877 - 842\nlocal secondIn  = 60   -- 902 - 842\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9, 1.5, 3.5, 6, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9, 1.5, 3.5, 6, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 87.5}  -- North\n    stackPos  = {x = 87.5, y = 0, z = 100}  -- West\nelse\n    spreadPos = {x = 87.5, y = 0, z = 100}  -- West\n    stackPos  = {x = 100, y = 0, z = 87.5}  -- North\nend\n\nlocal lead      = 10\nlocal firstIn   = 35   -- 877 - 842\nlocal secondIn  = 60   -- 902 - 842\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(10000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(10000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3638,7 +3633,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center    = {x = 100, y = 0, z = 100}\nlocal spreadPos = {x = 112.5, y = 0, z = 100  }  -- East\nlocal stackPos  = {x = 100,   y = 0, z = 112.5}  -- South\nlocal lead      = 7\nlocal firstIn   = 35   -- 877 - 842\nlocal secondIn  = 60   -- 902 - 842\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9, 1.5, 3.5, 6, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(7000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9, 1.5, 3.5, 6, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 112.5}  -- South\n    stackPos  = {x = 112.5, y = 0, z = 100}  -- East\nelse\n    spreadPos = {x = 112.5, y = 0, z = 100}  -- East\n    stackPos  = {x = 100, y = 0, z = 112.5}  -- South\nend\n\nlocal lead      = 10\nlocal firstIn   = 35   -- 877 - 842\nlocal secondIn  = 60   -- 902 - 842\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(10000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(10000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3837,7 +3832,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 100 }\n\nlocal totalDistance = TensorCore.getDistance3d(sourcePos, targetPos)\nlocal heading = TensorCore.getHeadingToPos(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false,\n        Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = sourcePos.y, z = 100 }\n\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0x4000FF00,\n        0x4000FF00,\n        0x4000FF00,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false,\n        Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -3879,41 +3874,9 @@ local tbl =
 				name = "[Lj Draw] Draw Donut/Twister Bait Positions",
 				timeRange = true,
 				timelineIndex = 162,
-				timerEndOffset = 30,
+				timerEndOffset = 45,
 				timerStartOffset = -10,
 				uuid = "c4ee9f11-8b37-0459-8b6c-4d21bb53e8bc",
-				version = 2,
-			},
-		},
-	},
-	[163] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							gVar = "ACR_RikuSGE3_CD",
-							resumeAllActions = true,
-							uuid = "bb15fd04-21d0-c468-8c32-cfe6b8e30257",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 877.06989073874,
-				name = "[Lj Opti] Resume Actions",
-				timelineIndex = 163,
-				timerOffset = 1,
-				uuid = "038de2c2-d4ed-597e-a3e6-5491032e0c1e",
 				version = 2,
 			},
 		},
@@ -3946,37 +3909,6 @@ local tbl =
 				timelineIndex = 165,
 				timerOffset = -2,
 				uuid = "68e8cfea-514c-428a-869f-310a8ca1eddc",
-				version = 2,
-			},
-		},
-	},
-	[166] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							gVar = "ACR_RikuSGE3_CD",
-							resumeAllActions = true,
-							uuid = "bb15fd04-21d0-c468-8c32-cfe6b8e30257",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 903.50044082329,
-				name = "[Lj Opti] Resume Actions",
-				timelineIndex = 166,
-				uuid = "6403a167-5a08-e174-a13e-b21fed6f68ca",
 				version = 2,
 			},
 		},
@@ -4169,7 +4101,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local state = data.ljP5FloodProjectionGuide\nlocal player = TensorCore.mGetPlayer()\n\nif state.pendingAdvanceAt ~= nil\n    and (TensorReactions_CurrentTimer or 0) >= state.pendingAdvanceAt\nthen\n    state.currentWave = state.currentWave + 1\n    state.pendingAdvanceAt = nil\nend\n\nif state.currentWave > 4 then\n    self.used = true\n    return\nend\n\nlocal guideRadius = 4\nlocal safeSpots = {\n    { x = 100, z = 100 - guideRadius },\n    { x = 100 + guideRadius, z = 100 },\n    { x = 100, z = 100 + guideRadius },\n    { x = 100 - guideRadius, z = 100 },\n}\nlocal safeSpot = safeSpots[state.sequence[state.currentWave]]\nlocal green = 0xFF00FF00\nlocal drawer = TensorCore.getCachedDrawer(green, green, green, green, 1)\n\ndrawer:addLine(\n    player.pos.x,\n    player.pos.y,\n    player.pos.z,\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    4\n)\n\ndrawer:addCircle(\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    1.5,\n    false\n)\n\nself.used = true",
+							actionLua = "local state = data.ljP5FloodProjectionGuide\nlocal player = TensorCore.mGetPlayer()\n\nif state.pendingAdvanceAt ~= nil\n    and (TensorReactions_CurrentTimer) >= state.pendingAdvanceAt\nthen\n    state.currentWave = state.currentWave + 1\n    state.pendingAdvanceAt = nil\nend\n\nif state.currentWave > 4 then\n    self.used = true\n    return\nend\n\nlocal guideRadius = 4\nlocal safeSpots = {\n    { x = 100, z = 100 - guideRadius },\n    { x = 100 + guideRadius, z = 100 },\n    { x = 100, z = 100 + guideRadius },\n    { x = 100 - guideRadius, z = 100 },\n}\nlocal safeSpot = safeSpots[state.sequence[state.currentWave]]\nlocal green = 0xFF00FF00\nlocal drawer = TensorCore.getCachedDrawer(green, green, green, green, 1)\n\ndrawer:addLine(\n    player.pos.x,\n    player.pos.y,\n    player.pos.z,\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    4\n)\n\ndrawer:addCircle(\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    1.5,\n    false\n)\n\nself.used = true",
 							conditions = 
 							{
 								
