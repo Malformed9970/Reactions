@@ -2193,6 +2193,60 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local entityId = eventArgs.entityID\nlocal kefka = TensorCore.mGetEntity(entityId)\n\ndata.ljUltimaBlasterSources = data.ljUltimaBlasterSources or {}\ndata.ljUltimaBlasterSourceIds = data.ljUltimaBlasterSourceIds or {}\n\nif not data.ljUltimaBlasterSourceIds[entityId] then\n    local order = #data.ljUltimaBlasterSources + 1\n\n    data.ljUltimaBlasterSourceIds[entityId] = true\n    data.ljUltimaBlasterSources[order] = {\n        entityId = entityId,\n        order = order,\n        position = {\n            x = kefka.pos.x,\n            y = kefka.pos.y,\n            z = kefka.pos.z,\n        },\n        dashHeading = kefka.pos.h,\n    }\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"355ec23a-d070-8f8f-8047-293fd11a46e5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "a1e07456-b429-9aeb-a7fa-7594b216ec43",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47843,
+							name = "Event: Ultima Blaster",
+							uuid = "355ec23a-d070-8f8f-8047-293fd11a46e5",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				loop = true,
+				mechanicTime = 507.31761539671,
+				name = "[Lj Data] Limit Cut Sources",
+				timeRange = true,
+				timelineIndex = 91,
+				timerEndOffset = 20,
+				timerStartOffset = -5,
+				uuid = "5030a90a-2a4b-8535-86bc-24e0b8d956e6",
+				version = 2,
+			},
+		},
 	},
 	[93] = 
 	{
@@ -2236,6 +2290,167 @@ local tbl =
 				timelineIndex = 93,
 				timerEndOffset = 8,
 				uuid = "51c47eb1-929d-ccce-8f41-0c0a04d710f1",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local markerToNumber = {\n    [336] = 1,\n    [337] = 2,\n    [338] = 3,\n    [339] = 4,\n    [437] = 5,\n    [438] = 6,\n    [439] = 7,\n    [440] = 8,\n}\n\nlocal entityId = eventArgs.entityID\nlocal playerNumber = markerToNumber[eventArgs.markerID]\n\ndata.ljUltimaBlasterTargets = data.ljUltimaBlasterTargets or {}\ndata.ljUltimaBlasterTargets[playerNumber] = entityId\n\nif entityId == TensorCore.mGetPlayer().id then\n    data.ljUltimaBlasterPlayerNumber = playerNumber\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"101b1a1f-9a30-6174-a3b9-e712fbc902e3",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "d9a1ed22-a863-bdf7-a111-d9c8ba3f0ea0",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							eventArgType = 3,
+							markerIDList = 
+							{
+								336,
+								337,
+								338,
+								339,
+								437,
+								438,
+								439,
+								440,
+							},
+							name = "Event: Limit Cut Numbers",
+							uuid = "101b1a1f-9a30-6174-a3b9-e712fbc902e3",
+							version = 3,
+						},
+					},
+				},
+				eventType = 4,
+				loop = true,
+				mechanicTime = 511.44225832111,
+				name = "[Lj Data] Record Limit Cut Markers",
+				timeRange = true,
+				timelineIndex = 93,
+				timerEndOffset = 10,
+				timerStartOffset = -2,
+				uuid = "12d5008f-702e-d059-9298-fd666059504f",
+				version = 2,
+			},
+		},
+	},
+	[101] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal arenaRadius = 20\nlocal lineLength = 40\nlocal lineWidth = 6\nlocal playerCutoutRadius = 1.25\nlocal firstHitTimeout = 4500\nlocal hitInterval = 225\nlocal finalHitTimeout = firstHitTimeout + hitInterval * 7\nlocal green = 0x9900FF00 -- pure green, 60% alpha\nlocal transparent = 0x00000000\nlocal drawHeight = 0.10 -- raised flat overlay clears the decorative floor mesh\n\nlocal function normaliseAngle(angle)\n    while angle > math.pi do angle = angle - 2 * math.pi end\n    while angle <= -math.pi do angle = angle + 2 * math.pi end\n    return angle\nend\n\nlocal function buildExpectedLines()\n    local first = data.ljUltimaBlasterSources[1].position\n    local second = data.ljUltimaBlasterSources[2].position\n    local firstAngle = math.atan2(first.x - center.x, first.z - center.z)\n    local secondAngle = math.atan2(second.x - center.x, second.z - center.z)\n    local initialStep = normaliseAngle(secondAngle - firstAngle)\n    local sourceRadius = TensorCore.getDistance2d(center, first)\n    local targetRadius = 19\n    local lines = {}\n\n    for order = 1, 8 do\n        -- The final sequence rotates in the opposite direction to the dashes.\n        local sourceAngle = firstAngle - initialStep * (order - 1)\n        -- Players resolve halfway toward the next intercardinal on the far side.\n        local targetAngle = sourceAngle + math.pi - initialStep * 0.5\n        local sourcePos = {\n            x = center.x + math.sin(sourceAngle) * sourceRadius,\n            y = drawHeight,\n            z = center.z + math.cos(sourceAngle) * sourceRadius,\n        }\n        local targetPos = {\n            x = center.x + math.sin(targetAngle) * targetRadius,\n            y = drawHeight,\n            z = center.z + math.cos(targetAngle) * targetRadius,\n        }\n\n        lines[order] = {\n            sourcePos = sourcePos,\n            heading = TensorCore.getHeadingToTarget(sourcePos, targetPos),\n        }\n    end\n\n    return lines\nend\n\nlocal channel = Argus2.getNextUnusedChannel(true)\nif channel == nil then\n    self.used = true\n    return\nend\n\nlocal expectedLines = buildExpectedLines()\n\n-- Keep the occlusion pipeline, but omit terrain warping. The slightly raised\n-- flat base bridges the decorative holes instead of reproducing their shape.\nlocal baseFlags =\n    Argus2.RenderFlags.FLAG_OCCLUSION_BASE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal occludeFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal safeDrawer = TensorCore.getStaticFlatDrawer(green, 0, channel, baseFlags)\nlocal dangerDrawer = TensorCore.getStaticFlatDrawer(transparent, 0, channel, occludeFlags)\ndangerDrawer.heightOffset = drawHeight\nlocal player = TensorCore.mGetPlayer()\n\nsafeDrawer:addTimedCircle(\n    finalHitTimeout,\n    center.x, drawHeight, center.z,\n    arenaRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect\n    baseFlags\n)\n\n-- Keep the character readable beneath the overlay without reducing the green\n-- visibility across the rest of the arena.\ndangerDrawer:addTimedCircleOnEnt(\n    finalHitTimeout,\n    player.id,\n    playerCutoutRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect: visibility cutout, not a danger area\n    occludeFlags\n)\n\nfor order, line in ipairs(expectedLines) do\n    if order ~= data.ljUltimaBlasterPlayerNumber then\n        local lineTimeout = firstHitTimeout + hitInterval * (order - 1)\n        dangerDrawer:addTimedRect(\n            lineTimeout,\n            line.sourcePos.x, line.sourcePos.y, line.sourcePos.z,\n            lineLength,\n            lineWidth,\n            line.heading,\n            0,     -- delay\n            false, -- oldDraw\n            false, -- doNotDetect: block dashes until this numbered hit resolves\n            occludeFlags\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"ba69b783-143c-3260-b1f9-cd5227e1ab68",
+									true,
+								},
+								
+								{
+									"ff1a697a-4f89-391d-92a4-e4538935aa30",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "ArgusDraws+",
+							uuid = "d97edc60-87a7-17b0-9d09-9d6a5960cd72",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local lineLength = 40\nlocal lineWidth = 6\nlocal firstHitTimeout = 4500\nlocal hitInterval = 225\nlocal red = 0x330000FF -- pure red, 20% alpha\nlocal redOutline = 0xBF0000FF -- pure red, 75% alpha\nlocal renderFlags = Argus2.RenderFlags.FLAG_WARP_TERRAIN\nlocal center = { x = 100, y = 0, z = 100 }\nlocal drawHeight = 0.05\n\nlocal function normaliseAngle(angle)\n    while angle > math.pi do angle = angle - 2 * math.pi end\n    while angle <= -math.pi do angle = angle + 2 * math.pi end\n    return angle\nend\n\nlocal function buildExpectedLines()\n    local first = data.ljUltimaBlasterSources[1].position\n    local second = data.ljUltimaBlasterSources[2].position\n    local firstAngle = math.atan2(first.x - center.x, first.z - center.z)\n    local secondAngle = math.atan2(second.x - center.x, second.z - center.z)\n    local initialStep = normaliseAngle(secondAngle - firstAngle)\n    local sourceRadius = TensorCore.getDistance2d(center, first)\n    local targetRadius = 19\n    local lines = {}\n\n    for order = 1, 8 do\n        local sourceAngle = firstAngle - initialStep * (order - 1)\n        local targetAngle = sourceAngle + math.pi - initialStep * 0.5\n        local sourcePos = {\n            x = center.x + math.sin(sourceAngle) * sourceRadius,\n            y = drawHeight,\n            z = center.z + math.cos(sourceAngle) * sourceRadius,\n        }\n        local targetPos = {\n            x = center.x + math.sin(targetAngle) * targetRadius,\n            y = drawHeight,\n            z = center.z + math.cos(targetAngle) * targetRadius,\n        }\n\n        lines[order] = {\n            sourcePos = sourcePos,\n            heading = TensorCore.getHeadingToTarget(sourcePos, targetPos),\n        }\n    end\n\n    return lines\nend\n\nlocal dangerDrawer = TensorCore.getCachedDrawer(red, red, red, redOutline, 1)\nfor order, line in ipairs(buildExpectedLines()) do\n    if order ~= data.ljUltimaBlasterPlayerNumber then\n        local lineTimeout = firstHitTimeout + hitInterval * (order - 1)\n        dangerDrawer:addTimedRect(\n            lineTimeout,\n            line.sourcePos.x, line.sourcePos.y, line.sourcePos.z,\n            lineLength,\n            lineWidth,\n            line.heading,\n            0,     -- delay\n            true,  -- oldDraw\n            false, -- doNotDetect\n            renderFlags\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"ba69b783-143c-3260-b1f9-cd5227e1ab68",
+									true,
+								},
+								
+								{
+									"ff1a697a-4f89-391d-92a4-e4538935aa30",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "PoorDraws-",
+							uuid = "8d358205-5b97-dce0-8c56-bb995776580b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljUltimaBlasterSources ~= nil\n      and #data.ljUltimaBlasterSources == 8\n      and data.ljUltimaBlasterPlayerNumber ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Data Vars",
+							uuid = "ba69b783-143c-3260-b1f9-cd5227e1ab68",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return ArgusDrawsPlus ~= nil and ArgusDrawsPlus.getEnabled() == true",
+							dequeueIfLuaFalse = true,
+							name = "ArgusDraws+",
+							uuid = "ff1a697a-4f89-391d-92a4-e4538935aa30",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 521.36069634686,
+				name = "[Lj Draw] Limit Cut",
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 5,
+				timerStartOffset = 3,
+				uuid = "79a87816-ba96-842b-b714-a43ddd347ffb",
 				version = 2,
 			},
 		},
