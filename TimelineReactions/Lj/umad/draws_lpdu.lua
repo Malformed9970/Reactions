@@ -3747,22 +3747,50 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "data.ljAccelBomb = true\nself.used = true",
+							actionLua = "data.ljAccelBomb = true\n--SendTextCommand(\"/e Real Accel Bomb\")\nself.used = true",
 							conditions = 
 							{
-								
-								{
-									"2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
-									true,
-								},
 								
 								{
 									"274f2dad-f7c1-b419-ad16-a81bca11d777",
 									true,
 								},
+								
+								{
+									"2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
+									true,
+								},
 							},
+							endIfUsed = true,
 							gVar = "ACR_RikuWAR3_CD",
+							name = "Stillness",
 							uuid = "5c32ecc6-92bc-aab9-bfe4-eb1224e52be8",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljAccelBomb = false\n--SendTextCommand(\"/e Fake Accel Bomb\")\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"274f2dad-f7c1-b419-ad16-a81bca11d777",
+									false,
+								},
+								
+								{
+									"2e0c317c-61c3-1330-a3f2-a7dc0efeb4ba",
+									true,
+								},
+							},
+							endIfUsed = true,
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Motion",
+							uuid = "10d58f6e-0d5c-435b-a700-fc777dc939c4",
 							version = 2.1,
 						},
 					},
