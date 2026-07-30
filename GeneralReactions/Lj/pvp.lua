@@ -678,7 +678,6 @@ local tbl =
 					},
 				},
 			},
-			enabled = false,
 			eventType = 11,
 			name = "LJ: CC | Data | Get Participants",
 			throttleTime = 32000,
@@ -4302,7 +4301,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\n\n-- Buffs to track on Enemy players\nlocal enemyBuffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Scales\", ids = { 4096 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } }\n}\n\n-- Buffs to track on Friendly players (your team)\nlocal friendlyBuffsToTrack = {\n    { name = \"Wildfire\", ids = { 1323 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\n-- Determine which list of buffs to check based on team\nlocal isFriendly = (ent.pvpteam == player.pvpteam)\nlocal buffsToCheck = isFriendly and friendlyBuffsToTrack or enemyBuffsToTrack\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff from the selected list\nfor _, buffData in ipairs(buffsToCheck) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff then\n    local duration = activeBuff.duration or 0\n    if duration <= 0 then \n        duration = 10 -- Fallback duration\n    end\n    \n    local timerMs = math.floor(duration * 1000)\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 1.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
+						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\n\n-- Buffs to track on Enemy players\nlocal enemyBuffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Scales\", ids = { 4096 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } },\n\t{ name = \"Covered\", ids = { 1301 } }\n}\n\n-- Buffs to track on Friendly players (your team)\nlocal friendlyBuffsToTrack = {\n    { name = \"Wildfire\", ids = { 1323 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\n-- Determine which list of buffs to check based on team\nlocal isFriendly = (ent.pvpteam == player.pvpteam)\nlocal buffsToCheck = isFriendly and friendlyBuffsToTrack or enemyBuffsToTrack\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff from the selected list\nfor _, buffData in ipairs(buffsToCheck) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff then\n    local duration = activeBuff.duration or 0\n    if duration <= 0 then \n        duration = 10 -- Fallback duration\n    end\n    \n    local timerMs = math.floor(duration * 1000)\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 1.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
 						conditions = 
 						{
 							
@@ -4353,6 +4352,7 @@ local tbl =
 							394,
 							4096,
 							1323,
+							1301,
 						},
 						category = "Party",
 						matchAnyBuff = true,
