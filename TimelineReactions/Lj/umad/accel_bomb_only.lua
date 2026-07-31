@@ -364,6 +364,169 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorCore.mGetPlayer():Jump()\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									true,
+								},
+								
+								{
+									"c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Jump",
+							stopAllActions = true,
+							uuid = "220568e8-2c1c-e615-840f-10b1db559f82",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljAccelBomb == false",
+							dequeueIfLuaFalse = true,
+							name = "Self: Motion Bomb",
+							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 1.5,
+							buffID = 5546,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Accel Bomb Buff <= 1.5s",
+							uuid = "c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+				},
+				loop = true,
+				mechanicTime = 846.19462329432,
+				name = "[Lj Opti] JUMP FOR MOTION",
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = 60,
+				timerOffset = -2,
+				timerStartOffset = -3,
+				uuid = "06651dcc-4bd8-c2f2-b20a-d8f99ff095c3",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"c305123f-01e2-32b0-bd63-4424d6132137",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Force Slidecast",
+							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "End Slide",
+							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 2,
+							buffID = 5546,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Accel Bomb Buff <= 2s",
+							uuid = "c305123f-01e2-32b0-bd63-4424d6132137",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							category = "Action",
+							name = "Action Used: Force Slidecast",
+							uuid = "a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 846.19462329432,
+				name = "[Lj Opti] Force Slidecast (Stillness/Motion)",
+				throttleTime = 2500,
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = 60,
+				timerStartOffset = -3,
+				uuid = "16ff7f3e-b846-5297-b48b-eed6a5f5e52e",
+				version = 2,
+			},
+			inheritedIndex = 7,
+		},
 	},
 	inheritedProfiles = 
 	{
