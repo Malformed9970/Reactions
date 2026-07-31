@@ -114,7 +114,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal innerRadius = 20              -- arena radius in yalms; the donut hole\nlocal outerRadius = 2000           -- far enough to swallow any off-arena draw like the stupid TBs\nlocal timeout = 1200000            -- 20 min\nlocal occlusionChannel = 0         -- default channel\nlocal drawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, Argus2.RenderFlags.FLAG_OCCLUDE)\n\ndrawer:addTimedDonut(\n    timeout,\n    center.x, center.y, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    false,   -- doNotDetect (idk if Anyone already does this, but this stops us yeeting ourselves off Arena too with safe jump)\n    Argus2.RenderFlags.FLAG_OCCLUDE\n)\n\nself.used = true",
+							actionLua = "local center = { x = 100, z = 100 } -- arena center (given as 100, 0, 100)\nlocal innerRadius = 20              -- arena radius in yalms; the donut hole\nlocal outerRadius = 2000           -- far enough to swallow any off-arena draw\nlocal timeout = 1200000            -- set-and-forget (20 min); re-fire as needed\nlocal occlusionChannel = 0         -- default channel; matches normal draws\n\nlocal floorY = 0\nlocal normalFlags = Argus2.RenderFlags.FLAG_OCCLUDE\nlocal overlayFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\nlocal normalDrawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, normalFlags)\nlocal overlayDrawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, overlayFlags)\n\nnormalDrawer:addTimedDonut(\n    timeout,\n    center.x, floorY, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    false,  -- doNotDetect: FALSE so the off-arena ring feeds safe-jump detection\n            --              and acts as an in-bounds boundary (won't jump the edge)\n    normalFlags\n)\n\noverlayDrawer:addTimedDonut(\n    timeout,\n    center.x, floorY, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    true,   -- doNotDetect: visual-only duplicate of the normal blocker\n    overlayFlags\n)\n\nself.used = true",
 							gVar = "ACR_TensorRequiem3_DoTs",
 							uuid = "db198ef7-8353-e3f7-9b45-eac5269b4ec5",
 							version = 2.1,
@@ -1855,6 +1855,61 @@ local tbl =
 			inheritedIndex = 6,
 		},
 	},
+	[70] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local target = TensorCore.mGetEntity(eventArgs.detectionTargetID)\n\nif target then\n    local drawer = TensorCore.getMoogleDrawer(\n        nil,\n        Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\n\n    drawer:addCircle(\n        target.pos.x,\n        target.pos.y,\n        target.pos.z,\n        7,\n        false\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"34ebc686-3c66-beef-b3f9-0c96e75de520",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "ade79668-270a-8259-83fb-22affb19dcf3",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							filterTargetType = "Party",
+							subtypeRangeCheckSourceType = "ContentID",
+							subtypeRangeSourceContentID = 7131,
+							uuid = "34ebc686-3c66-beef-b3f9-0c96e75de520",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 367.80061742504,
+				name = "[Lj Draw] Tankbuster Closest",
+				timeRange = true,
+				timelineIndex = 70,
+				timerEndOffset = 2.5,
+				timerStartOffset = -0.80000001192093,
+				uuid = "43ccc00d-cfad-b947-94ef-f835e2d23120",
+				version = 2,
+			},
+		},
+	},
 	[76] = 
 	{
 		
@@ -2370,7 +2425,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal arenaRadius = 20\nlocal lineLength = 40\nlocal lineWidth = 6\nlocal playerCutoutRadius = 1.25\nlocal firstHitTimeout = 4500\nlocal hitInterval = 225\nlocal finalHitTimeout = firstHitTimeout + hitInterval * 7\nlocal green = 0x9900FF00 -- pure green, 60% alpha\nlocal transparent = 0x00000000\nlocal drawHeight = 0.10 -- raised flat overlay clears the decorative floor mesh\n\nlocal function normaliseAngle(angle)\n    while angle > math.pi do angle = angle - 2 * math.pi end\n    while angle <= -math.pi do angle = angle + 2 * math.pi end\n    return angle\nend\n\nlocal function buildExpectedLines()\n    local first = data.ljUltimaBlasterSources[1].position\n    local second = data.ljUltimaBlasterSources[2].position\n    local firstAngle = math.atan2(first.x - center.x, first.z - center.z)\n    local secondAngle = math.atan2(second.x - center.x, second.z - center.z)\n    local initialStep = normaliseAngle(secondAngle - firstAngle)\n    local sourceRadius = TensorCore.getDistance2d(center, first)\n    local targetRadius = 19\n    local lines = {}\n\n    for order = 1, 8 do\n        -- The final sequence rotates in the opposite direction to the dashes.\n        local sourceAngle = firstAngle - initialStep * (order - 1)\n        -- Players resolve halfway toward the next intercardinal on the far side.\n        local targetAngle = sourceAngle + math.pi - initialStep * 0.5\n        local sourcePos = {\n            x = center.x + math.sin(sourceAngle) * sourceRadius,\n            y = drawHeight,\n            z = center.z + math.cos(sourceAngle) * sourceRadius,\n        }\n        local targetPos = {\n            x = center.x + math.sin(targetAngle) * targetRadius,\n            y = drawHeight,\n            z = center.z + math.cos(targetAngle) * targetRadius,\n        }\n\n        lines[order] = {\n            sourcePos = sourcePos,\n            heading = TensorCore.getHeadingToTarget(sourcePos, targetPos),\n        }\n    end\n\n    return lines\nend\n\nlocal channel = Argus2.getNextUnusedChannel(true)\nif channel == nil then\n    self.used = true\n    return\nend\n\nlocal expectedLines = buildExpectedLines()\n\n-- Keep the occlusion pipeline, but omit terrain warping. The slightly raised\n-- flat base bridges the decorative holes instead of reproducing their shape.\nlocal baseFlags =\n    Argus2.RenderFlags.FLAG_OCCLUSION_BASE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal occludeFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal safeDrawer = TensorCore.getStaticFlatDrawer(green, 0, channel, baseFlags)\nlocal dangerDrawer = TensorCore.getStaticFlatDrawer(transparent, 0, channel, occludeFlags)\ndangerDrawer.heightOffset = drawHeight\nlocal player = TensorCore.mGetPlayer()\n\nsafeDrawer:addTimedCircle(\n    finalHitTimeout,\n    center.x, drawHeight, center.z,\n    arenaRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect\n    baseFlags\n)\n\n-- Keep the character readable beneath the overlay without reducing the green\n-- visibility across the rest of the arena.\ndangerDrawer:addTimedCircleOnEnt(\n    finalHitTimeout,\n    player.id,\n    playerCutoutRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect: visibility cutout, not a danger area\n    occludeFlags\n)\n\nfor order, line in ipairs(expectedLines) do\n    if order ~= data.ljUltimaBlasterPlayerNumber then\n        local lineTimeout = firstHitTimeout + hitInterval * (order - 1)\n        dangerDrawer:addTimedRect(\n            lineTimeout,\n            line.sourcePos.x, line.sourcePos.y, line.sourcePos.z,\n            lineLength,\n            lineWidth,\n            line.heading,\n            0,     -- delay\n            false, -- oldDraw\n            false, -- doNotDetect: block dashes until this numbered hit resolves\n            occludeFlags\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal arenaRadius = 20\nlocal lineLength = 40\nlocal lineWidth = 6\nlocal playerCutoutRadius = 1.25\nlocal firstHitTimeout = 4500\nlocal hitInterval = 225\nlocal finalHitTimeout = firstHitTimeout + hitInterval * 7\nlocal green = 0x9900FF00 -- pure green, 60% alpha\nlocal transparent = 0x00000000\nlocal drawHeight = 0.05 -- raised flat overlay clears the decorative floor mesh\n\nlocal function normaliseAngle(angle)\n    while angle > math.pi do angle = angle - 2 * math.pi end\n    while angle <= -math.pi do angle = angle + 2 * math.pi end\n    return angle\nend\n\nlocal function buildExpectedLines()\n    local first = data.ljUltimaBlasterSources[1].position\n    local second = data.ljUltimaBlasterSources[2].position\n    local firstAngle = math.atan2(first.x - center.x, first.z - center.z)\n    local secondAngle = math.atan2(second.x - center.x, second.z - center.z)\n    local initialStep = normaliseAngle(secondAngle - firstAngle)\n    local sourceRadius = TensorCore.getDistance2d(center, first)\n    local targetRadius = 19\n    local lines = {}\n\n    for order = 1, 8 do\n        -- The final sequence rotates in the opposite direction to the dashes.\n        local sourceAngle = firstAngle - initialStep * (order - 1)\n        -- Players resolve halfway toward the next intercardinal on the far side.\n        local targetAngle = sourceAngle + math.pi - initialStep * 0.5\n        local sourcePos = {\n            x = center.x + math.sin(sourceAngle) * sourceRadius,\n            y = drawHeight,\n            z = center.z + math.cos(sourceAngle) * sourceRadius,\n        }\n        local targetPos = {\n            x = center.x + math.sin(targetAngle) * targetRadius,\n            y = drawHeight,\n            z = center.z + math.cos(targetAngle) * targetRadius,\n        }\n\n        lines[order] = {\n            sourcePos = sourcePos,\n            heading = TensorCore.getHeadingToTarget(sourcePos, targetPos),\n        }\n    end\n\n    return lines\nend\n\nlocal channel = Argus2.getNextUnusedChannel(true)\nif channel == nil then\n    self.used = true\n    return\nend\n\nlocal expectedLines = buildExpectedLines()\n\n-- Keep the occlusion pipeline, but omit terrain warping. The slightly raised\n-- flat base bridges the decorative holes instead of reproducing their shape.\nlocal baseFlags =\n    Argus2.RenderFlags.FLAG_OCCLUSION_BASE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal occludeFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal safeDrawer = TensorCore.getStaticFlatDrawer(green, 0, channel, baseFlags)\nlocal dangerDrawer = TensorCore.getStaticFlatDrawer(transparent, 0, channel, occludeFlags)\ndangerDrawer.heightOffset = drawHeight\nlocal player = TensorCore.mGetPlayer()\n\nsafeDrawer:addTimedCircle(\n    finalHitTimeout,\n    center.x, drawHeight, center.z,\n    arenaRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect\n    baseFlags\n)\n\n-- Keep the character readable beneath the overlay without reducing the green\n-- visibility across the rest of the arena.\ndangerDrawer:addTimedCircleOnEnt(\n    finalHitTimeout,\n    player.id,\n    playerCutoutRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect: visibility cutout, not a danger area\n    occludeFlags\n)\n\nfor order, line in ipairs(expectedLines) do\n    if order ~= data.ljUltimaBlasterPlayerNumber then\n        local lineTimeout = firstHitTimeout + hitInterval * (order - 1)\n        dangerDrawer:addTimedRect(\n            lineTimeout,\n            line.sourcePos.x, line.sourcePos.y, line.sourcePos.z,\n            lineLength,\n            lineWidth,\n            line.heading,\n            0,     -- delay\n            false, -- oldDraw\n            false, -- doNotDetect: block dashes until this numbered hit resolves\n            occludeFlags\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -4016,7 +4071,7 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return data.ljAccelBomb == true",
 							dequeueIfLuaFalse = true,
-							name = "Self: Accel Bomb",
+							name = "Self: Stillness Bomb",
 							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
 							version = 3,
 						},
@@ -4048,7 +4103,6 @@ local tbl =
 						},
 					},
 				},
-				enabled = false,
 				mechanicTime = 846.19462329432,
 				name = "[Lj Opti] STOP EVERYTHING",
 				throttleTime = 2000,
@@ -4060,6 +4114,169 @@ local tbl =
 				uuid = "c8135b33-eeb8-ff45-9ca2-d49178ba1afd",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorCore.mGetPlayer():Jump()\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									true,
+								},
+								
+								{
+									"c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Jump",
+							stopAllActions = true,
+							uuid = "220568e8-2c1c-e615-840f-10b1db559f82",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljAccelBomb == false",
+							dequeueIfLuaFalse = true,
+							name = "Self: Motion Bomb",
+							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 1.5,
+							buffID = 5546,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Accel Bomb Buff <= 1.5s",
+							uuid = "c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+				},
+				loop = true,
+				mechanicTime = 846.19462329432,
+				name = "[Lj Opti] JUMP FOR MOTION",
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = 60,
+				timerOffset = -2,
+				timerStartOffset = -3,
+				uuid = "52eb6ae3-c8c9-6836-b522-0c5d22da2bae",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"c305123f-01e2-32b0-bd63-4424d6132137",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Force Slidecast",
+							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "End Slide",
+							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 2,
+							buffID = 5546,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Accel Bomb Buff <= 2s",
+							uuid = "c305123f-01e2-32b0-bd63-4424d6132137",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							category = "Action",
+							name = "Action Used: Force Slidecast",
+							uuid = "a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 846.19462329432,
+				name = "[Lj Opti] Force Slidecast (Stillness/Motion)",
+				throttleTime = 2500,
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = 60,
+				timerStartOffset = -3,
+				uuid = "ee5e982b-7601-cac4-b9cc-7724b9bab42c",
+				version = 2,
+			},
+			inheritedIndex = 7,
 		},
 	},
 	[162] = 
@@ -4120,6 +4337,105 @@ local tbl =
 				timerEndOffset = 45,
 				timerStartOffset = -10,
 				uuid = "c4ee9f11-8b37-0459-8b6c-4d21bb53e8bc",
+				version = 2,
+			},
+		},
+	},
+	[163] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 96 }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0.75 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									false,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "North",
+							uuid = "0dd0dc2d-b322-6fdd-b593-019afbfed7ae",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 104 }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0.75 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "South",
+							uuid = "6002616b-0609-f148-8b39-700ef94f8be3",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 7,
+							buffID = 5543,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Cursed Shriek Buff",
+							uuid = "99c7f027-aad3-5984-a9f6-707857fa04c7",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 877.06989073874,
+				name = "[Lj Draw] Gaze Baits",
+				timeRange = true,
+				timelineIndex = 163,
+				timerEndOffset = 33,
+				uuid = "a4812aa0-abc6-4b8a-96c6-4111fd11cd10",
 				version = 2,
 			},
 		},
@@ -4344,7 +4660,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local state = data.ljP5FloodProjectionGuide\nlocal player = TensorCore.mGetPlayer()\n\nif state.pendingAdvanceAt ~= nil\n    and (TensorReactions_CurrentTimer) >= state.pendingAdvanceAt\nthen\n    state.currentWave = state.currentWave + 1\n    state.pendingAdvanceAt = nil\nend\n\nif state.currentWave > 4 then\n    self.used = true\n    return\nend\n\nlocal guideRadius = 4\nlocal safeSpots = {\n    { x = 100, z = 100 - guideRadius },\n    { x = 100 + guideRadius, z = 100 },\n    { x = 100, z = 100 + guideRadius },\n    { x = 100 - guideRadius, z = 100 },\n}\nlocal safeSpot = safeSpots[state.sequence[state.currentWave]]\nlocal green = 0xFF00FF00\nlocal drawer = TensorCore.getCachedDrawer(green, green, green, green, 1)\n\ndrawer:addLine(\n    player.pos.x,\n    player.pos.y,\n    player.pos.z,\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    4\n)\n\ndrawer:addCircle(\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    1.5,\n    false\n)\n\nself.used = true",
+							actionLua = "local state = data.ljP5FloodProjectionGuide\nlocal player = TensorCore.mGetPlayer()\n\nif state.pendingAdvanceAt ~= nil\n    and (TensorReactions_CurrentTimer) >= state.pendingAdvanceAt\nthen\n    state.currentWave = state.currentWave + 1\n    state.pendingAdvanceAt = nil\nend\n\nif state.currentWave > 3 then\n    self.used = true\n    return\nend\n\nlocal guideRadius = 4\nlocal safeSpots = {\n    { x = 100, z = 100 - guideRadius },\n    { x = 100 + guideRadius, z = 100 },\n    { x = 100, z = 100 + guideRadius },\n    { x = 100 - guideRadius, z = 100 },\n}\nlocal safeSpot = safeSpots[state.sequence[state.currentWave]]\nlocal green = 0xFF00FF00\nlocal drawer = TensorCore.getCachedDrawer(green, green, green, green, 1)\n\ndrawer:addLine(\n    player.pos.x,\n    player.pos.y,\n    player.pos.z,\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    4\n)\n\ndrawer:addCircle(\n    safeSpot.x,\n    player.pos.y,\n    safeSpot.z,\n    1.5,\n    false\n)\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -4400,6 +4716,56 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"826399d1-d225-88a8-abc1-fc70ea7033f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffID = 2941,
+							category = "Self",
+							name = "Self: Vulnerability Up Debuff",
+							uuid = "826399d1-d225-88a8-abc1-fc70ea7033f5",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 1006.5474749784,
+				name = "[Lj Draw] Line to Role Stacks",
+				timeRange = true,
+				timelineIndex = 188,
+				timerEndOffset = 2,
+				uuid = "1e39b4c6-0bae-26a7-8d24-d368b97efc96",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
 							version = 2.1,
@@ -4415,7 +4781,8 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 188,
 				timerEndOffset = 12,
-				uuid = "1e39b4c6-0bae-26a7-8d24-d368b97efc96",
+				timerStartOffset = 1.75,
+				uuid = "f2d4de03-aeae-bbb9-81d5-226168724a8b",
 				version = 2,
 			},
 		},
@@ -4454,6 +4821,78 @@ local tbl =
 			},
 		},
 	},
+	[209] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local impactRadius = 6\nlocal stepDistance = math.sqrt(50)\nlocal firstImpactMs = 4220\nlocal stepCadenceMs = 520\n\nlocal renderFlags =\n    Argus2.RenderFlags.FLAG_WARP_TERRAIN |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY |\n    Argus2.RenderFlags.FLAG_OCCLUSION_BASE\n\nlocal drawer = TensorCore.getCachedDrawer(\n    0xFF00FFFF,\n    0xFF0088FF,\n    0xFF0000FF,\n    0xFFFFFFFF,\n    2\n)\n\nlocal sourcePos = {\n    x = eventArgs.x,\n    y = eventArgs.y,\n    z = eventArgs.z\n}\n\nfor step = 0, 7 do\n    local pos = TensorCore.getPosInDirection(\n        sourcePos,\n        eventArgs.heading,\n        stepDistance * step\n    )\n\n    drawer:addTimedCircle(\n        firstImpactMs + stepCadenceMs * step,\n        pos.x,\n        pos.y,\n        pos.z,\n        impactRadius,\n        0,\n        false,\n        false,\n        renderFlags\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"9207737d-68be-b251-804a-cfa2f109fef0",
+									true,
+								},
+								
+								{
+									"4df7efe1-f599-71ef-8c60-7a64b45aa10c",
+									true,
+								},
+							},
+							gVar = "ACR_TensorMagnum3_CD",
+							uuid = "9f1bea58-6fc8-d2e2-bdf5-1b548d2ce87c",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return eventArgs.aoeID == 47932",
+							dequeueIfLuaFalse = true,
+							name = "Event: AoE ID 47932",
+							uuid = "9207737d-68be-b251-804a-cfa2f109fef0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return ArgusDrawsPlus ~= nil and ArgusDrawsPlus.getEnabled() == true",
+							dequeueIfLuaFalse = true,
+							name = "ArgusDraws+",
+							uuid = "4df7efe1-f599-71ef-8c60-7a64b45aa10c",
+							version = 3,
+						},
+					},
+				},
+				eventType = 18,
+				loop = true,
+				mechanicTime = 1063.6903949829,
+				name = "[Lj Draw] Exaflares",
+				timeRange = true,
+				timelineIndex = 209,
+				timerEndOffset = 15,
+				uuid = "1c90096b-6c73-ec02-9994-043ec1ac4042",
+				version = 2,
+			},
+		},
+	},
 	[212] = 
 	{
 		
@@ -4483,7 +4922,7 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 212,
 				timerEndOffset = 17,
-				timerStartOffset = 1,
+				timerStartOffset = 2,
 				uuid = "5f417c69-5caa-a27e-9f52-28c9e2c06e07",
 				version = 2,
 			},
