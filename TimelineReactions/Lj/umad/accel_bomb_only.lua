@@ -320,7 +320,7 @@ local tbl =
 							category = "Lua",
 							conditionLua = "return data.ljAccelBomb == true",
 							dequeueIfLuaFalse = true,
-							name = "Self: Accel Bomb",
+							name = "Self: Stillness Bomb",
 							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
 							version = 3,
 						},
@@ -455,6 +455,11 @@ local tbl =
 							{
 								
 								{
+									"9e92cb67-1086-49f0-a48b-50c019806e0b",
+									true,
+								},
+								
+								{
 									"c305123f-01e2-32b0-bd63-4424d6132137",
 									true,
 								},
@@ -475,6 +480,11 @@ local tbl =
 							{
 								
 								{
+									"9e92cb67-1086-49f0-a48b-50c019806e0b",
+									true,
+								},
+								
+								{
 									"a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
 									true,
 								},
@@ -492,12 +502,25 @@ local tbl =
 					{
 						data = 
 						{
+							category = "Lua",
+							conditionLua = "return TensorDrift_SlidecastForceHold ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "TensorDrift",
+							uuid = "9e92cb67-1086-49f0-a48b-50c019806e0b",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
 							buffCheckType = 3,
-							buffDuration = 2,
+							buffDuration = 2.5,
 							buffID = 5546,
 							category = "Self",
 							comparator = 2,
-							name = "Self: Accel Bomb Buff <= 2s",
+							name = "Self: Accel Bomb Buff <= 2.5s",
 							uuid = "c305123f-01e2-32b0-bd63-4424d6132137",
 							version = 3,
 						},
@@ -517,12 +540,12 @@ local tbl =
 				},
 				mechanicTime = 846.19462329432,
 				name = "[Lj Opti] Force Slidecast (Stillness/Motion)",
-				throttleTime = 2500,
+				throttleTime = 3000,
 				timeRange = true,
 				timelineIndex = 157,
 				timerEndOffset = 60,
 				timerStartOffset = -3,
-				uuid = "16ff7f3e-b846-5297-b48b-eed6a5f5e52e",
+				uuid = "16d8e550-9566-1c7a-a8e1-3df4b3520e8d",
 				version = 2,
 			},
 			inheritedIndex = 7,
