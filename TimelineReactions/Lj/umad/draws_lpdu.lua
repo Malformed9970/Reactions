@@ -1910,6 +1910,63 @@ local tbl =
 			},
 		},
 	},
+	[74] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal playerPos = player.pos\n\nlocal kbSourcePos = { x = 100, y = 0, z = 100 }\nlocal kbDistance = 15\n\nlocal distanceToPlayer = TensorCore.getDistance2d(kbSourcePos, playerPos)\nlocal totalDistance = distanceToPlayer + kbDistance\nlocal heading = TensorCore.getHeadingToTarget(kbSourcePos, playerPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        kbSourcePos.x,\n        kbSourcePos.y + 0.15,\n        kbSourcePos.z,\n        heading,\n        baseLength,\n        baseWidth,\n        tipLength,\n        tipWidth,\n        false,\n        Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nlocal sourceDrawer = TensorCore.getCachedDrawer(0xFF0000FF)\nsourceDrawer:addCircle(\n    kbSourcePos.x,\n    kbSourcePos.y + 0.15,\n    kbSourcePos.z,\n    0.25,\n    true,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true",
+							gVar = "ACR_RikuMNK3_CD",
+							uuid = "0a43bb3f-77dc-669a-b343-8afbb51ac482",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 381.48132335556,
+				name = "[Lj Draw] KB Arrow",
+				timeRange = true,
+				timelineIndex = 74,
+				timerEndOffset = 5,
+				uuid = "7cce803f-ee1a-0fc8-a9ba-eae74acd1a88",
+				version = 2,
+			},
+		},
+	},
+	[75] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 386.79737120621,
+				name = "[Lj Draw] KB Arrow",
+				timeRange = true,
+				timelineIndex = 75,
+				timerStartOffset = -2,
+				uuid = "ee194367-8a9b-b066-9022-14a9c91aa2a4",
+				version = 2,
+			},
+		},
+	},
 	[76] = 
 	{
 		
@@ -5013,7 +5070,7 @@ local tbl =
 				name = "[Lj Draw] Forsaken SW",
 				timeRange = true,
 				timelineIndex = 219,
-				timerEndOffset = 12,
+				timerEndOffset = 7,
 				uuid = "f48d7af7-5b41-247d-8226-6014ab2722b1",
 				version = 2,
 			},
