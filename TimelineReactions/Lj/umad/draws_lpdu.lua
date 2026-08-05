@@ -4584,6 +4584,128 @@ local tbl =
 			},
 		},
 	},
+	[170] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawTime = 35000\nlocal green = 0x5900FF00\nlocal white = 0xFFFFFFFF\n\nlocal tankPos = { x = 100, y = 0.05, z = 92 }\n\nAnyoneCore.addTimedWorldText(drawTime, \"Tanks\", tankPos, white, true, 1.5)\n\nlocal drawer = TensorCore.getStaticFlatDrawer(green)\ndrawer:addTimedCircle(\n    drawTime,\n    tankPos.x, tankPos.y, tankPos.z,\n    3,\n    0,\n    false,\n    true,\n    0\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"fb916d2c-906d-4b4f-b999-74a950467561",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Tank",
+							uuid = "f825f389-1163-3247-b28d-cf2fe6562cb9",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawTime = 35000\nlocal green = 0x5900FF00\nlocal white = 0xFFFFFFFF\n\nlocal healerPos = { x = 94.34, y = 0.05, z = 105.65 }\n\nAnyoneCore.addTimedWorldText(drawTime, \"Healers\", healerPos, white, true, 1.5)\n\nlocal drawer = TensorCore.getStaticFlatDrawer(green)\ndrawer:addTimedCircle(\n    drawTime,\n    healerPos.x, healerPos.y, healerPos.z,\n    5,\n    0,\n    false,\n    true,\n    0\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"584680ce-85af-5ae5-8115-971b2d09ed1e",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Healer",
+							uuid = "330dd5d0-3a29-7209-9371-bd5b9a0230f2",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawTime = 35000\nlocal green = 0x5900FF00\nlocal white = 0xFFFFFFFF\n\nlocal dpsPos = { x = 105.65, y = 0.05, z = 105.65 }\n\nAnyoneCore.addTimedWorldText(drawTime, \"DPS\", dpsPos, white, true, 1.5)\n\nlocal drawer = TensorCore.getStaticFlatDrawer(green)\ndrawer:addTimedCircle(\n    drawTime,\n    dpsPos.x, dpsPos.y, dpsPos.z,\n    5,\n    0,\n    false,\n    true,\n    0\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"4cf97ae8-3b68-99ed-9afa-d236d2dcb517",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "DPS",
+							uuid = "4bab7f09-443a-f4d4-a6fe-9e953c8ace59",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Tank",
+							partyTargetType = "Tank",
+							uuid = "fb916d2c-906d-4b4f-b999-74a950467561",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "584680ce-85af-5ae5-8115-971b2d09ed1e",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "4cf97ae8-3b68-99ed-9afa-d236d2dcb517",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[Lj Draw] Auto Baits",
+				timelineIndex = 170,
+				timerOffset = 4,
+				uuid = "bc09bbbd-3d53-31be-8182-d608e74f3e73",
+				version = 2,
+			},
+		},
+	},
 	[173] = 
 	{
 		
@@ -4613,6 +4735,7 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 173,
 				timerEndOffset = 12,
+				timerStartOffset = -36,
 				uuid = "0e1b544b-d075-6339-873e-9b70dc8239b2",
 				version = 2,
 			},
@@ -4867,6 +4990,128 @@ local tbl =
 			},
 		},
 	},
+	[202] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawTime = 7000\nlocal green = 0x5900FF00\nlocal white = 0xFFFFFFFF\n\nlocal tankPos = { x = 100, y = 0.05, z = 92 }\n\nAnyoneCore.addTimedWorldText(drawTime, \"Tanks\", tankPos, white, true, 1.5)\n\nlocal drawer = TensorCore.getStaticFlatDrawer(green)\ndrawer:addTimedCircle(\n    drawTime,\n    tankPos.x, tankPos.y, tankPos.z,\n    3,\n    0,\n    false,\n    true,\n    0\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"fb916d2c-906d-4b4f-b999-74a950467561",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Tank",
+							uuid = "f825f389-1163-3247-b28d-cf2fe6562cb9",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawTime = 7000\nlocal green = 0x5900FF00\nlocal white = 0xFFFFFFFF\n\nlocal healerPos = { x = 94.34, y = 0.05, z = 105.65 }\n\nAnyoneCore.addTimedWorldText(drawTime, \"Healers\", healerPos, white, true, 1.5)\n\nlocal drawer = TensorCore.getStaticFlatDrawer(green)\ndrawer:addTimedCircle(\n    drawTime,\n    healerPos.x, healerPos.y, healerPos.z,\n    5,\n    0,\n    false,\n    true,\n    0\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"584680ce-85af-5ae5-8115-971b2d09ed1e",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Healer",
+							uuid = "330dd5d0-3a29-7209-9371-bd5b9a0230f2",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawTime = 7000\nlocal green = 0x5900FF00\nlocal white = 0xFFFFFFFF\n\nlocal dpsPos = { x = 105.65, y = 0.05, z = 105.65 }\n\nAnyoneCore.addTimedWorldText(drawTime, \"DPS\", dpsPos, white, true, 1.5)\n\nlocal drawer = TensorCore.getStaticFlatDrawer(green)\ndrawer:addTimedCircle(\n    drawTime,\n    dpsPos.x, dpsPos.y, dpsPos.z,\n    5,\n    0,\n    false,\n    true,\n    0\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"4cf97ae8-3b68-99ed-9afa-d236d2dcb517",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "DPS",
+							uuid = "4bab7f09-443a-f4d4-a6fe-9e953c8ace59",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Tank",
+							partyTargetType = "Tank",
+							uuid = "fb916d2c-906d-4b4f-b999-74a950467561",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "584680ce-85af-5ae5-8115-971b2d09ed1e",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "4cf97ae8-3b68-99ed-9afa-d236d2dcb517",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1047.2843757912,
+				name = "[Lj Draw] Auto Baits",
+				timelineIndex = 202,
+				timerOffset = 1,
+				uuid = "238bed9c-c213-a311-9935-49dd9e50b619",
+				version = 2,
+			},
+		},
+	},
 	[203] = 
 	{
 		
@@ -4896,6 +5141,7 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 203,
 				timerEndOffset = 10,
+				timerStartOffset = -6,
 				uuid = "941e06e1-ff52-5647-87ad-542e70c58964",
 				version = 2,
 			},
