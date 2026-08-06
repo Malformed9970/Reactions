@@ -1952,6 +1952,17 @@ local tbl =
 			{
 				actions = 
 				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal playerPos = player.pos\n\nlocal kbSourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal kbDistance = 15\n\nlocal distanceToPlayer = TensorCore.getDistance2d(kbSourcePos, playerPos)\nlocal totalDistance = distanceToPlayer + kbDistance\nlocal heading = TensorCore.getHeadingToTarget(kbSourcePos, playerPos)\n\nlocal baseWidth = 0.5\nlocal tipWidth = 1.5\nlocal tipLength = 1.5\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n\n    arrowDrawer:addArrow(kbSourcePos.x, kbSourcePos.y + 0.15, kbSourcePos.z, heading, baseLength, baseWidth, tipLength,\n        tipWidth, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nlocal sourceDrawer = TensorCore.getCachedDrawer(0xFF0000FF)\nsourceDrawer:addCircle(kbSourcePos.x, kbSourcePos.y + 0.15, kbSourcePos.z, 0.25, true,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "54619b80-1422-473f-be54-bd1a31541cfc",
+							version = 2.1,
+						},
+					},
 				},
 				conditions = 
 				{
@@ -1962,7 +1973,7 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 75,
 				timerStartOffset = -2,
-				uuid = "ee194367-8a9b-b066-9022-14a9c91aa2a4",
+				uuid = "609bbdcf-7531-e175-af5e-4f47d57e7d47",
 				version = 2,
 			},
 		},
@@ -3448,6 +3459,7 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 140,
 				timerEndOffset = 6,
+				timerStartOffset = -1,
 				uuid = "0ae2b750-99a0-a6fa-8af6-dc13c80e06bb",
 				version = 2,
 			},
