@@ -5318,6 +5318,58 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljForsakenGroundCount = (data.ljForsakenGroundCount or 0) + 1\nlocal wave = math.ceil(data.ljForsakenGroundCount / 2)\nlocal timeoutByWave = {60550, 52400, 44250, 36100}\nlocal timeout = timeoutByWave[wave]\nlocal radius = eventArgs.aoeLength\nlocal drawer = TensorCore.getStaticDrawer(0x660000FF, 2)\n\ndrawer:addTimedCircle(timeout, eventArgs.x, eventArgs.y, eventArgs.z, radius, 0, false, false,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"738ca744-3789-3735-9e79-67d07d37c057",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "1b9327e0-fc38-667d-bd58-ec15de1415bc",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return eventArgs.aoeID == 47927",
+							name = "Event: AoE ID 47927",
+							uuid = "738ca744-3789-3735-9e79-67d07d37c057",
+							version = 3,
+						},
+					},
+				},
+				eventType = 18,
+				loop = true,
+				mechanicTime = 1125.2071474604,
+				name = "[Lj Draw] Forsaken Danger Area",
+				timeRange = true,
+				timelineIndex = 219,
+				timerEndOffset = 30,
+				timerStartOffset = -1,
+				uuid = "b0f73226-aee1-97ce-be69-b618850e0c40",
+				version = 2,
+			},
+		},
 	},
 	[221] = 
 	{
