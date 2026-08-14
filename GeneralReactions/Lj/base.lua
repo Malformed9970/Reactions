@@ -117,7 +117,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return ljHighendDuty",
+						conditionLua = "return ljHighendDuty == true",
 						dequeueIfLuaFalse = true,
 						name = "In Highend Duty",
 						uuid = "64d7c855-cc05-f50d-a8b2-34c52aa84eed",
@@ -444,6 +444,7 @@ local tbl =
 							1069,
 							1137,
 							1176,
+							1346,
 						},
 						name = "Duty Action Maps",
 						uuid = "df74efb9-4705-7052-b131-02edb2689619",
