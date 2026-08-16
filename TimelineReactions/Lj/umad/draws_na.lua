@@ -2871,6 +2871,190 @@ local tbl =
 			inheritedIndex = 1,
 		},
 	},
+	[108] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h + (math.pi / 2), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"cfbf8985-cfd2-2699-a7ac-fd0940b9a1b1",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Group Stack",
+							uuid = "6d3b6f06-eac7-2d4a-9608-515ee16f574a",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi * 3 / 4), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"a631a59f-9417-f43d-833c-8e5e2c9e1897",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Tank",
+							uuid = "bbac486a-2e17-df35-a6c5-cf97fe7de16b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi / 2), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"207b4766-2d53-57e2-9a99-4094936b83ed",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Healer",
+							uuid = "2bdc507a-c37d-b344-bc14-650fedfe2aa7",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi / 4), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"36d9c36f-0a36-7b1d-b1f2-c045389d6cd0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "DPS",
+							uuid = "02eea43d-88d6-dfc5-b74d-fc0e3c55404a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47846,
+							name = "Event: West Cleave 47846",
+							uuid = "cfbf8985-cfd2-2699-a7ac-fd0940b9a1b1",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47847,
+							name = "Event: East Cleave 47847",
+							uuid = "92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Tank",
+							partyTargetType = "Tank",
+							uuid = "a631a59f-9417-f43d-833c-8e5e2c9e1897",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "207b4766-2d53-57e2-9a99-4094936b83ed",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "36d9c36f-0a36-7b1d-b1f2-c045389d6cd0",
+							version = 3,
+						},
+					},
+				},
+				eventType = 3,
+				mechanicTime = 574.57649748723,
+				name = "[Lj Draw] Slappies",
+				timeRange = true,
+				timelineIndex = 108,
+				timerEndOffset = 10,
+				timerStartOffset = -10,
+				uuid = "93415fa7-35d0-5b07-9926-c5dce1971828",
+				version = 2,
+			},
+		},
+	},
 	[113] = 
 	{
 		
@@ -3076,6 +3260,374 @@ local tbl =
 				version = 2,
 			},
 			inheritedIndex = 42,
+		},
+	},
+	[118] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h + (math.pi / 2), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"cfbf8985-cfd2-2699-a7ac-fd0940b9a1b1",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Group Stack",
+							uuid = "6d3b6f06-eac7-2d4a-9608-515ee16f574a",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi * 3 / 4), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"a631a59f-9417-f43d-833c-8e5e2c9e1897",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Tank",
+							uuid = "bbac486a-2e17-df35-a6c5-cf97fe7de16b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi / 2), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"207b4766-2d53-57e2-9a99-4094936b83ed",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Healer",
+							uuid = "2bdc507a-c37d-b344-bc14-650fedfe2aa7",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi / 4), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"36d9c36f-0a36-7b1d-b1f2-c045389d6cd0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "DPS",
+							uuid = "02eea43d-88d6-dfc5-b74d-fc0e3c55404a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47846,
+							name = "Event: West Cleave 47846",
+							uuid = "cfbf8985-cfd2-2699-a7ac-fd0940b9a1b1",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47847,
+							name = "Event: East Cleave 47847",
+							uuid = "92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Tank",
+							partyTargetType = "Tank",
+							uuid = "a631a59f-9417-f43d-833c-8e5e2c9e1897",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "207b4766-2d53-57e2-9a99-4094936b83ed",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "36d9c36f-0a36-7b1d-b1f2-c045389d6cd0",
+							version = 3,
+						},
+					},
+				},
+				eventType = 3,
+				mechanicTime = 604.98844481876,
+				name = "[Lj Draw] Slappies",
+				timeRange = true,
+				timelineIndex = 118,
+				timerEndOffset = 10,
+				timerStartOffset = -10,
+				uuid = "9a7840f5-f318-9051-8d3a-2b3c851a44f5",
+				version = 2,
+			},
+		},
+	},
+	[131] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h + (math.pi / 2), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"cfbf8985-cfd2-2699-a7ac-fd0940b9a1b1",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Group Stack",
+							uuid = "6d3b6f06-eac7-2d4a-9608-515ee16f574a",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi * 3 / 4), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"a631a59f-9417-f43d-833c-8e5e2c9e1897",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Tank",
+							uuid = "bbac486a-2e17-df35-a6c5-cf97fe7de16b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi / 2), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"207b4766-2d53-57e2-9a99-4094936b83ed",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Healer",
+							uuid = "2bdc507a-c37d-b344-bc14-650fedfe2aa7",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 8000\nlocal spotDistance = 9.5\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal sourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal targetPos = TensorCore.getPosInDirection(ent.pos, ent.pos.h - (math.pi / 4), spotDistance)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\ndrawer:addTimedArrow(timeout, sourcePos.x, sourcePos.y, sourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, 0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+									true,
+								},
+								
+								{
+									"36d9c36f-0a36-7b1d-b1f2-c045389d6cd0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "DPS",
+							uuid = "02eea43d-88d6-dfc5-b74d-fc0e3c55404a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47846,
+							name = "Event: West Cleave 47846",
+							uuid = "cfbf8985-cfd2-2699-a7ac-fd0940b9a1b1",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47847,
+							name = "Event: East Cleave 47847",
+							uuid = "92995fe8-e313-5d04-b1f4-f8dff2d704cd",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Tank",
+							partyTargetType = "Tank",
+							uuid = "a631a59f-9417-f43d-833c-8e5e2c9e1897",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "207b4766-2d53-57e2-9a99-4094936b83ed",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "36d9c36f-0a36-7b1d-b1f2-c045389d6cd0",
+							version = 3,
+						},
+					},
+				},
+				eventType = 3,
+				mechanicTime = 672.96514955193,
+				name = "[Lj Draw] Slappies",
+				timeRange = true,
+				timelineIndex = 131,
+				timerEndOffset = 10,
+				timerStartOffset = -10,
+				uuid = "24938a40-ca87-62f9-a762-fbbadab35f72",
+				version = 2,
+			},
 		},
 	},
 	[136] = 
@@ -4135,11 +4687,11 @@ local tbl =
 						data = 
 						{
 							buffCheckType = 3,
-							buffDuration = 1.5,
+							buffDuration = 2,
 							buffID = 5546,
 							category = "Self",
 							comparator = 2,
-							name = "Self: Accel Bomb Buff <= 1.5s",
+							name = "Self: Accel Bomb Buff <= 2s",
 							uuid = "c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
 							version = 3,
 						},
@@ -4159,7 +4711,7 @@ local tbl =
 				},
 				mechanicTime = 846.19462329432,
 				name = "[Lj Opti] STOP EVERYTHING",
-				throttleTime = 2000,
+				throttleTime = 2500,
 				timeRange = true,
 				timelineIndex = 157,
 				timerEndOffset = 60,
@@ -4321,11 +4873,11 @@ local tbl =
 						data = 
 						{
 							buffCheckType = 3,
-							buffDuration = 2.5,
+							buffDuration = 3,
 							buffID = 5546,
 							category = "Self",
 							comparator = 2,
-							name = "Self: Accel Bomb Buff <= 2.5s",
+							name = "Self: Accel Bomb Buff <= 3s",
 							uuid = "c305123f-01e2-32b0-bd63-4424d6132137",
 							version = 3,
 						},
@@ -4345,7 +4897,7 @@ local tbl =
 				},
 				mechanicTime = 846.19462329432,
 				name = "[Lj Opti] Force Slidecast (Stillness/Motion)",
-				throttleTime = 3000,
+				throttleTime = 3500,
 				timeRange = true,
 				timelineIndex = 157,
 				timerEndOffset = 60,
