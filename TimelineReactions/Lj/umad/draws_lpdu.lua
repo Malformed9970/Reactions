@@ -3070,6 +3070,39 @@ local tbl =
 			},
 		},
 	},
+	[112] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawer = TensorCore.getMoogleDrawer()\ndrawer:addTimedCircle(3000, 100, 0, 100, 6)\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "63eab906-fcfd-238b-af94-626405b11107",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 578.01131609381,
+				name = "[Lj Draw] 4th Slap Pre-Draw",
+				timeRange = true,
+				timelineIndex = 112,
+				timerStartOffset = -3,
+				uuid = "0950355b-5357-76e8-a427-981b71a020ec",
+				version = 2,
+			},
+		},
+	},
 	[113] = 
 	{
 		
@@ -3461,6 +3494,39 @@ local tbl =
 			},
 		},
 	},
+	[122] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawer = TensorCore.getMoogleDrawer()\ndrawer:addTimedCircle(3000, 100, 0, 100, 6)\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "63eab906-fcfd-238b-af94-626405b11107",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 608.39401598045,
+				name = "[Lj Draw] 4th Slap Pre-Draw",
+				timeRange = true,
+				timelineIndex = 122,
+				timerStartOffset = -3,
+				uuid = "8b7acbe3-58e2-c7ec-b195-7ad71c371995",
+				version = 2,
+			},
+		},
+	},
 	[131] = 
 	{
 		
@@ -3641,6 +3707,39 @@ local tbl =
 				timerEndOffset = 10,
 				timerStartOffset = -10,
 				uuid = "8f761a7a-6be9-0a0a-b839-5541fa28c9e6",
+				version = 2,
+			},
+		},
+	},
+	[135] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local drawer = TensorCore.getMoogleDrawer()\ndrawer:addTimedCircle(3000, 100, 0, 100, 6)\n\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "63eab906-fcfd-238b-af94-626405b11107",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 676.34203400282,
+				name = "[Lj Draw] 4th Slap Pre-Draw",
+				timeRange = true,
+				timelineIndex = 135,
+				timerStartOffset = -3,
+				uuid = "01c3e3b5-c2e6-cba4-b035-6494d6fea016",
 				version = 2,
 			},
 		},
