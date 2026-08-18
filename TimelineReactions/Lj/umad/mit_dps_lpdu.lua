@@ -195,6 +195,160 @@ local tbl =
 			},
 			inheritedIndex = 2,
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"7c259250-e60f-cf60-ac51-224d92e3db21",
+									true,
+								},
+								
+								{
+									"c8990f81-73d9-bf7b-942e-ad6db29e6623",
+									true,
+								},
+							},
+							gVar = "ACR_TensorRequiem3_Hotbar_Troubadour",
+							uuid = "fd2d982d-2e90-2b4e-865b-e4db2bfa6923",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"83d0ea0a-4934-2421-a692-59d0959b18f9",
+									true,
+								},
+								
+								{
+									"c8990f81-73d9-bf7b-942e-ad6db29e6623",
+									true,
+								},
+							},
+							gVar = "ACR_RikuDNC3_Hotbar_ShieldSamba",
+							uuid = "5409201a-e210-3d52-bd0a-5785a0062108",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"9b510f14-672a-9890-b474-d7ab095f17f6",
+									true,
+								},
+								
+								{
+									"c8990f81-73d9-bf7b-942e-ad6db29e6623",
+									true,
+								},
+							},
+							gVar = "ACR_TensorMagnum3_Hotbar_Tactician",
+							uuid = "55ef0f53-d927-aef8-8a4b-086a6f3246da",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "7c259250-e60f-cf60-ac51-224d92e3db21",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "DANCER",
+							name = "Self: DNC",
+							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MACHINIST",
+							name = "Self: MCH",
+							uuid = "9b510f14-672a-9890-b474-d7ab095f17f6",
+							version = 3,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "c8990f81-73d9-bf7b-942e-ad6db29e6623",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 37.212891227673,
+				name = "[Lj Mit] Phys Ranged - Primary",
+				randomTimeout = 10,
+				timeRange = true,
+				timelineIndex = 5,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "e31a9c57-3fe6-cbdb-bb4e-62fb4af1a8e3",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
 	},
 	[12] = 
 	{
