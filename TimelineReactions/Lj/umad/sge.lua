@@ -346,7 +346,7 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return FFXIV_Common_BotRunning and AnyoneCore.Settings.PrepullHelper.enabled",
+							conditionLua = "return FFXIV_Common_BotRunning",
 							name = "Assist Enabled",
 							uuid = "4a7db5d9-954b-bac7-9064-bbd7166b5052",
 							version = 3,
