@@ -13,7 +13,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\ndata.ljTimelineOpener = true\nself.used = true",
+							actionLua = "gStartCombat = false\nljAnyoneCorePrepullHelper = AnyoneCore.Settings.PrepullHelper.enabled\nAnyoneCore.Settings.PrepullHelper.enabled = false\ndata.ljTimelineOpener = true\nself.used = true",
 							gVar = "ACR_RikuMNK3_CD",
 							name = "Start Combat",
 							uuid = "2964ffe6-bc9b-60ec-801f-7ac41f171b54",
@@ -897,7 +897,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\n\nself.used = true",
+							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\nAnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\n\nself.used = true",
 							conditions = 
 							{
 								
