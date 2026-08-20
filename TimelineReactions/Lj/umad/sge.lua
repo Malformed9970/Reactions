@@ -13,7 +13,39 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\nljAnyoneCorePrepullHelper = AnyoneCore.Settings.PrepullHelper.enabled\nAnyoneCore.Settings.PrepullHelper.enabled = false\ndata.ljTimelineOpener = true\nself.used = true",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9a17440e-4710-700d-b90f-f154c8188764",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 17,
+				mechanicTime = 15.261765625,
+				name = "Opener Cancel",
+				timeRange = true,
+				timelineIndex = 1,
+				timerStartOffset = -15.300000190735,
+				uuid = "c23d0c09-b8cc-f34a-a167-c96f58db0daa",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "gStartCombat = false\nif ljAnyoneCorePrepullHelper == nil then\n    ljAnyoneCorePrepullHelper = AnyoneCore.Settings.PrepullHelper.enabled\nend\nAnyoneCore.Settings.PrepullHelper.enabled = false\ndata.ljTimelineOpener = true\nself.used = true",
 							gVar = "ACR_RikuMNK3_CD",
 							name = "Start Combat",
 							uuid = "2964ffe6-bc9b-60ec-801f-7ac41f171b54",
@@ -251,7 +283,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "self.used = true",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
 							conditions = 
 							{
 								
@@ -537,7 +569,7 @@ local tbl =
 				uuid = "e4dfd30f-34bd-c288-8b39-14d3318b0983",
 				version = 2,
 			},
-			inheritedIndex = 16,
+			inheritedIndex = 17,
 		},
 		
 		{
@@ -940,7 +972,7 @@ local tbl =
 				uuid = "aec72e14-2095-a98c-a572-05e0f7a9bf54",
 				version = 2,
 			},
-			inheritedIndex = 17,
+			inheritedIndex = 18,
 		},
 		
 		{
@@ -990,7 +1022,7 @@ local tbl =
 				uuid = "a467b997-33b3-ec34-9752-ce508186e22b",
 				version = 2,
 			},
-			inheritedIndex = 18,
+			inheritedIndex = 19,
 		},
 		
 		{
@@ -1058,7 +1090,7 @@ local tbl =
 				uuid = "af37f79a-ea4a-ee84-8934-3ea9c32cf424",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 20,
 		},
 		
 		{
@@ -1420,7 +1452,7 @@ local tbl =
 				uuid = "f9d04d43-ef85-2171-b3ba-67572612ca73",
 				version = 2,
 			},
-			inheritedIndex = 20,
+			inheritedIndex = 21,
 		},
 		
 		{
@@ -1476,7 +1508,7 @@ local tbl =
 				uuid = "cedcb153-1675-ea3b-b331-9d519402b84a",
 				version = 2,
 			},
-			inheritedIndex = 21,
+			inheritedIndex = 22,
 		},
 		
 		{
@@ -1532,7 +1564,7 @@ local tbl =
 				uuid = "b25567f0-8dbf-10ba-bce9-1b755e51d9c4",
 				version = 2,
 			},
-			inheritedIndex = 22,
+			inheritedIndex = 23,
 		},
 		
 		{
@@ -1585,7 +1617,7 @@ local tbl =
 				uuid = "febf9fac-75a7-ab1f-8ca5-db6b496ca613",
 				version = 2,
 			},
-			inheritedIndex = 23,
+			inheritedIndex = 24,
 		},
 		
 		{
@@ -1604,7 +1636,7 @@ local tbl =
 				uuid = "0e44798a-cf0d-5da5-98dc-c9638fc3aa0c",
 				version = 2,
 			},
-			inheritedIndex = 24,
+			inheritedIndex = 25,
 		},
 		
 		{
@@ -1699,7 +1731,7 @@ local tbl =
 				uuid = "d157bf51-1947-4b85-a282-b387445aeaba",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 26,
 		},
 		
 		{
@@ -1775,7 +1807,7 @@ local tbl =
 				uuid = "9eb6b0f6-bbcb-96be-89c5-62faee039dd9",
 				version = 2,
 			},
-			inheritedIndex = 26,
+			inheritedIndex = 27,
 		},
 		
 		{
@@ -1851,7 +1883,7 @@ local tbl =
 				uuid = "0c66b7f8-9c53-609d-a647-4239ca592181",
 				version = 2,
 			},
-			inheritedIndex = 27,
+			inheritedIndex = 28,
 		},
 		
 		{
@@ -1927,7 +1959,7 @@ local tbl =
 				uuid = "3685d17b-db88-0b0c-86d9-afc217c20573",
 				version = 2,
 			},
-			inheritedIndex = 28,
+			inheritedIndex = 30,
 		},
 		
 		{
@@ -2003,7 +2035,7 @@ local tbl =
 				uuid = "bd32b382-6df9-26eb-91c3-729d5b0a9f90",
 				version = 2,
 			},
-			inheritedIndex = 29,
+			inheritedIndex = 30,
 		},
 		
 		{
@@ -3093,6 +3125,7 @@ local tbl =
 				uuid = "c431ad2a-bd1e-f439-885e-3220fbe389c7",
 				version = 2,
 			},
+			inheritedIndex = 29,
 		},
 	},
 	
