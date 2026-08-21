@@ -14,6 +14,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local dmu = AnyoneCore.Settings.Reactions.dmu\n\ndmu.p1TeleTrounceStrat = 1\n\ndmu.p2ForsakenStrat = 12\n\ndmu.p3BlackHoleSolverStrategy = 2\n\ndmu.p4HelperEnabled = true\ndmu.p4StackSpreadOrientation = 1\n\ndmu.p5HelperEnabled = true\ndmu.p5MaddeningFacing = 1\ndmu.p5TowerRotation = 1\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2aed0f1e-619c-595c-a114-55aeb01af52f",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "72436b0d-a28a-4e51-a27b-9dbefa347f5e",
 							version = 2.1,
@@ -22,6 +30,18 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "2aed0f1e-619c-595c-a114-55aeb01af52f",
+							version = 3,
+						},
+					},
 				},
 				enabled = false,
 				mechanicTime = 15.261765625,
@@ -206,6 +226,11 @@ local tbl =
 									"c5bafdfa-4352-f094-9392-198940ca1a79",
 									true,
 								},
+								
+								{
+									"8ad4ed37-77da-fb98-a67e-947414d9b101",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "0e3e4797-c37b-d5c4-8037-930312b7c3c2",
@@ -224,6 +249,18 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							name = "Role Set",
 							uuid = "c5bafdfa-4352-f094-9392-198940ca1a79",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "8ad4ed37-77da-fb98-a67e-947414d9b101",
 							version = 3,
 						},
 					},
@@ -257,6 +294,11 @@ local tbl =
 									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
 									true,
 								},
+								
+								{
+									"83e6eba5-bae1-8170-8fa9-a6b54383eea0",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "a7a394f6-4eda-07b7-a707-bb5ad36ea4fa",
@@ -275,6 +317,18 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							name = "Light Party Set",
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "83e6eba5-bae1-8170-8fa9-a6b54383eea0",
 							version = 3,
 						},
 					},
@@ -364,6 +418,11 @@ local tbl =
 									"aacd6563-fc48-2a2f-98ce-936b401203a0",
 									true,
 								},
+								
+								{
+									"f46574d0-bb79-9069-bb5b-9f88b4dc8b0d",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							name = "Meteor",
@@ -410,7 +469,19 @@ local tbl =
 							uuid = "aacd6563-fc48-2a2f-98ce-936b401203a0",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "f46574d0-bb79-9069-bb5b-9f88b4dc8b0d",
+							version = 3,
+						},
 					},
 				},
 				mechanicTime = 87.304550672705,
@@ -424,56 +495,6 @@ local tbl =
 	},
 	[20] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local timeout = 6000 \nlocal x, y, z = 100, 0, 100\n\n-- Determine heading based on Light Party\nlocal myId = TensorCore.mGetPlayer().id\nlocal isLP2 = false\nfor _, id in ipairs(AnyoneCore.Roster.groups(\"g2\")) do\n    if id == myId then isLP2 = true break end\nend\nlocal heading = math.pi -- Default to North for Light Party 1\nif isLP2 then\n    heading = 0         -- Face South for Light Party 2\nend\n\nlocal baseLength = 8\nlocal baseWidth = 1\nlocal tipLength = 3\nlocal tipWidth = 3\n\nlocal colorStart = 0xFF00FFFF\nlocal colorMid = 0xFF0088FF\nlocal colorEnd = 0xFF0000FF\nlocal colorOutline = 0xFFFFFFFF\nlocal outlineThickness = 2\n\nlocal drawer = TensorCore.getCachedDrawer(colorStart, colorMid, colorEnd, colorOutline, outlineThickness)\ndrawer:addTimedArrow(timeout, x, y, z, heading, baseLength, baseWidth, tipLength, tipWidth, 0, nil, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "a7a394f6-4eda-07b7-a707-bb5ad36ea4fa",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Light Party Set",
-							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 100.29172113594,
-				name = "[Lj Draw] OLD Light Party Stacks",
-				timelineIndex = 20,
-				timerOffset = -1,
-				uuid = "49a0fee7-5a25-63a0-9c5e-ea4accec281b",
-				version = 2,
-			},
-		},
 		
 		{
 			data = 
@@ -551,6 +572,11 @@ local tbl =
 									"9b66bcae-bb93-b194-8f3b-17469cb772c3",
 									true,
 								},
+								
+								{
+									"852b78f8-c37a-82a7-adc0-1b091e260e8f",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							name = "Meteor",
@@ -599,6 +625,18 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "852b78f8-c37a-82a7-adc0-1b091e260e8f",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 105.78798877162,
 				name = "[Lj Draw] Draw Positions",
@@ -622,64 +660,9 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local timeout = 6000 \nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- Determine target coordinate based on Role\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\nlocal isSupport = { [\"MT\"] = true, [\"OT\"] = true, [\"H1\"] = true, [\"H2\"] = true }\n\n-- Set the fixed destination coordinates for each group\nlocal targetPos = { x = 100, y = 0, z = 104 } -- Default to South group for DPS\nif isSupport[myRole] then\n    targetPos = { x = 100, y = 0, z = 96 }    -- North group for Supports\nend\n\n-- Calculate exact heading and distance from the player to the fixed spot\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n-- Proximity Scaling\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale) \nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\n\nlocal baseLength = totalDistance - tipLength\nlocal renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\n-- Draw the Arrow\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addTimedArrow(\n        timeout, \n        sourcePos.x, sourcePos.y, sourcePos.z, \n        heading, \n        baseLength, baseWidth, tipLength, tipWidth, \n        0, nil, renderFlags\n    )\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "a7a394f6-4eda-07b7-a707-bb5ad36ea4fa",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Light Party Set",
-							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 109.77404737751,
-				name = "[Lj Draw] OLD Light Party Stacks",
-				timelineIndex = 23,
-				timerOffset = -1,
-				uuid = "8c38ff89-58b5-ae31-8ea8-e749e3a5838b",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
 							actionLua = "data.ljGravenSafe = \"East\"\nself.used = true",
 							conditions = 
 							{
-								
-								{
-									"41bcd354-a8bf-5fec-930c-b5dab8ff8ac2",
-									true,
-								},
 								
 								{
 									"6a9af4bd-63fb-5b24-9a83-738cec4e3620",
@@ -714,11 +697,6 @@ local tbl =
 							{
 								
 								{
-									"41bcd354-a8bf-5fec-930c-b5dab8ff8ac2",
-									true,
-								},
-								
-								{
 									"6a9af4bd-63fb-5b24-9a83-738cec4e3620",
 									true,
 								},
@@ -743,19 +721,6 @@ local tbl =
 				},
 				conditions = 
 				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Role Set",
-							uuid = "41bcd354-a8bf-5fec-930c-b5dab8ff8ac2",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
 					
 					{
 						data = 
@@ -838,6 +803,16 @@ local tbl =
 							{
 								
 								{
+									"8d225e33-197e-25ee-8da1-1db2b022b760",
+									true,
+								},
+								
+								{
+									"c056aee7-6cab-68b9-bc05-bff8cd5202c3",
+									true,
+								},
+								
+								{
 									"c57efa49-644f-6a19-9720-931ee867f1fc",
 									true,
 								},
@@ -859,6 +834,16 @@ local tbl =
 							{
 								
 								{
+									"8d225e33-197e-25ee-8da1-1db2b022b760",
+									true,
+								},
+								
+								{
+									"c056aee7-6cab-68b9-bc05-bff8cd5202c3",
+									true,
+								},
+								
+								{
 									"85120373-77c5-99c0-bb7e-40ed439bb84a",
 									true,
 								},
@@ -872,6 +857,32 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "8d225e33-197e-25ee-8da1-1db2b022b760",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "c056aee7-6cab-68b9-bc05-bff8cd5202c3",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 					
 					{
 						data = 
@@ -933,6 +944,11 @@ local tbl =
 								},
 								
 								{
+									"7c441bac-3569-90bd-b1a4-e72b4aeb8599",
+									true,
+								},
+								
+								{
 									"723f1a71-86ff-e49f-8ef5-62184183033b",
 									true,
 								},
@@ -954,6 +970,11 @@ local tbl =
 								
 								{
 									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
+									true,
+								},
+								
+								{
+									"7c441bac-3569-90bd-b1a4-e72b4aeb8599",
 									true,
 								},
 								
@@ -982,6 +1003,19 @@ local tbl =
 							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
 							version = 3,
 						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "7c441bac-3569-90bd-b1a4-e72b4aeb8599",
+							version = 3,
+						},
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -1029,17 +1063,17 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local sourceEnt = TensorCore.mGetEntity(eventArgs.sourceEntityID)\nif sourceEnt.pos.x < 100.0 then\n    data.ljGraven3Tether = \"Confused\"\nelse\n    data.ljGraven3Tether = \"Sleepy\"\nend\n\nself.used = true\n",
+							actionLua = "local myColorStart = 0xFF00FFFF\nlocal myColorMid = 0xFF0088FF\nlocal myColorEnd = 0xFF0000FF\n\nlocal uuidsToDelete = {}\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid, drawColorStart, drawColorEnd = Argus.getTimedDrawBaseInfo(i)\n    \n    if shapeType == \"arrow\" and uuid then\n        -- Grab colorMid (6th return of OptArgs)\n        local _, _, _, _, _, drawColorMid = Argus.getTimedDrawOptArgs(i)\n        \n        -- If any of the colors don't match mine, mark it for deletion.\n        if drawColorStart ~= myColorStart or drawColorMid ~= myColorMid or drawColorEnd ~= myColorEnd then\n            table.insert(uuidsToDelete, uuid)\n        end\n    end\nend\n\nfor _, uuid in ipairs(uuidsToDelete) do\n    Argus.deleteTimedShape(uuid)\nend\n\nself.used = true",
 							conditions = 
 							{
 								
 								{
-									"675a7082-0ae1-f4ba-a5bc-9d4252a57a77",
+									"a45c68c2-6365-416b-bbcc-f228cd9556bb",
 									true,
 								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
-							uuid = "39b43baf-f1dc-319e-bccd-7e59c4d187f1",
+							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
 							version = 2.1,
 						},
 					},
@@ -1051,46 +1085,14 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return eventArgs.newTetherID == 45 and eventArgs.newTargetID == TensorCore.mGetPlayer().id",
+							conditionLua = "return AnyoneCore ~= nil",
 							dequeueIfLuaFalse = true,
-							name = "Tether On Me",
-							uuid = "675a7082-0ae1-f4ba-a5bc-9d4252a57a77",
+							name = "AnyoneCore",
+							uuid = "a45c68c2-6365-416b-bbcc-f228cd9556bb",
 							version = 3,
 						},
+						inheritedIndex = 2,
 					},
-				},
-				enabled = false,
-				eventType = 15,
-				mechanicTime = 163.54778319029,
-				name = "[Lj Data] OLD Get Tethers",
-				timeRange = true,
-				timelineIndex = 33,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "cb79b48b-2d01-7a87-9006-79f6a344da34",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local myColorStart = 0xFF00FFFF\nlocal myColorMid = 0xFF0088FF\nlocal myColorEnd = 0xFF0000FF\n\nlocal uuidsToDelete = {}\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid, drawColorStart, drawColorEnd = Argus.getTimedDrawBaseInfo(i)\n    \n    if shapeType == \"arrow\" and uuid then\n        -- Grab colorMid (6th return of OptArgs)\n        local _, _, _, _, _, drawColorMid = Argus.getTimedDrawOptArgs(i)\n        \n        -- If any of the colors don't match mine, mark it for deletion.\n        if drawColorStart ~= myColorStart or drawColorMid ~= myColorMid or drawColorEnd ~= myColorEnd then\n            table.insert(uuidsToDelete, uuid)\n        end\n    end\nend\n\nfor _, uuid in ipairs(uuidsToDelete) do\n    Argus.deleteTimedShape(uuid)\nend\n\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
 				},
 				eventType = 12,
 				mechanicTime = 163.54778319029,
@@ -1118,138 +1120,17 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\n\n-- Perfectly mirrored pinwheel coordinates\nlocal rolePositions = {\n    -- NW Pair (Vertical Line: Shared X)\n    [\"MT\"] = { x = 93.5,  y = 0, z = 96.5 },\n    [\"R1\"] = { x = 93.5,  y = 0, z = 90.5 },\n    \n    -- NE Pair (Horizontal Line: Shared Z)\n    [\"OT\"] = { x = 103.5, y = 0, z = 93.5 },\n    [\"R2\"] = { x = 109.5, y = 0, z = 93.5 },\n    \n    -- SE Pair (Vertical Line: Shared X)\n    [\"M2\"] = { x = 106.5, y = 0, z = 103.5 },\n    [\"H2\"] = { x = 106.5, y = 0, z = 109.5 },\n    \n    -- SW Pair (Horizontal Line: Shared Z)\n    [\"M1\"] = { x = 96.5,  y = 0, z = 106.5 },\n    [\"H1\"] = { x = 90.5,  y = 0, z = 106.5 }\n}\n\nlocal targetPos = rolePositions[myRole]\n\nif targetPos then\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    if totalDistance > 1.5 then\n        local drawer = TensorCore.getStaticDrawer(0xFF00FF00, 2)\n\n        -- Draw the line from the player to the spot\n        drawer:addLine(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            targetPos.x, targetPos.y, targetPos.z,\n            3 -- line thickness\n        )\n\n        -- Draw the green target circle at the destination\n        drawer:addCircle(\n            targetPos.x, targetPos.y, targetPos.z,\n            1 -- radius\n        )\n    end\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
-									true,
-								},
-								
-								{
-									"c356788b-c5f1-2e92-89c8-6b4cd35b401f",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "2x2",
-							uuid = "a7a394f6-4eda-07b7-a707-bb5ad36ea4fa",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\n\n-- Define the cardinal pairs based on logged positions\n-- Confused = Outer position, Sleepy = Inner position\nlocal spots = {\n    North = { outer = { x = 100.0, y = 0, z = 84.0 },  inner = { x = 100.0, y = 0, z = 93 } },\n    East  = { outer = { x = 115, y = 0, z = 100.0 }, inner = { x = 107.0, y = 0, z = 100.0 } },\n    South = { outer = { x = 100.0, y = 0, z = 116.5 }, inner = { x = 100.0, y = 0, z = 107.0 } },\n    West  = { outer = { x = 84.0,  y = 0, z = 100.0 }, inner = { x = 93,  y = 0, z = 100.0 } }\n}\n\n-- Assign specific roles to their coordinate pairs\nlocal roleToPair = {\n    [\"MT\"] = spots.North, [\"R1\"] = spots.North,\n    [\"H2\"] = spots.East,  [\"M2\"] = spots.East,\n    [\"H1\"] = spots.South, [\"M1\"] = spots.South,\n    [\"OT\"] = spots.West,  [\"R2\"] = spots.West\n}\n\nlocal targetPos = nil\nlocal myPair = roleToPair[myRole]\nlocal tetherType = data.ljGraven3Tether\n\n-- Route player to the correct inner/outer position dynamically\nif myPair and tetherType then\n    if tetherType == \"Confused\" then\n        targetPos = myPair.outer\n    elseif tetherType == \"Sleepy\" then\n        targetPos = myPair.inner\n    end\nend\n\nif targetPos then\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    if totalDistance > 1 then\n        local drawer = TensorCore.getStaticDrawer(0xFF00FF00, 2)\n\n        -- Draw the line from the player to the spot\n        drawer:addLine(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            targetPos.x, targetPos.y, targetPos.z,\n            3 -- line thickness\n        )\n\n        -- Draw the green target circle at the destination\n        drawer:addCircle(\n            targetPos.x, targetPos.y, targetPos.z,\n            1 -- radius\n        )\n    end\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
-									true,
-								},
-								
-								{
-									"c47442ce-2bc1-e429-a369-8290d01f802e",
-									true,
-								},
-								
-								{
-									"4c9b852f-a462-e475-bac2-748f04f42434",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Freaky",
-							uuid = "749b0e81-a683-b443-bd31-dde468c06320",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Role Set",
-							uuid = "b66ef0db-52b2-34d0-b728-7b1236a4a478",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljGraven3Tether ~= nil",
-							name = "Tether Var",
-							uuid = "c47442ce-2bc1-e429-a369-8290d01f802e",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 2",
-							dequeueIfLuaFalse = true,
-							name = "2x2",
-							uuid = "c356788b-c5f1-2e92-89c8-6b4cd35b401f",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
-							dequeueIfLuaFalse = true,
-							name = "Freaky CW",
-							uuid = "4c9b852f-a462-e475-bac2-748f04f42434",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				eventType = 12,
-				mechanicTime = 167.71168967762,
-				name = "[Lj Draw] OLD Arrow Positions",
-				timeRange = true,
-				timelineIndex = 34,
-				timerEndOffset = 6.5,
-				timerOffset = 1,
-				timerStartOffset = 0.20000000298023,
-				uuid = "f87122de-a9a0-80be-9801-5b5c2308d305",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
 							actionLua = "local player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\n\n-- Outers (H2, H1, R1, R2) and Inners (MT, OT, M1, M2) based on cardinal pairs\nlocal rolePositions = {\n    [\"MT\"] = { x = 100.0, y = 0, z = 93.0 },  -- North Inner\n    [\"R1\"] = { x = 100.0, y = 0, z = 84.0 },  -- North Outer\n    [\"M2\"] = { x = 107.0, y = 0, z = 100.0 }, -- East Inner\n    [\"H2\"] = { x = 115.0, y = 0, z = 100.0 }, -- East Outer\n    [\"M1\"] = { x = 100.0, y = 0, z = 107.0 }, -- South Inner\n    [\"H1\"] = { x = 100.0, y = 0, z = 116.5 }, -- South Outer\n    [\"OT\"] = { x = 93.0,  y = 0, z = 100.0 }, -- West Inner\n    [\"R2\"] = { x = 84.0,  y = 0, z = 100.0 }  -- West Outer\n}\n\nlocal targetPos = rolePositions[myRole]\n\nif targetPos then\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity Scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale) \n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z, \n            heading, \n            baseLength, baseWidth, tipLength, tipWidth, \n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
 								{
 									"b66ef0db-52b2-34d0-b728-7b1236a4a478",
+									true,
+								},
+								
+								{
+									"e2652640-1edb-11c2-88df-b5c5930fa5e6",
 									true,
 								},
 								
@@ -1284,6 +1165,19 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "e2652640-1edb-11c2-88df-b5c5930fa5e6",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
 							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
 							dequeueIfLuaFalse = true,
 							name = "Merry Go Round",
@@ -1305,42 +1199,6 @@ local tbl =
 			},
 		},
 	},
-	[35] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "for i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and uuid then\n        Argus.deleteTimedShape(uuid)\n        break\n    end\nend\n\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				enabled = false,
-				eventType = 12,
-				mechanicTime = 173.37050637968,
-				name = "[Lj Draw] Delete Teletrounce Circle",
-				timeRange = true,
-				timelineIndex = 35,
-				timerEndOffset = 2,
-				timerOffset = -2,
-				uuid = "a1aaa66d-4a2f-503d-8cf5-13396174ee2c",
-				version = 2,
-			},
-		},
-	},
 	[41] = 
 	{
 		
@@ -1355,6 +1213,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"8aca302c-8cf8-d665-9c38-46b0683d48fa",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1363,6 +1229,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "8aca302c-8cf8-d665-9c38-46b0683d48fa",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 235.34477128997,
@@ -1390,6 +1269,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local ahead = 3.5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2675f632-5873-6be8-a5ae-1feac327082c",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1398,6 +1285,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "2675f632-5873-6be8-a5ae-1feac327082c",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 257.94281774788,
@@ -1427,6 +1327,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"202011a2-3c26-23a8-bf30-7f570cda3dff",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1435,6 +1343,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "202011a2-3c26-23a8-bf30-7f570cda3dff",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 269.6455060413,
@@ -1462,6 +1383,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local ahead = 3.5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"66316e86-564d-3166-96aa-5d3a96b791d0",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1470,6 +1399,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "66316e86-564d-3166-96aa-5d3a96b791d0",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 278.89733564761,
@@ -1499,6 +1441,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"fa1d8fe1-da61-83f3-a9a1-6451474c9c2a",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1507,6 +1457,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "fa1d8fe1-da61-83f3-a9a1-6451474c9c2a",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 280.23863811015,
@@ -1534,6 +1497,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local ahead = 3.5 -- yalms ahead of the arrow tip the target spot sits\nlocal playerPos = TensorCore.mGetPlayer().pos\n\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and x then\n        local length, _, tipLength, _, heading = Argus.getTimedArrowInfo(i)\n        local source  = { x = x, y = y, z = z }\n        local tipDist = (length or 0) + (tipLength or 0)\n\n        -- Target spot: AHEAD yalms past the arrow tip, along its heading.\n        local spot = TensorCore.getPosInDirection(source, heading, tipDist + ahead)\n\n        local dx, dy, dz = playerPos.x - spot.x, playerPos.y - spot.y, playerPos.z - spot.z\n        if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared to skip sqrt + table alloc\n            local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n            drawer:addLine(playerPos.x, playerPos.y, playerPos.z, spot.x, spot.y, spot.z, 4)\n        end\n        break\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"54f55f12-af38-aa9a-91b3-16b899b9ed1e",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "1e1e5507-8e77-97af-a1a6-1d001d15396e",
 							version = 2.1,
@@ -1542,6 +1513,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "54f55f12-af38-aa9a-91b3-16b899b9ed1e",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 299.97907895232,
@@ -1571,6 +1555,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal purple = 3539271935\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == purple or colorStart == purple) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2d02cffc-1ff1-f7ed-a674-92e4e44d4b60",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "bd5ee627-a904-1e68-9cea-ced4f12d5be9",
 							version = 2.1,
@@ -1579,6 +1571,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "2d02cffc-1ff1-f7ed-a674-92e4e44d4b60",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 301.30844266449,
@@ -1606,6 +1611,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "for i = 1, Argus.getNumTimedDraws() do\n    local shapeType, _, _, _, _, _, _, uuid = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"arrow\" and uuid then\n        Argus.deleteTimedShape(uuid)\n        break\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2345597f-cb7e-bb31-9a43-f713c8658cca",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "0c9a2faf-d70b-7a53-aa31-aa8b25d2ab7e",
 							version = 2.1,
@@ -1614,6 +1627,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "2345597f-cb7e-bb31-9a43-f713c8658cca",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 321.02450192489,
@@ -1923,7 +1949,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nlocal playerPos = player.pos\n\nlocal kbSourcePos = { x = 100, y = 0, z = 100 }\nlocal kbDistance = 15\n\nlocal distanceToPlayer = TensorCore.getDistance2d(kbSourcePos, playerPos)\nlocal totalDistance = distanceToPlayer + kbDistance\nlocal heading = TensorCore.getHeadingToTarget(kbSourcePos, playerPos)\n\nlocal baseWidth = 0.5\nlocal tipWidth = 1.25\nlocal tipLength = 1.25\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        kbSourcePos.x,\n        kbSourcePos.y + 0.15,\n        kbSourcePos.z,\n        heading,\n        baseLength,\n        baseWidth,\n        tipLength,\n        tipWidth,\n        false,\n        Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nlocal sourceDrawer = TensorCore.getCachedDrawer(0xFF0000FF)\nsourceDrawer:addCircle(\n    kbSourcePos.x,\n    kbSourcePos.y + 0.15,\n    kbSourcePos.z,\n    0.25,\n    true,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n)\n\nself.used = true\n",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal playerPos = player.pos\n\nlocal kbSourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal kbDistance = 15\n\nlocal distanceToPlayer = TensorCore.getDistance2d(kbSourcePos, playerPos)\nlocal totalDistance = distanceToPlayer + kbDistance\nlocal heading = TensorCore.getHeadingToTarget(kbSourcePos, playerPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nlocal arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n\narrowDrawer:addArrow(kbSourcePos.x, kbSourcePos.y + 0.15, kbSourcePos.z, heading, baseLength, baseWidth, tipLength,\n    tipWidth, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
 							gVar = "ACR_RikuMNK3_CD",
 							uuid = "0a43bb3f-77dc-669a-b343-8afbb51ac482",
 							version = 2.1,
@@ -1938,42 +1964,8 @@ local tbl =
 				name = "[Lj Draw] KB Arrow",
 				timeRange = true,
 				timelineIndex = 74,
-				timerEndOffset = 5,
+				timerEndOffset = 6,
 				uuid = "7cce803f-ee1a-0fc8-a9ba-eae74acd1a88",
-				version = 2,
-			},
-		},
-	},
-	[75] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nlocal playerPos = player.pos\n\nlocal kbSourcePos = {\n    x = 100,\n    y = 0,\n    z = 100\n}\nlocal kbDistance = 15\n\nlocal distanceToPlayer = TensorCore.getDistance2d(kbSourcePos, playerPos)\nlocal totalDistance = distanceToPlayer + kbDistance\nlocal heading = TensorCore.getHeadingToTarget(kbSourcePos, playerPos)\n\nlocal baseWidth = 0.5\nlocal tipWidth = 1.5\nlocal tipLength = 1.5\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n\n    arrowDrawer:addArrow(kbSourcePos.x, kbSourcePos.y + 0.15, kbSourcePos.z, heading, baseLength, baseWidth, tipLength,\n        tipWidth, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nlocal sourceDrawer = TensorCore.getCachedDrawer(0xFF0000FF)\nsourceDrawer:addCircle(kbSourcePos.x, kbSourcePos.y + 0.15, kbSourcePos.z, 0.25, true,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
-							gVar = "ACR_RikuWAR3_CD",
-							uuid = "54619b80-1422-473f-be54-bd1a31541cfc",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				eventType = 12,
-				mechanicTime = 386.79737120621,
-				name = "[Lj Draw] KB Arrow",
-				timeRange = true,
-				timelineIndex = 75,
-				timerStartOffset = -2,
-				uuid = "609bbdcf-7531-e175-af5e-4f47d57e7d47",
 				version = 2,
 			},
 		},
@@ -1999,6 +1991,11 @@ local tbl =
 									"064ab097-39cb-d8a0-9652-f1bd5bfad9c2",
 									true,
 								},
+								
+								{
+									"d26fbdae-e67d-1aff-a86f-724281e7e456",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "a48e13c4-8a20-9de0-8ef4-8d3c5b6f3e2c",
@@ -2017,6 +2014,18 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							name = "Role Set",
 							uuid = "064ab097-39cb-d8a0-9652-f1bd5bfad9c2",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "d26fbdae-e67d-1aff-a86f-724281e7e456",
 							version = 3,
 						},
 					},
@@ -2043,56 +2052,6 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local timeout = 9000\nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\n\n-- WorldText: name every crystal regardless of role/arrow\nlocal crystalNames = {\n    [2015291] = { name = \"Water\", color = 0xFFFFBF00 }, -- blue\n    [2015290] = { name = \"Fire\",  color = 0xFF1133FF }, -- red\n    [2015292] = { name = \"Wind\",  color = 0xFF55FF55 }, -- green\n}\n\nfor contentID, info in pairs(crystalNames) do\n    local crystals = TensorCore.entityList(\"contentid=\" .. contentID)\n    if table.valid(crystals) then\n        for k, entity in pairs(crystals) do\n            AnyoneCore.addTimedWorldTextOnEnt(timeout, info.name, entity.id, info.color, true, 1.5, 2.0)\n        end\n    end\nend\n\nlocal roleTargets = {\n    [\"H1\"] = 2015291, [\"H2\"] = 2015291, -- Water Crystal\n    [\"R1\"] = 2015290, [\"R2\"] = 2015290, -- Fire Crystal\n    [\"MT\"] = 2015292, [\"OT\"] = 2015292, [\"M1\"] = 2015292, [\"M2\"] = 2015292  -- Wind Crystal\n}\n\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\nlocal targetContentID = roleTargets[myRole]\n\n\nif targetContentID ~= nil then\n    local targetEntity = nil\n    local entityList = TensorCore.entityList(\"contentid=\" .. targetContentID)\n\n    if table.valid(entityList) then\n        for _, entity in pairs(entityList) do\n            targetEntity = entity\n            break\n        end\n    end\n\n    if targetEntity ~= nil then\n        local targetPos = { x = targetEntity.pos.x, y = targetEntity.pos.y, z = targetEntity.pos.z }\n\n        if myRole == \"OT\" then -- Opposite Wind\n            local centerX = 100.0\n            local centerZ = 100.0\n            targetPos.x = centerX + (centerX - targetPos.x)\n            targetPos.z = centerZ + (centerZ - targetPos.z)\n        end\n\n        local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n        local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n        local scale = math.min(1, totalDistance / 15)\n        local baseWidth = math.max(0.5, 1 * scale)\n        local tipWidth = math.max(1.5, 3 * scale)\n        local tipLength = math.max(2, 3 * scale)\n        local baseLength = totalDistance - tipLength\n\n        if baseLength > 0 then\n            local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n            arrowDrawer:addTimedArrow(\n                timeout,\n                sourcePos.x, sourcePos.y, sourcePos.z,\n                heading,\n                baseLength, baseWidth, tipLength, tipWidth,\n                0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n            )\n        end\n    end\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"a0225b2c-4cb9-7884-9db9-620a44267b80",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "c9dd2649-2492-fe24-aac7-9148d86367f9",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Role Set",
-							uuid = "a0225b2c-4cb9-7884-9db9-620a44267b80",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 450.00390950196,
-				name = "[Lj Draw] OLD Arrow to Crystals",
-				timelineIndex = 79,
-				timerOffset = 1,
-				uuid = "120176a5-3e78-95f9-92bb-6ccd460d37a9",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
 							actionLua = "local timeout = 9000\n\nlocal roleTargets = {\n    [\"H1\"] = 2015291, [\"H2\"] = 2015291, -- Water Crystal\n    [\"R1\"] = 2015290, [\"R2\"] = 2015290, -- Fire Crystal\n    [\"MT\"] = 2015292, [\"OT\"] = 2015292, [\"M1\"] = 2015292, [\"M2\"] = 2015292  -- Wind Crystal\n}\n\nlocal Roster = AnyoneCore.Roster\n\n-- Tank priority toward Exdeath (lower rank = points to centre; the other tank points at the wind crystal).\nlocal tankPrio = { war = 1, drk = 2, gnb = 3, pld = 4 }\nlocal function tankRank(ent)\n    return tankPrio[AnyoneCore.jobs[ent.job]] or 50\nend\n\n-- Decide which tank seat is the Exdeath (centre) tank by job, not by roster MT/OT.\nlocal t1, t2 = Roster.entOf(\"T1\"), Roster.entOf(\"T2\")\nlocal r1, r2 = tankRank(t1), tankRank(t2)\nlocal exdeathSlot\nif r1 ~= r2 then\n    exdeathSlot = (r1 < r2) and \"T1\" or \"T2\"\nelse\n    exdeathSlot = (t1.id <= t2.id) and \"T1\" or \"T2\" -- same job: deterministic tiebreak by id\nend\n\nlocal contentID = eventArgs.entityContentID\nlocal mySlot = Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\n\nif roleTargets[myRole] == contentID then\n    local entity = TensorCore.mGetEntity(eventArgs.entityID)\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = entity.pos.x, y = entity.pos.y, z = entity.pos.z }\n\n    if mySlot == exdeathSlot then -- Exdeath tank -> Mid\n        targetPos.x = 100.0\n        targetPos.z = 100.0\n    end\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addTimedArrow(\n            timeout,\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
@@ -2104,6 +2063,11 @@ local tbl =
 								
 								{
 									"1b28bf19-6f7f-2c6e-866e-f426448ccb85",
+									true,
+								},
+								
+								{
+									"ef3e2b6a-bbfb-502a-afdf-1ff3f02c6e8a",
 									true,
 								},
 							},
@@ -2124,6 +2088,11 @@ local tbl =
 								
 								{
 									"1b28bf19-6f7f-2c6e-866e-f426448ccb85",
+									true,
+								},
+								
+								{
+									"ef3e2b6a-bbfb-502a-afdf-1ff3f02c6e8a",
 									true,
 								},
 							},
@@ -2160,6 +2129,18 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "ef3e2b6a-bbfb-502a-afdf-1ff3f02c6e8a",
+							version = 3,
+						},
+					},
 				},
 				eventType = 29,
 				loop = true,
@@ -2171,76 +2152,6 @@ local tbl =
 				timerOffset = 1,
 				timerStartOffset = -2,
 				uuid = "44a0fef8-f1b9-37f1-b679-6d457d815898",
-				version = 2,
-			},
-		},
-	},
-	[90] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local timeout = 6000\nlocal player = TensorCore.mGetPlayer()\nlocal sourcePos = player.pos\nlocal targetEntity = TensorCore.mGetEntity(eventArgs.detectionTargetID)\n\nif targetEntity ~= nil then\n    -- Calculate opposite position of the targeted entity\n    local centerX = 100.0\n    local centerZ = 100.0\n    local targetPos = { \n        x = centerX + (centerX - targetEntity.pos.x), \n        y = targetEntity.pos.y, \n        z = centerZ + (centerZ - targetEntity.pos.z) \n    }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n    \n    -- Fixed sizes for the arrow\n    local baseWidth = 1.0 \n    local tipWidth = 3.0\n    local tipLength = 3.0\n    local baseLength = math.max(0.1, totalDistance - tipLength)\n\n    local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    arrowDrawer:addTimedArrow(\n        timeout, \n        sourcePos.x, sourcePos.y, sourcePos.z, \n        heading, \n        baseLength, baseWidth, tipLength, tipWidth, \n        0, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\n    \n    -- Draw the timed WorldText hint at the target destination\n    AnyoneCore.addTimedWorldText(timeout, \"Bait\", targetPos, 0xFFFFFFFF, true, 1.5, 0)\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"a0225b2c-4cb9-7884-9db9-620a44267b80",
-									true,
-								},
-								
-								{
-									"639c55d1-d078-f5af-97b6-084f7d9348a8",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "c9dd2649-2492-fe24-aac7-9148d86367f9",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() == \"R1\"",
-							dequeueIfLuaFalse = true,
-							name = "Self: R1",
-							uuid = "a0225b2c-4cb9-7884-9db9-620a44267b80",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							filterTargetType = "ContentID",
-							name = "F - Chaos",
-							partyTargetContentID = 7691,
-							uuid = "639c55d1-d078-f5af-97b6-084f7d9348a8",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 498.85079039671,
-				name = "[Lj Draw] Arrow to Bait",
-				timelineIndex = 90,
-				timerOffset = 1,
-				uuid = "d0547bcb-e638-aab8-ac8a-d0ed841e0b78",
 				version = 2,
 			},
 		},
@@ -2269,6 +2180,11 @@ local tbl =
 								
 								{
 									"4309361d-7d58-2019-990e-f081251313e5",
+									true,
+								},
+								
+								{
+									"f67643db-618a-4761-a4ef-a814863de01f",
 									true,
 								},
 							},
@@ -2301,6 +2217,18 @@ local tbl =
 							eventSpellID = 47891,
 							name = "Event Spell ID: Vacuum Wave",
 							uuid = "4309361d-7d58-2019-990e-f081251313e5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "f67643db-618a-4761-a4ef-a814863de01f",
 							version = 3,
 						},
 					},
@@ -2385,6 +2313,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "-- Pairs are T1/T2, H1/H2, M1/M2, and R1/R2.\n\nlocal Roster = AnyoneCore.Roster\nlocal player = TensorCore.mGetPlayer()\nlocal mySlot = Roster.mySlot()\nlocal _, partnerOf = Roster.pairsOf(\"rolePairs\")\nlocal partnerID = partnerOf[player.id]\nlocal partner = partnerID and TensorCore.mGetEntity(partnerID)\n\nif partner then\n    local color\n\n    if mySlot == \"H1\" or mySlot == \"H2\" then\n        color = 0xFF00FF00 -- Green\n    elseif mySlot == \"T1\" or mySlot == \"T2\" then\n        color = 0xFFFF0000 -- Blue (ABGR)\n    else\n        color = 0xFF0000FF -- Red for melee and ranged DPS (ABGR)\n    end\n\n    local drawer = TensorCore.getCachedDrawer(color, color, color, color, 2)\n    drawer:addLine(\n        player.pos.x, player.pos.y, player.pos.z,\n        partner.pos.x, partner.pos.y, partner.pos.z,\n        5, 5\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"ce197692-1216-e128-afc3-fb5cbdc5f296",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "2bfd56a1-878f-a8e2-9e99-c77fece8cb31",
 							version = 2.1,
@@ -2402,6 +2338,18 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							name = "Role Set",
 							uuid = "57932d35-132d-fd55-87bf-a5f121c170af",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "ce197692-1216-e128-afc3-fb5cbdc5f296",
 							version = 3,
 						},
 					},
@@ -2604,6 +2552,11 @@ local tbl =
 									"4a06c095-1de6-e60d-aad8-e7cb877e6d15",
 									true,
 								},
+								
+								{
+									"e4070211-fdf7-b2d9-95f4-e00d6fabf762",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							name = "Chaos",
@@ -2647,6 +2600,18 @@ local tbl =
 							name = "F - Chaos",
 							partyTargetContentID = 7691,
 							uuid = "4a06c095-1de6-e60d-aad8-e7cb877e6d15",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "e4070211-fdf7-b2d9-95f4-e00d6fabf762",
 							version = 3,
 						},
 					},
@@ -3898,6 +3863,11 @@ local tbl =
 									"d3e255d8-667c-4512-bd4a-c806c0acfac9",
 									true,
 								},
+								
+								{
+									"673df4a3-e397-301d-9e8d-c28e195c9115",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "b2fcfa27-5cf7-59ba-8b3c-a232cd81174c",
@@ -3930,7 +3900,19 @@ local tbl =
 							uuid = "d3e255d8-667c-4512-bd4a-c806c0acfac9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "673df4a3-e397-301d-9e8d-c28e195c9115",
+							version = 3,
+						},
 					},
 				},
 				eventType = 12,
@@ -4070,6 +4052,11 @@ local tbl =
 									"eda595af-f405-3639-bebc-66e2d6674b33",
 									true,
 								},
+								
+								{
+									"050efd2a-cee8-f9ac-8e88-5e8ad704b3ca",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "3eed45c1-a515-ef19-9cc5-fa3762d65300",
@@ -4100,6 +4087,18 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							name = "Stack Set",
 							uuid = "eda595af-f405-3639-bebc-66e2d6674b33",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "050efd2a-cee8-f9ac-8e88-5e8ad704b3ca",
 							version = 3,
 						},
 					},
@@ -4640,6 +4639,11 @@ local tbl =
 									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
 									false,
 								},
+								
+								{
+									"5aabe516-20b8-30d6-a2b1-a739b8efe3e9",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							name = "Support",
@@ -4664,6 +4668,11 @@ local tbl =
 								
 								{
 									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									true,
+								},
+								
+								{
+									"5aabe516-20b8-30d6-a2b1-a739b8efe3e9",
 									true,
 								},
 							},
@@ -4699,6 +4708,18 @@ local tbl =
 							name = "Self: DPS",
 							partyTargetType = "DPS",
 							uuid = "faba3eab-7df5-75f5-bcc8-805f8106c79a",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "5aabe516-20b8-30d6-a2b1-a739b8efe3e9",
 							version = 3,
 						},
 					},
@@ -4839,6 +4860,11 @@ local tbl =
 									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
 									false,
 								},
+								
+								{
+									"737aa02b-cd93-9f73-98cd-861d3935358a",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
 							name = "Support",
@@ -4868,6 +4894,11 @@ local tbl =
 								
 								{
 									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									true,
+								},
+								
+								{
+									"737aa02b-cd93-9f73-98cd-861d3935358a",
 									true,
 								},
 							},
@@ -4916,6 +4947,18 @@ local tbl =
 							name = "Self: DPS",
 							partyTargetType = "DPS",
 							uuid = "faba3eab-7df5-75f5-bcc8-805f8106c79a",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "737aa02b-cd93-9f73-98cd-861d3935358a",
 							version = 3,
 						},
 					},
@@ -5398,6 +5441,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local timeout = 5000\nlocal position = { x = 100, y = 1, z = 100 }\nlocal white = 0xFFFFFFFF\n\nAnyoneCore.addWorldTextCountdown(timeout, position, white, true, 1.5)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e0b8d51b-6e2f-361e-9597-9b1d0e6d9cf6",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "90b0a2d0-ab3a-b7da-bf92-d6b6191e3564",
 							version = 2.1,
@@ -5406,6 +5457,18 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "e0b8d51b-6e2f-361e-9597-9b1d0e6d9cf6",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 895.49672653853,
 				name = "[Lj Draw] Countdown",
@@ -5430,6 +5493,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local timeout = 5000\nlocal position = { x = 100, y = 1, z = 100 }\nlocal white = 0xFFFFFFFF\n\nAnyoneCore.addWorldTextCountdown(timeout, position, white, true, 1.5)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"a697e07a-768c-f355-bbfa-94035faf7030",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "90b0a2d0-ab3a-b7da-bf92-d6b6191e3564",
 							version = 2.1,
@@ -5438,6 +5509,18 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "a697e07a-768c-f355-bbfa-94035faf7030",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 916.86652777982,
 				name = "[Lj Draw] Countdown",
@@ -5469,6 +5552,11 @@ local tbl =
 									"fb916d2c-906d-4b4f-b999-74a950467561",
 									true,
 								},
+								
+								{
+									"d7c14c06-ed1a-186c-96d6-ac907da08967",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							name = "Tank",
@@ -5489,6 +5577,11 @@ local tbl =
 									"584680ce-85af-5ae5-8115-971b2d09ed1e",
 									true,
 								},
+								
+								{
+									"d7c14c06-ed1a-186c-96d6-ac907da08967",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							name = "Healer",
@@ -5507,6 +5600,11 @@ local tbl =
 								
 								{
 									"4cf97ae8-3b68-99ed-9afa-d236d2dcb517",
+									true,
+								},
+								
+								{
+									"d7c14c06-ed1a-186c-96d6-ac907da08967",
 									true,
 								},
 							},
@@ -5560,6 +5658,18 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "d7c14c06-ed1a-186c-96d6-ac907da08967",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 934.65552902023,
 				name = "[Lj Draw] Auto Baits",
@@ -5584,6 +5694,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"ff53ae6b-d64a-dc11-b861-e26a79f07a42",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
 							version = 2.1,
@@ -5592,6 +5710,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "ff53ae6b-d64a-dc11-b861-e26a79f07a42",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 973.84072239989,
@@ -5626,6 +5757,11 @@ local tbl =
 									"1bb79a36-4409-66b4-89f7-b6df8e601dbc",
 									true,
 								},
+								
+								{
+									"0cc6e3e4-416c-05ca-9840-9ee6f82aa6f8",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "971d71c6-6514-de6a-921e-d55dcc6ba834",
@@ -5644,6 +5780,18 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							name = "Event: AoE ID 49539",
 							uuid = "1bb79a36-4409-66b4-89f7-b6df8e601dbc",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "0cc6e3e4-416c-05ca-9840-9ee6f82aa6f8",
 							version = 3,
 						},
 					},
@@ -5790,6 +5938,11 @@ local tbl =
 									"826399d1-d225-88a8-abc1-fc70ea7033f5",
 									true,
 								},
+								
+								{
+									"3fe9af13-7367-ae1a-8138-08642251d086",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
@@ -5809,6 +5962,19 @@ local tbl =
 							uuid = "826399d1-d225-88a8-abc1-fc70ea7033f5",
 							version = 3,
 						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "3fe9af13-7367-ae1a-8138-08642251d086",
+							version = 3,
+						},
+						inheritedIndex = 2,
 					},
 				},
 				eventType = 12,
@@ -5833,6 +5999,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"2714be76-8bdb-d608-8bf1-cbd48648acd3",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
 							version = 2.1,
@@ -5841,6 +6015,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "2714be76-8bdb-d608-8bf1-cbd48648acd3",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 1006.5474749784,
@@ -5875,6 +6062,11 @@ local tbl =
 									"fb916d2c-906d-4b4f-b999-74a950467561",
 									true,
 								},
+								
+								{
+									"b8af5213-e7e1-7469-b261-5ec91635d1e7",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							name = "Tank",
@@ -5895,6 +6087,11 @@ local tbl =
 									"584680ce-85af-5ae5-8115-971b2d09ed1e",
 									true,
 								},
+								
+								{
+									"b8af5213-e7e1-7469-b261-5ec91635d1e7",
+									true,
+								},
 							},
 							gVar = "ACR_RikuWAR3_CD",
 							name = "Healer",
@@ -5913,6 +6110,11 @@ local tbl =
 								
 								{
 									"4cf97ae8-3b68-99ed-9afa-d236d2dcb517",
+									true,
+								},
+								
+								{
+									"b8af5213-e7e1-7469-b261-5ec91635d1e7",
 									true,
 								},
 							},
@@ -5966,6 +6168,18 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "b8af5213-e7e1-7469-b261-5ec91635d1e7",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 1047.2843757912,
 				name = "[Lj Draw] Auto Baits",
@@ -5990,6 +6204,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"7d7cf07f-d01f-0c2f-aae0-660fe9ae15e9",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
 							version = 2.1,
@@ -5998,6 +6220,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "7d7cf07f-d01f-0c2f-aae0-660fe9ae15e9",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 1054.5292176297,
@@ -6097,6 +6332,14 @@ local tbl =
 						{
 							aType = "Lua",
 							actionLua = "local playerPos = TensorCore.mGetPlayer().pos\nlocal green = 1493237504\n\nlocal tx, ty, tz\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, y, z, _, _, _, _, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n    if shapeType == \"circle\" and (colorEnd == green or colorStart == green) then\n        tx, ty, tz = x, y, z\n        break\n    end\nend\n\nif tx then\n    local dx, dy, dz = playerPos.x - tx, playerPos.y - ty, playerPos.z - tz\n    if dx * dx + dy * dy + dz * dz > 4 then -- > 2 yalms, squared\n        local drawer = TensorCore.getCachedDrawer(0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 0xFF00FF00, 1)\n        drawer:addLine(playerPos.x, playerPos.y, playerPos.z, tx, ty, tz, 4)\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"13f03249-69d3-4ff3-b06a-686a45c36a74",
+									true,
+								},
+							},
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9cb0a338-97ca-e5d7-91fb-c4057a2f3f68",
 							version = 2.1,
@@ -6105,6 +6348,19 @@ local tbl =
 				},
 				conditions = 
 				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "13f03249-69d3-4ff3-b06a-686a45c36a74",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
 				},
 				eventType = 12,
 				mechanicTime = 1096.9713108088,
