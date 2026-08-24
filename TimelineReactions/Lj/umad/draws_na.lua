@@ -6445,7 +6445,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "data.ljForsakenGroundCount = (data.ljForsakenGroundCount or 0) + 1\nlocal wave = math.ceil(data.ljForsakenGroundCount / 2)\nlocal timeoutByWave = {60550, 52400, 44250, 36100}\nlocal timeout = timeoutByWave[wave]\nlocal radius = eventArgs.aoeLength\nlocal drawer = TensorCore.getStaticDrawer(0x660000FF, 2)\n\ndrawer:addTimedCircle(timeout, eventArgs.x, eventArgs.y, eventArgs.z, radius, 0, false, false,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
+							actionLua = "data.ljForsakenGroundCount = (data.ljForsakenGroundCount or 0) + 1\nlocal wave = math.ceil(data.ljForsakenGroundCount / 2)\nlocal timeoutByWave = {60550, 52400, 44250, 36100}\nlocal delay = eventArgs.duration * 1000\nlocal timeout = timeoutByWave[wave] - delay\nlocal radius = eventArgs.aoeLength\nlocal drawer = TensorCore.getStaticDrawer(0x660000FF, 2)\n\ndrawer:addTimedCircle(timeout, eventArgs.x, eventArgs.y, eventArgs.z, radius, delay, false, false,\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\nself.used = true",
 							conditions = 
 							{
 								
