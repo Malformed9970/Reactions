@@ -2447,7 +2447,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local entityId = eventArgs.entityID\nlocal kefka = TensorCore.mGetEntity(entityId)\n\ndata.ljUltimaBlasterSources = data.ljUltimaBlasterSources or {}\ndata.ljUltimaBlasterSourceIds = data.ljUltimaBlasterSourceIds or {}\n\nif not data.ljUltimaBlasterSourceIds[entityId] then\n    local order = #data.ljUltimaBlasterSources + 1\n\n    data.ljUltimaBlasterSourceIds[entityId] = true\n    data.ljUltimaBlasterSources[order] = {\n        entityId = entityId,\n        order = order,\n        position = {\n            x = kefka.pos.x,\n            y = kefka.pos.y,\n            z = kefka.pos.z,\n        },\n        dashHeading = kefka.pos.h,\n    }\nend\n\nself.used = true",
+							actionLua = "local entityId = eventArgs.entityID\nlocal kefka = TensorCore.mGetEntity(entityId)\n\ndata.ljUltimaBlasterSources = data.ljUltimaBlasterSources or {}\ndata.ljUltimaBlasterSourceIds = data.ljUltimaBlasterSourceIds or {}\n\nif not data.ljUltimaBlasterSourceIds[entityId] then\n    local order = #data.ljUltimaBlasterSources + 1\n\n    data.ljUltimaBlasterSourceIds[entityId] = true\n    data.ljUltimaBlasterSources[order] = {\n        entityId = entityId,\n        order = order,\n        position = {\n            x = kefka.pos.x,\n            y = kefka.pos.y,\n            z = kefka.pos.z,\n        },\n        dashHeading = kefka.pos.h,\n    }\n\n    if order == 1 then\n        data.ljUltimaBlasterChatReadyAt = nil\n    elseif order == 2 then\n        data.ljUltimaBlasterChatReadyAt = Now() + math.random(1000, 2500)\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -2486,9 +2486,10 @@ local tbl =
 				timelineIndex = 91,
 				timerEndOffset = 20,
 				timerStartOffset = -5,
-				uuid = "5030a90a-2a4b-8535-86bc-24e0b8d956e6",
+				uuid = "7398e1c0-d05e-4f15-b1e2-4b4d3abe6230",
 				version = 2,
 			},
+			inheritedIndex = 1,
 		},
 		
 		{
