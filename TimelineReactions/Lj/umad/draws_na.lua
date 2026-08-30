@@ -41,7 +41,7 @@ local tbl =
 							uuid = "90622d7b-f5c5-1bdb-8035-302a1c0d7905",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				enabled = false,
@@ -50,6 +50,35 @@ local tbl =
 				timelineIndex = 1,
 				timerOffset = -15,
 				uuid = "b669dc81-9d0a-9894-a562-7e61f5f1cf1c",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = { x = 100, z = 100 } -- arena center (given as 100, 0, 100)\nlocal innerRadius = 20              -- arena radius in yalms; the donut hole\nlocal outerRadius = 2000           -- far enough to swallow any off-arena draw\nlocal timeout = 1200000            -- set-and-forget (20 min); re-fire as needed\nlocal occlusionChannel = 0         -- default channel; matches normal draws\n\nlocal floorY = 0\nlocal normalFlags = Argus2.RenderFlags.FLAG_OCCLUDE\nlocal overlayFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\nlocal normalDrawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, normalFlags)\nlocal overlayDrawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, overlayFlags)\n\nnormalDrawer:addTimedDonut(\n    timeout,\n    center.x, floorY, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    false,  -- doNotDetect: FALSE so the off-arena ring feeds safe-jump detection\n            --              and acts as an in-bounds boundary (won't jump the edge)\n    normalFlags\n)\n\noverlayDrawer:addTimedDonut(\n    timeout,\n    center.x, floorY, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    true,   -- doNotDetect: visual-only duplicate of the normal blocker\n    overlayFlags\n)\n\nself.used = true",
+							gVar = "ACR_TensorRequiem3_DoTs",
+							uuid = "db198ef7-8353-e3f7-9b45-eac5269b4ec5",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 15.261765625,
+				name = "[Lj Draw] Arena Boundary Occlusion",
+				timelineIndex = 1,
+				timerOffset = -15.300000190735,
+				uuid = "816a832a-cc07-ce25-a574-0f420da516dd",
 				version = 2,
 			},
 		},
@@ -135,9 +164,9 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, z = 100 } -- arena center (given as 100, 0, 100)\nlocal innerRadius = 20              -- arena radius in yalms; the donut hole\nlocal outerRadius = 2000           -- far enough to swallow any off-arena draw\nlocal timeout = 1200000            -- set-and-forget (20 min); re-fire as needed\nlocal occlusionChannel = 0         -- default channel; matches normal draws\n\nlocal floorY = 0\nlocal normalFlags = Argus2.RenderFlags.FLAG_OCCLUDE\nlocal overlayFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\nlocal normalDrawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, normalFlags)\nlocal overlayDrawer = TensorCore.getStaticFlatDrawer(0x00000000, 0, occlusionChannel, overlayFlags)\n\nnormalDrawer:addTimedDonut(\n    timeout,\n    center.x, floorY, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    false,  -- doNotDetect: FALSE so the off-arena ring feeds safe-jump detection\n            --              and acts as an in-bounds boundary (won't jump the edge)\n    normalFlags\n)\n\noverlayDrawer:addTimedDonut(\n    timeout,\n    center.x, floorY, center.z,\n    innerRadius, outerRadius,\n    0,      -- delay\n    false,  -- oldDraw\n    true,   -- doNotDetect: visual-only duplicate of the normal blocker\n    overlayFlags\n)\n\nself.used = true",
-							gVar = "ACR_TensorRequiem3_DoTs",
-							uuid = "db198ef7-8353-e3f7-9b45-eac5269b4ec5",
+							actionLua = "local settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\\\\\Lj\\\\\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSDrawSettings.lua]]\n\nif not Lj_UMADDRAWS_Settings then\n    Lj_UMADDRAWS_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADDRAWS_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADDRAWS_Settings\nlocal settingsChanged = false\n\nif settings.stompies ~= \"Roles\" and settings.stompies ~= \"Group 1/Group 2\" then\n    settings.stompies = \"Group 1/Group 2\"\n    settingsChanged = true\nend\n\nif settings.accelBombStillness ~= true and settings.accelBombStillness ~= false then\n    settings.accelBombStillness = true\n    settingsChanged = true\nend\n\nif settings.accelBombMotion ~= true and settings.accelBombMotion ~= false then\n    settings.accelBombMotion = true\n    settingsChanged = true\nend\n\nif settings.limitCutMacro ~= \"Disabled\" and settings.limitCutMacro ~= \"Echo Chat\" and settings.limitCutMacro ~= \"Party Chat\" then\n    settings.limitCutMacro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4Macro ~= \"Disabled\" and settings.p4Macro ~= \"Echo Chat\" and settings.p4Macro ~= \"Party Chat\" then\n    settings.p4Macro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4IceLightningMacro == nil then\n    settings.p4IceLightningMacro = settings.p4Macro\n    settingsChanged = true\nelseif settings.p4IceLightningMacro ~= \"Disabled\" and settings.p4IceLightningMacro ~= \"Echo Chat\" and settings.p4IceLightningMacro ~= \"Party Chat\" then\n    settings.p4IceLightningMacro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4AutoMark == nil and settings.p4SelfMark ~= nil then\n    settings.p4AutoMark = settings.p4SelfMark\n    settings.p4SelfMark = nil\n    settingsChanged = true\nelseif settings.p4SelfMark ~= nil then\n    settings.p4SelfMark = nil\n    settingsChanged = true\nend\n\nif settings.p4AutoMark == true then\n    settings.p4AutoMark = \"Self Only\"\n    settingsChanged = true\nelseif settings.p4AutoMark == false then\n    settings.p4AutoMark = \"Disabled\"\n    settingsChanged = true\nelseif settings.p4AutoMark ~= \"Disabled\" and settings.p4AutoMark ~= \"Self Only\" then\n    settings.p4AutoMark = \"Disabled\"\n    settingsChanged = true\nend\n\nif settingsChanged then\n    if not FolderExists(settingsFolder) then\n        FolderCreate(settingsFolder)\n    end\n    FileSave(settingsPath, settings)\nend\n\nLj_UMADDRAWS_Stompies = settings.stompies\nLj_UMADDRAWS_AccelBombStillness = settings.accelBombStillness\nLj_UMADDRAWS_AccelBombMotion = settings.accelBombMotion\nLj_UMADDRAWS_LimitCutMacro = settings.limitCutMacro\nLj_UMADDRAWS_P4Macro = settings.p4Macro\nLj_UMADDRAWS_P4IceLightningMacro = settings.p4IceLightningMacro\nLj_UMADDRAWS_P4AutoMark = settings.p4AutoMark\n\nlocal flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize + GUI.WindowFlags_NoSavedSettings\nGUI:SetNextWindowSize(300, 0, GUI.SetCond_Always)\nlocal visible = GUI:Begin(\"Lj Draw Settings###LjUMADSDRAWSettings\", true, flags)\n\nif visible then\n    GUI:Text(\"Lj Draw Settings\")\n\n    GUI:Text(\"Stompies\")\n    GUI:SameLine(150)\n    local stompiesIndex = settings.stompies == \"Group 1/Group 2\" and 2 or 1\n    GUI:PushItemWidth(140)\n    local newStompiesIndex, stompiesChanged = GUI:Combo(\"##LjUMADRAWStompies\", stompiesIndex, {\"Roles\", \"Group 1/Group 2\"})\n    if GUI:IsItemHovered() then\n        if settings.stompies == \"Group 1/Group 2\" then\n            GUI:SetTooltip(\"ZsQ Raidplan, Group 1 West, Group 2 East\")\n        else\n            GUI:SetTooltip(\"Tanks and Melee Pos to West, Healers and Ranged to East/LPDU\")\n        end\n    end\n    GUI:PopItemWidth()\n    if stompiesChanged then\n        settings.stompies = newStompiesIndex == 2 and \"Group 1/Group 2\" or \"Roles\"\n        Lj_UMADDRAWS_Stompies = settings.stompies\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Limit Cut Macro\")\n    GUI:SameLine(150)\n    local limitCutMacroIndex = settings.limitCutMacro == \"Echo Chat\" and 2 or (settings.limitCutMacro == \"Party Chat\" and 3 or 1)\n    GUI:PushItemWidth(140)\n    local newLimitCutMacroIndex, limitCutMacroChanged = GUI:Combo(\"##LjUMADRAWLimitCutMacro\", limitCutMacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n    GUI:PopItemWidth()\n    if limitCutMacroChanged then\n        settings.limitCutMacro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newLimitCutMacroIndex]\n        Lj_UMADDRAWS_LimitCutMacro = settings.limitCutMacro\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"P4 Macro\")\n    GUI:SameLine(150)\n    local p4MacroIndex = settings.p4Macro == \"Echo Chat\" and 2 or (settings.p4Macro == \"Party Chat\" and 3 or 1)\n    GUI:PushItemWidth(140)\n    local newP4MacroIndex, p4MacroChanged = GUI:Combo(\"##LjUMADRAWP4Macro\", p4MacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n    GUI:PopItemWidth()\n    if p4MacroChanged then\n        settings.p4Macro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newP4MacroIndex]\n        Lj_UMADDRAWS_P4Macro = settings.p4Macro\n        FileSave(settingsPath, settings)\n    end\n\n    if settings.p4Macro ~= \"Disabled\" then\n        GUI:Text(\"P4 Ice/Lightning Macro\")\n        GUI:SameLine(150)\n        local p4IceLightningMacroIndex = settings.p4IceLightningMacro == \"Echo Chat\" and 2 or (settings.p4IceLightningMacro == \"Party Chat\" and 3 or 1)\n        GUI:PushItemWidth(140)\n        local newP4IceLightningMacroIndex, p4IceLightningMacroChanged = GUI:Combo(\"##LjUMADRAWP4IceLightningMacro\", p4IceLightningMacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n        GUI:PopItemWidth()\n        if p4IceLightningMacroChanged then\n            settings.p4IceLightningMacro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newP4IceLightningMacroIndex]\n            Lj_UMADDRAWS_P4IceLightningMacro = settings.p4IceLightningMacro\n            FileSave(settingsPath, settings)\n        end\n    end\n\n    GUI:Text(\"P4 Auto Mark\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Support: Short Spread = Bind 1, Long Spread = Ignore 1\\nDPS: Short Spread = Bind 2, Long Spread = Ignore 2\")\n    end\n    GUI:SameLine(150)\n    local p4AutoMarkIndex = settings.p4AutoMark == \"Self Only\" and 2 or 1\n    GUI:PushItemWidth(140)\n    local newP4AutoMarkIndex, p4AutoMarkChanged = GUI:Combo(\"##LjUMADRAWP4AutoMark\", p4AutoMarkIndex, {\"Disabled\", \"Self Only\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Support: Short Spread = Bind 1, Long Spread = Ignore 1\\nDPS: Short Spread = Bind 2, Long Spread = Ignore 2\")\n    end\n    GUI:PopItemWidth()\n    if p4AutoMarkChanged then\n        settings.p4AutoMark = newP4AutoMarkIndex == 2 and \"Self Only\" or \"Disabled\"\n        Lj_UMADDRAWS_P4AutoMark = settings.p4AutoMark\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Accel Bomb Stillness\")\n    GUI:SameLine(150)\n    local stillnessIndex = settings.accelBombStillness and 1 or 2\n    GUI:PushItemWidth(140)\n    local newStillnessIndex, stillnessChanged = GUI:Combo(\"##LjUMADRAWAccelBombStillness\", stillnessIndex, {\"Enabled\", \"Disabled\"})\n    GUI:PopItemWidth()\n    if stillnessChanged then\n        settings.accelBombStillness = newStillnessIndex == 1\n        Lj_UMADDRAWS_AccelBombStillness = settings.accelBombStillness\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Accel Bomb Motion\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"This will jump up and down for you, don't move!\")\n    end\n    GUI:SameLine(150)\n    local motionIndex = settings.accelBombMotion and 1 or 2\n    GUI:PushItemWidth(140)\n    local newMotionIndex, motionChanged = GUI:Combo(\"##LjUMADRAWAccelBombMotion\", motionIndex, {\"Enabled\", \"Disabled\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"This will jump up and down for you, don't move!\")\n    end\n    GUI:PopItemWidth()\n    if motionChanged then\n        settings.accelBombMotion = newMotionIndex == 1\n        Lj_UMADDRAWS_AccelBombMotion = settings.accelBombMotion\n        FileSave(settingsPath, settings)\n    end\nend\n\nGUI:End()\nself.used = true",
+							name = "[Lj Draw] Settings",
+							uuid = "6156b892-c4a6-d230-86c7-939835f0f9dd",
 							version = 2.1,
 						},
 					},
@@ -145,11 +174,14 @@ local tbl =
 				conditions = 
 				{
 				},
+				eventType = 13,
 				mechanicTime = 15.261765625,
-				name = "[Lj Draw] Arena Boundary Occlusion",
+				name = "[Lj Draw] Settings",
+				timeRange = true,
 				timelineIndex = 1,
-				timerOffset = -15.300000190735,
-				uuid = "816a832a-cc07-ce25-a574-0f420da516dd",
+				timerEndOffset = 15,
+				timerStartOffset = -30,
+				uuid = "89f9ff07-525a-c7a9-a044-d469d144a4f0",
 				version = 2,
 			},
 		},
@@ -399,6 +431,19 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "2fd5bbaa-f763-8c00-999f-c36b843c2184",
+							version = 3,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
 							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
 							dequeueIfLuaFalse = true,
 							name = "Role Set",
@@ -406,19 +451,6 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 4,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "2fd5bbaa-f763-8c00-999f-c36b843c2184",
-							version = 3,
-						},
-						inheritedIndex = 2,
 					},
 				},
 				mechanicTime = 87.304550672705,
@@ -520,7 +552,7 @@ local tbl =
 							uuid = "c03aefdc-0a8f-82a2-980e-acfcc65d01d1",
 							version = 2.1,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 				},
 				conditions = 
@@ -555,25 +587,25 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Role Set",
-							uuid = "9b66bcae-bb93-b194-8f3b-17469cb772c3",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
 							conditionLua = "return AnyoneCore ~= nil",
 							dequeueIfLuaFalse = true,
 							name = "AnyoneCore",
 							uuid = "5a43aba2-0d4f-34fc-8787-7b03a0b5f0d4",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "9b66bcae-bb93-b194-8f3b-17469cb772c3",
+							version = 3,
+						},
 					},
 				},
 				mechanicTime = 105.78798877162,
@@ -749,6 +781,19 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "1bc3fbff-e31b-611f-b619-f5b6e861ea4a",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
 							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 2",
 							dequeueIfLuaFalse = true,
 							name = "2x2",
@@ -767,19 +812,6 @@ local tbl =
 							uuid = "bb58c5ac-1622-a80f-875b-f41598d897d8",
 							version = 3,
 						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "1bc3fbff-e31b-611f-b619-f5b6e861ea4a",
-							version = 3,
-						},
-						inheritedIndex = 2,
 					},
 				},
 				mechanicTime = 162.3021905977,
@@ -831,7 +863,7 @@ local tbl =
 							uuid = "a113ffa7-a606-d5ab-9075-418ffc630e4b",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -905,18 +937,6 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
-							dequeueIfLuaFalse = true,
-							name = "Merry Go Round",
-							uuid = "4c9b852f-a462-e475-bac2-748f04f42434",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
 							conditionLua = "return AnyoneCore ~= nil",
 							dequeueIfLuaFalse = true,
 							name = "AnyoneCore",
@@ -924,6 +944,18 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
+							dequeueIfLuaFalse = true,
+							name = "Merry Go Round",
+							uuid = "4c9b852f-a462-e475-bac2-748f04f42434",
+							version = 3,
+						},
 					},
 				},
 				eventType = 12,
@@ -980,7 +1012,7 @@ local tbl =
 							uuid = "50bdf8df-329d-3eda-b6c8-44df54b03742",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				enabled = false,
@@ -1037,7 +1069,7 @@ local tbl =
 							uuid = "132895ff-3cb6-6f50-ae35-f7d3ec708f89",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1093,7 +1125,7 @@ local tbl =
 							uuid = "8a1fbe26-c4d7-5b23-b5bb-9b6b9849d6f5",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1151,7 +1183,7 @@ local tbl =
 							uuid = "da05f707-71ff-24d5-8a81-9dbbf0862540",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1207,7 +1239,7 @@ local tbl =
 							uuid = "0f46f803-b0b4-f843-a056-9a4ae0796019",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1265,7 +1297,7 @@ local tbl =
 							uuid = "c484a765-1c7c-33b2-9551-b255cb8bd104",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1321,7 +1353,7 @@ local tbl =
 							uuid = "b2b3cc30-8e50-3ddd-a20d-021078e3816d",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1379,7 +1411,7 @@ local tbl =
 							uuid = "7d3e92ec-520d-5aa4-86a3-5b8e08fa777c",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1547,7 +1579,7 @@ local tbl =
 							uuid = "e43d4dfb-0a5e-ff60-a252-c3e433be25b8",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -1827,7 +1859,7 @@ local tbl =
 							uuid = "1d642120-c55b-a5ac-a0c0-9d14f7a1a4ba",
 							version = 3,
 						},
-						inheritedIndex = 5,
+						inheritedIndex = 6,
 					},
 				},
 				eventType = 19,
@@ -1841,7 +1873,7 @@ local tbl =
 				uuid = "1b0ef89a-2e9f-f6c1-a18a-4517dd784975",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 	},
 	[70] = 
@@ -2087,7 +2119,7 @@ local tbl =
 							uuid = "25240f35-c2a4-5541-aa30-6ad8fc68f622",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 2,
 					},
 				},
 				mechanicTime = 450.00390950196,
@@ -2378,7 +2410,7 @@ local tbl =
 							uuid = "d9967e0a-5e35-3f7c-a4b3-3869814a34a0",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -2455,6 +2487,190 @@ local tbl =
 				timerEndOffset = 20,
 				timerStartOffset = -5,
 				uuid = "5030a90a-2a4b-8535-86bc-24e0b8d956e6",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local sources = data.ljUltimaBlasterSources\nlocal first = sources[1].position\nlocal second = sources[2].position\nlocal step = math.pi / 4\nlocal firstDirection = math.floor(math.atan2(first.x - 100, 100 - first.z) / step + 0.5) % 8\nlocal secondDirection = math.floor(math.atan2(second.x - 100, 100 - second.z) / step + 0.5) % 8\nlocal delta = (secondDirection - firstDirection) % 8\nlocal dashStep = delta < 4 and 1 or -1\nlocal partyStep = -dashStep\n\nlocal waymarkLabels = {\"A\", \"B\", \"C\", \"D\", \"1\", \"2\", \"3\", \"4\"}\nlocal waymarks = {}\nlocal radiusTotal = 0\n\nfor markerID = 1, 8 do\n    local x, y, z, isActive = Argus.getWaymarkInfo(markerID)\n    if not isActive then\n        data.ljUltimaBlasterMacro = nil\n        d(\"[Lj Macro] Ultima Blaster: all 8 waymarks must be active\")\n        self.used = true\n        return\n    end\n\n    waymarks[markerID] = {\n        label = waymarkLabels[markerID],\n        x = x,\n        z = z,\n    }\n\n    local dx = x - 100\n    local dz = z - 100\n    radiusTotal = radiusTotal + math.sqrt(dx * dx + dz * dz)\nend\n\nlocal waymarkRadius = radiusTotal / 8\nlocal markers = {}\n\nfor direction = 0, 7 do\n    local angle = direction * step\n    local targetX = 100 + math.sin(angle) * waymarkRadius\n    local targetZ = 100 - math.cos(angle) * waymarkRadius\n    local closestLabel\n    local closestDistance\n\n    for markerID = 1, 8 do\n        local waymark = waymarks[markerID]\n        local dx = waymark.x - targetX\n        local dz = waymark.z - targetZ\n        local distance = dx * dx + dz * dz\n\n        if closestDistance == nil or distance < closestDistance then\n            closestLabel = waymark.label\n            closestDistance = distance\n        end\n    end\n\n    markers[direction + 1] = closestLabel\nend\n\nlocal firstPairDirection = (firstDirection + (dashStep > 0 and 3 or 4)) % 8\nlocal lines = {}\n\nfor number = 1, 8 do\n    local pairStart = (firstPairDirection + partyStep * (number - 1)) % 8\n    local pairEnd = (pairStart + 1) % 8\n    lines[number] = number .. \" -> \" .. markers[pairStart + 1] .. markers[pairEnd + 1]\nend\n\ndata.ljUltimaBlasterMacro = {\n    startMarker = markers[firstDirection + 1],\n    direction = dashStep > 0 and \"Clockwise\" or \"Counterclockwise\",\n    waymarkRing = markers,\n    lines = lines,\n}\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. lines[1])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 1 - Limit Cut 1",
+							uuid = "62146819-e2af-ce8b-9f16-fb2916bcd0af",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[2] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[2])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 2 - Limit Cut 2",
+							uuid = "a3cfd1d6-c971-8404-a65e-da023c3502e0",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[3] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[3])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 3 - Limit Cut 3",
+							uuid = "82b01cc8-b573-8e5e-9c3b-359415494115",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[4] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[4])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 4 - Limit Cut 4",
+							uuid = "8092ea8d-9e41-5cba-8d4c-ba6930db59bb",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[5] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[5])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 5 - Limit Cut 5",
+							uuid = "aceb7c18-656a-d387-ab6b-3e8d4ed9f70d",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[6] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[6])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 6 - Limit Cut 6",
+							uuid = "87970e7c-78ec-643e-810f-3d20d828c708",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[7] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[7])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 7 - Limit Cut 7",
+							uuid = "711aa97d-1794-578c-b1e2-34c5ec07c3ab",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local macro = data.ljUltimaBlasterMacro\nif macro == nil or macro.lines == nil or macro.lines[8] == nil then\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_LimitCutMacro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. macro.lines[8])\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+									true,
+								},
+							},
+							name = "Chat 8 - Limit Cut 8",
+							uuid = "b8efc672-bb9e-48a8-b61f-88075359f6c9",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local mode = Lj_UMADDRAWS_LimitCutMacro\nlocal sources = data.ljUltimaBlasterSources\nif mode ~= \"Echo Chat\" and mode ~= \"Party Chat\" then\n    return false\nend\nif sources == nil or #sources < 2 then\n    return false\nend\n\nlocal first = sources[1].position\nlocal second = sources[2].position\nif first == nil or second == nil then\n    return false\nend\n\nlocal step = math.pi / 4\nlocal firstDirection = math.floor(math.atan2(first.x - 100, 100 - first.z) / step + 0.5) % 8\nlocal secondDirection = math.floor(math.atan2(second.x - 100, 100 - second.z) / step + 0.5) % 8\nlocal delta = (secondDirection - firstDirection) % 8\nif delta == 0 or delta == 4 then\n    return false\nend\n\nlocal readyAt = data.ljUltimaBlasterChatReadyAt\nreturn readyAt ~= nil and Now() >= readyAt",
+							name = "Macro Enabled + First 2 Hits",
+							uuid = "d0196d3b-4974-9cf0-8bf8-91cef6eaca06",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 507.31761539671,
+				name = "[Lj Macro] Ultima Blaster Limit Cut",
+				throttleTime = 250,
+				timeRange = true,
+				timelineIndex = 91,
+				timerEndOffset = 20,
+				timerStartOffset = -5,
+				uuid = "c855b9d3-c569-4457-bc93-88fbb2e07ab7",
 				version = 2,
 			},
 		},
@@ -3421,7 +3637,7 @@ local tbl =
 				uuid = "b5f21df5-9a0c-faba-bafd-ef0e39887f30",
 				version = 2,
 			},
-			inheritedIndex = 42,
+			inheritedIndex = 3,
 		},
 	},
 	[118] = 
@@ -3947,7 +4163,7 @@ local tbl =
 							uuid = "7c6397c3-68f3-8aeb-9899-b20972b27e16",
 							version = 2.1,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 				},
 				conditions = 
@@ -3988,96 +4204,6 @@ local tbl =
 	},
 	[138] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local mode = \"ZsQ\"\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal cornerDist = 11                       -- distance from centre to each corner\nlocal offset = cornerDist / math.sqrt(2)    -- equal X/Z offset for a diagonal corner\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) corners; rotated to Kefka below.\nlocal nw = { x = center.x - offset, z = center.z - offset }\nlocal ne = { x = center.x + offset, z = center.z - offset }\nlocal sw = { x = center.x - offset, z = center.z + offset }\nlocal se = { x = center.x + offset, z = center.z + offset }\n\n-- Role -> corner pairings per strat (all directions relative to Kefka).\nlocal cornerByRoleByMode = {\n    ZsQ = {\n        H1 = nw, MT = nw,\n        H2 = ne, OT = ne,\n        R1 = sw, M1 = sw,\n        R2 = se, M2 = se,\n    },\n    LPDU = {\n        MT = nw, OT = nw,\n        H1 = ne, H2 = ne,\n        M1 = sw, M2 = sw,\n        R1 = se, R2 = se,\n    },\n}\nlocal cornerByRole = cornerByRoleByMode[mode]\n\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\nlocal corner = cornerByRole[myRole]\nif corner then\n    corner.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, corner, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"bc1775ff-71e5-b191-bae2-2524f87e3986",
-									true,
-								},
-								
-								{
-									"405fb0cb-4c1e-3718-8865-17a8a63658ed",
-									true,
-								},
-								
-								{
-									"d3e255d8-667c-4512-bd4a-c806c0acfac9",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "b2fcfa27-5cf7-59ba-8b3c-a232cd81174c",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "bc1775ff-71e5-b191-bae2-2524f87e3986",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Role Set",
-							uuid = "405fb0cb-4c1e-3718-8865-17a8a63658ed",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljKefkaHeading ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Kefka Heading",
-							uuid = "d3e255d8-667c-4512-bd4a-c806c0acfac9",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				eventType = 12,
-				mechanicTime = 699.71269025282,
-				name = "[Lj Draw] Draw Arrow to Corner Baits",
-				randomOffset = 3,
-				timeRange = true,
-				timelineIndex = 138,
-				timerEndOffset = 3,
-				timerOffset = -1,
-				timerStartOffset = -0.25,
-				uuid = "fe3712b5-905e-f317-9177-0ff196a32e02",
-				version = 2,
-			},
-		},
 		
 		{
 			data = 
@@ -4175,6 +4301,144 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local mode = Lj_UMADDRAWS_Stompies\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal cornerDist = 11                       -- distance from centre to each corner\nlocal offset = cornerDist / math.sqrt(2)    -- equal X/Z offset for a diagonal corner\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) corners; rotated to Kefka below.\nlocal nw = { x = center.x - offset, z = center.z - offset }\nlocal ne = { x = center.x + offset, z = center.z - offset }\nlocal sw = { x = center.x - offset, z = center.z + offset }\nlocal se = { x = center.x + offset, z = center.z + offset }\n\n-- Exact persisted Stompies setting values -> role/corner pairings.\nlocal cornerByRoleByMode = {\n    [\"Group 1/Group 2\"] = {\n        H1 = nw, MT = nw,\n        H2 = ne, OT = ne,\n        R1 = sw, M1 = sw,\n        R2 = se, M2 = se,\n    },\n    [\"Roles\"] = {\n        MT = nw, OT = nw,\n        H1 = ne, H2 = ne,\n        M1 = sw, M2 = sw,\n        R1 = se, R2 = se,\n    },\n}\nlocal cornerByRole = cornerByRoleByMode[mode]\n\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal myRole = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\nlocal corner = cornerByRole and cornerByRole[myRole]\nif corner then\n    corner.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, corner, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"6638cbae-31ef-2bc6-a0fe-c5e6de4690b3",
+									true,
+								},
+								
+								{
+									"e68eed16-3ae6-7377-bc52-d14362eea2e0",
+									true,
+								},
+								
+								{
+									"8b49ca6b-481e-dd63-9ca0-f1bc4bb0603c",
+									true,
+								},
+							},
+							uuid = "6b6586a8-063c-8231-91fd-82e9e98592da",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "6638cbae-31ef-2bc6-a0fe-c5e6de4690b3",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljKefkaHeading ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Kefka Heading",
+							uuid = "e68eed16-3ae6-7377-bc52-d14362eea2e0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "8b49ca6b-481e-dd63-9ca0-f1bc4bb0603c",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 699.71269025282,
+				name = "[Lj Draw] Draw Arrow to Corner Baits",
+				timeRange = true,
+				timelineIndex = 138,
+				timerEndOffset = 3,
+				timerStartOffset = -0.25,
+				uuid = "205d5378-6d23-9e48-b35c-ac1ec1848681",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local target = TensorCore.mGetEntity(eventArgs.targetID)\n\nif target ~= nil and target.pos ~= nil then\n    local RENDER_FLAG = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    local revealTime = 710.741\n    local finishTime = 715.37264047081\n    local drawStart = math.max(TensorReactions_CurrentTimer, revealTime)\n    local delay = math.max(0, (revealTime - TensorReactions_CurrentTimer) * 1000)\n    local timeout = math.max(0, (finishTime - drawStart) * 1000)\n    local drawer = TensorCore.getMoogleDrawer(0, RENDER_FLAG)\n\n    drawer:addTimedCircle(\n        timeout,\n        target.pos.x, target.pos.y, target.pos.z,\n        6,\n        delay, false, false,\n        RENDER_FLAG\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"cf84bf67-54dc-8c90-99cf-a78d36a4e1f1",
+									true,
+								},
+							},
+							name = "Draw Delayed Big Bang Puddle",
+							uuid = "034b1bd7-b8c7-5138-9383-3555665d7ace",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47875,
+							name = "Event: Spell ID Knock Down 47875",
+							uuid = "cf84bf67-54dc-8c90-99cf-a78d36a4e1f1",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				loop = true,
+				mechanicTime = 699.71269025282,
+				name = "[Lj Draw] Big Bang Puddles (Knock Down)",
+				timeRange = true,
+				timelineIndex = 138,
+				timerEndOffset = 14,
+				uuid = "65805a58-6021-a006-b327-9924ace18c4a",
+				version = 2,
+			},
+		},
 	},
 	[140] = 
 	{
@@ -4189,27 +4453,26 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local mode = \"ZsQ\"\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal towerDist = 10\nlocal towerRadius = 5\nlocal stackDotRadius = 0.225\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) tower spots; rotated to Kefka below.\nlocal westTower = { x = center.x - towerDist, y = center.y, z = center.z }\nlocal eastTower = { x = center.x + towerDist, y = center.y, z = center.z }\n\n-- Always-on markers, drawn regardless of where this player is headed:\n-- red outlines on both towers, small filled red dot mid for the stack.\nlocal towerDrawer = TensorCore.getCachedDrawer(nil, nil, 0x00000000, 0xFF0000FF, 2)\nfor _, tower in pairs({ westTower, eastTower }) do\n    local rotatedTower = TensorCore.rotatePosAroundPos(center, tower, rot)\n    towerDrawer:addCircle(rotatedTower.x, rotatedTower.y, rotatedTower.z, towerRadius, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nlocal stackDotDrawer = TensorCore.getCachedDrawer(nil, nil, 0xFF0000FF)\nstackDotDrawer:addCircle(center.x, center.y, center.z, stackDotRadius, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\n-- Role -> tower assignment per strat (all directions relative to Kefka).\nlocal towerByRoleByMode = {\n    ZsQ = {\n        H1 = westTower, MT = westTower, R1 = westTower, M1 = westTower,\n        H2 = eastTower, OT = eastTower, R2 = eastTower, M2 = eastTower,\n    },\n    LPDU = {\n        H1 = eastTower, H2 = eastTower, R1 = eastTower, R2 = eastTower,\n        MT = westTower, OT = westTower, M1 = westTower, M2 = westTower,\n    },\n}\nlocal towerByRole = towerByRoleByMode[mode]\n\nlocal SUPPORT = { H1 = true, H2 = true, MT = true, OT = true }\n\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal role = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\nlocal playerGroup = SUPPORT[role] and \"Support\" or \"DPS\"\n\n-- Group named by data.ljP3Stack stacks mid; the other group soaks the towers. This then flips later by changing the vaue of data.ljP3Stack.\nlocal designTarget\nif playerGroup == data.ljP3Stack then\n    designTarget = { x = center.x, z = center.z }\nelse\n    designTarget = towerByRole[role]\nend\n\nif designTarget then\n    designTarget.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "local setting = Lj_UMADDRAWS_Stompies\n\nlocal center = { x = 100, y = 0, z = 100 }\nlocal towerDist = 10\nlocal towerRadius = 5\nlocal stackDotRadius = 0.225\nlocal rot = data.ljKefkaHeading\n\n-- Design (true-north) tower spots; rotated to Kefka below.\nlocal westTower = { x = center.x - towerDist, y = center.y, z = center.z }\nlocal eastTower = { x = center.x + towerDist, y = center.y, z = center.z }\n\n-- Always-on markers, drawn regardless of where this player is headed:\n-- red outlines on both towers, small filled red dot mid for the stack.\nlocal towerDrawer = TensorCore.getCachedDrawer(nil, nil, 0x00000000, 0xFF0000FF, 2)\nfor _, tower in pairs({ westTower, eastTower }) do\n    local rotatedTower = TensorCore.rotatePosAroundPos(center, tower, rot)\n    towerDrawer:addCircle(rotatedTower.x, rotatedTower.y, rotatedTower.z, towerRadius, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nlocal stackDotDrawer = TensorCore.getCachedDrawer(nil, nil, 0xFF0000FF)\nstackDotDrawer:addCircle(center.x, center.y, center.z, stackDotRadius, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n\n-- Exact persisted Stompies setting values -> tower assignments.\nlocal towerByRoleBySetting = {\n    [\"Group 1/Group 2\"] = {\n        H1 = westTower, MT = westTower, R1 = westTower, M1 = westTower,\n        H2 = eastTower, OT = eastTower, R2 = eastTower, M2 = eastTower,\n    },\n    [\"Roles\"] = {\n        H1 = eastTower, H2 = eastTower, R1 = eastTower, R2 = eastTower,\n        MT = westTower, OT = westTower, M1 = westTower, M2 = westTower,\n    },\n}\nlocal towerByRole = towerByRoleBySetting[setting]\n\nlocal SUPPORT = { H1 = true, H2 = true, MT = true, OT = true }\n\nlocal mySlot = AnyoneCore.Roster.mySlot()\nlocal role = (mySlot == \"T1\" and \"MT\") or (mySlot == \"T2\" and \"OT\") or mySlot\nlocal playerGroup = SUPPORT[role] and \"Support\" or \"DPS\"\n\n-- Group named by data.ljP3Stack stacks mid; the other group soaks the towers.\n-- This flips later when the timeline changes data.ljP3Stack.\nlocal designTarget\nif playerGroup == data.ljP3Stack then\n    designTarget = { x = center.x, z = center.z }\nelse\n    designTarget = towerByRole and towerByRole[role]\nend\n\nif designTarget then\n    designTarget.y = center.y\n    local rotated = TensorCore.rotatePosAroundPos(center, designTarget, rot)\n\n    local sourcePos = TensorCore.mGetPlayer().pos\n    local targetPos = { x = rotated.x, y = sourcePos.y, z = rotated.z }\n\n    local heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\n    local totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\n    -- Proximity scaling\n    local scale = math.min(1, totalDistance / 15)\n    local baseWidth = math.max(0.5, 1 * scale)\n    local tipWidth = math.max(1.5, 3 * scale)\n    local tipLength = math.max(2, 3 * scale)\n    local baseLength = totalDistance - tipLength\n\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n        arrowDrawer:addArrow(\n            sourcePos.x, sourcePos.y, sourcePos.z,\n            heading,\n            baseLength, baseWidth, tipLength, tipWidth,\n            false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n        )\n    end\nend\n\nself.used = true",
 							conditions = 
 							{
 								
 								{
-									"fa25f86e-2115-569c-9252-f7a2852057ea",
+									"6ca95d18-699d-e4bc-8639-84e40d63b11b",
 									true,
 								},
 								
 								{
-									"a0ad6380-d04f-ebc3-ac67-a741a20b5443",
+									"9b8b7326-09e3-dd6a-9e87-72685c412ca2",
 									true,
 								},
 								
 								{
-									"eda595af-f405-3639-bebc-66e2d6674b33",
+									"aa269837-1971-7c5b-a287-54a91f7f972f",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "3eed45c1-a515-ef19-9cc5-fa3762d65300",
+							uuid = "c3c0b92c-39c8-2d63-ad27-863c13b225d1",
 							version = 2.1,
 						},
 					},
@@ -4221,23 +4484,10 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "fa25f86e-2115-569c-9252-f7a2852057ea",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
 							conditionLua = "return AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
 							dequeueIfLuaFalse = true,
 							name = "Role Set",
-							uuid = "a0ad6380-d04f-ebc3-ac67-a741a20b5443",
+							uuid = "6ca95d18-699d-e4bc-8639-84e40d63b11b",
 							version = 3,
 						},
 					},
@@ -4249,7 +4499,19 @@ local tbl =
 							conditionLua = "return data.ljP3Stack ~= nil",
 							dequeueIfLuaFalse = true,
 							name = "Stack Set",
-							uuid = "eda595af-f405-3639-bebc-66e2d6674b33",
+							uuid = "9b8b7326-09e3-dd6a-9e87-72685c412ca2",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "aa269837-1971-7c5b-a287-54a91f7f972f",
 							version = 3,
 						},
 					},
@@ -4261,7 +4523,7 @@ local tbl =
 				timelineIndex = 140,
 				timerEndOffset = 6,
 				timerStartOffset = -1,
-				uuid = "0ae2b750-99a0-a6fa-8af6-dc13c80e06bb",
+				uuid = "ed2880b8-604e-e3e2-9488-a40f99e2183b",
 				version = 2,
 			},
 		},
@@ -4289,12 +4551,12 @@ local tbl =
 								},
 								
 								{
-									"31a4c8ba-f70f-3acc-a378-62b96c2099a8",
+									"ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
 									true,
 								},
 								
 								{
-									"ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+									"d9128e06-e3d0-3767-b211-6fa7a0c23b9e",
 									true,
 								},
 							},
@@ -4323,10 +4585,92 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
+							conditionLua = "local myId = TensorCore.mGetPlayer().id\nlocal g1 = AnyoneCore.Roster and AnyoneCore.Roster.groups(\"g1\")\nif not g1 then return false end\nfor _, id in ipairs(g1) do if id == myId then return true end end\nreturn false",
 							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "31a4c8ba-f70f-3acc-a378-62b96c2099a8",
+							name = "Group 1",
+							uuid = "ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADDRAWS_Stompies == \"Group 1/Group 2\"",
+							dequeueIfLuaFalse = true,
+							name = "Group 1/Group 2",
+							uuid = "d9128e06-e3d0-3767-b211-6fa7a0c23b9e",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 705.28176295466,
+				name = "[Lj Data] Flip Roles G1",
+				timelineIndex = 141,
+				timerOffset = -0.125,
+				uuid = "3d085258-3e3f-dd13-bdeb-f0ea0043f7bd",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljP3Stack = (data.ljP3Stack == \"Support\") and \"DPS\" or \"Support\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"8032f2ab-ea6f-8b6f-ba45-e6b3a13f6806",
+									true,
+								},
+								
+								{
+									"83f4e746-a801-d222-b2df-058814e4a6ee",
+									true,
+								},
+								
+								{
+									"d658c705-2a03-edca-abbf-75b3dcf76936",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "e4011a22-4e7e-97a1-9833-05e32b79a0c6",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljP3Stack ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Stack Set",
+							uuid = "8032f2ab-ea6f-8b6f-ba45-e6b3a13f6806",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local Roster = AnyoneCore.Roster\nif not Roster then return false end\n\nlocal mySlot = Roster.mySlot()\nreturn mySlot == \"T1\"\n    or mySlot == \"T2\"\n    or mySlot == \"M1\"\n    or mySlot == \"M2\"",
+							name = "West Group",
+							uuid = "83f4e746-a801-d222-b2df-058814e4a6ee",
 							version = 3,
 						},
 						inheritedIndex = 2,
@@ -4336,19 +4680,19 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "local myId = TensorCore.mGetPlayer().id\nlocal g1 = AnyoneCore.Roster and AnyoneCore.Roster.groups(\"g1\")\nif not g1 then return false end\nfor _, id in ipairs(g1) do if id == myId then return true end end\nreturn false",
+							conditionLua = "return Lj_UMADDRAWS_Stompies == \"Roles\"\n",
 							dequeueIfLuaFalse = true,
-							name = "Group 1",
-							uuid = "ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+							name = "Roles",
+							uuid = "d658c705-2a03-edca-abbf-75b3dcf76936",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 705.28176295466,
-				name = "[Lj Data] Flip Roles G1",
+				name = "[Lj Data] Flip Roles West",
 				timelineIndex = 141,
 				timerOffset = -0.125,
-				uuid = "c3b6d2c4-fa53-1725-a587-c8a6e4343d4a",
+				uuid = "4de1419a-25e9-c033-99df-1ee5cac4e3e1",
 				version = 2,
 			},
 		},
@@ -4376,12 +4720,12 @@ local tbl =
 								},
 								
 								{
-									"71e10f21-621e-a1ca-9646-5631ed971927",
+									"ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
 									true,
 								},
 								
 								{
-									"ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+									"b77ff695-6a2b-95f7-bc88-3509690b7bfb",
 									true,
 								},
 							},
@@ -4410,10 +4754,93 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
+							conditionLua = "local myId = TensorCore.mGetPlayer().id\nlocal g2 = AnyoneCore.Roster and AnyoneCore.Roster.groups(\"g2\")\nif not g2 then return false end\nfor _, id in ipairs(g2) do if id == myId then return true end end\nreturn false",
 							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "71e10f21-621e-a1ca-9646-5631ed971927",
+							name = "Group 2",
+							uuid = "ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADDRAWS_Stompies == \"Group 1/Group 2\"",
+							dequeueIfLuaFalse = true,
+							name = "Group 1/Group 2",
+							uuid = "b77ff695-6a2b-95f7-bc88-3509690b7bfb",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 706.58990945806,
+				name = "[Lj Data] Flip Roles G2",
+				timelineIndex = 143,
+				timerOffset = -0.125,
+				uuid = "e7af2122-11ea-d3c9-986a-38e49cba1911",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljP3Stack = (data.ljP3Stack == \"Support\") and \"DPS\" or \"Support\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"baccdfab-101d-00c5-891f-b8f2ab46e3ef",
+									true,
+								},
+								
+								{
+									"42105c8b-5b2e-a711-a9cf-99ae89e5a252",
+									true,
+								},
+								
+								{
+									"bcfcb4c5-7070-9289-97aa-75496affefb2",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "ad52dea3-1b34-c7fd-bf4e-b020dd556631",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljP3Stack ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Stack Set",
+							uuid = "baccdfab-101d-00c5-891f-b8f2ab46e3ef",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local Roster = AnyoneCore.Roster\nif not Roster then return false end\n\nlocal mySlot = Roster.mySlot()\nreturn mySlot == \"H1\"\n    or mySlot == \"H2\"\n    or mySlot == \"R1\"\n    or mySlot == \"R2\"",
+							dequeueIfLuaFalse = true,
+							name = "East Group",
+							uuid = "42105c8b-5b2e-a711-a9cf-99ae89e5a252",
 							version = 3,
 						},
 						inheritedIndex = 2,
@@ -4423,19 +4850,19 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "local myId = TensorCore.mGetPlayer().id\nlocal g2 = AnyoneCore.Roster and AnyoneCore.Roster.groups(\"g2\")\nif not g2 then return false end\nfor _, id in ipairs(g2) do if id == myId then return true end end\nreturn false",
+							conditionLua = "return Lj_UMADDRAWS_Stompies == \"Roles\"\n",
 							dequeueIfLuaFalse = true,
-							name = "Group 2",
-							uuid = "ef878e15-11ee-71d1-8947-cfb48c2bd0e6",
+							name = "Roles",
+							uuid = "bcfcb4c5-7070-9289-97aa-75496affefb2",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 706.58990945806,
-				name = "[Lj Data] Flip Roles G2",
+				name = "[Lj Data] Flip Roles East",
 				timelineIndex = 143,
 				timerOffset = -0.125,
-				uuid = "f326cacd-cb74-aa06-88b9-3901054dfb49",
+				uuid = "fe86d88b-ffcc-f7fd-9242-3d901f6b49ac",
 				version = 2,
 			},
 		},
@@ -4598,9 +5025,6 @@ local tbl =
 				version = 2,
 			},
 		},
-	},
-	[153] = 
-	{
 		
 		{
 			data = 
@@ -4612,62 +5036,19 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 87.5}  -- North\n    stackPos  = {x = 87.5, y = 0, z = 100}  -- West\nelse\n    spreadPos = {x = 87.5, y = 0, z = 100}  -- West\n    stackPos  = {x = 100, y = 0, z = 87.5}  -- North\nend\n\nlocal lead      = 8\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							actionLua = "data.ljP4ElementTell = data.ljP4ElementTell or {}\nlocal state = data.ljP4ElementTell\n\nif eventArgs.markerID == 675 then\n    state.element = \"ice\"\nelseif eventArgs.markerID == 676 then\n    state.element = \"lighting\"\nelseif eventArgs.markerID == 677 then\n    state.truth = true\nelseif eventArgs.markerID == 678 then\n    state.truth = false\nend\n\nif state.element == nil or state.truth == nil then\n    self.used = true\n    return\nend\n\nif state.sendAt == nil then\n    state.sendAt = Now() + math.random(1000, 2000)\nend\n\nif Now() < state.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\nthen\n    local line\n    if state.element == \"lighting\" then\n        line = state.truth and \"■      TRUE lighting (Lines)\" or \"□      FAKE lighting (Lines)\"\n    else\n        line = state.truth and \"▼      TRUE ice (Cones)\" or \"▽      FAKE ice (Cones)\"\n    end\n\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. line)\nend\n\nstate.element = nil\nstate.truth = nil\nstate.sendAt = nil\nself.used = true",
 							conditions = 
 							{
 								
 								{
-									"65799846-741b-81c0-8ed4-85181cd3bca2",
-									true,
-								},
-								
-								{
-									"162df881-c016-8e8a-b363-b0f345a8c6da",
-									true,
-								},
-								
-								{
-									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
-									false,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Support",
-							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 112.5}  -- South\n    stackPos  = {x = 112.5, y = 0, z = 100}  -- East\nelse\n    spreadPos = {x = 112.5, y = 0, z = 100}  -- East\n    stackPos  = {x = 100, y = 0, z = 112.5}  -- South\nend\n\nlocal lead      = 8\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"65799846-741b-81c0-8ed4-85181cd3bca2",
-									true,
-								},
-								
-								{
-									"162df881-c016-8e8a-b363-b0f345a8c6da",
-									true,
-								},
-								
-								{
-									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									"bdc5bc48-989d-2f7d-ab8e-a76872117740",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "DPS",
-							uuid = "0a729d61-7ce4-7c95-9607-2ec280c1a486",
+							name = "Fancy Ice/Lightning Tell",
+							uuid = "17a90bed-cc22-7398-9656-c8f715a2c7a3",
 							version = 2.1,
 						},
-						inheritedIndex = 1,
 					},
 				},
 				conditions = 
@@ -4677,49 +5058,28 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return AnyoneCore ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "AnyoneCore",
-							uuid = "65799846-741b-81c0-8ed4-85181cd3bca2",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljExdeathAura ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Exdeath Aura Recorded",
-							uuid = "162df881-c016-8e8a-b363-b0f345a8c6da",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							name = "Self: DPS",
-							partyTargetType = "DPS",
-							uuid = "faba3eab-7df5-75f5-bcc8-805f8106c79a",
+							conditionLua = "if Lj_UMADDRAWS_P4Macro == \"Disabled\" then\n    return false\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif mode ~= \"Echo Chat\" and mode ~= \"Party Chat\" then\n    return false\nend\n\nif eventArgs.entityContentID ~= 7131 then\n    return false\nend\n\nreturn eventArgs.markerID == 675\n    or eventArgs.markerID == 676\n    or eventArgs.markerID == 677\n    or eventArgs.markerID == 678",
+							name = "P4 Ice/Lightning Marker",
+							uuid = "bdc5bc48-989d-2f7d-ab8e-a76872117740",
 							version = 3,
 						},
 					},
 				},
-				mechanicTime = 826.02524789261,
-				name = "[Lj Draw] Spread Stack Arrow",
-				timelineIndex = 153,
-				timerOffset = 1,
-				uuid = "7c286e17-4f6b-dc85-ae73-de5b513879a3",
+				eventType = 4,
+				loop = true,
+				mechanicTime = 812.05085714286,
+				name = "[Lj Macro] Ice/Lightning Tell",
+				timeRange = true,
+				timelineIndex = 151,
+				timerEndOffset = 100,
+				timerStartOffset = 4,
+				uuid = "98841943-b8f3-a8d2-8bd2-a174e8e427e1",
 				version = 2,
 			},
-			inheritedIndex = 2,
 		},
+	},
+	[153] = 
+	{
 		
 		{
 			data = 
@@ -4815,6 +5175,324 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 87.5}  -- North\n    stackPos  = {x = 87.5, y = 0, z = 100}  -- West\nelse\n    spreadPos = {x = 87.5, y = 0, z = 100}  -- West\n    stackPos  = {x = 100, y = 0, z = 87.5}  -- North\nend\n\nlocal lead      = 8\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"65799846-741b-81c0-8ed4-85181cd3bca2",
+									true,
+								},
+								
+								{
+									"162df881-c016-8e8a-b363-b0f345a8c6da",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Support",
+							uuid = "2eed23b6-13a5-63de-b393-6645da874b59",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local center = {x = 100, y = 0, z = 100}\nlocal orientation = AnyoneCore.Settings.Reactions.dmu.p4StackSpreadOrientation\nlocal spreadPos\nlocal stackPos\n\nif orientation == 2 then\n    spreadPos = {x = 100, y = 0, z = 112.5}  -- South\n    stackPos  = {x = 112.5, y = 0, z = 100}  -- East\nelse\n    spreadPos = {x = 112.5, y = 0, z = 100}  -- East\n    stackPos  = {x = 100, y = 0, z = 112.5}  -- South\nend\n\nlocal lead      = 8\nlocal firstIn   = 50   -- 877 - 827\nlocal secondIn  = 75   -- 902 - 827\n\nlocal player = TensorCore.mGetPlayer()\nlocal buff   = TensorCore.getBuff(player, 5544) or TensorCore.getBuff(player, 5545)\n\nif buff then\n    data.ljExdeathBuffClaimed = true\n\n    local truth  = data.ljExdeathAura == \"Truth\"\n    local spread = (buff.id == 5544)\n    if not truth then spread = not spread end\n\n    local resolvesFirst = math.abs(buff.duration - firstIn) <= math.abs(buff.duration - secondIn)\n    local otherIn = resolvesFirst and secondIn or firstIn\n\n    local drawer = TensorCore.getCachedDrawer(0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, spread and spreadPos or stackPos),\n        9.5, 1, 3, 3, math.max(0, buff.duration - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    drawer:addTimedArrow(8000, center.x, center.y, center.z,\n        TensorCore.getHeadingToTarget(center, stackPos),\n        9.5, 1, 3, 3, (otherIn - lead) * 1000, false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"65799846-741b-81c0-8ed4-85181cd3bca2",
+									true,
+								},
+								
+								{
+									"162df881-c016-8e8a-b363-b0f345a8c6da",
+									true,
+								},
+								
+								{
+									"faba3eab-7df5-75f5-bcc8-805f8106c79a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "DPS",
+							uuid = "0a729d61-7ce4-7c95-9607-2ec280c1a486",
+							version = 2.1,
+						},
+						inheritedIndex = 2,
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "65799846-741b-81c0-8ed4-85181cd3bca2",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljExdeathAura ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Exdeath Aura Recorded",
+							uuid = "162df881-c016-8e8a-b363-b0f345a8c6da",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "faba3eab-7df5-75f5-bcc8-805f8106c79a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[Lj Draw] Spread Stack Arrow",
+				timelineIndex = 153,
+				timerOffset = 1,
+				uuid = "7c286e17-4f6b-dc85-ae73-de5b513879a3",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local truth = data.ljExdeathAura == \"Truth\"\nlocal line = truth and \"      Gaze1: Look OUT.\" or \"      Gaze1: Look INSIDE.\"\nlocal prefix = Lj_UMADDRAWS_P4Macro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. line)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"70ffaef4-ecca-338a-bd00-8145f63aad42",
+									true,
+								},
+							},
+							name = "Fancy Gaze 1 Tell",
+							uuid = "8c2f1439-9a2f-c33c-aed3-6bba5b839065",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local mode = Lj_UMADDRAWS_P4Macro\nif mode ~= \"Echo Chat\" and mode ~= \"Party Chat\" then\n    return false\nend\nreturn data.ljExdeathAura == \"Truth\" or data.ljExdeathAura == \"Lie\"",
+							dequeueIfLuaFalse = true,
+							name = "GC1 Tell Ready",
+							uuid = "70ffaef4-ecca-338a-bd00-8145f63aad42",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[Lj Macro] Gaze 1 Call",
+				randomTimeout = 8,
+				timeRandomRange = true,
+				timeRange = true,
+				timelineIndex = 153,
+				timerStartOffset = -8,
+				uuid = "00db9161-1ee5-41a8-9082-06a4f4c150bd",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local markState = data.ljP4SpreadMarks\nif not markState or markState.selfIsLong == nil then\n    self.used = true\n    return\nend\n\nlocal line = markState.selfIsLong and \"I'm LONG SPREAD\" or \"I'm SHORT SPREAD\"\nTensorCore.sendParsedChatMessage(\"/e \" .. line)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"97a8a3a1-c6f9-ebe6-8d2a-900dd332d586",
+									true,
+								},
+							},
+							name = "Echo Short/Long Spread",
+							uuid = "e45f9d58-020b-f8be-a69b-6d5103b380a0",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local markState = data.ljP4SpreadMarks\nif not markState or markState.selfIsLong == nil then\n    self.used = true\n    return\nend\n\nlocal isLong = markState.selfIsLong\nlocal isDPS = TensorCore.isDPS(Player) == true\nlocal sign\nif isDPS then\n    sign = isLong and \"ignore2\" or \"bind2\"\nelse\n    sign = isLong and \"ignore1\" or \"bind1\"\nend\n\nTensorCore.sendParsedChatMessage('/mk \"' .. sign .. '\" <me>')\nmarkState.selfMarked = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"97a8a3a1-c6f9-ebe6-8d2a-900dd332d586",
+									true,
+								},
+							},
+							name = "Self Mark Short/Long Spread",
+							uuid = "9691d33a-72b7-dc55-b9c8-f5c4905a338e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "if Lj_UMADDRAWS_P4AutoMark ~= \"Self Only\" or not Player then\n    return false\nend\n\nlocal markState = data.ljP4SpreadMarks\nif markState and markState.selfMarked then\n    return false\nend\n\nlocal tell = data.ljExdeathAura\nif tell ~= \"Truth\" and tell ~= \"Lie\" then\n    return false\nend\n\nlocal buff\nif tell == \"Truth\" then\n    buff = TensorCore.getBuff(Player, 587)\n        or TensorCore.getBuff(Player, 3799)\n        or TensorCore.getBuff(Player, 5544)\nelse\n    buff = TensorCore.getBuff(Player, 1023)\n        or TensorCore.getBuff(Player, 5545)\n        or TensorCore.getBuff(Player, 2142)\nend\n\nif not buff then\n    return false\nend\n\nmarkState = markState or {}\ndata.ljP4SpreadMarks = markState\nmarkState.selfIsLong = buff.duration > 60\nreturn true",
+							name = "Self Spread Ready",
+							uuid = "97a8a3a1-c6f9-ebe6-8d2a-900dd332d586",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[Lj Macro] Self Mark Spreads",
+				randomTimeout = 2,
+				timeRandomRange = true,
+				timeRange = true,
+				timelineIndex = 153,
+				timerEndOffset = 3,
+				timerStartOffset = 1,
+				uuid = "79c5fc07-2d0c-01cb-9836-ba332e9d90c5",
+				version = 2,
+			},
+		},
+	},
+	[154] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "self.used = true",
+							conditions = 
+							{
+								
+								{
+									"af6c0fa5-4895-8e3d-bda6-f82f6bfe25df",
+									true,
+								},
+							},
+							uuid = "7700ddf8-c378-61ca-8d1b-e468fd8e0380",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local truth = data.ljChaosAura == \"Truth\"\nlocal line\n\nif eventArgs.spellID == 47902 then\n    line = truth and \"● Fire is AOE (move)\" or \" Fire is DONUT (stay)\"\nelseif eventArgs.spellID == 47903 then\n    line = truth and \" Water is DONUT (stay)\" or \"● Water is AOE (move)\"\nelse\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_P4Macro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. line)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"af6c0fa5-4895-8e3d-bda6-f82f6bfe25df",
+									true,
+								},
+							},
+							name = "Fancy Chaos 1 Tell",
+							uuid = "9fa5f3c6-c026-b5f3-9946-777c8242e003",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local mode = Lj_UMADDRAWS_P4Macro\nif mode ~= \"Echo Chat\" and mode ~= \"Party Chat\" then\n    return false\nend\nlocal tell = data.ljChaosAura\nif tell ~= \"Truth\" and tell ~= \"Lie\" then\n    return false\nend\nreturn eventArgs.spellID == 47902 or eventArgs.spellID == 47903",
+							dequeueIfLuaFalse = true,
+							name = "Chaos 1 Cast + Tell Ready",
+							uuid = "af6c0fa5-4895-8e3d-bda6-f82f6bfe25df",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				mechanicTime = 831.10515604713,
+				name = "[Lj Macro] Donut Twister Call 1",
+				throttleTime = 1500,
+				timeRange = true,
+				timelineIndex = 154,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "95b92043-6832-2374-a828-151ed9cad2b3",
+				version = 2,
+			},
+		},
 	},
 	[156] = 
 	{
@@ -4894,7 +5572,7 @@ local tbl =
 							uuid = "0a729d61-7ce4-7c95-9607-2ec280c1a486",
 							version = 2.1,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 				},
 				conditions = 
@@ -4923,7 +5601,7 @@ local tbl =
 							uuid = "162df881-c016-8e8a-b363-b0f345a8c6da",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -4936,7 +5614,7 @@ local tbl =
 							uuid = "ad360180-81d2-eeb0-9949-bded6a94e9f1",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 3,
 					},
 					
 					{
@@ -4959,6 +5637,130 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local truth = data.ljExdeathAura == \"Truth\"\nlocal line = truth and \"      Gaze2: Look OUT.\" or \"      Gaze2: Look INSIDE.\"\nlocal prefix = Lj_UMADDRAWS_P4Macro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. line)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"1d8c37ab-1122-d20d-a79c-97b1fa121583",
+									true,
+								},
+							},
+							name = "Fancy Gaze 2 Tell",
+							uuid = "cbd8eb1c-ca39-6e0a-9ea3-df72cb77e83e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local mode = Lj_UMADDRAWS_P4Macro\nif mode ~= \"Echo Chat\" and mode ~= \"Party Chat\" then\n    return false\nend\nlocal tell = data.ljExdeathAura\nreturn tell == \"Truth\" or tell == \"Lie\"",
+							dequeueIfLuaFalse = true,
+							name = "GC2 Tell Ready",
+							uuid = "1d8c37ab-1122-d20d-a79c-97b1fa121583",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 841.08843971594,
+				name = "[Lj Macro] Gaze Call 2",
+				timeRandomRange = true,
+				timeRange = true,
+				timelineIndex = 156,
+				timerEndOffset = -3,
+				timerStartOffset = -8,
+				uuid = "8069c61d-3bec-64ea-8d82-0212c2aa9155",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local markState = data.ljP4SpreadMarks\nif not markState or markState.selfIsLong == nil then\n    self.used = true\n    return\nend\n\nlocal line = markState.selfIsLong and \"I'm LONG SPREAD\" or \"I'm SHORT SPREAD\"\nTensorCore.sendParsedChatMessage(\"/e \" .. line)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"9ea1e141-00be-cff2-a029-b56b07ddd2b4",
+									true,
+								},
+							},
+							name = "Echo Short/Long Spread",
+							uuid = "e69e0d8c-9d25-eff7-ab61-29bf681a761e",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local markState = data.ljP4SpreadMarks\nif not markState or markState.selfIsLong == nil then\n    self.used = true\n    return\nend\n\nlocal isLong = markState.selfIsLong\nlocal isDPS = TensorCore.isDPS(Player) == true\nlocal sign\nif isDPS then\n    sign = isLong and \"ignore2\" or \"bind2\"\nelse\n    sign = isLong and \"ignore1\" or \"bind1\"\nend\n\nTensorCore.sendParsedChatMessage('/mk \"' .. sign .. '\" <me>')\nmarkState.selfMarked = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"9ea1e141-00be-cff2-a029-b56b07ddd2b4",
+									true,
+								},
+							},
+							name = "Self Mark Short/Long Spread",
+							uuid = "a50d06f5-eebf-4920-a50a-e9cd73e7e840",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "if Lj_UMADDRAWS_P4AutoMark ~= \"Self Only\" or not Player then\n    return false\nend\n\nlocal markState = data.ljP4SpreadMarks\nif markState and markState.selfMarked then\n    return false\nend\n\nlocal tell = data.ljExdeathAura\nif tell ~= \"Truth\" and tell ~= \"Lie\" then\n    return false\nend\n\nlocal buff\nif tell == \"Truth\" then\n    buff = TensorCore.getBuff(Player, 587)\n        or TensorCore.getBuff(Player, 3799)\n        or TensorCore.getBuff(Player, 5544)\nelse\n    buff = TensorCore.getBuff(Player, 1023)\n        or TensorCore.getBuff(Player, 5545)\n        or TensorCore.getBuff(Player, 2142)\nend\n\nif not buff then\n    return false\nend\n\nmarkState = markState or {}\ndata.ljP4SpreadMarks = markState\nmarkState.selfIsLong = buff.duration > 60\nreturn true",
+							name = "Self Spread Ready",
+							uuid = "9ea1e141-00be-cff2-a029-b56b07ddd2b4",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 841.08843971594,
+				name = "[Lj Macro] Self Mark Spreads",
+				randomTimeout = 2,
+				timeRandomRange = true,
+				timeRange = true,
+				timelineIndex = 156,
+				timerEndOffset = 3,
+				timerStartOffset = 1,
+				uuid = "4670d87d-20a9-fbb7-baa3-9710c4fb9d99",
+				version = 2,
+			},
+		},
 	},
 	[157] = 
 	{
@@ -4977,12 +5779,17 @@ local tbl =
 							{
 								
 								{
-									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									"764de496-a44e-045d-b7f6-025a0d67a492",
 									true,
 								},
 								
 								{
 									"c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+									true,
+								},
+								
+								{
+									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
 									true,
 								},
 							},
@@ -5000,6 +5807,11 @@ local tbl =
 							aType = "Misc",
 							conditions = 
 							{
+								
+								{
+									"764de496-a44e-045d-b7f6-025a0d67a492",
+									true,
+								},
 								
 								{
 									"4663a60a-faba-f023-aa6d-dd2d0807e008",
@@ -5021,12 +5833,13 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return data.ljAccelBomb == true",
+							conditionLua = "return Lj_UMADDRAWS_AccelBombStillness == true",
 							dequeueIfLuaFalse = true,
-							name = "Self: Stillness Bomb",
-							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							name = "Enabled",
+							uuid = "764de496-a44e-045d-b7f6-025a0d67a492",
 							version = 3,
 						},
+						inheritedIndex = 1,
 					},
 					
 					{
@@ -5042,6 +5855,18 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljAccelBomb == true",
+							dequeueIfLuaFalse = true,
+							name = "Self: Stillness Bomb",
+							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							version = 3,
+						},
 					},
 					
 					{
@@ -5083,12 +5908,17 @@ local tbl =
 							{
 								
 								{
-									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+									"6bb24ea9-53d4-1d0d-8c75-88a459e7312e",
 									true,
 								},
 								
 								{
 									"c3af5c05-6b4e-4922-99a0-dfd62372d6e0",
+									true,
+								},
+								
+								{
+									"e6d90469-40d1-94f2-8f97-cc86c184c5bb",
 									true,
 								},
 							},
@@ -5107,12 +5937,13 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return data.ljAccelBomb == false",
+							conditionLua = "return Lj_UMADDRAWS_AccelBombMotion == true",
 							dequeueIfLuaFalse = true,
-							name = "Self: Motion Bomb",
-							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							name = "Enabled",
+							uuid = "6bb24ea9-53d4-1d0d-8c75-88a459e7312e",
 							version = 3,
 						},
+						inheritedIndex = 1,
 					},
 					
 					{
@@ -5128,6 +5959,18 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljAccelBomb == false",
+							dequeueIfLuaFalse = true,
+							name = "Self: Motion Bomb",
+							uuid = "e6d90469-40d1-94f2-8f97-cc86c184c5bb",
+							version = 3,
+						},
 					},
 				},
 				loop = true,
@@ -5251,7 +6094,79 @@ local tbl =
 				uuid = "68b15629-2225-0783-ac12-d6fdd5b9d9d3",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "self.used = true",
+							conditions = 
+							{
+								
+								{
+									"b7f43efa-8433-da28-a3c2-2e6dc9c6ac90",
+									true,
+								},
+							},
+							uuid = "6eece6ab-1a4c-2f49-8633-aa2cccbfec8f",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local truth = data.ljChaosAura == \"Truth\"\nlocal line\n\nif eventArgs.spellID == 47902 then\n    line = truth and \"● Fire is AOE (move)\" or \" Fire is DONUT (stay)\"\nelseif eventArgs.spellID == 47903 then\n    line = truth and \" Water is DONUT (stay)\" or \"● Water is AOE (move)\"\nelse\n    self.used = true\n    return\nend\n\nlocal prefix = Lj_UMADDRAWS_P4Macro == \"Party Chat\" and \"/p \" or \"/e \"\nTensorCore.sendParsedChatMessage(prefix .. line)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"b7f43efa-8433-da28-a3c2-2e6dc9c6ac90",
+									true,
+								},
+							},
+							name = "Fancy Chaos 2 Tell",
+							uuid = "fa5064a3-424b-9117-bdc3-025f431199f5",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local mode = Lj_UMADDRAWS_P4Macro\nif mode ~= \"Echo Chat\" and mode ~= \"Party Chat\" then\n    return false\nend\nlocal tell = data.ljChaosAura\nif tell ~= \"Truth\" and tell ~= \"Lie\" then\n    return false\nend\nreturn eventArgs.spellID == 47902 or eventArgs.spellID == 47903",
+							dequeueIfLuaFalse = true,
+							name = "Chaos 2 Cast + Tell Ready",
+							uuid = "b7f43efa-8433-da28-a3c2-2e6dc9c6ac90",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				mechanicTime = 846.19462329432,
+				name = "[Lj Macro] Donut Twister Call 2",
+				throttleTime = 1500,
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "72aecb46-2e0f-0214-b747-3444df300023",
+				version = 2,
+			},
 		},
 	},
 	[162] = 
@@ -5329,7 +6244,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 96 }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0.75 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							actionLua = "data.ljGazeBaits = data.ljGazeBaits or {}\nlocal state = data.ljGazeBaits\n\nif state.north == nil then\n    state.north = {\n        { x = 100, y = 0, z = 96 },\n        { x = 104, y = 0, z = 94 },\n        { x = 96, y = 0, z = 94 },\n        { x = 100, y = 0, z = 92 },\n        { x = 106, y = 0, z = 96 },\n        { x = 94, y = 0, z = 96 },\n    }\n    state.south = {\n        { x = 100, y = 0, z = 104 },\n        { x = 96, y = 0, z = 106 },\n        { x = 104, y = 0, z = 106 },\n        { x = 100, y = 0, z = 108 },\n        { x = 94, y = 0, z = 104 },\n        { x = 106, y = 0, z = 104 },\n    }\nend\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal candidates = state.north\nlocal targetPos = candidates[1]\n\nif TensorCore.Avoidance.inAnyAOE(targetPos.x, targetPos.y, targetPos.z) == true then\n    for i = 2, #candidates do\n        local candidate = candidates[i]\n        if TensorCore.Avoidance.inAnyAOE(candidate.x, candidate.y, candidate.z) == false then\n            targetPos = candidate\n            break\n        end\n    end\nend\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -5354,7 +6269,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 104 }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0.75 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							actionLua = "data.ljGazeBaits = data.ljGazeBaits or {}\nlocal state = data.ljGazeBaits\n\nif state.north == nil then\n    state.north = {\n        { x = 100, y = 0, z = 96 },\n        { x = 104, y = 0, z = 94 },\n        { x = 96, y = 0, z = 94 },\n        { x = 100, y = 0, z = 92 },\n        { x = 106, y = 0, z = 96 },\n        { x = 94, y = 0, z = 96 },\n    }\n    state.south = {\n        { x = 100, y = 0, z = 104 },\n        { x = 96, y = 0, z = 106 },\n        { x = 104, y = 0, z = 106 },\n        { x = 100, y = 0, z = 108 },\n        { x = 94, y = 0, z = 104 },\n        { x = 106, y = 0, z = 104 },\n    }\nend\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal candidates = state.south\nlocal targetPos = candidates[1]\n\nif TensorCore.Avoidance.inAnyAOE(targetPos.x, targetPos.y, targetPos.z) == true then\n    for i = 2, #candidates do\n        local candidate = candidates[i]\n        if TensorCore.Avoidance.inAnyAOE(candidate.x, candidate.y, candidate.z) == false then\n            targetPos = candidate\n            break\n        end\n    end\nend\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -5456,7 +6371,7 @@ local tbl =
 							uuid = "eb369e5d-fc25-9695-9008-d21d950a914a",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 895.49672653853,
@@ -5509,7 +6424,7 @@ local tbl =
 							uuid = "679bb1bb-080d-3a60-95b5-97bb2edbe83a",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 916.86652777982,
@@ -5632,7 +6547,7 @@ local tbl =
 							uuid = "fb916d2c-906d-4b4f-b999-74a950467561",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -5646,7 +6561,7 @@ local tbl =
 							uuid = "584680ce-85af-5ae5-8115-971b2d09ed1e",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 3,
 					},
 					
 					{
@@ -5712,7 +6627,7 @@ local tbl =
 							uuid = "e26605a5-8bf9-bda7-ae34-d2323a857c50",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -5909,6 +6824,58 @@ local tbl =
 			},
 		},
 	},
+	[185] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 7000\nlocal totalDistance = 10\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\n-- ShapeDrawer arrows render 180 degrees opposite Tensor entity headings here.\n-- Comments describe the resulting on-screen arrow direction.\nlocal headings = {\n    T1 = -7 * math.pi / 8,  -- NNW: 22.5 degrees west of north\n    T2 = 7 * math.pi / 8,   -- NNE: 22.5 degrees east of north\n    M1 = -5 * math.pi / 8,  -- WNW: 67.5 degrees west of north\n    M2 = 5 * math.pi / 8,   -- ENE: 67.5 degrees east of north\n    R1 = -3 * math.pi / 8,  -- WSW: 22.5 degrees south of west\n    R2 = 3 * math.pi / 8,   -- ESE: 22.5 degrees south of east\n    H1 = -math.pi / 8,      -- SSW: 22.5 degrees west of south\n    H2 = math.pi / 8,       -- SSE: 22.5 degrees east of south\n}\nlocal heading = headings[AnyoneCore.Roster.mySlot()]\nif heading == nil then\n    return\nend\n\nlocal drawer = TensorCore.getCachedDrawer(\n    0xFF00FFFF,\n    0xFF0088FF,\n    0xFF0000FF,\n    0xFFFFFFFF,\n    2\n)\ndrawer:addTimedArrow(\n    timeout,\n    100, 0, 100,\n    heading,\n    baseLength, baseWidth, tipLength, tipWidth,\n    0, false\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"0ebe22cd-85c1-9a75-8711-39b0708bb4da",
+									true,
+								},
+							},
+							name = "Clock Spread Arrow",
+							uuid = "6f5c65d0-b7a1-54de-838e-8c6d8bf93744",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil and AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "0ebe22cd-85c1-9a75-8711-39b0708bb4da",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 994.40031547983,
+				name = "[Lj Draw] Clock Spreads",
+				timelineIndex = 185,
+				timerOffset = 2,
+				uuid = "e19db3ac-0b2a-7917-b633-1e7b46b73084",
+				version = 2,
+			},
+		},
+	},
 	[188] = 
 	{
 		
@@ -6018,7 +6985,7 @@ local tbl =
 							uuid = "8d016ca4-789c-2f5c-833f-cc2066a98e04",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -6144,7 +7111,7 @@ local tbl =
 							uuid = "fb916d2c-906d-4b4f-b999-74a950467561",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -6158,7 +7125,7 @@ local tbl =
 							uuid = "584680ce-85af-5ae5-8115-971b2d09ed1e",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 3,
 					},
 					
 					{
@@ -6224,7 +7191,7 @@ local tbl =
 							uuid = "2cb0d8f4-3005-7417-a2fd-c3c1f89e354f",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
@@ -6311,6 +7278,58 @@ local tbl =
 			},
 		},
 	},
+	[210] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local timeout = 6000\nlocal totalDistance = 10\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\n-- ShapeDrawer arrows render 180 degrees opposite Tensor entity headings here.\n-- Comments describe the resulting on-screen arrow direction.\nlocal headings = {\n    T1 = -7 * math.pi / 8,  -- NNW: 22.5 degrees west of north\n    T2 = 7 * math.pi / 8,   -- NNE: 22.5 degrees east of north\n    M1 = -5 * math.pi / 8,  -- WNW: 67.5 degrees west of north\n    M2 = 5 * math.pi / 8,   -- ENE: 67.5 degrees east of north\n    R1 = -3 * math.pi / 8,  -- WSW: 22.5 degrees south of west\n    R2 = 3 * math.pi / 8,   -- ESE: 22.5 degrees south of east\n    H1 = -math.pi / 8,      -- SSW: 22.5 degrees west of south\n    H2 = math.pi / 8,       -- SSE: 22.5 degrees east of south\n}\nlocal heading = headings[AnyoneCore.Roster.mySlot()]\nif heading == nil then\n    return\nend\n\nlocal drawer = TensorCore.getCachedDrawer(\n    0xFF00FFFF,\n    0xFF0088FF,\n    0xFF0000FF,\n    0xFFFFFFFF,\n    2\n)\ndrawer:addTimedArrow(\n    timeout,\n    100, 0, 100,\n    heading,\n    baseLength, baseWidth, tipLength, tipWidth,\n    0, false\n)\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"0ebe22cd-85c1-9a75-8711-39b0708bb4da",
+									true,
+								},
+							},
+							name = "Clock Spread Arrow",
+							uuid = "6f5c65d0-b7a1-54de-838e-8c6d8bf93744",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil and AnyoneCore.Roster ~= nil and AnyoneCore.Roster.mySlot() ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Role Set",
+							uuid = "0ebe22cd-85c1-9a75-8711-39b0708bb4da",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1095.4450949829,
+				name = "[Lj Draw] Clock Spreads",
+				timelineIndex = 210,
+				timerOffset = -7,
+				uuid = "3f873458-ca3e-7c60-ac89-3dfd0684117c",
+				version = 2,
+			},
+		},
+	},
 	[212] = 
 	{
 		
@@ -6352,7 +7371,7 @@ local tbl =
 							uuid = "d25c75ac-77e0-c7ef-85a7-60426cb13ee0",
 							version = 3,
 						},
-						inheritedIndex = 2,
+						inheritedIndex = 1,
 					},
 				},
 				eventType = 12,
