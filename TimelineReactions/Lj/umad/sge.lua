@@ -13,6 +13,39 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
+							actionLua = "local settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\Lj\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSGESettings.lua]]\n\nif not Lj_UMADSGE_Settings then\n    Lj_UMADSGE_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADSGE_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADSGE_Settings\nlocal settingsChanged = false\n\nif settings.firstZoeShield ~= \"Mystery Magic\" and settings.firstZoeShield ~= \"Wave Cannon\" then\n    settings.firstZoeShield = \"Mystery Magic\"\n    settingsChanged = true\nend\n\nif settings.usePotions ~= true and settings.usePotions ~= false then\n    settings.usePotions = true\n    settingsChanged = true\nend\n\nif settingsChanged then\n    if not FolderExists(settingsFolder) then\n        FolderCreate(settingsFolder)\n    end\n    FileSave(settingsPath, settings)\nend\n\nLj_UMADSGE_FirstZoeShield = settings.firstZoeShield\nLj_UMADSGE_UsePotions = settings.usePotions\n\nlocal flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize + GUI.WindowFlags_NoSavedSettings\nGUI:SetNextWindowSize(260, 0, GUI.SetCond_Always)\nlocal visible = GUI:Begin(\"Lj Sage Settings###LjUMADSGESettings\", true, flags)\n\nif visible then\n    GUI:Text(\"Lj Sage Settings\")\n\n    GUI:Text(\"Use Potions\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Start of P2, P3 Cleave, P4 Antilight, P5 Enrage\")\n    end\n    GUI:SameLine(110)\n    local potionIndex = settings.usePotions and 1 or 2\n    GUI:PushItemWidth(120)\n    local newPotionIndex, potionChanged = GUI:Combo(\"##UMADSGEUsePotions\", potionIndex, {\"Yes\", \"No\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Start of P2, P3 Cleave, P4 Antilight, P5 Enrage\")\n    end\n    GUI:PopItemWidth()\n    if potionChanged then\n        settings.usePotions = newPotionIndex == 1\n        Lj_UMADSGE_UsePotions = settings.usePotions\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"First Zoe Shield\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Mystery Magic is default and works for Ikuya, Wave Cannon is for LPDU where almost no mit is available for tower soaks, you need to move fast\")\n    end\n    GUI:SameLine(110)\n    local selectedIndex = settings.firstZoeShield == \"Wave Cannon\" and 2 or 1\n    GUI:PushItemWidth(120)\n    local newIndex, changed = GUI:Combo(\"##UMADSGEFirstZoeShield\", selectedIndex, {\"Mystery Magic\", \"Wave Cannon\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Mystery Magic is default and works for Ikuya, Wave Cannon is for LPDU where almost no mit is available for tower soaks, you need to move fast\")\n    end\n    GUI:PopItemWidth()\n    if changed then\n        settings.firstZoeShield = newIndex == 2 and \"Wave Cannon\" or \"Mystery Magic\"\n        Lj_UMADSGE_FirstZoeShield = settings.firstZoeShield\n        FileSave(settingsPath, settings)\n    end\nend\n\nGUI:End()\nself.used = true",
+							name = "Draw Lj Sage Settings",
+							uuid = "28e857a5-b724-416a-8623-32718c1bb97e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 13,
+				mechanicTime = 15.261765625,
+				name = "Lj Sage Settings",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = -5,
+				timerStartOffset = -30,
+				uuid = "b4f4e470-5253-5d43-a007-3792c71e4146",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
 							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
 							gVar = "ACR_RikuWAR3_CD",
 							uuid = "9a17440e-4710-700d-b90f-f154c8188764",
@@ -32,7 +65,191 @@ local tbl =
 				uuid = "c23d0c09-b8cc-f34a-a167-c96f58db0daa",
 				version = 2,
 			},
-			inheritedIndex = 1,
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Zoe",
+							uuid = "68f07163-b007-4f65-a949-55d21423260e",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				enabled = false,
+				mechanicTime = 15.261765625,
+				name = "[SGE] Zoe",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "6835f885-a4c4-4811-8f0c-877f7e22c60d",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				enabled = false,
+				mechanicTime = 15.261765625,
+				name = "[SGE] Pneuma",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "9fe4ff8b-9704-f0fa-912d-a1d241a6b65d",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 15.261765625,
+				name = "[SGE] Prognosis",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "e2cabc61-c269-be46-8292-149eaa3f96aa",
+				version = 2,
+			},
 		},
 		
 		{
@@ -49,6 +266,37 @@ local tbl =
 							gVar = "ACR_RikuMNK3_CD",
 							name = "Start Combat",
 							uuid = "2964ffe6-bc9b-60ec-801f-7ac41f171b54",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e8de0f77-e6e5-93fb-9d52-61c81a36ac84",
+									true,
+								},
+								
+								{
+									"5baaedca-0f6e-4f72-9800-ecabaed4da14",
+									true,
+								},
+								
+								{
+									"0f89b93d-336a-5ea3-9642-4fc9eed99079",
+									true,
+								},
+							},
+							endIfUsed = true,
+							gVar = "ACR_RikuWHM3_CD",
+							name = "Didn't Pull",
+							uuid = "fbe94e52-94ad-9493-99b7-c86c9df0b3c0",
 							version = 2.1,
 						},
 					},
@@ -128,44 +376,7 @@ local tbl =
 							uuid = "0953ef99-4d8a-a014-aa6a-4d5a5daece19",
 							version = 2.1,
 						},
-						inheritedIndex = 3,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							conditions = 
-							{
-								
-								{
-									"4a7db5d9-954b-bac7-9064-bbd7166b5052",
-									true,
-								},
-								
-								{
-									"e8de0f77-e6e5-93fb-9d52-61c81a36ac84",
-									true,
-								},
-								
-								{
-									"de7d078f-d3ad-7b91-8f56-2780e2a467b7",
-									true,
-								},
-								
-								{
-									"96453faa-8a47-3d88-b953-094c87acbe27",
-									true,
-								},
-							},
-							gVar = "ACR_RikuWHM3_CD",
-							name = "Target Nearest",
-							setTarget = true,
-							targetType = "Enemy",
-							uuid = "ad3c6f9c-68b3-dd49-844f-28b4f9aca282",
-							version = 2.1,
-						},
-						inheritedIndex = 7,
+						inheritedIndex = 4,
 					},
 					
 					{
@@ -203,6 +414,43 @@ local tbl =
 							gVar = "ACR_RikuWHM3_CD",
 							targetType = "Enemy",
 							uuid = "c57036ed-3b36-a78b-898e-32119d4b1446",
+							version = 2.1,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"4a7db5d9-954b-bac7-9064-bbd7166b5052",
+									true,
+								},
+								
+								{
+									"e8de0f77-e6e5-93fb-9d52-61c81a36ac84",
+									true,
+								},
+								
+								{
+									"de7d078f-d3ad-7b91-8f56-2780e2a467b7",
+									true,
+								},
+								
+								{
+									"96453faa-8a47-3d88-b953-094c87acbe27",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWHM3_CD",
+							name = "Target Nearest",
+							setTarget = true,
+							targetType = "Enemy",
+							uuid = "ad3c6f9c-68b3-dd49-844f-28b4f9aca282",
 							version = 2.1,
 						},
 						inheritedIndex = 6,
@@ -276,38 +524,7 @@ local tbl =
 							uuid = "91ec36d7-8313-4ca7-992b-d9696dfdbb48",
 							version = 2.1,
 						},
-						inheritedIndex = 9,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"e8de0f77-e6e5-93fb-9d52-61c81a36ac84",
-									true,
-								},
-								
-								{
-									"5baaedca-0f6e-4f72-9800-ecabaed4da14",
-									true,
-								},
-								
-								{
-									"0f89b93d-336a-5ea3-9642-4fc9eed99079",
-									true,
-								},
-							},
-							endIfUsed = true,
-							gVar = "ACR_RikuWHM3_CD",
-							name = "Didn't Pull",
-							uuid = "fbe94e52-94ad-9493-99b7-c86c9df0b3c0",
-							version = 2.1,
-						},
+						inheritedIndex = 8,
 					},
 					
 					{
@@ -397,7 +614,22 @@ local tbl =
 							uuid = "e8de0f77-e6e5-93fb-9d52-61c81a36ac84",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 2,
+							eventArgType = 3,
+							eventCountdownRangeEnd = 2.5,
+							eventCountdownRangeStart = 5,
+							eventCountdownTime = 5,
+							name = "Eukrasia Timer",
+							uuid = "ed0ad1b9-b308-f320-bea8-cae427644ba0",
+							version = 3,
+						},
 					},
 					
 					{
@@ -426,7 +658,7 @@ local tbl =
 							uuid = "dba4af31-be33-516a-9099-e406053bc05f",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 5,
 					},
 					
 					{
@@ -440,7 +672,7 @@ local tbl =
 							uuid = "de7d078f-d3ad-7b91-8f56-2780e2a467b7",
 							version = 3,
 						},
-						inheritedIndex = 5,
+						inheritedIndex = 6,
 					},
 					
 					{
@@ -452,7 +684,7 @@ local tbl =
 							uuid = "39155299-8053-3800-bd92-35be5b6856b8",
 							version = 3,
 						},
-						inheritedIndex = 6,
+						inheritedIndex = 7,
 					},
 					
 					{
@@ -465,35 +697,7 @@ local tbl =
 							uuid = "56fa481a-db50-06c2-97ab-900b02425889",
 							version = 3,
 						},
-						inheritedIndex = 7,
-					},
-					
-					{
-						data = 
-						{
-							category = "Event",
-							comparator = 2,
-							eventArgType = 3,
-							eventCountdownRangeEnd = 2.5,
-							eventCountdownRangeStart = 5,
-							eventCountdownTime = 5,
-							name = "Eukrasia Timer",
-							uuid = "ed0ad1b9-b308-f320-bea8-cae427644ba0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Event",
-							comparator = 2,
-							eventCountdownTime = 2,
-							name = "Target Timer",
-							uuid = "96453faa-8a47-3d88-b953-094c87acbe27",
-							version = 3,
-						},
-						inheritedIndex = 14,
+						inheritedIndex = 8,
 					},
 					
 					{
@@ -513,22 +717,22 @@ local tbl =
 						{
 							category = "Event",
 							comparator = 2,
-							eventCountdownTime = 1.25,
-							name = "<= -1.25s",
-							uuid = "2f437ac7-311d-435a-b532-904df1742af8",
+							eventCountdownTime = -5,
+							name = "<= -5s",
+							uuid = "0f89b93d-336a-5ea3-9642-4fc9eed99079",
 							version = 3,
 						},
-						inheritedIndex = 16,
 					},
 					
 					{
 						data = 
 						{
-							category = "Event",
-							comparator = 2,
-							eventCountdownTime = -5,
-							name = "<= -5s",
-							uuid = "0f89b93d-336a-5ea3-9642-4fc9eed99079",
+							category = "Self",
+							conditionType = 7,
+							dequeueIfLuaFalse = true,
+							inCombatType = 2,
+							name = "Not in Combat",
+							uuid = "5baaedca-0f6e-4f72-9800-ecabaed4da14",
 							version = 3,
 						},
 					},
@@ -549,14 +753,27 @@ local tbl =
 					{
 						data = 
 						{
-							category = "Self",
-							conditionType = 7,
-							dequeueIfLuaFalse = true,
-							inCombatType = 2,
-							name = "Not in Combat",
-							uuid = "5baaedca-0f6e-4f72-9800-ecabaed4da14",
+							category = "Event",
+							comparator = 2,
+							eventCountdownTime = 2,
+							name = "Target Timer",
+							uuid = "96453faa-8a47-3d88-b953-094c87acbe27",
 							version = 3,
 						},
+						inheritedIndex = 13,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 2,
+							eventCountdownTime = 1.25,
+							name = "<= -1.25s",
+							uuid = "2f437ac7-311d-435a-b532-904df1742af8",
+							version = 3,
+						},
+						inheritedIndex = 14,
 					},
 				},
 				eventType = 16,
@@ -569,7 +786,7 @@ local tbl =
 				uuid = "e4dfd30f-34bd-c288-8b39-14d3318b0983",
 				version = 2,
 			},
-			inheritedIndex = 17,
+			inheritedIndex = 6,
 		},
 		
 		{
@@ -972,7 +1189,7 @@ local tbl =
 				uuid = "aec72e14-2095-a98c-a572-05e0f7a9bf54",
 				version = 2,
 			},
-			inheritedIndex = 18,
+			inheritedIndex = 7,
 		},
 		
 		{
@@ -995,7 +1212,27 @@ local tbl =
 								},
 							},
 							gVar = "ACR_RikuSGE3_CD",
+							name = "Disable Leta Heal",
 							uuid = "3892fc66-70de-7b0e-af2b-4d4ab5e796da",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.Reactions.dmu.healerMitigation = false\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"fe3a83ec-08f3-942a-90b6-9f0f04e8097d",
+									true,
+								},
+							},
+							name = "Disable Anyone Healer Mits",
+							uuid = "c17dc816-e7f3-aa68-b08b-2a3a2e12cf46",
 							version = 2.1,
 						},
 					},
@@ -1014,15 +1251,27 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.healerMitigation",
+							dequeueIfLuaFalse = true,
+							name = "Anyone Kun",
+							uuid = "fe3a83ec-08f3-942a-90b6-9f0f04e8097d",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 15.261765625,
-				name = "Disable Leta",
+				name = "Disable Leta & Anyone",
 				timelineIndex = 1,
 				timerOffset = -15.300000190735,
 				uuid = "a467b997-33b3-ec34-9752-ce508186e22b",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 8,
 		},
 		
 		{
@@ -1090,7 +1339,7 @@ local tbl =
 				uuid = "af37f79a-ea4a-ee84-8934-3ea9c32cf424",
 				version = 2,
 			},
-			inheritedIndex = 20,
+			inheritedIndex = 9,
 		},
 		
 		{
@@ -1303,6 +1552,25 @@ local tbl =
 									true,
 								},
 							},
+							gVar = "ACR_RikuSGE3_ToxikonWeave",
+							gVarValue = 2,
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
 							gVar = "ACR_RikuSGE3_Attacks",
 							uuid = "34056070-e4b1-7432-9c32-4e594eb7068e",
 							version = 2.1,
@@ -1361,9 +1629,9 @@ local tbl =
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_ToxikonWeave",
+							gVar = "ACR_RikuSGE3_DyskrasiaWeave",
 							gVarValue = 2,
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							uuid = "c67dd5d1-86b5-6087-8395-29dc3a19627f",
 							version = 2.1,
 						},
 					},
@@ -1380,9 +1648,9 @@ local tbl =
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_DyskrasiaWeave",
+							gVar = "ACR_RikuSGE3_2Toxikon",
 							gVarValue = 2,
-							uuid = "c67dd5d1-86b5-6087-8395-29dc3a19627f",
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
 							version = 2.1,
 						},
 					},
@@ -1405,25 +1673,6 @@ local tbl =
 							version = 2.1,
 						},
 						inheritedIndex = 17,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							gVarValue = 2,
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
-							version = 2.1,
-						},
 					},
 				},
 				conditions = 
@@ -1452,7 +1701,7 @@ local tbl =
 				uuid = "f9d04d43-ef85-2171-b3ba-67572612ca73",
 				version = 2,
 			},
-			inheritedIndex = 21,
+			inheritedIndex = 10,
 		},
 		
 		{
@@ -1508,7 +1757,7 @@ local tbl =
 				uuid = "cedcb153-1675-ea3b-b331-9d519402b84a",
 				version = 2,
 			},
-			inheritedIndex = 22,
+			inheritedIndex = 11,
 		},
 		
 		{
@@ -1564,7 +1813,7 @@ local tbl =
 				uuid = "b25567f0-8dbf-10ba-bce9-1b755e51d9c4",
 				version = 2,
 			},
-			inheritedIndex = 23,
+			inheritedIndex = 12,
 		},
 		
 		{
@@ -1617,7 +1866,7 @@ local tbl =
 				uuid = "febf9fac-75a7-ab1f-8ca5-db6b496ca613",
 				version = 2,
 			},
-			inheritedIndex = 24,
+			inheritedIndex = 13,
 		},
 		
 		{
@@ -1636,7 +1885,7 @@ local tbl =
 				uuid = "0e44798a-cf0d-5da5-98dc-c9638fc3aa0c",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 14,
 		},
 		
 		{
@@ -1731,7 +1980,7 @@ local tbl =
 				uuid = "d157bf51-1947-4b85-a282-b387445aeaba",
 				version = 2,
 			},
-			inheritedIndex = 26,
+			inheritedIndex = 15,
 		},
 		
 		{
@@ -1807,7 +2056,7 @@ local tbl =
 				uuid = "9eb6b0f6-bbcb-96be-89c5-62faee039dd9",
 				version = 2,
 			},
-			inheritedIndex = 27,
+			inheritedIndex = 16,
 		},
 		
 		{
@@ -1883,7 +2132,65 @@ local tbl =
 				uuid = "0c66b7f8-9c53-609d-a647-4239ca592181",
 				version = 2,
 			},
-			inheritedIndex = 28,
+			inheritedIndex = 17,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Druochole",
+							targetSubType = "Lowest HP",
+							targetType = "Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				enabled = false,
+				mechanicTime = 15.261765625,
+				name = "[SGE] Druochole",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "c431ad2a-bd1e-f439-885e-3220fbe389c7",
+				version = 2,
+			},
+			inheritedIndex = 18,
 		},
 		
 		{
@@ -1959,7 +2266,7 @@ local tbl =
 				uuid = "3685d17b-db88-0b0c-86d9-afc217c20573",
 				version = 2,
 			},
-			inheritedIndex = 30,
+			inheritedIndex = 19,
 		},
 		
 		{
@@ -2035,7 +2342,7 @@ local tbl =
 				uuid = "bd32b382-6df9-26eb-91c3-729d5b0a9f90",
 				version = 2,
 			},
-			inheritedIndex = 30,
+			inheritedIndex = 20,
 		},
 		
 		{
@@ -2111,7 +2418,7 @@ local tbl =
 				uuid = "04e89e4a-9787-f27d-aec7-e28fb9385f5b",
 				version = 2,
 			},
-			inheritedIndex = 30,
+			inheritedIndex = 21,
 		},
 		
 		{
@@ -2243,7 +2550,7 @@ local tbl =
 				uuid = "6e91851c-5b9e-69d5-965a-2a793a396194",
 				version = 2,
 			},
-			inheritedIndex = 31,
+			inheritedIndex = 22,
 		},
 		
 		{
@@ -2361,7 +2668,7 @@ local tbl =
 				uuid = "4703876f-65bc-091c-8c99-5913bd336bb4",
 				version = 2,
 			},
-			inheritedIndex = 32,
+			inheritedIndex = 23,
 		},
 		
 		{
@@ -2449,6 +2756,20 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "c27bee88-2ee7-398f-9955-bbf057b8b295",
+							version = 3,
+						},
+						inheritedIndex = 4,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -2462,13 +2783,18 @@ local tbl =
 									"4eda2bfd-8a78-35e9-9fb8-c4bfd00ad0d5",
 									true,
 								},
+								
+								{
+									"c27bee88-2ee7-398f-9955-bbf057b8b295",
+									true,
+								},
 							},
 							filterTargetSubtype = "Lowest HP",
 							filterTargetType = "Party",
 							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 5,
 					},
 				},
 				enabled = false,
@@ -2481,62 +2807,7 @@ local tbl =
 				uuid = "42d5daec-f3ec-8225-ad1a-1dd6bf6caa8d",
 				version = 2,
 			},
-			inheritedIndex = 33,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"ace000e6-5541-6a8d-b064-b432e620d43a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Zoe",
-							uuid = "68f07163-b007-4f65-a949-55d21423260e",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				enabled = false,
-				mechanicTime = 15.261765625,
-				name = "[SGE] Zoe",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "6835f885-a4c4-4811-8f0c-877f7e22c60d",
-				version = 2,
-			},
+			inheritedIndex = 24,
 		},
 		
 		{
@@ -2591,7 +2862,7 @@ local tbl =
 				uuid = "0fe4d5b5-c648-f826-bbec-b218fa6d8e87",
 				version = 2,
 			},
-			inheritedIndex = 35,
+			inheritedIndex = 25,
 		},
 		
 		{
@@ -2691,7 +2962,7 @@ local tbl =
 				uuid = "05c19294-4a12-43f9-8b36-c9392a4f5b55",
 				version = 2,
 			},
-			inheritedIndex = 36,
+			inheritedIndex = 26,
 		},
 		
 		{
@@ -2748,7 +3019,7 @@ local tbl =
 				uuid = "603eeb46-03d3-4fb3-9c83-39ba571ded80",
 				version = 2,
 			},
-			inheritedIndex = 37,
+			inheritedIndex = 27,
 		},
 		
 		{
@@ -2824,7 +3095,7 @@ local tbl =
 				uuid = "1c479603-d17c-55b8-abe2-071da6d8d2ce",
 				version = 2,
 			},
-			inheritedIndex = 38,
+			inheritedIndex = 28,
 		},
 		
 		{
@@ -2881,7 +3152,7 @@ local tbl =
 				uuid = "783f028d-927d-1ea8-afbb-ea4feac9fdad",
 				version = 2,
 			},
-			inheritedIndex = 39,
+			inheritedIndex = 29,
 		},
 		
 		{
@@ -2938,251 +3209,11 @@ local tbl =
 				uuid = "d92c91e8-17c3-aa0b-b415-620c2c356fd5",
 				version = 2,
 			},
-			inheritedIndex = 40,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"ace000e6-5541-6a8d-b064-b432e620d43a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				enabled = false,
-				mechanicTime = 15.261765625,
-				name = "[SGE] Pneuma",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "9fe4ff8b-9704-f0fa-912d-a1d241a6b65d",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 15.261765625,
-				name = "[SGE] Prognosis",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "e2cabc61-c269-be46-8292-149eaa3f96aa",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Druochole",
-							targetSubType = "Lowest HP",
-							targetType = "Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				enabled = false,
-				mechanicTime = 15.261765625,
-				name = "[SGE] Druochole",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "c431ad2a-bd1e-f439-885e-3220fbe389c7",
-				version = 2,
-			},
-			inheritedIndex = 29,
+			inheritedIndex = 30,
 		},
 	},
 	
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Soteria",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 18.37640625,
-				name = "[SGE] Soteria",
-				timelineIndex = 2,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "0502045f-7245-4053-97a9-bfbd4b1f2cab",
-				version = 2,
-			},
-			inheritedIndex = 2,
-		},
 		
 		{
 			data = 
@@ -3254,14 +3285,12 @@ local tbl =
 							{
 								
 								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
-							targetType = "Main Tank",
+							gVar = "ACR_RikuSGE3_Healbar_Soteria",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
 							variableTogglesType = 3,
 							version = 2.1,
 						},
@@ -3278,23 +3307,21 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
 							version = 3,
 						},
 						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 18.37640625,
-				name = "[SGE] Taurochole",
-				timeRange = true,
+				name = "[SGE] Soteria",
 				timelineIndex = 2,
-				timerEndOffset = -1,
-				timerOffset = -1,
-				timerStartOffset = -14,
-				uuid = "db2b4626-a0c1-c5cc-bc85-723acde0fdeb",
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "0502045f-7245-4053-97a9-bfbd4b1f2cab",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -3347,6 +3374,211 @@ local tbl =
 				timerOffset = 1,
 				timerStartOffset = -5,
 				uuid = "9a2d2555-bdae-3d88-973c-a1830236543c",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 18.37640625,
+				name = "[SGE] Taurochole",
+				timeRange = true,
+				timelineIndex = 2,
+				timerEndOffset = -1,
+				timerOffset = -1,
+				timerStartOffset = -14,
+				uuid = "db2b4626-a0c1-c5cc-bc85-723acde0fdeb",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"303cfea5-c9de-3c82-8055-df4b83304e43",
+									true,
+								},
+								
+								{
+									"73bc20a5-8ab3-4e83-9ca6-98cef3760bf7",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "DT: Missing Eukrasian Prognosis",
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 10,
+							inGroupTargetType = "Tank",
+							name = "DT: Tank",
+							partyTargetType = "Detection Target",
+							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"5b3830f2-93e2-9833-9894-680daafb64f5",
+									true,
+								},
+								
+								{
+									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+									false,
+								},
+							},
+							filterTargetType = "Party",
+							name = "F - Non Tank Missing Shield",
+							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_FirstZoeShield == \"Wave Cannon\"",
+							dequeueIfLuaFalse = true,
+							name = "Lj: Wave Cannon Zoe",
+							uuid = "73bc20a5-8ab3-4e83-9ca6-98cef3760bf7",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 18.37640625,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 2,
+				timerEndOffset = 5,
+				timerOffset = -4,
+				timerStartOffset = -5,
+				uuid = "39c937d9-4793-9c31-8c28-330e36d69db9",
 				version = 2,
 			},
 			inheritedIndex = 5,
@@ -3562,6 +3794,18 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_FirstZoeShield == \"Mystery Magic\"",
+							dequeueIfLuaFalse = true,
+							name = "Lj: Mystery Magic Zoe",
+							uuid = "fb7e66dd-81f0-4e55-bf16-2186a28456f5",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 29.049328125,
 				name = "[SGE] Eukrasian Prognosis",
@@ -3572,11 +3816,125 @@ local tbl =
 				uuid = "625451b4-c09d-094a-a8cb-5e1e98e7af5a",
 				version = 2,
 			},
-			inheritedIndex = 10,
+			inheritedIndex = 2,
 		},
 	},
 	
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Force Slidecast",
+							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							name = "End Slide",
+							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 34.922075823741,
+				name = "Force Slidecast",
+				throttleTime = 3000,
+				timeRange = true,
+				timelineIndex = 4,
+				timerEndOffset = 2,
+				timerStartOffset = -2,
+				uuid = "008d23b5-d010-a9ab-b005-d9d15d4025a6",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"97442e7b-337f-e4e4-bb15-2c86958f0744",
+									true,
+								},
+								
+								{
+									"321df051-42a8-3569-a840-d0250abab8c8",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Hotbar_Sprint",
+							uuid = "fbf5b4cf-3fa7-f798-a099-bcfaea881945",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "97442e7b-337f-e4e4-bb15-2c86958f0744",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_FirstZoeShield == \"Wave Cannon\"",
+							dequeueIfLuaFalse = true,
+							name = "Lj: Wave Cannon Zoe",
+							uuid = "321df051-42a8-3569-a840-d0250abab8c8",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 34.922075823741,
+				name = "[SGE] Sprint",
+				timelineIndex = 4,
+				timerOffset = -3,
+				uuid = "0f930d27-c495-f8cc-8c42-2ce6f522ac2e",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
 		
 		{
 			data = 
@@ -3649,55 +4007,10 @@ local tbl =
 				uuid = "450d1e52-75f9-00d7-a62b-cd578618d2ac",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Force Slidecast",
-							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "End Slide",
-							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 34.922075823741,
-				name = "Force Slidecast",
-				throttleTime = 3000,
-				timeRange = true,
-				timelineIndex = 4,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "008d23b5-d010-a9ab-b005-d9d15d4025a6",
-				version = 2,
-			},
-		},
-	}, 
-	[7] = 
+	},
+	
 	{
 		
 		{
@@ -3714,12 +4027,18 @@ local tbl =
 							{
 								
 								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"c04d5bb8-cc7b-b19b-bb14-79646ed9f926",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
 							version = 2.1,
 						},
 					},
@@ -3735,22 +4054,104 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 							version = 3,
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "DT: Missing Eukrasian Prognosis",
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 10,
+							inGroupTargetType = "Tank",
+							name = "DT: Tank",
+							partyTargetType = "Detection Target",
+							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"5b3830f2-93e2-9833-9894-680daafb64f5",
+									true,
+								},
+								
+								{
+									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+									false,
+								},
+							},
+							filterTargetType = "Party",
+							name = "F - Non Tank Missing Shield",
+							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_FirstZoeShield == \"Wave Cannon\"",
+							dequeueIfLuaFalse = true,
+							name = "Lj: Wave Cannon Zoe",
+							uuid = "c04d5bb8-cc7b-b19b-bb14-79646ed9f926",
+							version = 3,
+						},
+					},
 				},
-				mechanicTime = 42.238586763472,
-				name = "[SGE] Toggle 2 Toxikon",
-				timelineIndex = 7,
+				mechanicTime = 37.212891227673,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 5,
 				timerEndOffset = 5,
 				timerStartOffset = -5,
-				uuid = "82303b7a-c0b6-4a63-806d-098fe75c3251",
+				uuid = "0ec9b931-2fbc-10e2-a124-ca6a3ab0e0b6",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 1,
 		},
+	}, 
+	[7] = 
+	{
 		
 		{
 			data = 
@@ -3826,6 +4227,58 @@ local tbl =
 				uuid = "f3279886-0a2a-280d-81b9-19bab4d44ae3",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_2Toxikon",
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 42.238586763472,
+				name = "[SGE] Toggle 2 Toxikon",
+				timelineIndex = 7,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "82303b7a-c0b6-4a63-806d-098fe75c3251",
+				version = 2,
+			},
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -3919,7 +4372,7 @@ local tbl =
 				uuid = "7c04802c-1adc-95a5-b239-4a271b622047",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 3,
 		},
 	},
 	[10] = 
@@ -4459,7 +4912,7 @@ local tbl =
 				uuid = "0bd4139c-02d8-d37d-a8ed-1b5fb4b559a4",
 				version = 2,
 			},
-			inheritedIndex = 37,
+			inheritedIndex = 1,
 		},
 	},
 	[16] = 
@@ -4534,6 +4987,80 @@ local tbl =
 					{
 						data = 
 						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 87.304550672705,
+				name = "[SGE] Ixochole",
+				timeRange = true,
+				timelineIndex = 17,
+				timerEndOffset = 8,
+				timerStartOffset = 1.1000000238419,
+				uuid = "f7bf796e-61e7-9f4a-8c00-776fff04c383",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
 							aType = "Lua",
 							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
@@ -4568,7 +5095,7 @@ local tbl =
 				uuid = "3b5d518f-7ef8-b20f-b5e3-48d8a4c75b11",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -4662,81 +5189,7 @@ local tbl =
 				uuid = "95edea14-4478-5627-81e6-4cd14b7f12d9",
 				version = 2,
 			},
-			inheritedIndex = 6,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 87.304550672705,
-				name = "[SGE] Ixochole",
-				timeRange = true,
-				timelineIndex = 17,
-				timerEndOffset = 8,
-				timerStartOffset = 1.1000000238419,
-				uuid = "f7bf796e-61e7-9f4a-8c00-776fff04c383",
-				version = 2,
-			},
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -4790,64 +5243,11 @@ local tbl =
 				uuid = "dc258c63-f299-11ee-92b0-72d498f9f53e",
 				version = 2,
 			},
-			inheritedIndex = 27,
+			inheritedIndex = 4,
 		},
 	},
 	[19] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 97.181065398234,
-				name = "[SGE] Toggle 2 Toxikon",
-				timelineIndex = 19,
-				timerEndOffset = 5,
-				timerOffset = -2,
-				timerStartOffset = -5,
-				uuid = "43df0ebb-13d6-fe4e-83ff-398cb84e282f",
-				version = 2,
-			},
-			inheritedIndex = 13,
-		},
 		
 		{
 			data = 
@@ -4912,6 +5312,7 @@ local tbl =
 						},
 					},
 				},
+				enabled = false,
 				mechanicTime = 97.181065398234,
 				name = "[SGE] Physis",
 				timelineIndex = 19,
@@ -4920,6 +5321,59 @@ local tbl =
 				uuid = "e2276029-3ad1-1d22-a39c-073bd89cecc3",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_2Toxikon",
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 97.181065398234,
+				name = "[SGE] Toggle 2 Toxikon",
+				timelineIndex = 19,
+				timerEndOffset = 5,
+				timerOffset = -2,
+				timerStartOffset = -5,
+				uuid = "43df0ebb-13d6-fe4e-83ff-398cb84e282f",
+				version = 2,
+			},
+			inheritedIndex = 2,
 		},
 	},
 	[20] = 
@@ -5065,59 +5519,6 @@ local tbl =
 							{
 								
 								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							gVarValue = 2,
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 100.29172113594,
-				name = "[SGE] Toggle 2 Toxikon",
-				timelineIndex = 20,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "22562686-efb7-5833-8489-cc5c943899b4",
-				version = 2,
-			},
-			inheritedIndex = 13,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
@@ -5232,11 +5633,109 @@ local tbl =
 				uuid = "7bbc4e05-865e-9140-bf63-cd73aab9da3f",
 				version = 2,
 			},
-			inheritedIndex = 9,
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_2Toxikon",
+							gVarValue = 2,
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 100.29172113594,
+				name = "[SGE] Toggle 2 Toxikon",
+				timelineIndex = 20,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "22562686-efb7-5833-8489-cc5c943899b4",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 	},
 	[22] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Force Slidecast",
+							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							name = "End Slide",
+							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 105.78798877162,
+				name = "Force Slidecast",
+				throttleTime = 4000,
+				timeRange = true,
+				timelineIndex = 22,
+				timerEndOffset = 4,
+				timerStartOffset = -1,
+				uuid = "292f1809-0b3e-7791-b9e6-cccf3abe388f",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -5310,52 +5809,7 @@ local tbl =
 				uuid = "e158913b-97bc-3fcb-8f0b-876481854df7",
 				version = 2,
 			},
-			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Force Slidecast",
-							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "End Slide",
-							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 105.78798877162,
-				name = "Force Slidecast",
-				throttleTime = 4000,
-				timeRange = true,
-				timelineIndex = 22,
-				timerEndOffset = 4,
-				timerStartOffset = -1,
-				uuid = "292f1809-0b3e-7791-b9e6-cccf3abe388f",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -5450,110 +5904,11 @@ local tbl =
 				uuid = "a669db51-b5e2-2e0c-91f0-da8372e2ac46",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 3,
 		},
 	},
 	[23] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"53d292a9-114e-4b73-ade9-8a05229e04b5",
-									true,
-								},
-								
-								{
-									"a24923b3-697e-3d4e-ac74-1a032c4f58c6",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Krasis",
-							targetSubType = "Lowest HP",
-							targetType = "Detection Target",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffDuration = 5,
-							buffID = 5078,
-							category = "Party",
-							comparator = 2,
-							filterTargetSubtype = "Lowest HP",
-							filterTargetType = "Party",
-							name = "DT: Missing Confetti Buff",
-							partyTargetType = "Detection Target",
-							uuid = "62ed5f55-1b23-220b-9dd6-bbc5d4d7d04e",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"62ed5f55-1b23-220b-9dd6-bbc5d4d7d04e",
-									true,
-								},
-							},
-							filterTargetSubtype = "Lowest HP",
-							filterTargetType = "Party",
-							uuid = "a24923b3-697e-3d4e-ac74-1a032c4f58c6",
-							version = 3,
-						},
-						inheritedIndex = 3,
-					},
-				},
-				mechanicTime = 109.77404737751,
-				name = "[SGE] Krasis",
-				timelineIndex = 23,
-				timerEndOffset = 5,
-				timerOffset = -2,
-				timerStartOffset = -5,
-				uuid = "125db5bb-7822-768b-aab4-a81cf4d9157d",
-				version = 2,
-			},
-			inheritedIndex = 9,
-		},
 		
 		{
 			data = 
@@ -5695,7 +6050,106 @@ local tbl =
 				uuid = "77bfeb27-a74f-7c75-bd81-eb810e6b1f69",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"53d292a9-114e-4b73-ade9-8a05229e04b5",
+									true,
+								},
+								
+								{
+									"a24923b3-697e-3d4e-ac74-1a032c4f58c6",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Krasis",
+							targetSubType = "Lowest HP",
+							targetType = "Detection Target",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffDuration = 5,
+							buffID = 5078,
+							category = "Party",
+							comparator = 2,
+							filterTargetSubtype = "Lowest HP",
+							filterTargetType = "Party",
+							name = "DT: Missing Confetti Buff",
+							partyTargetType = "Detection Target",
+							uuid = "62ed5f55-1b23-220b-9dd6-bbc5d4d7d04e",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"62ed5f55-1b23-220b-9dd6-bbc5d4d7d04e",
+									true,
+								},
+							},
+							filterTargetSubtype = "Lowest HP",
+							filterTargetType = "Party",
+							uuid = "a24923b3-697e-3d4e-ac74-1a032c4f58c6",
+							version = 3,
+						},
+						inheritedIndex = 3,
+					},
+				},
+				mechanicTime = 109.77404737751,
+				name = "[SGE] Krasis",
+				timelineIndex = 23,
+				timerEndOffset = 5,
+				timerOffset = -2,
+				timerStartOffset = -5,
+				uuid = "125db5bb-7822-768b-aab4-a81cf4d9157d",
+				version = 2,
+			},
+			inheritedIndex = 3,
 		},
 	},
 	[24] = 
@@ -5784,9 +6238,153 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 114.28706589603,
+				name = "[SGE] Physis",
+				timelineIndex = 24,
+				timerEndOffset = 5,
+				timerOffset = -7,
+				timerStartOffset = -5,
+				uuid = "c89511a0-3afe-9f47-96b1-caae3666d10b",
+				version = 2,
+			},
+		},
 	},
 	[25] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							actionID = 37033,
+							conditions = 
+							{
+								
+								{
+									"95052372-e5ff-666f-aa3a-e5d87e424d3f",
+									true,
+								},
+								
+								{
+									"057535e7-9461-e3c8-8208-c72a9ce52616",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							targetType = "Enemy",
+							uuid = "6a32c0da-0005-2922-9fee-5d859f88f5c8",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "95052372-e5ff-666f-aa3a-e5d87e424d3f",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return FFXIV_Common_BotRunning",
+							dequeueIfLuaFalse = true,
+							name = "Assist Enabled",
+							uuid = "057535e7-9461-e3c8-8208-c72a9ce52616",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+				},
+				mechanicTime = 118.07975730716,
+				name = "[SGE] Psyche",
+				timelineIndex = 25,
+				timerOffset = 2,
+				uuid = "f6ed74c0-7263-d666-b37c-06c691f63546",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -5860,7 +6458,7 @@ local tbl =
 				uuid = "d80e34a4-2bdc-a487-bd9c-0dcf4b83e094",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -5906,212 +6504,11 @@ local tbl =
 				uuid = "46f259ab-af10-dc7c-a363-919f4d62cc6d",
 				version = 2,
 			},
-			inheritedIndex = 7,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							actionID = 37033,
-							conditions = 
-							{
-								
-								{
-									"95052372-e5ff-666f-aa3a-e5d87e424d3f",
-									true,
-								},
-								
-								{
-									"057535e7-9461-e3c8-8208-c72a9ce52616",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							targetType = "Enemy",
-							uuid = "6a32c0da-0005-2922-9fee-5d859f88f5c8",
-							version = 2.1,
-						},
-						inheritedIndex = 9,
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "95052372-e5ff-666f-aa3a-e5d87e424d3f",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return FFXIV_Common_BotRunning",
-							dequeueIfLuaFalse = true,
-							name = "Assist Enabled",
-							uuid = "057535e7-9461-e3c8-8208-c72a9ce52616",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-				},
-				mechanicTime = 118.07975730716,
-				name = "[SGE] Psyche",
-				timelineIndex = 25,
-				timerOffset = 2,
-				uuid = "f6ed74c0-7263-d666-b37c-06c691f63546",
-				version = 2,
-			},
+			inheritedIndex = 3,
 		},
 	},
 	[26] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-								
-								{
-									"303cfea5-c9de-3c82-8055-df4b83304e43",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2609,
-							category = "Party",
-							name = "DT: Missing Eukrasian Prognosis",
-							partyTargetSubType = "Number",
-							partyTargetType = "Detection Target",
-							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							conditionType = 10,
-							inGroupTargetType = "Tank",
-							name = "DT: Tank",
-							partyTargetType = "Detection Target",
-							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"5b3830f2-93e2-9833-9894-680daafb64f5",
-									true,
-								},
-								
-								{
-									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
-									false,
-								},
-							},
-							filterTargetType = "Party",
-							name = "F - Non Tank Missing Shield",
-							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 132.26514619605,
-				name = "[SGE] Eukrasian Prognosis",
-				timelineIndex = 26,
-				timerEndOffset = 5,
-				timerOffset = -6,
-				timerStartOffset = -5,
-				uuid = "9475ceea-9df5-323a-85d5-4586ff3d2bc5",
-				version = 2,
-			},
-			inheritedIndex = 8,
-		},
 		
 		{
 			data = 
@@ -6274,8 +6671,139 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 26,
 				timerEndOffset = -1,
-				timerStartOffset = -14.5,
+				timerStartOffset = -16,
 				uuid = "8a7b5dc4-530b-2bb1-bedb-1292cb5ee35e",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"303cfea5-c9de-3c82-8055-df4b83304e43",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "DT: Missing Eukrasian Prognosis",
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 10,
+							inGroupTargetType = "Tank",
+							name = "DT: Tank",
+							partyTargetType = "Detection Target",
+							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"5b3830f2-93e2-9833-9894-680daafb64f5",
+									true,
+								},
+								
+								{
+									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+									false,
+								},
+							},
+							filterTargetType = "Party",
+							name = "F - Non Tank Missing Shield",
+							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 132.26514619605,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 26,
+				timerEndOffset = 5,
+				timerOffset = -9,
+				timerStartOffset = -5,
+				uuid = "9475ceea-9df5-323a-85d5-4586ff3d2bc5",
 				version = 2,
 			},
 			inheritedIndex = 3,
@@ -6332,7 +6860,7 @@ local tbl =
 				uuid = "31c1ba5f-f64f-034b-85ca-9a389c28c903",
 				version = 2,
 			},
-			inheritedIndex = 18,
+			inheritedIndex = 4,
 		},
 	},
 	[28] = 
@@ -6519,7 +7047,7 @@ local tbl =
 				uuid = "bb208e28-c9bf-94f9-91e8-e836f98f570f",
 				version = 2,
 			},
-			inheritedIndex = 12,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -6577,7 +7105,7 @@ local tbl =
 				uuid = "d9ae83b0-4e9d-64e1-a7cb-329004099116",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 2,
 		},
 	},
 	[34] = 
@@ -6597,17 +7125,17 @@ local tbl =
 							{
 								
 								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									"81ae31c5-9e92-6a56-ba07-ff21087cac48",
 									true,
 								},
 								
 								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									"800486cc-705c-5caf-8fba-1dd95613f62d",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							gVar = "ACR_RikuSGE3_Healbar_Panhaima",
+							uuid = "3513de14-07f8-c935-80cb-36aa906944eb",
 							variableTogglesType = 3,
 							version = 2.1,
 						},
@@ -6624,7 +7152,7 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							uuid = "81ae31c5-9e92-6a56-ba07-ff21087cac48",
 							version = 3,
 						},
 						inheritedIndex = 1,
@@ -6641,21 +7169,20 @@ local tbl =
 							name = "Party Range: <= 30y",
 							partyTargetNumber = 100,
 							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							uuid = "800486cc-705c-5caf-8fba-1dd95613f62d",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 167.71168967762,
-				name = "[SGE] Physis",
-				timeRange = true,
+				name = "[SGE] Panhaima",
 				timelineIndex = 34,
-				timerEndOffset = -1,
-				timerStartOffset = -5,
-				uuid = "63a29356-fd0f-7e1b-929d-45fb878b6db4",
+				timerEndOffset = -10,
+				timerOffset = -4,
+				timerStartOffset = -16,
+				uuid = "a709652e-a0cb-72fd-beb6-838cb75e1e78",
 				version = 2,
 			},
-			inheritedIndex = 10,
 		},
 		
 		{
@@ -6786,7 +7313,7 @@ local tbl =
 				uuid = "13d7c36e-2114-6f98-80e0-8028959f2d29",
 				version = 2,
 			},
-			inheritedIndex = 8,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -6803,17 +7330,17 @@ local tbl =
 							{
 								
 								{
-									"81ae31c5-9e92-6a56-ba07-ff21087cac48",
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
 									true,
 								},
 								
 								{
-									"800486cc-705c-5caf-8fba-1dd95613f62d",
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_Panhaima",
-							uuid = "3513de14-07f8-c935-80cb-36aa906944eb",
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableTogglesType = 3,
 							version = 2.1,
 						},
@@ -6830,7 +7357,7 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "81ae31c5-9e92-6a56-ba07-ff21087cac48",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
 							version = 3,
 						},
 						inheritedIndex = 1,
@@ -6847,20 +7374,21 @@ local tbl =
 							name = "Party Range: <= 30y",
 							partyTargetNumber = 100,
 							partyTargetSubType = "Number",
-							uuid = "800486cc-705c-5caf-8fba-1dd95613f62d",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 167.71168967762,
-				name = "[SGE] Panhaima",
+				name = "[SGE] Physis",
+				timeRange = true,
 				timelineIndex = 34,
-				timerEndOffset = -10,
-				timerOffset = -4,
-				timerStartOffset = -16,
-				uuid = "a709652e-a0cb-72fd-beb6-838cb75e1e78",
+				timerEndOffset = 5,
+				timerStartOffset = -1,
+				uuid = "63a29356-fd0f-7e1b-929d-45fb878b6db4",
 				version = 2,
 			},
+			inheritedIndex = 3,
 		},
 	},
 	[35] = 
@@ -6995,52 +7523,6 @@ local tbl =
 	},
 	[36] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Force Slidecast",
-							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "End Slide",
-							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 186.42310109999,
-				name = "Force Slidecast",
-				throttleTime = 3000,
-				timeRange = true,
-				timelineIndex = 36,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "7c4f1ac8-4618-fad6-9e2f-68059fd0ddf0",
-				version = 2,
-			},
-			inheritedIndex = 19,
-		},
 		
 		{
 			data = 
@@ -7187,9 +7669,150 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Force Slidecast",
+							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							name = "End Slide",
+							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 186.42310109999,
+				name = "Force Slidecast",
+				throttleTime = 3000,
+				timeRange = true,
+				timelineIndex = 36,
+				timerEndOffset = 2,
+				timerStartOffset = -2,
+				uuid = "7c4f1ac8-4618-fad6-9e2f-68059fd0ddf0",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
 	},
 	[38] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+									true,
+								},
+								
+								{
+									"225f0a62-02ad-f581-9e09-1588e4671457",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
+							targetSubType = "Topmost Partylist",
+							targetType = "Detection Target",
+							uuid = "1f6dfa69-9fa5-6422-bae0-e4c484120183",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "6eda2cb7-18f3-6221-beb9-52b18168dca1",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"6eda2cb7-18f3-6221-beb9-52b18168dca1",
+									true,
+								},
+							},
+							filterTargetSubtype = "Topmost Partylist",
+							filterTargetType = "Tank",
+							uuid = "225f0a62-02ad-f581-9e09-1588e4671457",
+							version = 3,
+						},
+					},
+				},
+				loop = true,
+				mechanicTime = 197.52218784626,
+				name = "[SGE] Eukrasian Diagnosis",
+				timeRange = true,
+				timelineIndex = 38,
+				timerEndOffset = 7,
+				timerOffset = 1,
+				timerStartOffset = 1,
+				uuid = "82546f0b-e1aa-f3fa-a3ca-cdcba5c8681e",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -7246,85 +7869,6 @@ local tbl =
 				version = 2,
 			},
 			inheritedIndex = 2,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
-							targetSubType = "Topmost Partylist",
-							targetType = "Tank",
-							uuid = "1f6dfa69-9fa5-6422-bae0-e4c484120183",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
-							targetSubType = "Bottom-most Partylist",
-							targetType = "Tank",
-							uuid = "bdea2236-c2ad-e9f6-9707-6df8298bbf01",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 197.52218784626,
-				name = "[SGE] Eukrasian Diagnosis",
-				timeRange = true,
-				timelineIndex = 38,
-				timerEndOffset = 7,
-				timerOffset = 1,
-				timerStartOffset = 1,
-				uuid = "82546f0b-e1aa-f3fa-a3ca-cdcba5c8681e",
-				version = 2,
-			},
 		},
 		
 		{
@@ -7415,7 +7959,7 @@ local tbl =
 				uuid = "2ac3f2cb-1aa6-62e2-81de-cd79741312d6",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -7482,7 +8026,7 @@ local tbl =
 				uuid = "7734258f-4ecd-29b5-81c8-928b72744060",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -7531,7 +8075,7 @@ local tbl =
 							uuid = "515d74ca-ab1b-e512-a7d1-7bf5c67a20e3",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 1,
 					},
 					
 					{
@@ -7547,7 +8091,7 @@ local tbl =
 							uuid = "c7dea2c7-3688-0fad-9c73-4e054fa0a85b",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 2,
 					},
 				},
 				mechanicTime = 197.52218784626,
@@ -7557,7 +8101,7 @@ local tbl =
 				uuid = "e02eb5da-e0a0-0086-b77f-f35cf2a660eb",
 				version = 2,
 			},
-			inheritedIndex = 17,
+			inheritedIndex = 5,
 		},
 	},
 	[39] = 
@@ -7671,6 +8215,11 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
+								
+								{
+									"714a4601-7797-dbc0-a24a-1c8cc58a911c",
+									true,
+								},
 							},
 							gVar = "ACR_RikuSGE3_Hotbar_Potion",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
@@ -7694,6 +8243,18 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_UsePotions == true",
+							dequeueIfLuaFalse = true,
+							name = "Potion",
+							uuid = "714a4601-7797-dbc0-a24a-1c8cc58a911c",
+							version = 3,
+						},
 					},
 				},
 				mechanicTime = 207.87965305988,
@@ -7796,6 +8357,101 @@ local tbl =
 							{
 								
 								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"08f3f7b5-6ab3-a32f-a878-f6743996bebb",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
+							targetType = "Detection Target",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 7,
+							jobValue = "PALADIN",
+							name = "DT: PLD",
+							partyTargetType = "Detection Target",
+							uuid = "925e192f-b635-b497-b77e-a7f176c00264",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"925e192f-b635-b497-b77e-a7f176c00264",
+									false,
+								},
+							},
+							filterTargetType = "Tank",
+							uuid = "08f3f7b5-6ab3-a32f-a878-f6743996bebb",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 220.14545421679,
+				name = "[SGE] Taurochole",
+				randomOffset = -1,
+				timeRange = true,
+				timelineIndex = 40,
+				timerEndOffset = -1,
+				timerOffset = -10,
+				timerStartOffset = -10,
+				uuid = "648ca7d1-da93-2737-81e7-5371560e8e79",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
 									true,
 								},
@@ -7834,7 +8490,7 @@ local tbl =
 				uuid = "8a623659-abfe-258a-ae1e-808d7a76b31c",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -7936,101 +8592,6 @@ local tbl =
 				uuid = "9aec4b15-12d7-04f5-b144-c4ed31aa7e80",
 				version = 2,
 			},
-			inheritedIndex = 17,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"08f3f7b5-6ab3-a32f-a878-f6743996bebb",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
-							targetType = "Detection Target",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							conditionType = 7,
-							jobValue = "PALADIN",
-							name = "DT: PLD",
-							partyTargetType = "Detection Target",
-							uuid = "925e192f-b635-b497-b77e-a7f176c00264",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"925e192f-b635-b497-b77e-a7f176c00264",
-									false,
-								},
-							},
-							filterTargetType = "Tank",
-							uuid = "08f3f7b5-6ab3-a32f-a878-f6743996bebb",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 220.14545421679,
-				name = "[SGE] Taurochole",
-				randomOffset = -1,
-				timeRange = true,
-				timelineIndex = 40,
-				timerEndOffset = -1,
-				timerOffset = -10,
-				timerStartOffset = -10,
-				uuid = "648ca7d1-da93-2737-81e7-5371560e8e79",
-				version = 2,
-			},
 			inheritedIndex = 3,
 		},
 		
@@ -8093,189 +8654,6 @@ local tbl =
 	},
 	[41] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_MovementSwiftcast",
-							uuid = "3cff111f-56ee-e7d1-85e2-f6eecba10921",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 235.34477128997,
-				name = "[SGE] Toggle M Swift",
-				timelineIndex = 41,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "114b8536-718a-6a11-85cc-196d84de4804",
-				version = 2,
-			},
-			inheritedIndex = 25,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-								
-								{
-									"303cfea5-c9de-3c82-8055-df4b83304e43",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2609,
-							category = "Party",
-							name = "DT: Missing Eukrasian Prognosis",
-							partyTargetSubType = "Number",
-							partyTargetType = "Detection Target",
-							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							conditionType = 10,
-							inGroupTargetType = "Tank",
-							name = "DT: Tank",
-							partyTargetType = "Detection Target",
-							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"5b3830f2-93e2-9833-9894-680daafb64f5",
-									true,
-								},
-								
-								{
-									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
-									false,
-								},
-							},
-							filterTargetType = "Party",
-							name = "F - Non Tank Missing Shield",
-							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 235.34477128997,
-				name = "[SGE] Eukrasian Prognosis",
-				timelineIndex = 41,
-				timerEndOffset = 5,
-				timerOffset = 3,
-				timerStartOffset = -5,
-				uuid = "05bbf49f-cd5c-115c-bdc8-2ee9bd214dbf",
-				version = 2,
-			},
-			inheritedIndex = 27,
-		},
 		
 		{
 			data = 
@@ -8423,6 +8801,189 @@ local tbl =
 				uuid = "2797fced-462c-044a-a01d-94e1b8226497",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_MovementSwiftcast",
+							uuid = "3cff111f-56ee-e7d1-85e2-f6eecba10921",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 235.34477128997,
+				name = "[SGE] Toggle M Swift",
+				timelineIndex = 41,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "114b8536-718a-6a11-85cc-196d84de4804",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"303cfea5-c9de-3c82-8055-df4b83304e43",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "DT: Missing Eukrasian Prognosis",
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 10,
+							inGroupTargetType = "Tank",
+							name = "DT: Tank",
+							partyTargetType = "Detection Target",
+							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"5b3830f2-93e2-9833-9894-680daafb64f5",
+									true,
+								},
+								
+								{
+									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+									false,
+								},
+							},
+							filterTargetType = "Party",
+							name = "F - Non Tank Missing Shield",
+							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 235.34477128997,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 41,
+				timerEndOffset = 5,
+				timerOffset = 3,
+				timerStartOffset = -5,
+				uuid = "05bbf49f-cd5c-115c-bdc8-2ee9bd214dbf",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 	},
 	[42] = 
@@ -8591,7 +9152,79 @@ local tbl =
 				uuid = "38b71cd8-e595-1897-b526-43cff546078b",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+								
+								{
+									"268cb41f-7ac9-adae-954b-05c13795af92",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Soteria",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							actionCDValue = 2,
+							actionID = 37033,
+							category = "Self",
+							conditionType = 4,
+							name = "Self: Pscyhe => 2s",
+							uuid = "268cb41f-7ac9-adae-954b-05c13795af92",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 249.21799166092,
+				name = "[SGE] Soteria",
+				timeRange = true,
+				timelineIndex = 43,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "6069d844-8a51-db7c-8cb1-791c51586721",
+				version = 2,
+			},
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -8722,79 +9355,7 @@ local tbl =
 				uuid = "5a8565ca-9c75-da72-9d8f-873853c2d495",
 				version = 2,
 			},
-			inheritedIndex = 9,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-								
-								{
-									"268cb41f-7ac9-adae-954b-05c13795af92",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Soteria",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							actionCDValue = 2,
-							actionID = 37033,
-							category = "Self",
-							conditionType = 4,
-							name = "Self: Pscyhe => 2s",
-							uuid = "268cb41f-7ac9-adae-954b-05c13795af92",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 249.21799166092,
-				name = "[SGE] Soteria",
-				timeRange = true,
-				timelineIndex = 43,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "6069d844-8a51-db7c-8cb1-791c51586721",
-				version = 2,
-			},
-			inheritedIndex = 6,
+			inheritedIndex = 3,
 		},
 	},
 	[44] = 
@@ -9164,7 +9725,7 @@ local tbl =
 				uuid = "0c9d1500-c77e-150f-8616-e6165edd00a7",
 				version = 2,
 			},
-			inheritedIndex = 9,
+			inheritedIndex = 3,
 		},
 	},
 	[48] = 
@@ -9223,7 +9784,7 @@ local tbl =
 				uuid = "e7b67f2e-2836-b77c-a878-5238bdc4f9f2",
 				version = 2,
 			},
-			inheritedIndex = 30,
+			inheritedIndex = 1,
 		},
 	},
 	[49] = 
@@ -9320,7 +9881,7 @@ local tbl =
 				uuid = "1e466b8a-b257-835c-9e8a-6e494f1df964",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -9451,7 +10012,7 @@ local tbl =
 				uuid = "53564789-0c76-f0b0-a86f-a805cdcf1188",
 				version = 2,
 			},
-			inheritedIndex = 10,
+			inheritedIndex = 2,
 		},
 	},
 	[50] = 
@@ -9561,6 +10122,59 @@ local tbl =
 							{
 								
 								{
+									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 280.23863811015,
+				name = "[SGE] Pneuma",
+				timelineIndex = 53,
+				timerEndOffset = 5,
+				timerOffset = -0.5,
+				timerStartOffset = 0.10000000149012,
+				uuid = "14da1627-ac2a-0c9c-bc89-fc9af9b29b16",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"42ace145-2b74-484f-8bf2-cebf11dccf7a",
 									true,
 								},
@@ -9619,60 +10233,7 @@ local tbl =
 				uuid = "8484a3df-ed26-412a-8a4d-70bc4aae0977",
 				version = 2,
 			},
-			inheritedIndex = 5,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"ace000e6-5541-6a8d-b064-b432e620d43a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 280.23863811015,
-				name = "[SGE] Pneuma",
-				timelineIndex = 53,
-				timerEndOffset = 5,
-				timerOffset = -0.5,
-				timerStartOffset = 0.10000000149012,
-				uuid = "14da1627-ac2a-0c9c-bc89-fc9af9b29b16",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -9803,7 +10364,7 @@ local tbl =
 				uuid = "9c9a163a-e21b-32da-896d-b9aa2505a48d",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
 		},
 	},
 	[54] = 
@@ -9949,7 +10510,7 @@ local tbl =
 				uuid = "2c09fcd4-c619-c5b5-ab99-3334c033bd0b",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -10080,7 +10641,7 @@ local tbl =
 				uuid = "b81b78fa-9870-846a-9c53-d02794fbf079",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -10206,11 +10767,83 @@ local tbl =
 				uuid = "a7b4a27f-14cb-5569-b791-e975c38b9a1c",
 				version = 2,
 			},
-			inheritedIndex = 8,
+			inheritedIndex = 3,
 		},
 	},
 	[56] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Burn",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Burn",
+							gVarValue = 2,
+							uuid = "9ac8c031-3563-647d-9823-247f402be1c0",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 299.97907895232,
+				name = "[SGE] Toggle Burn",
+				throttleTime = 6000,
+				timeRange = true,
+				timelineIndex = 56,
+				timerEndOffset = 10,
+				timerStartOffset = 2,
+				uuid = "1696b78b-19d4-9c26-9cac-fcd31d677b1a",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -10299,78 +10932,6 @@ local tbl =
 			},
 			inheritedIndex = 2,
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Burn",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Burn",
-							gVarValue = 2,
-							uuid = "9ac8c031-3563-647d-9823-247f402be1c0",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 299.97907895232,
-				name = "[SGE] Toggle Burn",
-				throttleTime = 6000,
-				timeRange = true,
-				timelineIndex = 56,
-				timerEndOffset = 10,
-				timerStartOffset = 2,
-				uuid = "1696b78b-19d4-9c26-9cac-fcd31d677b1a",
-				version = 2,
-			},
-		},
 	},
 	[59] = 
 	{
@@ -10447,7 +11008,7 @@ local tbl =
 				uuid = "aa79ae69-dc16-d5a9-a75e-c749cdf47c28",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -10492,7 +11053,7 @@ local tbl =
 				uuid = "80b7d920-52c2-bbbb-a77a-25d9c24ef3cc",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -10623,7 +11184,7 @@ local tbl =
 				uuid = "d81ebc68-6bcb-6bcc-ac54-cb43557ce93e",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -10698,7 +11259,7 @@ local tbl =
 				uuid = "e5a5fc21-e0a3-73b7-a120-0946cec9e64d",
 				version = 2,
 			},
-			inheritedIndex = 8,
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -10770,7 +11331,7 @@ local tbl =
 				uuid = "818279f5-6c12-6f08-a782-ff113577a162",
 				version = 2,
 			},
-			inheritedIndex = 29,
+			inheritedIndex = 5,
 		},
 	},
 	[61] = 
@@ -10852,6 +11413,81 @@ local tbl =
 	},
 	[64] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 321.78311722413,
+				name = "[SGE] Physis",
+				timelineIndex = 64,
+				timerEndOffset = 5,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "72042f59-7e6c-463b-98cb-82454e87efa5",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
 		
 		{
 			data = 
@@ -10951,82 +11587,7 @@ local tbl =
 				uuid = "49621c9e-9327-807f-9289-a8861369e589",
 				version = 2,
 			},
-			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
-									true,
-								},
-								
-								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 321.78311722413,
-				name = "[SGE] Physis",
-				timelineIndex = 64,
-				timerEndOffset = 5,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "72042f59-7e6c-463b-98cb-82454e87efa5",
-				version = 2,
-			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 	},
 	[65] = 
@@ -11103,12 +11664,12 @@ local tbl =
 					{
 						data = 
 						{
-							actionCDValue = 1,
+							actionCDValue = 2,
 							actionID = 24298,
 							category = "Self",
 							comparator = 2,
 							conditionType = 4,
-							name = "Self: Kerachole CD <= 1s",
+							name = "Self: Kerachole CD <= 2s",
 							uuid = "73317a59-32cc-0ef3-8144-5d37b696cab3",
 							version = 3,
 						},
@@ -11123,7 +11684,7 @@ local tbl =
 				uuid = "a278e328-24f3-2912-9a31-1f7ec32bc8c3",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 	},
 	[66] = 
@@ -11221,6 +11782,276 @@ local tbl =
 				version = 2,
 			},
 			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							acrOptionType = "Hold Action",
+							actionID = 24316,
+							conditions = 
+							{
+								
+								{
+									"2396dc77-b792-7e80-9887-f83101f21e56",
+									true,
+								},
+								
+								{
+									"cc078f14-2bcc-c74e-a2a9-2131dcb81b0e",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							holdActionCharges = 2,
+							holdActionDuration = 6,
+							holdActionID = 24313,
+							targetType = "Enemy",
+							uuid = "870510d0-9a27-ffb0-877a-e19b2e0e5941",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "2396dc77-b792-7e80-9887-f83101f21e56",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 6,
+							gaugeIndex = 3,
+							gaugeValue = 1,
+							name = "Self Gauge: >= 1 Toxikon",
+							uuid = "cc078f14-2bcc-c74e-a2a9-2131dcb81b0e",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 341.70452758191,
+				name = "[SGE] Hold Phlegma",
+				timelineIndex = 66,
+				timerOffset = -5,
+				timerStartOffset = -2,
+				uuid = "f2df078e-5d63-70e7-b287-69d73a33db9f",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							actionID = 24316,
+							clusterRadius = 5,
+							clusterRange = 25,
+							conditions = 
+							{
+								
+								{
+									"2396dc77-b792-7e80-9887-f83101f21e56",
+									true,
+								},
+								
+								{
+									"1c5346a0-1b85-950b-ac60-0f87e347e3c7",
+									true,
+								},
+								
+								{
+									"be39038c-1ae7-41d9-baee-6ef533259037",
+									true,
+								},
+								
+								{
+									"cbf606d9-3d41-b3dd-b8a7-458ca00f1992",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							targetType = "Enemy",
+							uuid = "870510d0-9a27-ffb0-877a-e19b2e0e5941",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "2396dc77-b792-7e80-9887-f83101f21e56",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return FFXIV_Common_BotRunning",
+							name = "Assist Enabled",
+							uuid = "1c5346a0-1b85-950b-ac60-0f87e347e3c7",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 6,
+							gaugeIndex = 3,
+							gaugeValue = 1,
+							name = "Self Gauge: >= 1 Toxikon",
+							uuid = "be39038c-1ae7-41d9-baee-6ef533259037",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							actionCDValue = 2,
+							actionID = 24298,
+							category = "Self",
+							comparator = 2,
+							conditionType = 4,
+							name = "Self: Kerachole CD <= 2s",
+							uuid = "cbf606d9-3d41-b3dd-b8a7-458ca00f1992",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 341.70452758191,
+				name = "[SGE] Toxikon",
+				timeRange = true,
+				timelineIndex = 66,
+				timerOffset = -4,
+				timerStartOffset = -5,
+				uuid = "5fafd8a4-f837-9f0f-9851-069b9360ba31",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"335d9301-bb38-83fc-a46d-44a6d4c52e0f",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Force Slidecast",
+							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"aad74fc1-636a-b14e-ab4d-84c954a6e3ea",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "End Slide",
+							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2618,
+							category = "Self",
+							name = "Self: Missing Kerachole Buff",
+							uuid = "335d9301-bb38-83fc-a46d-44a6d4c52e0f",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							category = "Action",
+							uuid = "aad74fc1-636a-b14e-ab4d-84c954a6e3ea",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 341.70452758191,
+				name = "Force Slidecast",
+				throttleTime = 4000,
+				timeRange = true,
+				timelineIndex = 66,
+				timerEndOffset = 2,
+				timerStartOffset = -3,
+				uuid = "7036a27e-1fb7-73aa-aab7-d51876cbd731",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -11336,238 +12167,6 @@ local tbl =
 				uuid = "ca8962b4-9b48-2dec-9317-558a23e18dc4",
 				version = 2,
 			},
-			inheritedIndex = 8,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Hold Action",
-							actionID = 24316,
-							conditions = 
-							{
-								
-								{
-									"2396dc77-b792-7e80-9887-f83101f21e56",
-									true,
-								},
-								
-								{
-									"cc078f14-2bcc-c74e-a2a9-2131dcb81b0e",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							holdActionCharges = 2,
-							holdActionDuration = 6,
-							holdActionID = 24313,
-							targetType = "Enemy",
-							uuid = "870510d0-9a27-ffb0-877a-e19b2e0e5941",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "2396dc77-b792-7e80-9887-f83101f21e56",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 6,
-							gaugeIndex = 3,
-							gaugeValue = 1,
-							name = "Self Gauge: >= 1 Toxikon",
-							uuid = "cc078f14-2bcc-c74e-a2a9-2131dcb81b0e",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 341.70452758191,
-				name = "[SGE] Hold Phlegma",
-				timelineIndex = 66,
-				timerOffset = -5,
-				timerStartOffset = -2,
-				uuid = "f2df078e-5d63-70e7-b287-69d73a33db9f",
-				version = 2,
-			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							actionID = 24316,
-							clusterRadius = 5,
-							clusterRange = 25,
-							conditions = 
-							{
-								
-								{
-									"2396dc77-b792-7e80-9887-f83101f21e56",
-									true,
-								},
-								
-								{
-									"1c5346a0-1b85-950b-ac60-0f87e347e3c7",
-									true,
-								},
-								
-								{
-									"be39038c-1ae7-41d9-baee-6ef533259037",
-									true,
-								},
-								
-								{
-									"cbf606d9-3d41-b3dd-b8a7-458ca00f1992",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							targetType = "Enemy",
-							uuid = "870510d0-9a27-ffb0-877a-e19b2e0e5941",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "2396dc77-b792-7e80-9887-f83101f21e56",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return FFXIV_Common_BotRunning",
-							name = "Assist Enabled",
-							uuid = "1c5346a0-1b85-950b-ac60-0f87e347e3c7",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 6,
-							gaugeIndex = 3,
-							gaugeValue = 1,
-							name = "Self Gauge: >= 1 Toxikon",
-							uuid = "be39038c-1ae7-41d9-baee-6ef533259037",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							actionCDValue = 1,
-							actionID = 24298,
-							category = "Self",
-							comparator = 2,
-							conditionType = 4,
-							name = "Self: Kerachole CD <= 1s",
-							uuid = "cbf606d9-3d41-b3dd-b8a7-458ca00f1992",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 341.70452758191,
-				name = "[SGE] Toxikon",
-				timeRange = true,
-				timelineIndex = 66,
-				timerOffset = -4,
-				timerStartOffset = -5,
-				uuid = "5fafd8a4-f837-9f0f-9851-069b9360ba31",
-				version = 2,
-			},
-			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Force Slidecast",
-							uuid = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							gVar = "ACR_RikuSGE3_CD",
-							name = "End Slide",
-							uuid = "c9525cfd-c78c-8c38-b40b-09e5fe1fbe7b",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 341.70452758191,
-				name = "Force Slidecast",
-				throttleTime = 3000,
-				timeRange = true,
-				timelineIndex = 66,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "7036a27e-1fb7-73aa-aab7-d51876cbd731",
-				version = 2,
-			},
 			inheritedIndex = 5,
 		},
 		
@@ -11617,11 +12216,12 @@ local tbl =
 				name = "[SGE] Toggle M Swift",
 				timelineIndex = 66,
 				timerEndOffset = 5,
+				timerOffset = -10,
 				timerStartOffset = -5,
 				uuid = "f67de75c-9f2b-501d-8e35-d89d5633598c",
 				version = 2,
 			},
-			inheritedIndex = 12,
+			inheritedIndex = 6,
 		},
 		
 		{
@@ -11836,174 +12436,11 @@ local tbl =
 				uuid = "c6298460-0ba8-e3d0-8308-7a614a254ee2",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 1,
 		},
 	},
 	[70] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_ToxikonWeave",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 367.80061742504,
-				name = "[SGE] Toggle T Weave",
-				timelineIndex = 70,
-				timerEndOffset = 5,
-				timerOffset = -11,
-				timerStartOffset = -5,
-				uuid = "e0b93d4b-c41c-3cd6-9733-bbf696101e1b",
-				version = 2,
-			},
-			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"53d292a9-114e-4b73-ade9-8a05229e04b5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Krasis",
-							targetType = "Main Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 367.80061742504,
-				name = "[SGE] Krasis",
-				timelineIndex = 70,
-				timerEndOffset = -1,
-				timerOffset = 2.0999999046326,
-				timerStartOffset = -9,
-				uuid = "129f3745-487d-0446-89db-ede8eea84fdb",
-				version = 2,
-			},
-			inheritedIndex = 5,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Soteria",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 367.80061742504,
-				name = "[SGE] Soteria",
-				timelineIndex = 70,
-				timerEndOffset = 5,
-				timerOffset = 2,
-				timerStartOffset = -5,
-				uuid = "3a9db344-1e49-95a3-86bc-04585eba82e2",
-				version = 2,
-			},
-			inheritedIndex = 26,
-		},
 		
 		{
 			data = 
@@ -12075,9 +12512,6 @@ local tbl =
 				version = 2,
 			},
 		},
-	},
-	[73] = 
-	{
 		
 		{
 			data = 
@@ -12093,11 +12527,64 @@ local tbl =
 							{
 								
 								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
+							gVar = "ACR_RikuSGE3_ToxikonWeave",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 367.80061742504,
+				name = "[SGE] Toggle T Weave",
+				timelineIndex = 70,
+				timerEndOffset = 5,
+				timerOffset = -11,
+				timerStartOffset = -5,
+				uuid = "e0b93d4b-c41c-3cd6-9733-bbf696101e1b",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"53d292a9-114e-4b73-ade9-8a05229e04b5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Krasis",
 							targetType = "Main Tank",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableIsHover = true,
@@ -12117,25 +12604,80 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
 							version = 3,
 						},
 						inheritedIndex = 1,
 					},
 				},
-				mechanicTime = 377.30637120621,
-				name = "[SGE] Taurochole",
-				randomOffset = -1,
-				timeRange = true,
-				timelineIndex = 73,
+				mechanicTime = 367.80061742504,
+				name = "[SGE] Krasis",
+				timelineIndex = 70,
 				timerEndOffset = -1,
-				timerOffset = -10,
-				timerStartOffset = -14.5,
-				uuid = "664b0abc-5fc1-7260-b91f-fecc5ff5d92f",
+				timerOffset = 2.0999999046326,
+				timerStartOffset = -9,
+				uuid = "129f3745-487d-0446-89db-ede8eea84fdb",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 3,
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Soteria",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 367.80061742504,
+				name = "[SGE] Soteria",
+				timelineIndex = 70,
+				timerEndOffset = 5,
+				timerOffset = 2,
+				timerStartOffset = -5,
+				uuid = "3a9db344-1e49-95a3-86bc-04585eba82e2",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+	},
+	[73] = 
+	{
 		
 		{
 			data = 
@@ -12229,64 +12771,6 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Haima",
-							targetSubType = "Lowest HP",
-							targetType = "Main Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 377.30637120621,
-				name = "[SGE] Haima",
-				timeRange = true,
-				timelineIndex = 73,
-				timerEndOffset = -1,
-				timerOffset = -3,
-				timerStartOffset = -14.5,
-				uuid = "9ff84972-57c2-faa8-8c82-3dbee8f5d767",
-				version = 2,
-			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
 								
 								{
 									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
@@ -12340,6 +12824,250 @@ local tbl =
 				timerOffset = 1,
 				timerStartOffset = -5,
 				uuid = "5d496fca-b23f-036a-b88d-30512ad5925c",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Haima",
+							targetSubType = "Lowest HP",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 377.30637120621,
+				name = "[SGE] Haima",
+				timeRange = true,
+				timelineIndex = 73,
+				timerEndOffset = -1,
+				timerOffset = -3,
+				timerStartOffset = -14.5,
+				uuid = "9ff84972-57c2-faa8-8c82-3dbee8f5d767",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+									true,
+								},
+								
+								{
+									"84484220-4c03-124d-8bc6-00658c2824ba",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Stop Casting",
+							stopCasting = true,
+							uuid = "043f05c5-4aaf-dc61-9d4a-a2b62d3c21fa",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+									true,
+								},
+								
+								{
+									"84484220-4c03-124d-8bc6-00658c2824ba",
+									true,
+								},
+								
+								{
+									"fc34601b-87e9-e1aa-96b6-0897ad64de09",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
+							targetSubType = "Topmost Partylist",
+							targetType = "Detection Target",
+							uuid = "1f6dfa69-9fa5-6422-bae0-e4c484120183",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+									true,
+								},
+								
+								{
+									"84484220-4c03-124d-8bc6-00658c2824ba",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Attacks",
+							gVarValue = 2,
+							uuid = "f4f47c92-4c14-defc-82ab-3ef9d080d5d0",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							comparator = 2,
+							conditionType = 3,
+							hpType = 2,
+							hpValue = 1,
+							name = "Target: HP <= 1",
+							uuid = "84484220-4c03-124d-8bc6-00658c2824ba",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2911,
+							category = "Party",
+							name = "DT: Missing Damage Down Debuff",
+							partyTargetType = "Detection Target",
+							uuid = "1be283f6-2ef4-127e-a7e2-c12d51206fe3",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							comparator = 2,
+							hpType = 2,
+							hpValue = 60,
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "53cc5ccc-0fc7-b4fb-8693-8acea27ff00f",
+							version = 3,
+						},
+						inheritedIndex = 4,
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"1be283f6-2ef4-127e-a7e2-c12d51206fe3",
+									true,
+								},
+								
+								{
+									"53cc5ccc-0fc7-b4fb-8693-8acea27ff00f",
+									true,
+								},
+							},
+							filterTargetSubtype = "Lowest HP",
+							filterTargetType = "Tank",
+							name = "Filter",
+							uuid = "fc34601b-87e9-e1aa-96b6-0897ad64de09",
+							version = 3,
+						},
+					},
+				},
+				loop = true,
+				mechanicTime = 377.30637120621,
+				name = "[SGE] Eukrasian Diagnosis",
+				timeRange = true,
+				timelineIndex = 73,
+				timerOffset = 1,
+				timerStartOffset = -15,
+				uuid = "bdf3a768-0987-66a0-90ec-b6988943ae21",
 				version = 2,
 			},
 		},
@@ -12471,115 +13199,20 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Misc",
-							conditions = 
-							{
-								
-								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-								
-								{
-									"84484220-4c03-124d-8bc6-00658c2824ba",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Stop Casting",
-							stopCasting = true,
-							uuid = "043f05c5-4aaf-dc61-9d4a-a2b62d3c21fa",
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							conditions = 
 							{
 								
 								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-								
-								{
-									"84484220-4c03-124d-8bc6-00658c2824ba",
-									true,
-								},
-								
-								{
-									"2066967b-c38a-ab8b-9d6a-723e4515f414",
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
-							targetSubType = "Topmost Partylist",
-							targetType = "Tank",
-							uuid = "1f6dfa69-9fa5-6422-bae0-e4c484120183",
+							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableIsHover = true,
 							variableTogglesType = 3,
-							version = 2.1,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-								
-								{
-									"84484220-4c03-124d-8bc6-00658c2824ba",
-									true,
-								},
-								
-								{
-									"fc34601b-87e9-e1aa-96b6-0897ad64de09",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
-							targetSubType = "Bottom-most Partylist",
-							targetType = "Tank",
-							uuid = "bdea2236-c2ad-e9f6-9707-6df8298bbf01",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-								
-								{
-									"84484220-4c03-124d-8bc6-00658c2824ba",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Attacks",
-							gVarValue = 2,
-							uuid = "f4f47c92-4c14-defc-82ab-3ef9d080d5d0",
 							version = 2.1,
 						},
 					},
@@ -12595,87 +13228,24 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 							version = 3,
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							comparator = 2,
-							conditionType = 3,
-							hpType = 2,
-							hpValue = 1,
-							name = "Target: HP <= 1",
-							uuid = "84484220-4c03-124d-8bc6-00658c2824ba",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2911,
-							category = "Party",
-							name = "DT: Missing Damage Down Debuff",
-							partyTargetType = "Detection Target",
-							uuid = "1be283f6-2ef4-127e-a7e2-c12d51206fe3",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"1be283f6-2ef4-127e-a7e2-c12d51206fe3",
-									true,
-								},
-							},
-							filterTargetSubtype = "Bottom-most Partylist",
-							filterTargetType = "Tank",
-							name = "F - Bottom Tank",
-							uuid = "fc34601b-87e9-e1aa-96b6-0897ad64de09",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"1be283f6-2ef4-127e-a7e2-c12d51206fe3",
-									true,
-								},
-							},
-							filterTargetSubtype = "Topmost Partylist",
-							filterTargetType = "Tank",
-							name = "F - Top Tank",
-							uuid = "2066967b-c38a-ab8b-9d6a-723e4515f414",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 377.30637120621,
-				name = "[SGE] Eukrasian Diagnosis",
+				name = "[SGE] Taurochole",
+				randomOffset = -1,
 				timeRange = true,
 				timelineIndex = 73,
-				timerOffset = 1,
-				timerStartOffset = -15,
-				uuid = "bdf3a768-0987-66a0-90ec-b6988943ae21",
+				timerEndOffset = -1,
+				timerOffset = -10,
+				timerStartOffset = -14.5,
+				uuid = "664b0abc-5fc1-7260-b91f-fecc5ff5d92f",
 				version = 2,
 			},
+			inheritedIndex = 6,
 		},
 	},
 	[74] = 
@@ -12838,6 +13408,81 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 381.48132335556,
+				name = "[SGE] Physis",
+				timelineIndex = 74,
+				timerEndOffset = 5,
+				timerOffset = 2,
+				timerStartOffset = -5,
+				uuid = "2214e053-2035-3c8e-b402-60d08c09bfe5",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
 							actionID = 24314,
 							conditions = 
 							{
@@ -12956,80 +13601,6 @@ local tbl =
 				version = 2,
 			},
 			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
-									true,
-								},
-								
-								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 381.48132335556,
-				name = "[SGE] Physis",
-				timelineIndex = 74,
-				timerEndOffset = 5,
-				timerOffset = 2,
-				timerStartOffset = -5,
-				uuid = "2214e053-2035-3c8e-b402-60d08c09bfe5",
-				version = 2,
-			},
 		},
 	},
 	[76] = 
@@ -13230,7 +13801,7 @@ local tbl =
 				uuid = "f4c903b8-1d9d-e1c8-86d3-78a0224b7b03",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -13303,7 +13874,7 @@ local tbl =
 				uuid = "7f9e4d6b-90f4-c2d2-897f-817221b58d60",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 3,
 		},
 	},
 	[77] = 
@@ -13477,9 +14048,6 @@ local tbl =
 				version = 2,
 			},
 		},
-	},
-	[79] = 
-	{
 		
 		{
 			data = 
@@ -13495,16 +14063,22 @@ local tbl =
 							{
 								
 								{
-									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									"61cf2373-5c78-cc97-b2fa-bbb8242754df",
+									true,
+								},
+								
+								{
+									"f83b9af9-50b4-36ad-a4db-ddab072152e0",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_Zoe",
-							uuid = "68f07163-b007-4f65-a949-55d21423260e",
+							gVar = "ACR_RikuSGE3_Healbar_Kardia",
+							targetType = "Detection Target",
+							uuid = "eebd022d-7dcc-3f00-ac58-4066ae9914c6",
+							variableIsHover = true,
 							variableTogglesType = 3,
 							version = 2.1,
 						},
-						inheritedIndex = 1,
 					},
 				},
 				conditions = 
@@ -13518,23 +14092,70 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							uuid = "61cf2373-5c78-cc97-b2fa-bbb8242754df",
 							version = 3,
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2605,
+							category = "Party",
+							name = "DT: Missing Kardia Buff",
+							partyTargetType = "Detection Target",
+							uuid = "8940a904-de51-6f1d-b3f5-4dc4ef3a4dc6",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"8940a904-de51-6f1d-b3f5-4dc4ef3a4dc6",
+									true,
+								},
+								
+								{
+									"6042f30b-197d-3105-b6ee-1d6272ec688f",
+									true,
+								},
+							},
+							filterTargetType = "Tank",
+							partyTargetContentID = 7691,
+							uuid = "f83b9af9-50b4-36ad-a4db-ddab072152e0",
+							version = 3,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							buffID = 4192,
+							category = "Party",
+							conditionLua = "return TensorCore.mGetEntity(eventArgs.detectionTargetID).aggropercentage => 100",
+							name = "DT: Epic Hero Buff",
+							partyTargetType = "Detection Target",
+							uuid = "6042f30b-197d-3105-b6ee-1d6272ec688f",
+							version = 3,
+						},
+					},
 				},
-				mechanicTime = 450.00390950196,
-				name = "[SGE] Zoe",
-				timeRange = true,
-				timelineIndex = 79,
-				timerEndOffset = 7,
-				timerOffset = -3,
-				timerStartOffset = -13,
-				uuid = "f1491cf6-47b4-c2d1-9054-ca7ebeb6cccf",
+				mechanicTime = 430.61710950197,
+				name = "[SGE] Kardia Chaos Tank",
+				timelineIndex = 78,
+				timerOffset = 2,
+				uuid = "8fc7073d-d185-81c2-b988-5a4bd47dd7e9",
 				version = 2,
 			},
-			inheritedIndex = 6,
 		},
 		
 		{
@@ -13600,74 +14221,20 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 450.00390950196,
+				mechanicTime = 430.61710950197,
 				name = "[SGE] Physis",
-				timelineIndex = 79,
+				timelineIndex = 78,
 				timerEndOffset = 5,
-				timerOffset = -3,
+				timerOffset = 9,
 				timerStartOffset = -5,
-				uuid = "e0115a0c-67ab-1aae-86d7-c635cf3e4367",
+				uuid = "24c20b11-da84-7e93-8bb4-12006e46459b",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"53d292a9-114e-4b73-ade9-8a05229e04b5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Krasis",
-							targetSubType = "Lowest HP",
-							targetType = "Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 450.00390950196,
-				name = "[SGE] Krasis",
-				timelineIndex = 79,
-				timerEndOffset = 5,
-				timerOffset = -1,
-				timerStartOffset = -5,
-				uuid = "727fd2b3-84c3-7384-b18e-2eeb5d99b713",
-				version = 2,
-			},
-			inheritedIndex = 13,
-		},
+	},
+	[79] = 
+	{
 		
 		{
 			data = 
@@ -13753,6 +14320,195 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
+							acrOptionType = "Hold Action",
+							actionID = 24316,
+							conditions = 
+							{
+								
+								{
+									"2396dc77-b792-7e80-9887-f83101f21e56",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							holdActionCharges = 2,
+							holdActionDuration = 34,
+							holdActionID = 24313,
+							targetType = "Enemy",
+							uuid = "870510d0-9a27-ffb0-877a-e19b2e0e5941",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "2396dc77-b792-7e80-9887-f83101f21e56",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 450.00390950196,
+				name = "[SGE] Hold Phlegma",
+				timelineIndex = 79,
+				timerOffset = -3,
+				timerStartOffset = -2,
+				uuid = "559c4db0-53e2-4243-b04c-e0c1d562f6ff",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Zoe",
+							uuid = "68f07163-b007-4f65-a949-55d21423260e",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 450.00390950196,
+				name = "[SGE] Zoe",
+				timeRange = true,
+				timelineIndex = 79,
+				timerEndOffset = 7,
+				timerOffset = -3,
+				timerStartOffset = -13,
+				uuid = "f1491cf6-47b4-c2d1-9054-ca7ebeb6cccf",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 450.00390950196,
+				name = "[SGE] Physis",
+				timelineIndex = 79,
+				timerEndOffset = 5,
+				timerOffset = -3,
+				timerStartOffset = -5,
+				uuid = "e0115a0c-67ab-1aae-86d7-c635cf3e4367",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
 							conditions = 
 							{
 								
@@ -13794,7 +14550,64 @@ local tbl =
 				uuid = "306de2b8-a847-a67b-bf42-f999e6afef2c",
 				version = 2,
 			},
-			inheritedIndex = 10,
+			inheritedIndex = 5,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"53d292a9-114e-4b73-ade9-8a05229e04b5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Krasis",
+							targetSubType = "Lowest HP",
+							targetType = "Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 450.00390950196,
+				name = "[SGE] Krasis",
+				timelineIndex = 79,
+				timerEndOffset = 5,
+				timerOffset = -1,
+				timerStartOffset = -5,
+				uuid = "727fd2b3-84c3-7384-b18e-2eeb5d99b713",
+				version = 2,
+			},
+			inheritedIndex = 6,
 		},
 		
 		{
@@ -13852,6 +14665,18 @@ local tbl =
 					{
 						data = 
 						{
+							buffID = 2611,
+							category = "Self",
+							name = "Self: Has Zoe Buff",
+							uuid = "e223e459-fb7a-08cb-92b8-2df73cfa08f2",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
 							category = "Party",
 							comparator = 2,
 							conditionType = 4,
@@ -13864,18 +14689,6 @@ local tbl =
 							version = 3,
 						},
 					},
-					
-					{
-						data = 
-						{
-							buffID = 2611,
-							category = "Self",
-							name = "Self: Has Zoe Buff",
-							uuid = "e223e459-fb7a-08cb-92b8-2df73cfa08f2",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
 				},
 				mechanicTime = 450.00390950196,
 				name = "[SGE] Eukrasian Prognosis",
@@ -13887,64 +14700,7 @@ local tbl =
 				uuid = "b4bb6992-7da3-8b20-b3c1-741b2b4462d0",
 				version = 2,
 			},
-			inheritedIndex = 27,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Hold Action",
-							actionID = 24316,
-							conditions = 
-							{
-								
-								{
-									"2396dc77-b792-7e80-9887-f83101f21e56",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							holdActionCharges = 2,
-							holdActionDuration = 32,
-							holdActionID = 24313,
-							targetType = "Enemy",
-							uuid = "870510d0-9a27-ffb0-877a-e19b2e0e5941",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "2396dc77-b792-7e80-9887-f83101f21e56",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 450.00390950196,
-				name = "[SGE] Hold Phlegma",
-				timelineIndex = 79,
-				timerOffset = -3,
-				timerStartOffset = -2,
-				uuid = "559c4db0-53e2-4243-b04c-e0c1d562f6ff",
-				version = 2,
-			},
+			inheritedIndex = 7,
 		},
 	},
 	[80] = 
@@ -13976,92 +14732,6 @@ local tbl =
 			{
 				timerOffset = -7,
 			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Soteria",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 469.19930950196,
-				name = "[SGE] Soteria",
-				timelineIndex = 80,
-				timerEndOffset = 5,
-				timerOffset = -3,
-				timerStartOffset = -5,
-				uuid = "7cf3fe50-38fa-e332-8b45-64389676c91b",
-				version = 2,
-			},
-			inheritedIndex = 7,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							gVar = "ACR_RikuSGE3_CD",
-							setTarget = true,
-							targetContentID = 7691,
-							targetType = "ContentID",
-							uuid = "60c6b762-030b-d5e0-a8fe-103c5ee54327",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 469.19930950196,
-				name = "Target Chaos",
-				timelineIndex = 80,
-				timerOffset = -6,
-				uuid = "157d311b-27b9-381b-be97-f926b65104f0",
-				version = 2,
-			},
-			inheritedIndex = 11,
 		},
 		
 		{
@@ -14134,6 +14804,60 @@ local tbl =
 				uuid = "6be65e7e-08f1-e67a-8754-acd6df180823",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Soteria",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 469.19930950196,
+				name = "[SGE] Soteria",
+				timelineIndex = 80,
+				timerEndOffset = 5,
+				timerOffset = -3,
+				timerStartOffset = -5,
+				uuid = "7cf3fe50-38fa-e332-8b45-64389676c91b",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -14259,7 +14983,39 @@ local tbl =
 				uuid = "083ae14b-239f-c0a9-8104-d4990b26e70c",
 				version = 2,
 			},
-			inheritedIndex = 10,
+			inheritedIndex = 5,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetContentID = 7691,
+							targetType = "ContentID",
+							uuid = "60c6b762-030b-d5e0-a8fe-103c5ee54327",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 469.19930950196,
+				name = "Target Chaos",
+				timelineIndex = 80,
+				timerOffset = -6,
+				uuid = "157d311b-27b9-381b-be97-f926b65104f0",
+				version = 2,
+			},
+			inheritedIndex = 6,
 		},
 	},
 	[81] = 
@@ -14409,7 +15165,7 @@ local tbl =
 				timeRange = true,
 				timelineIndex = 81,
 				timerEndOffset = -1,
-				timerStartOffset = -19.5,
+				timerStartOffset = -17.5,
 				uuid = "dbd1f775-e725-b2ae-879d-a766c763e4c2",
 				version = 2,
 			},
@@ -14485,6 +15241,76 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"e863203a-6083-89bf-9c82-07c5cc001266",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Hotbar_Potion",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_UsePotions == true",
+							dequeueIfLuaFalse = true,
+							name = "Potion",
+							uuid = "e863203a-6083-89bf-9c82-07c5cc001266",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 478.4207739929,
+				name = "[SGE] Use Pot",
+				timelineIndex = 83,
+				timerEndOffset = -1,
+				timerOffset = -1.5,
+				timerStartOffset = -5,
+				uuid = "16ca27fe-d65e-c89a-ab75-5b6414453aa5",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
 							acrOptionType = "Hold Action",
 							conditions = 
 							{
@@ -14529,60 +15355,7 @@ local tbl =
 				uuid = "b4e45f31-2d50-de5b-9f04-e48e6bcd548b",
 				version = 2,
 			},
-			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Hotbar_Potion",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 478.4207739929,
-				name = "[SGE] Use Pot",
-				timelineIndex = 83,
-				timerEndOffset = -1,
-				timerOffset = -1.5,
-				timerStartOffset = -5,
-				uuid = "16ca27fe-d65e-c89a-ab75-5b6414453aa5",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[84] = 
@@ -14936,11 +15709,134 @@ local tbl =
 				uuid = "d66e69a4-0173-0ac5-aebd-a7b653068781",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[89] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 497.15528394761,
+				name = "[SGE] Pneuma",
+				timelineIndex = 89,
+				timerEndOffset = 5,
+				timerOffset = -0.5,
+				timerStartOffset = -5,
+				uuid = "1ae2d4ae-aec8-91ec-a5b3-3bad8bcf9f63",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Kerachole",
+							uuid = "1f6dfa69-9fa5-6422-bae0-e4c484120183",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "6eed371c-276e-0dc6-bfef-64a1ef96e29f",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "6e5cce1c-e91c-060c-b26b-d9c804cb7b6e",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 497.15528394761,
+				name = "[SGE] Kerachole",
+				timeRange = true,
+				timelineIndex = 89,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "31f60f74-9e24-e43b-8e76-d7a177b6c18c",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
 		
 		{
 			data = 
@@ -15014,134 +15910,83 @@ local tbl =
 				uuid = "10789f12-f883-9e26-8ef0-839af35812ff",
 				version = 2,
 			},
-			inheritedIndex = 7,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Kerachole",
-							uuid = "1f6dfa69-9fa5-6422-bae0-e4c484120183",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "6eed371c-276e-0dc6-bfef-64a1ef96e29f",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "6e5cce1c-e91c-060c-b26b-d9c804cb7b6e",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 497.15528394761,
-				name = "[SGE] Kerachole",
-				timeRange = true,
-				timelineIndex = 89,
-				timerEndOffset = -1,
-				timerStartOffset = -14.5,
-				uuid = "31f60f74-9e24-e43b-8e76-d7a177b6c18c",
-				version = 2,
-			},
-			inheritedIndex = 5,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"ace000e6-5541-6a8d-b064-b432e620d43a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 497.15528394761,
-				name = "[SGE] Pneuma",
-				timelineIndex = 89,
-				timerEndOffset = 5,
-				timerOffset = -0.5,
-				timerStartOffset = -5,
-				uuid = "1ae2d4ae-aec8-91ec-a5b3-3bad8bcf9f63",
-				version = 2,
-			},
+			inheritedIndex = 3,
 		},
 	},
 	[91] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"17018608-fe43-b818-9d29-3730258fd0f2",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_ToxikonWeave",
+							gVarValue = 2,
+							uuid = "30e44ac4-de33-e980-87fd-26ca0bc7e0f3",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"17018608-fe43-b818-9d29-3730258fd0f2",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_ToxikonWeave",
+							uuid = "bb78f2df-c9c1-7a78-ba86-dedf6d4a19bb",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "17018608-fe43-b818-9d29-3730258fd0f2",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 507.31761539671,
+				name = "[SGE] Toggle T Weave",
+				throttleTime = 7500,
+				timeRange = true,
+				timelineIndex = 91,
+				timerEndOffset = 2,
+				timerStartOffset = -7,
+				uuid = "1fb0fc47-dfa1-146c-8a51-efc555ecb4d9",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -15231,79 +16076,7 @@ local tbl =
 				uuid = "b10f96db-81cd-a135-be99-126daa029b61",
 				version = 2,
 			},
-			inheritedIndex = 4,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"17018608-fe43-b818-9d29-3730258fd0f2",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_ToxikonWeave",
-							gVarValue = 2,
-							uuid = "30e44ac4-de33-e980-87fd-26ca0bc7e0f3",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"17018608-fe43-b818-9d29-3730258fd0f2",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_ToxikonWeave",
-							uuid = "bb78f2df-c9c1-7a78-ba86-dedf6d4a19bb",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "17018608-fe43-b818-9d29-3730258fd0f2",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 507.31761539671,
-				name = "[SGE] Toggle T Weave",
-				throttleTime = 7500,
-				timeRange = true,
-				timelineIndex = 91,
-				timerEndOffset = 2,
-				timerStartOffset = -7,
-				uuid = "1fb0fc47-dfa1-146c-8a51-efc555ecb4d9",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[93] = 
@@ -15594,7 +16367,7 @@ local tbl =
 				uuid = "cc10f098-2e25-4afa-aebb-413d931ea53d",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 1,
 		},
 	},
 	[99] = 
@@ -15702,17 +16475,17 @@ local tbl =
 							{
 								
 								{
-									"81ae31c5-9e92-6a56-ba07-ff21087cac48",
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
 								
 								{
-									"800486cc-705c-5caf-8fba-1dd95613f62d",
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_Panhaima",
-							uuid = "3513de14-07f8-c935-80cb-36aa906944eb",
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableTogglesType = 3,
 							version = 2.1,
 						},
@@ -15729,7 +16502,7 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "81ae31c5-9e92-6a56-ba07-ff21087cac48",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 							version = 3,
 						},
 						inheritedIndex = 1,
@@ -15741,26 +16514,24 @@ local tbl =
 							category = "Party",
 							comparator = 2,
 							conditionType = 4,
-							inRangeValue = 30,
+							inRangeValue = 20,
 							minTargetPercent = true,
-							name = "Party Range: <= 30y",
+							name = "Party Range: <= 20y",
 							partyTargetNumber = 100,
 							partyTargetSubType = "Number",
-							uuid = "800486cc-705c-5caf-8fba-1dd95613f62d",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 519.33918599411,
-				name = "[SGE] Panhaima",
-				timeRange = true,
+				name = "[SGE] Eukrasian Prognosis",
 				timelineIndex = 99,
-				timerEndOffset = -1,
-				timerStartOffset = -14.5,
-				uuid = "cac778be-81ce-aa4f-96cc-c4058e24d6dc",
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "da90ed22-488b-032c-8f5f-9dbb3b0bb94d",
 				version = 2,
 			},
-			inheritedIndex = 19,
 		},
 		
 		{
@@ -15871,17 +16642,17 @@ local tbl =
 							{
 								
 								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									"81ae31c5-9e92-6a56-ba07-ff21087cac48",
 									true,
 								},
 								
 								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									"800486cc-705c-5caf-8fba-1dd95613f62d",
 									true,
 								},
 							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							gVar = "ACR_RikuSGE3_Healbar_Panhaima",
+							uuid = "3513de14-07f8-c935-80cb-36aa906944eb",
 							variableTogglesType = 3,
 							version = 2.1,
 						},
@@ -15898,7 +16669,7 @@ local tbl =
 							dequeueIfLuaFalse = true,
 							jobValue = "SAGE",
 							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							uuid = "81ae31c5-9e92-6a56-ba07-ff21087cac48",
 							version = 3,
 						},
 						inheritedIndex = 1,
@@ -15910,28 +16681,65 @@ local tbl =
 							category = "Party",
 							comparator = 2,
 							conditionType = 4,
-							inRangeValue = 20,
+							inRangeValue = 30,
 							minTargetPercent = true,
-							name = "Party Range: <= 20y",
+							name = "Party Range: <= 30y",
 							partyTargetNumber = 100,
 							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							uuid = "800486cc-705c-5caf-8fba-1dd95613f62d",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 519.33918599411,
-				name = "[SGE] Eukrasian Prognosis",
+				name = "[SGE] Panhaima",
+				timeRange = true,
 				timelineIndex = 99,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "da90ed22-488b-032c-8f5f-9dbb3b0bb94d",
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "cac778be-81ce-aa4f-96cc-c4058e24d6dc",
 				version = 2,
 			},
+			inheritedIndex = 4,
 		},
 	},
 	[101] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetType = "Enemy",
+							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				loop = true,
+				mechanicTime = 521.36069634686,
+				name = "Target Nearest",
+				throttleTime = 500,
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 15,
+				timerOffset = 5,
+				timerStartOffset = 5,
+				uuid = "67968eb1-8384-eac5-b77a-4511244dc446",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -15983,77 +16791,11 @@ local tbl =
 				uuid = "1496b63d-2ea3-5275-9d94-97974fbdc365",
 				version = 2,
 			},
-			inheritedIndex = 13,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							gVar = "ACR_RikuSGE3_CD",
-							setTarget = true,
-							targetType = "Enemy",
-							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				loop = true,
-				mechanicTime = 521.36069634686,
-				name = "Target Nearest",
-				throttleTime = 500,
-				timeRange = true,
-				timelineIndex = 101,
-				timerEndOffset = 15,
-				timerOffset = 5,
-				timerStartOffset = 5,
-				uuid = "67968eb1-8384-eac5-b77a-4511244dc446",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
-	[103] = 
+	[102] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							gVar = "ACR_RikuSGE3_CD",
-							setTarget = true,
-							targetContentID = 6052,
-							targetType = "ContentID",
-							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 540.01642260272,
-				name = "Target Exdeath",
-				timelineIndex = 103,
-				timerOffset = 2,
-				uuid = "32351568-4bc1-d283-abb1-97246f5542b8",
-				version = 2,
-			},
-		},
 		
 		{
 			data = 
@@ -16097,16 +16839,50 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
-				mechanicTime = 540.01642260272,
+				mechanicTime = 536.97932260272,
 				name = "[SGE] Soteria",
-				timelineIndex = 103,
+				timelineIndex = 102,
 				timerEndOffset = 5,
-				timerOffset = -2,
+				timerOffset = -4,
 				timerStartOffset = -5,
-				uuid = "53aee8ae-ccfb-2683-8c70-d94123454ec7",
+				uuid = "2f942727-0339-3f9f-8c41-5faf82a96393",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
+		},
+	},
+	[103] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetContentID = 6052,
+							targetType = "ContentID",
+							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 540.01642260272,
+				name = "Target Exdeath",
+				timelineIndex = 103,
+				timerOffset = 2,
+				uuid = "32351568-4bc1-d283-abb1-97246f5542b8",
+				version = 2,
+			},
 		},
 		
 		{
@@ -16179,12 +16955,31 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "d8d75236-ebcb-9fbf-a66b-ff0f0d61ac98",
+							version = 3,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
 								
 								{
 									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"d8d75236-ebcb-9fbf-a66b-ff0f0d61ac98",
 									true,
 								},
 							},
@@ -16204,7 +16999,7 @@ local tbl =
 				uuid = "3f6331c2-b368-a498-98e7-1bdd887096ae",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 2,
 		},
 	},
 	[104] = 
@@ -16314,7 +17109,7 @@ local tbl =
 				uuid = "fa614dbb-72f7-eef8-bb21-880dd3d9fa79",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -16370,7 +17165,62 @@ local tbl =
 				uuid = "237049e5-dd0b-fcde-ab2a-de402647b19b",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							fallthrough = true,
+							gVar = "ACR_RikuSGE3_Healbar_Zoe",
+							uuid = "e8241127-b7f4-8235-9f22-e126fbe1aa59",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 554.19098210262,
+				name = "[SGE] Zoe",
+				timelineIndex = 105,
+				timerEndOffset = -1,
+				timerStartOffset = -6,
+				uuid = "c23cfa13-615e-a569-9f76-ddb439455384",
+				version = 2,
+			},
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -16456,12 +17306,31 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "b47f91c5-8018-cee9-88c5-c149ae3d01c9",
+							version = 3,
+						},
+						inheritedIndex = 4,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
 								
 								{
 									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"b47f91c5-8018-cee9-88c5-c149ae3d01c9",
 									true,
 								},
 							},
@@ -16481,62 +17350,7 @@ local tbl =
 				uuid = "f9a7da29-004d-c01a-8416-de66c5bd8ea5",
 				version = 2,
 			},
-			inheritedIndex = 25,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							fallthrough = true,
-							gVar = "ACR_RikuSGE3_Healbar_Zoe",
-							uuid = "e8241127-b7f4-8235-9f22-e126fbe1aa59",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 554.19098210262,
-				name = "[SGE] Zoe",
-				timelineIndex = 105,
-				timerEndOffset = -1,
-				timerStartOffset = -6,
-				uuid = "c23cfa13-615e-a569-9f76-ddb439455384",
-				version = 2,
-			},
-			inheritedIndex = 8,
+			inheritedIndex = 4,
 		},
 	},
 	[106] = 
@@ -16625,7 +17439,7 @@ local tbl =
 				uuid = "7ca2aae0-9bd2-9d39-99cb-fdb58eb1a7cc",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[107] = 
@@ -16768,7 +17582,7 @@ local tbl =
 				uuid = "3b42f77c-ad05-1241-b945-0413b205e2b4",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -16843,182 +17657,7 @@ local tbl =
 				uuid = "4fc564ec-62ce-1bb3-8220-06ea93333249",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 557.21788210262,
-				name = "[SGE] Ixochole",
-				timelineIndex = 107,
-				timerEndOffset = 5,
-				timerOffset = 4,
-				timerStartOffset = -5,
-				uuid = "f6eb944c-7bd2-fe78-9b2b-9aec0f3adfee",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-								
-								{
-									"5b3830f2-93e2-9833-9894-680daafb64f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Pepsis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 5,
-							buffID = 2609,
-							buffIDList = 
-							{
-								2609,
-								2607,
-							},
-							category = "Party",
-							matchAnyBuff = true,
-							name = "Party: E. Prognosis/Diagnosis Buff",
-							partyTargetSubType = "Number",
-							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 557.21788210262,
-				name = "[SGE] Pepsis",
-				timelineIndex = 107,
-				timerEndOffset = 5,
-				timerOffset = 5,
-				timerStartOffset = -5,
-				uuid = "3e117f4c-8ea2-577a-a471-97fb18565916",
-				version = 2,
-			},
-			inheritedIndex = 35,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -17149,7 +17788,7 @@ local tbl =
 				uuid = "48fa5cd2-9491-14ba-af28-3925cbecb737",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -17207,7 +17846,107 @@ local tbl =
 				uuid = "0151165a-b466-bc8f-aa41-3b59af6a3321",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"5b3830f2-93e2-9833-9894-680daafb64f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Pepsis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 5,
+							buffID = 2609,
+							buffIDList = 
+							{
+								2609,
+								2607,
+							},
+							category = "Party",
+							matchAnyBuff = true,
+							name = "Party: E. Prognosis/Diagnosis Buff",
+							partyTargetSubType = "Number",
+							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 557.21788210262,
+				name = "[SGE] Pepsis",
+				timelineIndex = 107,
+				timerEndOffset = 5,
+				timerOffset = 5,
+				timerStartOffset = -5,
+				uuid = "3e117f4c-8ea2-577a-a471-97fb18565916",
+				version = 2,
+			},
+			inheritedIndex = 5,
 		},
 		
 		{
@@ -17262,7 +18001,7 @@ local tbl =
 				uuid = "b0cb0680-a957-3b57-b68b-e76e11154941",
 				version = 2,
 			},
-			inheritedIndex = 28,
+			inheritedIndex = 6,
 		},
 		
 		{
@@ -17320,7 +18059,7 @@ local tbl =
 				uuid = "2c34e634-2652-601a-945b-9486b09d6376",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 7,
 		},
 	},
 	[108] = 
@@ -17345,7 +18084,168 @@ local tbl =
 								},
 								
 								{
+									"584e8a34-09af-eb2f-8d40-f02ae10c118e",
+									true,
+								},
+								
+								{
 									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"3e70f8ee-ca91-c2dd-ba75-f12842bc10b4",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Druochole",
+							targetType = "Detection Target",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 7,
+							dequeueIfLuaFalse = true,
+							jobValue = "ASTROLOGIAN",
+							name = "Other Healer: AST",
+							partyTargetSubType = "Bottom-most Partylist",
+							partyTargetType = "Healer",
+							uuid = "584e8a34-09af-eb2f-8d40-f02ae10c118e",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 1604,
+							category = "Party",
+							name = "DT: Has Accretion Buff",
+							partyTargetType = "Detection Target",
+							uuid = "f897ad50-ad58-0a2f-b26a-ea51c666f770",
+							version = 3,
+						},
+						inheritedIndex = 4,
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"f897ad50-ad58-0a2f-b26a-ea51c666f770",
+									true,
+								},
+							},
+							filterTargetType = "Healer",
+							uuid = "3e70f8ee-ca91-c2dd-ba75-f12842bc10b4",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 574.57649748723,
+				name = "[SGE] Druochole",
+				timeRange = true,
+				timelineIndex = 108,
+				timerEndOffset = -5,
+				timerOffset = -3,
+				timerStartOffset = -14,
+				uuid = "abd87a4f-bb88-03c2-90de-3df811cb673e",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "self.used = true",
+							conditions = 
+							{
+								
+								{
+									"8e64fb9f-1869-808d-ad07-99579bff1ced",
+									true,
+								},
+							},
+							name = "Healer Cleansed",
+							uuid = "5630a965-88be-0027-9aaf-377ab4e3b2e3",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"b13fed2b-7ba2-31c4-af50-5060204f51b0",
 									true,
 								},
 								
@@ -17397,19 +18297,14 @@ local tbl =
 					{
 						data = 
 						{
+							buffID = 3372,
 							category = "Party",
-							comparator = 2,
-							conditionType = 2,
-							hpType = 2,
-							hpValue = 50,
-							minTargetPercent = true,
-							name = "Party HP: 1/2 <= 50% HP",
-							partyTargetNumber = 50,
+							name = "Party: Earth Down Debuff",
 							partyTargetSubType = "Number",
-							partyTargetType = "DPS",
-							uuid = "6f54471a-8ed0-5109-b59e-ce1f13153b18",
+							uuid = "8e64fb9f-1869-808d-ad07-99579bff1ced",
 							version = 3,
 						},
+						inheritedIndex = 3,
 					},
 					
 					{
@@ -17429,6 +18324,17 @@ local tbl =
 					{
 						data = 
 						{
+							actionUUID = "5630a965-88be-0027-9aaf-377ab4e3b2e3",
+							category = "Action",
+							name = "Action Used: Earth Seen",
+							uuid = "b13fed2b-7ba2-31c4-af50-5060204f51b0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -17439,10 +18345,12 @@ local tbl =
 								},
 							},
 							filterTargetType = "Healer",
+							name = "F - Healer Accretion Done",
 							partyTargetNumber = 2,
 							uuid = "3e70f8ee-ca91-c2dd-ba75-f12842bc10b4",
 							version = 3,
 						},
+						inheritedIndex = 6,
 					},
 				},
 				mechanicTime = 574.57649748723,
@@ -17453,6 +18361,115 @@ local tbl =
 				timerOffset = -3,
 				timerStartOffset = -11,
 				uuid = "7b40ecbf-da23-6cfa-9e82-9aad463d4a52",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"61cf2373-5c78-cc97-b2fa-bbb8242754df",
+									true,
+								},
+								
+								{
+									"f83b9af9-50b4-36ad-a4db-ddab072152e0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Kardia",
+							targetType = "Detection Target",
+							uuid = "eebd022d-7dcc-3f00-ac58-4066ae9914c6",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "61cf2373-5c78-cc97-b2fa-bbb8242754df",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2605,
+							category = "Party",
+							name = "DT: Missing Kardia Buff",
+							partyTargetType = "Detection Target",
+							uuid = "8940a904-de51-6f1d-b3f5-4dc4ef3a4dc6",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"8940a904-de51-6f1d-b3f5-4dc4ef3a4dc6",
+									true,
+								},
+								
+								{
+									"6042f30b-197d-3105-b6ee-1d6272ec688f",
+									true,
+								},
+							},
+							filterTargetType = "Tank",
+							partyTargetContentID = 7691,
+							uuid = "f83b9af9-50b4-36ad-a4db-ddab072152e0",
+							version = 3,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							buffID = 4192,
+							category = "Party",
+							conditionLua = "return TensorCore.mGetEntity(eventArgs.detectionTargetID).aggropercentage => 100",
+							name = "DT: Epic Hero Buff",
+							partyTargetType = "Detection Target",
+							uuid = "6042f30b-197d-3105-b6ee-1d6272ec688f",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 574.57649748723,
+				name = "[SGE] Kardia Chaos Tank",
+				timelineIndex = 108,
+				timerOffset = -2,
+				uuid = "e2c02ca8-2e8f-0481-8681-2e27c772264c",
 				version = 2,
 			},
 		},
@@ -17532,140 +18549,6 @@ local tbl =
 				uuid = "ffd0e2ba-4089-62f4-b4a4-c5c16454ffd4",
 				version = 2,
 			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-								
-								{
-									"303cfea5-c9de-3c82-8055-df4b83304e43",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2609,
-							category = "Party",
-							name = "DT: Missing Eukrasian Prognosis",
-							partyTargetSubType = "Number",
-							partyTargetType = "Detection Target",
-							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							conditionType = 10,
-							inGroupTargetType = "Tank",
-							name = "DT: Tank",
-							partyTargetType = "Detection Target",
-							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"5b3830f2-93e2-9833-9894-680daafb64f5",
-									true,
-								},
-								
-								{
-									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
-									false,
-								},
-							},
-							filterTargetType = "Party",
-							name = "F - Non Tank Missing Shield",
-							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
-							version = 3,
-						},
-					},
-				},
-				loop = true,
-				mechanicTime = 578.01131609381,
-				name = "[SGE] Eukrasian Prognosis",
-				throttleTime = 500,
-				timeRange = true,
-				timelineIndex = 112,
-				timerEndOffset = -1,
-				timerOffset = -3,
-				timerStartOffset = -7,
-				uuid = "cd2be8a5-165c-ecbf-a348-2429d76c6bcd",
-				version = 2,
-			},
-			inheritedIndex = 3,
 		},
 		
 		{
@@ -17861,6 +18744,140 @@ local tbl =
 						},
 					},
 				},
+				loop = true,
+				mechanicTime = 578.01131609381,
+				name = "[SGE] Eukrasian Prognosis",
+				throttleTime = 500,
+				timeRange = true,
+				timelineIndex = 112,
+				timerEndOffset = -1,
+				timerOffset = -3,
+				timerStartOffset = -7,
+				uuid = "cd2be8a5-165c-ecbf-a348-2429d76c6bcd",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"303cfea5-c9de-3c82-8055-df4b83304e43",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "DT: Missing Eukrasian Prognosis",
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "5b3830f2-93e2-9833-9894-680daafb64f5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							conditionType = 10,
+							inGroupTargetType = "Tank",
+							name = "DT: Tank",
+							partyTargetType = "Detection Target",
+							uuid = "d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"5b3830f2-93e2-9833-9894-680daafb64f5",
+									true,
+								},
+								
+								{
+									"d00ae7a2-5b63-9ea0-8f6c-a76c339c4bee",
+									false,
+								},
+							},
+							filterTargetType = "Party",
+							name = "F - Non Tank Missing Shield",
+							uuid = "303cfea5-c9de-3c82-8055-df4b83304e43",
+							version = 3,
+						},
+					},
+				},
 				mechanicTime = 578.01131609381,
 				name = "[SGE] Eukrasian Prognosis",
 				timelineIndex = 112,
@@ -17870,7 +18887,7 @@ local tbl =
 				uuid = "e1e78c4f-9d39-d5e6-8ac6-f7700e7bb04c",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 4,
 		},
 	},
 	[114] = 
@@ -18054,7 +19071,7 @@ local tbl =
 				uuid = "259eb6f0-33e3-16c7-828b-a34f1f804ca6",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -18099,6 +19116,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				enabled = false,
 				mechanicTime = 595.71497259653,
 				name = "[SGE] Soteria",
 				timelineIndex = 115,
@@ -18108,7 +19126,7 @@ local tbl =
 				uuid = "85929e6a-db36-0f36-b611-510b0454ee3b",
 				version = 2,
 			},
-			inheritedIndex = 28,
+			inheritedIndex = 2,
 		},
 	},
 	[117] = 
@@ -18206,173 +19224,6 @@ local tbl =
 	},
 	[122] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"2aede583-6334-5e6e-8897-d0185d2e479e",
-									true,
-								},
-								
-								{
-									"2655f02b-090f-3366-8e9d-81bd1daab933",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Holos",
-							uuid = "a63d60d1-0099-4678-9951-0dde4026e2a7",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "2aede583-6334-5e6e-8897-d0185d2e479e",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "2655f02b-090f-3366-8e9d-81bd1daab933",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 608.39401598045,
-				name = "[SGE] Holos",
-				timeRange = true,
-				timelineIndex = 122,
-				timerEndOffset = -1,
-				timerOffset = -19,
-				timerStartOffset = -8,
-				uuid = "1509c806-9284-63c6-9083-974da440bebf",
-				version = 2,
-			},
-			inheritedIndex = 17,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-								
-								{
-									"1a7b40c7-399c-9e8b-b75d-43f6be09fc4a",
-									false,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "1a7b40c7-399c-9e8b-b75d-43f6be09fc4a",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 608.39401598045,
-				name = "[SGE] Eukrasian Prognosis",
-				timelineIndex = 122,
-				timerEndOffset = 5,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "ccb6c8c8-372d-bc69-9d09-456b729428c5",
-				version = 2,
-			},
-			inheritedIndex = 3,
-		},
 		
 		{
 			data = 
@@ -18581,6 +19432,97 @@ local tbl =
 								},
 								
 								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"1a7b40c7-399c-9e8b-b75d-43f6be09fc4a",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 2609,
+							category = "Self",
+							name = "Self: Eukrasian Prognosis Buff",
+							uuid = "1a7b40c7-399c-9e8b-b75d-43f6be09fc4a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 608.39401598045,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 122,
+				timerEndOffset = 5,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "ccb6c8c8-372d-bc69-9d09-456b729428c5",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
 									"42ed800f-d575-8aae-8688-ab7df9aa97a9",
 									true,
 								},
@@ -18673,6 +19615,82 @@ local tbl =
 				uuid = "50e4ccab-71b8-5bfb-9b4a-95e1e13b6aec",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"2aede583-6334-5e6e-8897-d0185d2e479e",
+									true,
+								},
+								
+								{
+									"2655f02b-090f-3366-8e9d-81bd1daab933",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Holos",
+							uuid = "a63d60d1-0099-4678-9951-0dde4026e2a7",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "2aede583-6334-5e6e-8897-d0185d2e479e",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "2655f02b-090f-3366-8e9d-81bd1daab933",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 608.39401598045,
+				name = "[SGE] Holos",
+				timeRange = true,
+				timelineIndex = 122,
+				timerEndOffset = -1,
+				timerOffset = -19,
+				timerStartOffset = -8,
+				uuid = "1509c806-9284-63c6-9083-974da440bebf",
+				version = 2,
+			},
+			inheritedIndex = 5,
 		},
 	},
 	[123] = 
@@ -18922,6 +19940,18 @@ local tbl =
 					{
 						data = 
 						{
+							buffID = 2611,
+							category = "Self",
+							name = "Self: Zoe Buff",
+							uuid = "891d0d2e-c73f-4407-9413-dc1a4acb5e13",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
 							category = "Party",
 							comparator = 2,
 							conditionType = 4,
@@ -18945,18 +19975,6 @@ local tbl =
 							version = 3,
 						},
 					},
-					
-					{
-						data = 
-						{
-							buffID = 2611,
-							category = "Self",
-							name = "Self: Zoe Buff",
-							uuid = "891d0d2e-c73f-4407-9413-dc1a4acb5e13",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
 				},
 				mechanicTime = 631.08148473045,
 				name = "[SGE] Eukrasian Prognosis",
@@ -18967,7 +19985,7 @@ local tbl =
 				uuid = "19ec57bb-bce2-534a-b23d-4e59bdac772c",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -19061,7 +20079,7 @@ local tbl =
 				uuid = "531bdb53-af2a-6e06-98d9-3949a349570f",
 				version = 2,
 			},
-			inheritedIndex = 8,
+			inheritedIndex = 5,
 		},
 		
 		{
@@ -19119,6 +20137,18 @@ local tbl =
 					{
 						data = 
 						{
+							buffID = 2611,
+							category = "Self",
+							name = "Self: Zoe Buff",
+							uuid = "891d0d2e-c73f-4407-9413-dc1a4acb5e13",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
 							category = "Party",
 							comparator = 2,
 							conditionType = 4,
@@ -19146,18 +20176,6 @@ local tbl =
 					{
 						data = 
 						{
-							buffID = 2611,
-							category = "Self",
-							name = "Self: Zoe Buff",
-							uuid = "891d0d2e-c73f-4407-9413-dc1a4acb5e13",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
 							category = "Lua",
 							conditionLua = "return data.ljSGEInLine == \"Second\" and not data.ljSGEAccretion",
 							dequeueIfLuaFalse = true,
@@ -19176,7 +20194,7 @@ local tbl =
 				uuid = "5b6821c0-dfcd-94d1-9a08-7df081d4fe49",
 				version = 2,
 			},
-			inheritedIndex = 9,
+			inheritedIndex = 6,
 		},
 	},
 	[127] = 
@@ -19236,7 +20254,7 @@ local tbl =
 				uuid = "24d031f5-95b7-c69d-9474-5087997a6668",
 				version = 2,
 			},
-			inheritedIndex = 30,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -19393,6 +20411,20 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "fc2d5e19-2dc6-7446-8805-fa4be5ab4c07",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -19411,13 +20443,18 @@ local tbl =
 									"1bf943c2-d852-8872-bdce-64ec7139ab0d",
 									true,
 								},
+								
+								{
+									"fc2d5e19-2dc6-7446-8805-fa4be5ab4c07",
+									true,
+								},
 							},
 							filterTargetSubtype = "Lowest HP",
 							filterTargetType = "Party",
 							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 6,
 					},
 				},
 				mechanicTime = 652.34305216234,
@@ -19430,6 +20467,81 @@ local tbl =
 				version = 2,
 			},
 			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 652.34305216234,
+				name = "[SGE] Physis",
+				timelineIndex = 128,
+				timerEndOffset = 5,
+				timerOffset = 4,
+				timerStartOffset = -5,
+				uuid = "138c1a91-1583-ee27-b43d-028c23412733",
+				version = 2,
+			},
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -19526,6 +20638,20 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "2035d3ec-e12e-86dd-9225-fa1dbd9c31af",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -19544,13 +20670,18 @@ local tbl =
 									"70984764-9b56-c830-ad8d-f21c0f972e90",
 									true,
 								},
+								
+								{
+									"2035d3ec-e12e-86dd-9225-fa1dbd9c31af",
+									true,
+								},
 							},
 							filterTargetSubtype = "Lowest HP",
 							filterTargetType = "Party",
 							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 6,
 					},
 				},
 				mechanicTime = 652.34305216234,
@@ -19560,81 +20691,6 @@ local tbl =
 				timerOffset = 4,
 				timerStartOffset = -5,
 				uuid = "695c0eb6-bd67-0716-8bdd-487574be446e",
-				version = 2,
-			},
-			inheritedIndex = 25,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
-									true,
-								},
-								
-								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 652.34305216234,
-				name = "[SGE] Physis",
-				timelineIndex = 128,
-				timerEndOffset = 5,
-				timerOffset = 4,
-				timerStartOffset = -5,
-				uuid = "138c1a91-1583-ee27-b43d-028c23412733",
 				version = 2,
 			},
 			inheritedIndex = 3,
@@ -19734,6 +20790,20 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "e2c2271d-8743-fb0d-bb9b-0dee417fb0d6",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -19752,13 +20822,18 @@ local tbl =
 									"a755de6c-0fd0-82ab-b811-47d7ebcf2f92",
 									true,
 								},
+								
+								{
+									"e2c2271d-8743-fb0d-bb9b-0dee417fb0d6",
+									true,
+								},
 							},
 							filterTargetSubtype = "Lowest HP",
 							filterTargetType = "Party",
 							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
 							version = 3,
 						},
-						inheritedIndex = 5,
+						inheritedIndex = 6,
 					},
 				},
 				mechanicTime = 652.34305216234,
@@ -19770,7 +20845,7 @@ local tbl =
 				uuid = "4518a6bc-7e5f-53a0-995c-208977eab798",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -20206,7 +21281,7 @@ local tbl =
 				uuid = "916b89cb-a055-4ad6-87f9-c4695eb70791",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -20289,6 +21364,29 @@ local tbl =
 					{
 						data = 
 						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"59f318f3-31b1-a408-8ce8-b248735ff083",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							filterTargetType = "Tank",
+							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
 							buffID = 3006,
 							category = "Party",
 							name = "DT: Third in Line Buff",
@@ -20316,29 +21414,6 @@ local tbl =
 						},
 						inheritedIndex = 4,
 					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"59f318f3-31b1-a408-8ce8-b248735ff083",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							filterTargetType = "Tank",
-							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 689.33031525282,
 				name = "[SGE] Kardia Haima TIL Tank",
@@ -20349,145 +21424,7 @@ local tbl =
 				uuid = "3a04c98e-7eb4-9e65-ba35-24fb298f5638",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"381dce5b-3db3-8082-89b0-49db92f75dec",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
-							targetSubType = "Lowest HP",
-							targetType = "Detection Target",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "DT Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							partyTargetType = "Detection Target",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 2,
-							hpType = 2,
-							hpValue = 60,
-							name = "DT HP: <= 60% HP",
-							partyTargetType = "Detection Target",
-							uuid = "4eda2bfd-8a78-35e9-9fb8-c4bfd00ad0d5",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2911,
-							category = "Party",
-							name = "DT: Missing Damage Down Debuff",
-							partyTargetType = "Detection Target",
-							uuid = "23a78289-f5cb-44b7-b9f4-9d233f6ac818",
-							version = 3,
-						},
-						inheritedIndex = 4,
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-								
-								{
-									"4eda2bfd-8a78-35e9-9fb8-c4bfd00ad0d5",
-									true,
-								},
-								
-								{
-									"23a78289-f5cb-44b7-b9f4-9d233f6ac818",
-									true,
-								},
-							},
-							filterTargetSubtype = "Lowest HP",
-							filterTargetType = "Party",
-							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
-							version = 3,
-						},
-						inheritedIndex = 5,
-					},
-				},
-				mechanicTime = 689.33031525282,
-				name = "[SGE] Eukrasian Diagnosis",
-				timelineIndex = 136,
-				timerEndOffset = 1,
-				timerOffset = -5,
-				timerStartOffset = -5,
-				uuid = "0ede3b41-e9bb-341e-a520-317322742afb",
-				version = 2,
-			},
-			inheritedIndex = 25,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -20618,7 +21555,164 @@ local tbl =
 				uuid = "b5bb3e91-8c7c-76ed-b57a-9b54af9c0aa4",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"381dce5b-3db3-8082-89b0-49db92f75dec",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianDiagnosis",
+							targetSubType = "Lowest HP",
+							targetType = "Detection Target",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "DT Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 2,
+							hpType = 2,
+							hpValue = 60,
+							name = "DT HP: <= 60% HP",
+							partyTargetType = "Detection Target",
+							uuid = "4eda2bfd-8a78-35e9-9fb8-c4bfd00ad0d5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2911,
+							category = "Party",
+							name = "DT: Missing Damage Down Debuff",
+							partyTargetType = "Detection Target",
+							uuid = "23a78289-f5cb-44b7-b9f4-9d233f6ac818",
+							version = 3,
+						},
+						inheritedIndex = 4,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "cb993a18-9a25-6072-bef0-1f4f2e7cf953",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
+							category = "Filter",
+							conditions = 
+							{
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+								
+								{
+									"4eda2bfd-8a78-35e9-9fb8-c4bfd00ad0d5",
+									true,
+								},
+								
+								{
+									"23a78289-f5cb-44b7-b9f4-9d233f6ac818",
+									true,
+								},
+								
+								{
+									"cb993a18-9a25-6072-bef0-1f4f2e7cf953",
+									true,
+								},
+							},
+							filterTargetSubtype = "Lowest HP",
+							filterTargetType = "Party",
+							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
+							version = 3,
+						},
+						inheritedIndex = 6,
+					},
+				},
+				mechanicTime = 689.33031525282,
+				name = "[SGE] Eukrasian Diagnosis",
+				timelineIndex = 136,
+				timerEndOffset = 1,
+				timerOffset = -5,
+				timerStartOffset = -5,
+				uuid = "0ede3b41-e9bb-341e-a520-317322742afb",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 	},
 	[137] = 
@@ -20723,6 +21817,20 @@ local tbl =
 					{
 						data = 
 						{
+							buffCheckType = 2,
+							buffID = 2607,
+							category = "Party",
+							name = "DT: Missing E Diag Buff",
+							partyTargetType = "Detection Target",
+							uuid = "10d5afc6-8c0c-0dda-be9d-5c3692fcc24a",
+							version = 3,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -20741,13 +21849,18 @@ local tbl =
 									"ed7b7abf-3138-cf1e-9931-806a4a105435",
 									true,
 								},
+								
+								{
+									"10d5afc6-8c0c-0dda-be9d-5c3692fcc24a",
+									true,
+								},
 							},
 							filterTargetSubtype = "Lowest HP",
 							filterTargetType = "Party",
 							uuid = "381dce5b-3db3-8082-89b0-49db92f75dec",
 							version = 3,
 						},
-						inheritedIndex = 5,
+						inheritedIndex = 6,
 					},
 				},
 				mechanicTime = 690.41578400282,
@@ -20759,115 +21872,7 @@ local tbl =
 				uuid = "2dbfb5b6-3000-e4dd-a7e6-f27fa34dcc8a",
 				version = 2,
 			},
-			inheritedIndex = 2,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Soteria",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 690.41578400282,
-				name = "[SGE] Soteria",
-				timelineIndex = 137,
-				timerEndOffset = 5,
-				timerOffset = -3,
-				timerStartOffset = -5,
-				uuid = "1b1f7912-c0fb-7bc9-90c4-fb53d2635b2a",
-				version = 2,
-			},
-			inheritedIndex = 6,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							gVarValue = 2,
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 690.41578400282,
-				name = "[SGE] Toggle 2 Toxikon",
-				timelineIndex = 137,
-				timerEndOffset = 5,
-				timerOffset = -2,
-				timerStartOffset = -5,
-				uuid = "69c4ae2a-b32a-7418-bdd5-b55e83d0ee79",
-				version = 2,
-			},
-			inheritedIndex = 13,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -20953,7 +21958,115 @@ local tbl =
 				uuid = "94096646-a03d-fa33-a54b-fcc508c5ba10",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Soteria",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 690.41578400282,
+				name = "[SGE] Soteria",
+				timelineIndex = 137,
+				timerEndOffset = 5,
+				timerOffset = -3,
+				timerStartOffset = -5,
+				uuid = "1b1f7912-c0fb-7bc9-90c4-fb53d2635b2a",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_2Toxikon",
+							gVarValue = 2,
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 690.41578400282,
+				name = "[SGE] Toggle 2 Toxikon",
+				timelineIndex = 137,
+				timerEndOffset = 5,
+				timerOffset = -2,
+				timerStartOffset = -5,
+				uuid = "69c4ae2a-b32a-7418-bdd5-b55e83d0ee79",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 	},
 	[139] = 
@@ -21174,7 +22287,7 @@ local tbl =
 							},
 							gVar = "ACR_RikuSGE3_Healbar_Krasis",
 							targetSubType = "Lowest HP",
-							targetType = "Party",
+							targetType = "Ranged Physical DPS",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableIsHover = true,
 							variableTogglesType = 3,
@@ -21208,11 +22321,85 @@ local tbl =
 				uuid = "72d4033a-f8fb-978b-b515-63aa9343a8a7",
 				version = 2,
 			},
-			inheritedIndex = 12,
+			inheritedIndex = 4,
 		},
 	},
 	[141] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 705.28176295466,
+				name = "[SGE] Ixochole",
+				timelineIndex = 141,
+				timerEndOffset = 5,
+				timerOffset = 0.5,
+				timerStartOffset = -5,
+				uuid = "5a578671-9f3a-5d0d-bf92-d441e81bab11",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -21296,81 +22483,7 @@ local tbl =
 				uuid = "bad04dd9-2c58-7f25-9c14-2e7890bcdc4d",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 705.28176295466,
-				name = "[SGE] Ixochole",
-				timelineIndex = 141,
-				timerEndOffset = 5,
-				timerOffset = 0.5,
-				timerStartOffset = -5,
-				uuid = "5a578671-9f3a-5d0d-bf92-d441e81bab11",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[143] = 
@@ -21459,7 +22572,7 @@ local tbl =
 				uuid = "db035207-9921-6a3d-9def-c9e679a79c9c",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[146] = 
@@ -21541,176 +22654,6 @@ local tbl =
 	},
 	[148] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"cdf179f3-81c6-f603-aa9c-439b1344a70d",
-									true,
-								},
-								
-								{
-									"1b9bace4-38c3-9012-9fbc-6aedda9d495a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Attacks",
-							gVarValue = 2,
-							uuid = "e4f93982-807d-b66c-bdc9-d81f63223a33",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							conditions = 
-							{
-								
-								{
-									"cdf179f3-81c6-f603-aa9c-439b1344a70d",
-									true,
-								},
-								
-								{
-									"1b9bace4-38c3-9012-9fbc-6aedda9d495a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							untarget = true,
-							uuid = "8a20faf7-8883-c5a9-9e3b-a10a6cd968d5",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							dequeueIfLuaFalse = true,
-							name = "Self: Healer",
-							partyTargetType = "Healer",
-							uuid = "cdf179f3-81c6-f603-aa9c-439b1344a70d",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							comparator = 2,
-							conditionType = 3,
-							hpType = 2,
-							hpValue = 1,
-							name = "Target: HP <= 1",
-							uuid = "1b9bace4-38c3-9012-9fbc-6aedda9d495a",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 715.37264047081,
-				name = "[Healer] Disable Attacks",
-				timeRange = true,
-				timelineIndex = 148,
-				timerEndOffset = 10,
-				timerStartOffset = -20,
-				uuid = "a3cf3c15-3e71-6268-97a7-74bf4184dd01",
-				version = 2,
-			},
-			inheritedIndex = 2,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"515d74ca-ab1b-e512-a7d1-7bf5c67a20e3",
-									true,
-								},
-								
-								{
-									"c7dea2c7-3688-0fad-9c73-4e054fa0a85b",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Kardia",
-							targetSubType = "Topmost Partylist",
-							targetType = "Detection Target",
-							uuid = "c0a9c51e-79a0-c1be-b647-992fb1fced0e",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "local t1 = AnyoneCore.Roster and AnyoneCore.Roster.entOf(\"T1\")\n\nif not t1 then\n    return false\nend\n\neventArgs.detectionTargetID = t1.id\nreturn true",
-							dequeueIfLuaFalse = true,
-							name = "AnyoneCore Roster: T1",
-							uuid = "515d74ca-ab1b-e512-a7d1-7bf5c67a20e3",
-							version = 3,
-						},
-						inheritedIndex = 4,
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2605,
-							category = "Party",
-							dequeueIfLuaFalse = true,
-							name = "DT: Kardion Missing",
-							partyTargetSubType = "Topmost Partylist",
-							partyTargetType = "Detection Target",
-							uuid = "c7dea2c7-3688-0fad-9c73-4e054fa0a85b",
-							version = 3,
-						},
-						inheritedIndex = 4,
-					},
-				},
-				mechanicTime = 715.37264047081,
-				name = "[SGE] Kardia",
-				timelineIndex = 148,
-				timerOffset = -1,
-				uuid = "f3e9e59a-5dc2-2e05-8345-4775530915da",
-				version = 2,
-			},
-			inheritedIndex = 17,
-		},
 		
 		{
 			data = 
@@ -21834,6 +22777,101 @@ local tbl =
 							{
 								
 								{
+									"cdf179f3-81c6-f603-aa9c-439b1344a70d",
+									true,
+								},
+								
+								{
+									"1b9bace4-38c3-9012-9fbc-6aedda9d495a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Attacks",
+							gVarValue = 2,
+							uuid = "e4f93982-807d-b66c-bdc9-d81f63223a33",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"cdf179f3-81c6-f603-aa9c-439b1344a70d",
+									true,
+								},
+								
+								{
+									"1b9bace4-38c3-9012-9fbc-6aedda9d495a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							untarget = true,
+							uuid = "8a20faf7-8883-c5a9-9e3b-a10a6cd968d5",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "cdf179f3-81c6-f603-aa9c-439b1344a70d",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							comparator = 2,
+							conditionType = 3,
+							hpType = 2,
+							hpValue = 1,
+							name = "Target: HP <= 1",
+							uuid = "1b9bace4-38c3-9012-9fbc-6aedda9d495a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 715.37264047081,
+				name = "[Healer] Disable Attacks",
+				timeRange = true,
+				timelineIndex = 148,
+				timerEndOffset = 10,
+				timerStartOffset = -20,
+				uuid = "a3cf3c15-3e71-6268-97a7-74bf4184dd01",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
@@ -21887,7 +22925,82 @@ local tbl =
 				uuid = "f96e3bab-6641-0e7b-bd59-093dbcdcc123",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"515d74ca-ab1b-e512-a7d1-7bf5c67a20e3",
+									true,
+								},
+								
+								{
+									"c7dea2c7-3688-0fad-9c73-4e054fa0a85b",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Kardia",
+							targetSubType = "Topmost Partylist",
+							targetType = "Detection Target",
+							uuid = "c0a9c51e-79a0-c1be-b647-992fb1fced0e",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "local t1 = AnyoneCore.Roster and AnyoneCore.Roster.entOf(\"T1\")\n\nif not t1 then\n    return false\nend\n\neventArgs.detectionTargetID = t1.id\nreturn true",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore Roster: T1",
+							uuid = "515d74ca-ab1b-e512-a7d1-7bf5c67a20e3",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2605,
+							category = "Party",
+							dequeueIfLuaFalse = true,
+							name = "DT: Kardion Missing",
+							partyTargetSubType = "Topmost Partylist",
+							partyTargetType = "Detection Target",
+							uuid = "c7dea2c7-3688-0fad-9c73-4e054fa0a85b",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+				},
+				mechanicTime = 715.37264047081,
+				name = "[SGE] Kardia",
+				timelineIndex = 148,
+				timerOffset = -1,
+				uuid = "f3e9e59a-5dc2-2e05-8345-4775530915da",
+				version = 2,
+			},
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -21986,7 +23099,7 @@ local tbl =
 				uuid = "49b566cb-a6de-082c-ba78-eef4f35ebbda",
 				version = 2,
 			},
-			inheritedIndex = 35,
+			inheritedIndex = 5,
 		},
 	},
 	[150] = 
@@ -22199,58 +23312,6 @@ local tbl =
 							{
 								
 								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 801.88345429349,
-				name = "[SGE] Toggle 2 Toxikon",
-				timelineIndex = 150,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "66afa53c-892e-5b69-9b46-7610ce97f4f3",
-				version = 2,
-			},
-			inheritedIndex = 13,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
@@ -22322,6 +23383,58 @@ local tbl =
 							{
 								
 								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_2Toxikon",
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 801.88345429349,
+				name = "[SGE] Toggle 2 Toxikon",
+				timelineIndex = 150,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "66afa53c-892e-5b69-9b46-7610ce97f4f3",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
 									true,
 								},
@@ -22360,11 +23473,271 @@ local tbl =
 				uuid = "25a405cb-0bad-5b16-a7f5-aad9b7fc55f4",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 5,
 		},
 	},
 	[153] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"42ace145-2b74-484f-8bf2-cebf11dccf7a",
+									true,
+								},
+								
+								{
+									"6dc6db9a-b186-7ff6-a6b3-f82998575c8f",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Philosophia",
+							uuid = "7af0e0f9-9796-f4ac-9c26-f2fb54bb3a0f",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "6dc6db9a-b186-7ff6-a6b3-f82998575c8f",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "42ace145-2b74-484f-8bf2-cebf11dccf7a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[SGE] Philosophia",
+				timeRange = true,
+				timelineIndex = 153,
+				timerEndOffset = -1,
+				timerOffset = 1,
+				timerStartOffset = -12,
+				uuid = "a93a775c-9dc6-e573-9627-6f8a8c8571d0",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffID = 2611,
+							category = "Self",
+							name = "Self: Zoe Buff",
+							uuid = "d58395d9-ba5c-45a4-92a1-989764619b9a",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 2609,
+							category = "Self",
+							name = "Self: Eukrasian Prognosis Buff",
+							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 3989,
+							category = "Self",
+							name = "Self Buff: Philosophia",
+							uuid = "a3c2b599-8baa-b4b7-a5da-0ba8e859908f",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[SGE] Eukrasian Prognosis",
+				timeRange = true,
+				timelineIndex = 153,
+				timerEndOffset = -1,
+				timerOffset = 2,
+				timerStartOffset = -8,
+				uuid = "d04b30e3-4a67-3136-b77c-72d0b30e864c",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 826.02524789261,
+				name = "[SGE] Physis",
+				timelineIndex = 153,
+				timerEndOffset = 5,
+				timerStartOffset = -5,
+				uuid = "25278c14-edcf-aabe-ad1c-7e608b98509b",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
 		
 		{
 			data = 
@@ -22454,267 +23827,7 @@ local tbl =
 				uuid = "9b5646de-b1a8-6335-80bb-aa102c6af4dd",
 				version = 2,
 			},
-			inheritedIndex = 11,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"42ace145-2b74-484f-8bf2-cebf11dccf7a",
-									true,
-								},
-								
-								{
-									"6dc6db9a-b186-7ff6-a6b3-f82998575c8f",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Philosophia",
-							uuid = "7af0e0f9-9796-f4ac-9c26-f2fb54bb3a0f",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "6dc6db9a-b186-7ff6-a6b3-f82998575c8f",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "42ace145-2b74-484f-8bf2-cebf11dccf7a",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 826.02524789261,
-				name = "[SGE] Philosophia",
-				timeRange = true,
-				timelineIndex = 153,
-				timerEndOffset = -1,
-				timerOffset = 1,
-				timerStartOffset = -12,
-				uuid = "a93a775c-9dc6-e573-9627-6f8a8c8571d0",
-				version = 2,
-			},
-			inheritedIndex = 7,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 3989,
-							category = "Self",
-							name = "Self Buff: Philosophia",
-							uuid = "a3c2b599-8baa-b4b7-a5da-0ba8e859908f",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2611,
-							category = "Self",
-							name = "Self: Zoe Buff",
-							uuid = "d58395d9-ba5c-45a4-92a1-989764619b9a",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-				},
-				mechanicTime = 826.02524789261,
-				name = "[SGE] Eukrasian Prognosis",
-				timeRange = true,
-				timelineIndex = 153,
-				timerEndOffset = -1,
-				timerOffset = 2,
-				timerStartOffset = -8,
-				uuid = "d04b30e3-4a67-3136-b77c-72d0b30e864c",
-				version = 2,
-			},
-			inheritedIndex = 8,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
-									true,
-								},
-								
-								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 826.02524789261,
-				name = "[SGE] Physis",
-				timelineIndex = 153,
-				timerEndOffset = 5,
-				timerStartOffset = -5,
-				uuid = "25278c14-edcf-aabe-ad1c-7e608b98509b",
-				version = 2,
-			},
-			inheritedIndex = 9,
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -22790,7 +23903,7 @@ local tbl =
 				uuid = "eafd2b62-cb71-7de1-acd5-56f999e7927c",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 5,
 		},
 	},
 	[154] = 
@@ -22977,7 +24090,7 @@ local tbl =
 				uuid = "643f7929-93ec-c3a9-952e-0baa8a02072c",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 	},
 	[155] = 
@@ -23034,11 +24147,85 @@ local tbl =
 				uuid = "48534ee0-3cd9-165d-955a-f1f81d53c347",
 				version = 2,
 			},
-			inheritedIndex = 29,
+			inheritedIndex = 1,
 		},
 	},
 	[156] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 841.08843971594,
+				name = "[SGE] Ixochole",
+				timelineIndex = 156,
+				timerEndOffset = 5,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "4c0c9616-00e8-a135-9009-6b4723694a06",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -23124,7 +24311,7 @@ local tbl =
 				uuid = "d24f19d1-18e3-a1ef-8f4d-873b2b1dd775",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -23199,81 +24386,7 @@ local tbl =
 				uuid = "d355a233-1a59-b9a8-bdaf-5a69c4a7482d",
 				version = 2,
 			},
-			inheritedIndex = 27,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 841.08843971594,
-				name = "[SGE] Ixochole",
-				timelineIndex = 156,
-				timerEndOffset = 5,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "4c0c9616-00e8-a135-9009-6b4723694a06",
-				version = 2,
-			},
+			inheritedIndex = 3,
 		},
 	},
 	[157] = 
@@ -23353,7 +24466,7 @@ local tbl =
 				uuid = "4f352478-962f-1a52-81dc-12014a3921bb",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -23408,7 +24521,7 @@ local tbl =
 				uuid = "60583cfc-f415-a061-b7df-e94a2f58a764",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -23465,7 +24578,7 @@ local tbl =
 				uuid = "ad3b8514-700a-f67e-8e6c-2674ca3cac2c",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -23556,7 +24669,7 @@ local tbl =
 				uuid = "240e1e49-6b03-60cd-aacb-13ca2a8e8714",
 				version = 2,
 			},
-			inheritedIndex = 8,
+			inheritedIndex = 4,
 		},
 	},
 	[159] = 
@@ -23577,6 +24690,11 @@ local tbl =
 								
 								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"199a5de2-4896-08aa-83be-03f542a5e632",
 									true,
 								},
 							},
@@ -23602,6 +24720,18 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_UsePotions == true",
+							dequeueIfLuaFalse = true,
+							name = "Potion",
+							uuid = "199a5de2-4896-08aa-83be-03f542a5e632",
+							version = 3,
+						},
 					},
 				},
 				mechanicTime = 855.99403801671,
@@ -24010,7 +25140,7 @@ local tbl =
 				uuid = "6a7db8c8-9be2-b322-98e4-8febc7a67c34",
 				version = 2,
 			},
-			inheritedIndex = 5,
+			inheritedIndex = 1,
 		},
 	},
 	[163] = 
@@ -24179,11 +25309,85 @@ local tbl =
 				name = "[SGE] Physis",
 				timelineIndex = 164,
 				timerEndOffset = 5,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "ee16b9ca-c419-4e86-bd53-6d673734479c",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 885.32629175592,
+				name = "[SGE] Physis",
+				timelineIndex = 164,
+				timerEndOffset = 5,
 				timerStartOffset = -5,
 				uuid = "5e24134e-0d43-718b-ba3b-d8cb5972f1c0",
 				version = 2,
 			},
-			inheritedIndex = 12,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -24268,7 +25472,7 @@ local tbl =
 				uuid = "2cdbda37-bf37-2b17-915e-edc3d8a5c8b7",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -24323,6 +25527,17 @@ local tbl =
 					{
 						data = 
 						{
+							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							category = "Action",
+							name = "Action Used: Force Slidecast",
+							uuid = "a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
 							buffCheckType = 3,
 							buffDuration = 2,
 							buffID = 5543,
@@ -24335,17 +25550,6 @@ local tbl =
 						},
 						inheritedIndex = 2,
 					},
-					
-					{
-						data = 
-						{
-							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
-							category = "Action",
-							name = "Action Used: Force Slidecast",
-							uuid = "a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 885.32629175592,
 				name = "Force Slidecast (Shriek 1)",
@@ -24357,81 +25561,7 @@ local tbl =
 				uuid = "69199ce1-36e8-3a58-8138-53a347deb3b6",
 				version = 2,
 			},
-			inheritedIndex = 16,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
-									true,
-								},
-								
-								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 885.32629175592,
-				name = "[SGE] Physis",
-				timelineIndex = 164,
-				timerEndOffset = 5,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "ee16b9ca-c419-4e86-bd53-6d673734479c",
-				version = 2,
-			},
+			inheritedIndex = 4,
 		},
 	},
 	[165] = 
@@ -24486,7 +25616,7 @@ local tbl =
 				uuid = "80f6b980-98fc-c133-bb04-d94ea061a894",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -24595,7 +25725,7 @@ local tbl =
 				uuid = "ddf81489-3e5c-529a-9a5c-fd340095359d",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -24668,7 +25798,7 @@ local tbl =
 				uuid = "b46464fb-28b8-b47b-86b5-650c17867203",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -24749,65 +25879,11 @@ local tbl =
 				uuid = "d633bd94-9c7c-6d16-bb78-baaa419d91f7",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 4,
 		},
 	},
 	[166] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Soteria",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 903.50044082329,
-				name = "[SGE] Soteria",
-				timelineIndex = 166,
-				timerEndOffset = 5,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "6256b70a-f697-76f0-b29a-6da5b3178545",
-				version = 2,
-			},
-			inheritedIndex = 14,
-		},
 		
 		{
 			data = 
@@ -24972,6 +26048,17 @@ local tbl =
 					{
 						data = 
 						{
+							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
+							category = "Action",
+							name = "Action Used: Force Slidecast",
+							uuid = "a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
 							buffCheckType = 3,
 							buffDuration = 2,
 							buffID = 5543,
@@ -24984,17 +26071,6 @@ local tbl =
 						},
 						inheritedIndex = 2,
 					},
-					
-					{
-						data = 
-						{
-							actionUUID = "26b75ba9-ffe2-5289-bbe4-7548e58817b5",
-							category = "Action",
-							name = "Action Used: Force Slidecast",
-							uuid = "a6528518-f553-c3f8-8bec-1ab1f62e6ab1",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 903.50044082329,
 				name = "Force Slidecast (Shriek 2)",
@@ -25006,7 +26082,61 @@ local tbl =
 				uuid = "5d854289-06a4-1ddd-a3be-4daec01bc504",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Soteria",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 903.50044082329,
+				name = "[SGE] Soteria",
+				timelineIndex = 166,
+				timerEndOffset = 5,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "6256b70a-f697-76f0-b29a-6da5b3178545",
+				version = 2,
+			},
+			inheritedIndex = 3,
 		},
 	},
 	[167] = 
@@ -25066,7 +26196,7 @@ local tbl =
 				uuid = "5a99e12a-0c7a-c72c-a6c6-1c0c5bd90fd9",
 				version = 2,
 			},
-			inheritedIndex = 12,
+			inheritedIndex = 1,
 		},
 	},
 	[168] = 
@@ -25160,7 +26290,7 @@ local tbl =
 				uuid = "040b25fd-2df8-0323-a258-651946f322fe",
 				version = 2,
 			},
-			inheritedIndex = 13,
+			inheritedIndex = 1,
 		},
 	},
 	[169] = 
@@ -25347,234 +26477,11 @@ local tbl =
 				uuid = "7d2e9bbc-58ff-1910-a91a-6b55acf62d8b",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 2,
 		},
 	},
 	[170] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							actionID = 24314,
-							conditions = 
-							{
-								
-								{
-									"0c983eb5-162a-dd0e-a6ce-227d785ef690",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_DoT",
-							gVarValue = 2,
-							holdActionDuration = 16,
-							holdActionID = 24314,
-							uuid = "5844d9dd-0d8e-1b7f-b124-be34fe87d863",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"0c983eb5-162a-dd0e-a6ce-227d785ef690",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Burn",
-							uuid = "c0d5b32f-c5eb-7129-9954-5ef84594c2ed",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							name = "Self: Healer",
-							partyTargetType = "Healer",
-							uuid = "0c983eb5-162a-dd0e-a6ce-227d785ef690",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 934.65552902023,
-				name = "[Healer] Toggle DoT & Burn",
-				timelineIndex = 170,
-				timerEndOffset = 3,
-				timerOffset = -16.5,
-				timerStartOffset = -15,
-				uuid = "6c9e7812-cefa-9f3f-a7cc-7e48434cc5aa",
-				version = 2,
-			},
-			inheritedIndex = 2,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 934.65552902023,
-				name = "[SGE] Prognosis",
-				timelineIndex = 170,
-				timerEndOffset = -1,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "7855e0c9-b508-7c47-bbe1-9aaa1f41450d",
-				version = 2,
-			},
-			inheritedIndex = 15,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 934.65552902023,
-				name = "[SGE] Prognosis",
-				timelineIndex = 170,
-				timerEndOffset = -1,
-				timerOffset = 4,
-				timerStartOffset = -5,
-				uuid = "6cad990c-040e-9d89-8dd4-10fb43a5f090",
-				version = 2,
-			},
-			inheritedIndex = 15,
-		},
 		
 		{
 			data = 
@@ -25695,6 +26602,295 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
+							actionID = 24314,
+							conditions = 
+							{
+								
+								{
+									"0c983eb5-162a-dd0e-a6ce-227d785ef690",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_DoT",
+							gVarValue = 2,
+							holdActionDuration = 16,
+							holdActionID = 24314,
+							uuid = "5844d9dd-0d8e-1b7f-b124-be34fe87d863",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"0c983eb5-162a-dd0e-a6ce-227d785ef690",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Burn",
+							uuid = "c0d5b32f-c5eb-7129-9954-5ef84594c2ed",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "0c983eb5-162a-dd0e-a6ce-227d785ef690",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[Healer] Toggle DoT & Burn",
+				timelineIndex = 170,
+				timerEndOffset = 3,
+				timerOffset = -16.5,
+				timerStartOffset = -15,
+				uuid = "6c9e7812-cefa-9f3f-a7cc-7e48434cc5aa",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							actionID = 7562,
+							conditions = 
+							{
+								
+								{
+									"e5a279ee-15f5-ea3f-bdfd-a4b5478f38be",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							ignoreWeaveRules = true,
+							uuid = "37140911-ff23-a4b0-a593-b3a9c6b0cd73",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Healer",
+							partyTargetType = "Healer",
+							uuid = "e5a279ee-15f5-ea3f-bdfd-a4b5478f38be",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							actionCDValue = 1,
+							actionID = 7562,
+							category = "Self",
+							comparator = 2,
+							conditionType = 4,
+							name = "Self: Lucid CD <= 1s",
+							uuid = "ea086d9e-9db4-79cd-b827-f7124140f45a",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[Healer] Lucid Dreaming",
+				timeRange = true,
+				timelineIndex = 170,
+				timerEndOffset = 30,
+				timerStartOffset = 1,
+				uuid = "bec04cb5-831d-f8c6-9af4-9c7c28beb296",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[SGE] Prognosis",
+				timelineIndex = 170,
+				timerEndOffset = -1,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "7855e0c9-b508-7c47-bbe1-9aaa1f41450d",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[SGE] Prognosis",
+				timelineIndex = 170,
+				timerEndOffset = -1,
+				timerOffset = 4,
+				timerStartOffset = -5,
+				uuid = "6cad990c-040e-9d89-8dd4-10fb43a5f090",
+				version = 2,
+			},
+			inheritedIndex = 5,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
 							conditions = 
 							{
 								
@@ -25781,73 +26977,7 @@ local tbl =
 				uuid = "ec5c9223-8feb-c248-a003-c826896f5ba2",
 				version = 2,
 			},
-			inheritedIndex = 36,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							actionID = 7562,
-							conditions = 
-							{
-								
-								{
-									"e5a279ee-15f5-ea3f-bdfd-a4b5478f38be",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							ignoreWeaveRules = true,
-							uuid = "37140911-ff23-a4b0-a593-b3a9c6b0cd73",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							dequeueIfLuaFalse = true,
-							name = "Self: Healer",
-							partyTargetType = "Healer",
-							uuid = "e5a279ee-15f5-ea3f-bdfd-a4b5478f38be",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							actionCDValue = 1,
-							actionID = 7562,
-							category = "Self",
-							comparator = 2,
-							conditionType = 4,
-							name = "Self: Lucid CD <= 1s",
-							uuid = "ea086d9e-9db4-79cd-b827-f7124140f45a",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 934.65552902023,
-				name = "[Healer] Lucid Dreaming",
-				timeRange = true,
-				timelineIndex = 170,
-				timerEndOffset = 30,
-				timerStartOffset = 1,
-				uuid = "bec04cb5-831d-f8c6-9af4-9c7c28beb296",
-				version = 2,
-			},
+			inheritedIndex = 6,
 		},
 		
 		{
@@ -25896,7 +27026,7 @@ local tbl =
 							uuid = "515d74ca-ab1b-e512-a7d1-7bf5c67a20e3",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 1,
 					},
 					
 					{
@@ -25912,7 +27042,7 @@ local tbl =
 							uuid = "c7dea2c7-3688-0fad-9c73-4e054fa0a85b",
 							version = 3,
 						},
-						inheritedIndex = 4,
+						inheritedIndex = 2,
 					},
 				},
 				mechanicTime = 934.65552902023,
@@ -25922,11 +27052,102 @@ local tbl =
 				uuid = "a72ee809-1b0f-a611-a921-967a3e5c64df",
 				version = 2,
 			},
-			inheritedIndex = 17,
+			inheritedIndex = 7,
 		},
 	},
 	[171] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							actionID = 24290,
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"51e8e693-b6cc-ccdb-8596-4bed7cd07721",
+									true,
+								},
+								
+								{
+									"667149d9-c922-e4a0-a695-46eff0de1f65",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return FFXIV_Common_BotRunning",
+							dequeueIfLuaFalse = true,
+							name = "Assist Enabled",
+							uuid = "51e8e693-b6cc-ccdb-8596-4bed7cd07721",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2606,
+							category = "Self",
+							name = "Self Buff: Eukrasia Missing",
+							uuid = "667149d9-c922-e4a0-a695-46eff0de1f65",
+							version = 3,
+						},
+					},
+				},
+				loop = true,
+				mechanicTime = 965.64810213372,
+				name = "[SGE] Eukrasia",
+				randomTimeout = 10,
+				timeRange = true,
+				timelineIndex = 171,
+				timerEndOffset = -0.80000001192093,
+				timerOffset = -1.5,
+				timerStartOffset = -5,
+				uuid = "4d879e88-7874-71b9-82a6-de71ab105f25",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -26038,153 +27259,6 @@ local tbl =
 					{
 						data = 
 						{
-							actionID = 24290,
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"51e8e693-b6cc-ccdb-8596-4bed7cd07721",
-									true,
-								},
-								
-								{
-									"667149d9-c922-e4a0-a695-46eff0de1f65",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return FFXIV_Common_BotRunning",
-							dequeueIfLuaFalse = true,
-							name = "Assist Enabled",
-							uuid = "51e8e693-b6cc-ccdb-8596-4bed7cd07721",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2606,
-							category = "Self",
-							name = "Self Buff: Eukrasia Missing",
-							uuid = "667149d9-c922-e4a0-a695-46eff0de1f65",
-							version = 3,
-						},
-					},
-				},
-				loop = true,
-				mechanicTime = 965.64810213372,
-				name = "[SGE] Eukrasia",
-				randomTimeout = 10,
-				timeRange = true,
-				timelineIndex = 171,
-				timerEndOffset = -0.80000001192093,
-				timerOffset = -1.5,
-				timerStartOffset = -5,
-				uuid = "4d879e88-7874-71b9-82a6-de71ab105f25",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Haima",
-							targetType = "Main Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 965.64810213372,
-				name = "[SGE] Haima",
-				timelineIndex = 171,
-				timerEndOffset = 5,
-				timerOffset = 6,
-				timerStartOffset = -5,
-				uuid = "ab111ae5-0d9f-b352-bc3d-bfcf3d4a7d77",
-				version = 2,
-			},
-			inheritedIndex = 19,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							conditions = 
 							{
@@ -26264,6 +27338,62 @@ local tbl =
 							{
 								
 								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Haima",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 965.64810213372,
+				name = "[SGE] Haima",
+				timelineIndex = 171,
+				timerEndOffset = 5,
+				timerOffset = 6,
+				timerStartOffset = -5,
+				uuid = "ab111ae5-0d9f-b352-bc3d-bfcf3d4a7d77",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
 									true,
 								},
@@ -26295,6 +27425,7 @@ local tbl =
 						},
 					},
 				},
+				enabled = false,
 				mechanicTime = 965.64810213372,
 				name = "[SGE] Kardia MT",
 				timelineIndex = 171,
@@ -26302,7 +27433,7 @@ local tbl =
 				uuid = "2c5f45a0-9e7e-5618-b167-8031347fbe30",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 5,
 		},
 	},
 	[173] = 
@@ -26390,7 +27521,7 @@ local tbl =
 				uuid = "d6a1f7ce-c5be-7672-be1d-ec1969d1d86a",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[174] = 
@@ -26479,7 +27610,7 @@ local tbl =
 				uuid = "f07a0ff8-7e8f-ce13-a767-8e92af0ee170",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[175] = 
@@ -26568,11 +27699,86 @@ local tbl =
 				uuid = "4a95a888-d7d5-1d6f-9a72-5680ff3c0831",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[176] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				enabled = false,
+				mechanicTime = 975.94101651753,
+				name = "[SGE] Ixochole",
+				timelineIndex = 176,
+				timerEndOffset = 5,
+				timerOffset = 0.5,
+				timerStartOffset = -5,
+				uuid = "1fc0e1b1-ab4d-8262-9b45-a7ad051beca5",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -26656,82 +27862,7 @@ local tbl =
 				uuid = "814a87ab-06c8-b464-9af6-41a7736fec79",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 975.94101651753,
-				name = "[SGE] Ixochole",
-				timelineIndex = 176,
-				timerEndOffset = 5,
-				timerOffset = 0.5,
-				timerStartOffset = -5,
-				uuid = "1fc0e1b1-ab4d-8262-9b45-a7ad051beca5",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[177] = 
@@ -26820,11 +27951,140 @@ local tbl =
 				uuid = "6a899b85-2b9c-f05a-a743-e0f699ddbac7",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Kardia",
+							targetSubType = "Topmost Partylist",
+							targetType = "Main Tank",
+							uuid = "c0a9c51e-79a0-c1be-b647-992fb1fced0e",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2605,
+							category = "Party",
+							name = "MT Buff: Kardion Missing",
+							partyTargetSubType = "Topmost Partylist",
+							partyTargetType = "Main Tank",
+							uuid = "738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 978.67931016566,
+				name = "[SGE] Kardia MT",
+				timelineIndex = 177,
+				timerOffset = 1,
+				uuid = "7c54e3dd-87fe-d9f4-a458-456e22d68238",
+				version = 2,
+			},
+			inheritedIndex = 2,
 		},
 	},
 	[178] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 981.83831871021,
+				name = "[SGE] Ixochole",
+				timelineIndex = 178,
+				timerEndOffset = 5,
+				timerOffset = 0.5,
+				timerStartOffset = -5,
+				uuid = "c8922436-614b-4809-8d93-7da2129c2605",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -26908,81 +28168,7 @@ local tbl =
 				uuid = "d35d1954-1540-3d9f-9059-c10fa5cbdab5",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 981.83831871021,
-				name = "[SGE] Ixochole",
-				timelineIndex = 178,
-				timerEndOffset = 5,
-				timerOffset = 0.5,
-				timerStartOffset = -5,
-				uuid = "c8922436-614b-4809-8d93-7da2129c2605",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[179] = 
@@ -27257,7 +28443,7 @@ local tbl =
 				uuid = "4d1f2763-38d7-7338-a747-1a738d6fc565",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
 	},
 	[180] = 
@@ -27311,7 +28497,7 @@ local tbl =
 				uuid = "de1d08a8-3943-fd3a-aa45-1a28e0f91522",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 	},
 	[182] = 
@@ -27400,7 +28586,7 @@ local tbl =
 				uuid = "606fc9e0-06c8-efcf-85fd-c4a36bcef5e4",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[183] = 
@@ -27489,7 +28675,7 @@ local tbl =
 				uuid = "205a4cad-ec78-d5d1-ab8c-32acc4230eb2",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[185] = 
@@ -27567,7 +28753,7 @@ local tbl =
 				uuid = "9b4653fd-4af1-c755-9b7e-448254994df8",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -27653,7 +28839,7 @@ local tbl =
 				uuid = "f4f87e87-e848-2447-a3cc-21b62e2c3a89",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 	},
 	[186] = 
@@ -27713,7 +28899,7 @@ local tbl =
 				uuid = "b8b0a999-3d27-167c-8c2c-8c7b2e022915",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 	},
 	[187] = 
@@ -27803,7 +28989,7 @@ local tbl =
 				uuid = "86bc3355-f275-9bfd-8b80-379cb6fc7b40",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[189] = 
@@ -27927,7 +29113,7 @@ local tbl =
 								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
-							targetSubType = "Furthest",
+							targetSubType = "Lowest HP",
 							targetType = "Detection Target",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableIsHover = true,
@@ -28079,7 +29265,7 @@ local tbl =
 				uuid = "605efbcb-ff66-52a8-91f3-e033e1b16fc2",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 	},
 	[191] = 
@@ -28168,7 +29354,7 @@ local tbl =
 				uuid = "4d557b92-abc6-1760-8e23-aaec0d96c46d",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[192] = 
@@ -28374,7 +29560,7 @@ local tbl =
 				uuid = "7933df7f-dbac-36ec-ace1-3e038f65787b",
 				version = 2,
 			},
-			inheritedIndex = 14,
+			inheritedIndex = 3,
 		},
 		
 		{
@@ -28481,6 +29667,80 @@ local tbl =
 							{
 								
 								{
+									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
+									true,
+								},
+								
+								{
+									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Physis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1025.1000086512,
+				name = "[SGE] Physis",
+				timelineIndex = 193,
+				timerEndOffset = 5,
+				timerOffset = 1,
+				timerStartOffset = -5,
+				uuid = "1c3c4fb7-5e35-4074-b037-54e7a174acc9",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
@@ -28550,81 +29810,7 @@ local tbl =
 				uuid = "464495b3-81a3-b968-bb68-6225324de617",
 				version = 2,
 			},
-			inheritedIndex = 5,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"299bb84c-9fa3-6837-9e30-b8c05eae3959",
-									true,
-								},
-								
-								{
-									"db9e281c-6f91-3db5-8d6c-487c8eb46530",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Physis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "299bb84c-9fa3-6837-9e30-b8c05eae3959",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "db9e281c-6f91-3db5-8d6c-487c8eb46530",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 1025.1000086512,
-				name = "[SGE] Physis",
-				timelineIndex = 193,
-				timerEndOffset = 5,
-				timerOffset = 1,
-				timerStartOffset = -5,
-				uuid = "1c3c4fb7-5e35-4074-b037-54e7a174acc9",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[196] = 
@@ -28713,11 +29899,64 @@ local tbl =
 				uuid = "1913cf0e-9307-eeb1-8d86-398fcbce27f5",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[198] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"ace000e6-5541-6a8d-b064-b432e620d43a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1041.2310024427,
+				name = "[SGE] Pneuma",
+				timelineIndex = 198,
+				timerEndOffset = 5,
+				timerOffset = -0.5,
+				timerStartOffset = -5,
+				uuid = "ad8e97ad-02a1-3f5b-8d7d-f2b8a88a1444",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -28802,60 +30041,7 @@ local tbl =
 				uuid = "14119385-aa27-94fb-94b4-efcd5ca32fe3",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"ace000e6-5541-6a8d-b064-b432e620d43a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Pneuma",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "ace000e6-5541-6a8d-b064-b432e620d43a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 1041.2310024427,
-				name = "[SGE] Pneuma",
-				timelineIndex = 198,
-				timerEndOffset = 5,
-				timerOffset = -0.5,
-				timerStartOffset = -5,
-				uuid = "ad8e97ad-02a1-3f5b-8d7d-f2b8a88a1444",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[202] = 
@@ -28944,7 +30130,7 @@ local tbl =
 				uuid = "bafa87fe-c182-7bae-aa22-f8200d91e413",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[204] = 
@@ -29032,7 +30218,7 @@ local tbl =
 				uuid = "d3a9946f-821a-eb2a-8ee1-1868c4c8051d",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[205] = 
@@ -29121,7 +30307,7 @@ local tbl =
 				uuid = "54e883d3-ba8a-e5de-9982-85b2cd50c85c",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[206] = 
@@ -29210,11 +30396,85 @@ local tbl =
 				uuid = "5ad4bece-0c54-9be2-bde0-eeec96d1fd3c",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[207] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 20,
+							minTargetPercent = true,
+							name = "Party Range: <= 20y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1057.7456791682,
+				name = "[SGE] Ixochole",
+				timelineIndex = 207,
+				timerEndOffset = 5,
+				timerOffset = 0.5,
+				timerStartOffset = -5,
+				uuid = "dc7342fe-1f7b-abba-b5bb-86554bf8670f",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -29298,81 +30558,7 @@ local tbl =
 				uuid = "9d14831c-6bd4-419a-8a33-e250e2938936",
 				version = 2,
 			},
-			inheritedIndex = 3,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Ixochole",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 1057.7456791682,
-				name = "[SGE] Ixochole",
-				timelineIndex = 207,
-				timerEndOffset = 5,
-				timerOffset = 0.5,
-				timerStartOffset = -5,
-				uuid = "dc7342fe-1f7b-abba-b5bb-86554bf8670f",
-				version = 2,
-			},
+			inheritedIndex = 2,
 		},
 	},
 	[208] = 
@@ -29461,7 +30647,7 @@ local tbl =
 				uuid = "1d88059e-57da-89a5-a4e1-b11f74a010d9",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[209] = 
@@ -29558,7 +30744,7 @@ local tbl =
 				uuid = "45a3e3c1-ab46-6984-8ced-fe425ad553c1",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -29644,7 +30830,21 @@ local tbl =
 				uuid = "42e3d2c3-72bd-e29a-a98d-1337e7168453",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				name = "[Draw] P5 Exaflares",
+				uuid = "247ac03f-e53d-4399-b38d-bce4dbeb70e5",
+				version = 2,
+			},
+			inheritedObjectUUID = "dd6428d9-a7b5-42eb-9c77-49c655a81657",
+			inheritedOverwrites = 
+			{
+				enabled = false,
+			},
 		},
 	},
 	[210] = 
@@ -29733,7 +30933,7 @@ local tbl =
 				uuid = "d652c341-5844-1eb9-b5e0-fd93049a3155",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 	},
 	[212] = 
@@ -29821,7 +31021,7 @@ local tbl =
 				uuid = "69aa61c1-cb50-ec66-a62e-7726eafb99a0",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[213] = 
@@ -29881,7 +31081,7 @@ local tbl =
 				uuid = "3cc5ec65-9472-0e10-a47b-8a41bf2b7c70",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 1,
 		},
 	},
 	[214] = 
@@ -30156,7 +31356,7 @@ local tbl =
 				uuid = "a09db649-9d1e-a63b-ba57-8773b33d144b",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
 	},
 	[215] = 
@@ -30186,7 +31386,7 @@ local tbl =
 								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_Taurochole",
-							targetSubType = "Furthest",
+							targetSubType = "Lowest HP",
 							targetType = "Detection Target",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
 							variableIsHover = true,
@@ -30415,11 +31615,6 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
@@ -30444,33 +31639,6 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 1107.6512243835,
 				name = "[SGE] Eukrasian Prognosis",
@@ -30480,7 +31648,7 @@ local tbl =
 				uuid = "96863aac-2fef-d05f-b4a3-0b298e8644c4",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
 		},
 	},
 	[217] = 
@@ -30538,7 +31706,7 @@ local tbl =
 				uuid = "ded25403-5871-4177-a485-5672520459da",
 				version = 2,
 			},
-			inheritedIndex = 14,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -30556,11 +31724,6 @@ local tbl =
 								
 								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
 									true,
 								},
 							},
@@ -30587,33 +31750,6 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 1110.7798573505,
 				name = "[SGE] Eukrasian Prognosis",
@@ -30628,63 +31764,6 @@ local tbl =
 	},
 	[218] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Haima",
-							targetType = "Main Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 1113.9009474604,
-				name = "[SGE] Haima",
-				timeRange = true,
-				timelineIndex = 218,
-				timerEndOffset = -1,
-				timerOffset = -14,
-				timerStartOffset = -14.5,
-				uuid = "4a1c347d-8e5d-eac2-a19c-8900cfcc2d1f",
-				version = 2,
-			},
-			inheritedIndex = 19,
-		},
 		
 		{
 			data = 
@@ -30757,7 +31836,64 @@ local tbl =
 				uuid = "ab08209e-23e8-e81e-a868-c29d52395bc3",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Haima",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1113.9009474604,
+				name = "[SGE] Haima",
+				timeRange = true,
+				timelineIndex = 218,
+				timerEndOffset = -1,
+				timerOffset = -14,
+				timerStartOffset = -14.5,
+				uuid = "4a1c347d-8e5d-eac2-a19c-8900cfcc2d1f",
+				version = 2,
+			},
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -30849,204 +31985,19 @@ local tbl =
 				},
 				mechanicTime = 1113.9009474604,
 				name = "[SGE] Pepsis",
-				timelineIndex = 218,
-				timerEndOffset = 5,
-				timerOffset = 2,
-				timerStartOffset = -5,
-				uuid = "f4c1f9f6-3ae8-be54-87d0-5c3b9b974073",
-				version = 2,
-			},
-			inheritedIndex = 35,
-		},
-	},
-	[219] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							fallthrough = true,
-							gVar = "ACR_RikuSGE3_Healbar_Zoe",
-							uuid = "e8241127-b7f4-8235-9f22-e126fbe1aa59",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 1125.2071474604,
-				name = "[SGE] Zoe Eukrasian Prognosis",
 				timeRange = true,
-				timelineIndex = 219,
-				timerEndOffset = -1,
-				timerStartOffset = -8,
-				uuid = "6d51b731-18bf-1d64-ab90-d875c85ec831",
+				timelineIndex = 218,
+				timerEndOffset = 2,
+				timerOffset = 0.5,
+				timerStartOffset = 0.5,
+				uuid = "f4c1f9f6-3ae8-be54-87d0-5c3b9b974073",
 				version = 2,
 			},
 			inheritedIndex = 3,
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 1125.2071474604,
-				name = "[SGE] Eukrasian Prognosis",
-				timelineIndex = 219,
-				timerEndOffset = -1,
-				timerStartOffset = -5,
-				uuid = "45a2aa38-2b32-2949-9188-0b98b951594f",
-				version = 2,
-			},
-			inheritedIndex = 4,
-		},
+	},
+	[219] = 
+	{
 		
 		{
 			data = 
@@ -31120,6 +32071,134 @@ local tbl =
 				uuid = "733aa998-7d2e-b7d3-930e-7ed035f9b531",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							fallthrough = true,
+							gVar = "ACR_RikuSGE3_Healbar_Zoe",
+							uuid = "e8241127-b7f4-8235-9f22-e126fbe1aa59",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1125.2071474604,
+				name = "[SGE] Zoe Eukrasian Prognosis",
+				timeRange = true,
+				timelineIndex = 219,
+				timerEndOffset = -1,
+				timerStartOffset = -8,
+				uuid = "6d51b731-18bf-1d64-ab90-d875c85ec831",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1125.2071474604,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 219,
+				timerEndOffset = -1,
+				timerStartOffset = -5,
+				uuid = "45a2aa38-2b32-2949-9188-0b98b951594f",
+				version = 2,
+			},
+			inheritedIndex = 3,
 		},
 	},
 	[220] = 
@@ -31216,11 +32295,6 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
@@ -31245,33 +32319,6 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 1130.3204807937,
 				name = "[SGE] Eukrasian Prognosis",
@@ -31282,7 +32329,7 @@ local tbl =
 				uuid = "5d43879e-d59a-7f2e-8344-8d3e4a81b671",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 	},
 	[221] = 
@@ -31379,6 +32426,59 @@ local tbl =
 				uuid = "2b6cbaec-4036-7b58-a327-7c0f6ef34425",
 				version = 2,
 			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1133.3461474604,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 221,
+				timerEndOffset = -1,
+				timerStartOffset = -5,
+				uuid = "540302c1-3aa7-316a-9b4e-51b3eadce9c8",
+				version = 2,
+			},
 			inheritedIndex = 2,
 		},
 		
@@ -31399,11 +32499,6 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
@@ -31427,33 +32522,6 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
 					},
 				},
 				mechanicTime = 1133.3461474604,
@@ -31465,92 +32533,7 @@ local tbl =
 				uuid = "8fdb5025-db7b-4372-908a-a4881d16e3c9",
 				version = 2,
 			},
-			inheritedIndex = 5,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 1133.3461474604,
-				name = "[SGE] Eukrasian Prognosis",
-				timelineIndex = 221,
-				timerEndOffset = -1,
-				timerStartOffset = -5,
-				uuid = "540302c1-3aa7-316a-9b4e-51b3eadce9c8",
-				version = 2,
-			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
 	},
 	[222] = 
@@ -31573,14 +32556,75 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1138.4497474604,
+				name = "[SGE] Eukrasian Prognosis",
+				timelineIndex = 222,
+				timerEndOffset = -1,
+				timerStartOffset = -5,
+				uuid = "57d7d232-2ed7-0d97-8898-8c4ecbda77e8",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"ef65063d-28ea-4e41-966e-08adbc47d6d5",
+									true,
+								},
+								
+								{
+									"eaab5e2f-c658-0343-90fa-448b71513d05",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Druochole",
+							targetSubType = "Lowest HP",
+							targetType = "Party",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
 							variableTogglesType = 3,
 							version = 2.1,
 						},
@@ -31606,15 +32650,13 @@ local tbl =
 					{
 						data = 
 						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
+							category = "Self",
+							conditionType = 6,
+							dequeueIfLuaFalse = true,
+							gaugeIndex = 2,
+							gaugeValue = 2,
+							name = "Self: >= 2 Addersgall",
+							uuid = "ef65063d-28ea-4e41-966e-08adbc47d6d5",
 							version = 3,
 						},
 					},
@@ -31622,20 +32664,24 @@ local tbl =
 					{
 						data = 
 						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
+							category = "Party",
+							comparator = 2,
+							conditionType = 2,
+							hpValue = 100,
+							name = "Party HP: Lowest <= 100% HP",
+							partyTargetSubType = "Lowest HP",
+							uuid = "eaab5e2f-c658-0343-90fa-448b71513d05",
 							version = 3,
 						},
 					},
 				},
 				mechanicTime = 1138.4497474604,
-				name = "[SGE] Eukrasian Prognosis",
+				name = "[SGE] Druochole",
 				timelineIndex = 222,
-				timerEndOffset = -1,
+				timerEndOffset = 5,
+				timerOffset = 1,
 				timerStartOffset = -5,
-				uuid = "57d7d232-2ed7-0d97-8898-8c4ecbda77e8",
+				uuid = "ef90532a-ca5b-2d8a-a22d-56a2f147f7ca",
 				version = 2,
 			},
 			inheritedIndex = 2,
@@ -31716,7 +32762,7 @@ local tbl =
 				uuid = "988e1067-1a7b-29bb-9f37-b10490606a57",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -31734,11 +32780,6 @@ local tbl =
 								
 								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
 									true,
 								},
 							},
@@ -31765,39 +32806,85 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 1141.5122474604,
 				name = "[SGE] Eukrasian Prognosis",
 				timelineIndex = 223,
 				timerEndOffset = -1,
 				timerStartOffset = -5,
+				uuid = "0f049191-0110-2929-924b-7f5c22d9232b",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"9ffbc9a3-74fd-1cf2-b88a-5581779f9baf",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "Party: Missing E Prog",
+							partyTargetSubType = "Number",
+							uuid = "9ffbc9a3-74fd-1cf2-b88a-5581779f9baf",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1141.5122474604,
+				name = "[SGE] Prognosis",
+				timeRange = true,
+				timelineIndex = 223,
+				timerEndOffset = 5,
+				timerOffset = 3,
+				timerStartOffset = 3,
 				uuid = "627c22e7-2636-3c95-bde7-b829537ba430",
 				version = 2,
 			},
@@ -31823,7 +32910,7 @@ local tbl =
 								},
 								
 								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									"05540a95-8914-edb8-b438-eb339229e369",
 									true,
 								},
 							},
@@ -31854,26 +32941,12 @@ local tbl =
 					{
 						data = 
 						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
+							buffCheckType = 2,
 							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
+							category = "Party",
+							name = "Party: Missing E Prog",
+							partyTargetSubType = "Number",
+							uuid = "05540a95-8914-edb8-b438-eb339229e369",
 							version = 3,
 						},
 					},
@@ -31910,11 +32983,6 @@ local tbl =
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
 									true,
 								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
-									true,
-								},
 							},
 							gVar = "ACR_RikuSGE3_Healbar_EukrasianPrognosis",
 							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
@@ -31939,33 +33007,6 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 1146.5870474604,
 				name = "[SGE] Eukrasian Prognosis",
@@ -31975,11 +33016,83 @@ local tbl =
 				uuid = "5e3f983b-1379-5706-8891-dd779a0a438f",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 1,
 		},
 	},
 	[225] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"b3498f89-44c8-defb-9738-2418604491c6",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Hotbar_Potion",
+							potType = 3,
+							usePot = true,
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADSGE_UsePotions == true",
+							dequeueIfLuaFalse = true,
+							name = "Potion",
+							uuid = "b3498f89-44c8-defb-9738-2418604491c6",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1149.6575474604,
+				name = "[SGE] Use Pot",
+				timelineIndex = 225,
+				timerEndOffset = -1,
+				timerOffset = 2,
+				timerStartOffset = -5,
+				uuid = "05b1dcfa-b623-2b51-bdd8-84b29b921765",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -32065,72 +33178,12 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Misc",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Hotbar_Potion",
-							potType = 3,
-							usePot = true,
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 1149.6575474604,
-				name = "[SGE] Use Pot",
-				timelineIndex = 225,
-				timerEndOffset = -1,
-				timerOffset = 2,
-				timerStartOffset = -5,
-				uuid = "05b1dcfa-b623-2b51-bdd8-84b29b921765",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							conditions = 
 							{
 								
 								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
 									true,
 								},
 							},
@@ -32157,33 +33210,6 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
-							version = 3,
-						},
-					},
 				},
 				mechanicTime = 1149.6575474604,
 				name = "[SGE] Eukrasian Prognosis",
@@ -32192,6 +33218,79 @@ local tbl =
 				timerOffset = 1,
 				timerStartOffset = -5,
 				uuid = "af62caae-031c-ef43-9f04-ba6308bc0bfb",
+				version = 2,
+			},
+			inheritedIndex = 3,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+								
+								{
+									"9ffbc9a3-74fd-1cf2-b88a-5581779f9baf",
+									false,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Prognosis",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2609,
+							category = "Party",
+							name = "Party: Missing E Prog",
+							partyTargetSubType = "Number",
+							uuid = "9ffbc9a3-74fd-1cf2-b88a-5581779f9baf",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1149.6575474604,
+				name = "[SGE] Prognosis",
+				timeRange = true,
+				timelineIndex = 225,
+				timerEndOffset = 5,
+				timerOffset = 3,
+				timerStartOffset = 3,
+				uuid = "85710e84-e902-5abb-8ec9-ea040ed1c76d",
 				version = 2,
 			},
 			inheritedIndex = 4,
@@ -32216,7 +33315,7 @@ local tbl =
 								},
 								
 								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
+									"2b167ef1-04ac-1d07-8578-018533bb469d",
 									true,
 								},
 							},
@@ -32247,26 +33346,12 @@ local tbl =
 					{
 						data = 
 						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 20,
-							minTargetPercent = true,
-							name = "Party Range: <= 20y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "0796f2c7-5782-7e71-8675-e259a5fdcac0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
+							buffCheckType = 2,
 							buffID = 2609,
-							category = "Self",
-							name = "Self: Eukrasian Prognosis Buff",
-							uuid = "da3adfd0-f610-1d4f-96fe-1e4260f44f34",
+							category = "Party",
+							name = "Party: Missing E Prog",
+							partyTargetSubType = "Number",
+							uuid = "2b167ef1-04ac-1d07-8578-018533bb469d",
 							version = 3,
 						},
 					},
