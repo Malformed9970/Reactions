@@ -184,6 +184,57 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorCore.sendParsedChatMessage('/mk clear <me>')\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"6ade1cf2-6666-bfea-bf39-1161e481d19e",
+									true,
+								},
+							},
+							uuid = "1171bf1a-69b6-6aed-8473-8548703e6e3a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADDRAWS_P4AutoMark == \"Self Only\"",
+							dequeueIfLuaFalse = true,
+							name = "Self Marking",
+							uuid = "6ade1cf2-6666-bfea-bf39-1161e481d19e",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 15.261765625,
+				name = "[Lj Macro] Clear Self Marker",
+				timeRandomRange = true,
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 2,
+				timerStartOffset = -15,
+				uuid = "821c9a89-7133-e592-86be-2a97b1ef372c",
+				version = 2,
+			},
+		},
 	}, 
 	[3] = 
 	{
@@ -6525,6 +6576,57 @@ local tbl =
 				timelineIndex = 170,
 				timerOffset = 4,
 				uuid = "bc09bbbd-3d53-31be-8182-d608e74f3e73",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "TensorCore.sendParsedChatMessage('/mk clear <me>')\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"6ade1cf2-6666-bfea-bf39-1161e481d19e",
+									true,
+								},
+							},
+							uuid = "1171bf1a-69b6-6aed-8473-8548703e6e3a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADDRAWS_P4AutoMark == \"Self Only\"",
+							dequeueIfLuaFalse = true,
+							name = "Self Marking",
+							uuid = "6ade1cf2-6666-bfea-bf39-1161e481d19e",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[Lj Macro] Clear Self Marker",
+				timeRandomRange = true,
+				timeRange = true,
+				timelineIndex = 170,
+				timerEndOffset = 15,
+				timerStartOffset = 2,
+				uuid = "b5495a7b-0f83-d0e3-a31c-e93644fbf0d0",
 				version = 2,
 			},
 		},
