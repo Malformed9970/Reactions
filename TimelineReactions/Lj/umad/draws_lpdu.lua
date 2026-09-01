@@ -6251,6 +6251,11 @@ local tbl =
 								},
 								
 								{
+									"542263fc-e73e-0cb0-9094-dd3e0341a895",
+									true,
+								},
+								
+								{
 									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
 									false,
 								},
@@ -6272,6 +6277,11 @@ local tbl =
 								
 								{
 									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"542263fc-e73e-0cb0-9094-dd3e0341a895",
 									true,
 								},
 								
@@ -6298,10 +6308,24 @@ local tbl =
 							buffID = 5543,
 							category = "Self",
 							comparator = 2,
-							name = "Self: Cursed Shriek Buff",
+							name = "Self: Cursed Shriek Buff <= 7s",
 							uuid = "99c7f027-aad3-5984-a9f6-707857fa04c7",
 							version = 3,
 						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 3,
+							buffID = 5543,
+							category = "Self",
+							name = "Self: Cursed Shriek Buff >= 3s",
+							uuid = "542263fc-e73e-0cb0-9094-dd3e0341a895",
+							version = 3,
+						},
+						inheritedIndex = 2,
 					},
 					
 					{
