@@ -6371,6 +6371,7 @@ local tbl =
 						},
 					},
 				},
+				enabled = false,
 				eventType = 12,
 				mechanicTime = 877.06989073874,
 				name = "[Lj Draw] Gaze Baits",
@@ -6378,6 +6379,126 @@ local tbl =
 				timelineIndex = 163,
 				timerEndOffset = 33,
 				uuid = "a4812aa0-abc6-4b8a-96c6-4111fd11cd10",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljGazeBaits = data.ljGazeBaits or {}\nlocal state = data.ljGazeBaits\n\nif state.north == nil then\n    state.north = {\n        { x = 100, y = 0, z = 96 },\n        { x = 104, y = 0, z = 94 },\n        { x = 96, y = 0, z = 94 },\n        { x = 100, y = 0, z = 92 },\n        { x = 106, y = 0, z = 96 },\n        { x = 94, y = 0, z = 96 },\n    }\n    state.south = {\n        { x = 100, y = 0, z = 104 },\n        { x = 96, y = 0, z = 106 },\n        { x = 104, y = 0, z = 106 },\n        { x = 100, y = 0, z = 108 },\n        { x = 94, y = 0, z = 104 },\n        { x = 106, y = 0, z = 104 },\n    }\nend\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal candidates = state.north\nlocal targetPos = candidates[1]\n\nif TensorCore.Avoidance.inAnyAOE(targetPos.x, targetPos.y, targetPos.z) == true then\n    for i = 2, #candidates do\n        local candidate = candidates[i]\n        if TensorCore.Avoidance.inAnyAOE(candidate.x, candidate.y, candidate.z) == false then\n            targetPos = candidate\n            break\n        end\n    end\nend\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"542263fc-e73e-0cb0-9094-dd3e0341a895",
+									true,
+								},
+								
+								{
+									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									false,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "North",
+							uuid = "0dd0dc2d-b322-6fdd-b593-019afbfed7ae",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljGazeBaits = data.ljGazeBaits or {}\nlocal state = data.ljGazeBaits\n\nif state.north == nil then\n    state.north = {\n        { x = 100, y = 0, z = 96 },\n        { x = 104, y = 0, z = 94 },\n        { x = 96, y = 0, z = 94 },\n        { x = 100, y = 0, z = 92 },\n        { x = 106, y = 0, z = 96 },\n        { x = 94, y = 0, z = 96 },\n    }\n    state.south = {\n        { x = 100, y = 0, z = 104 },\n        { x = 96, y = 0, z = 106 },\n        { x = 104, y = 0, z = 106 },\n        { x = 100, y = 0, z = 108 },\n        { x = 94, y = 0, z = 104 },\n        { x = 106, y = 0, z = 104 },\n    }\nend\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal candidates = state.south\nlocal targetPos = candidates[1]\n\nif TensorCore.Avoidance.inAnyAOE(targetPos.x, targetPos.y, targetPos.z) == true then\n    for i = 2, #candidates do\n        local candidate = candidates[i]\n        if TensorCore.Avoidance.inAnyAOE(candidate.x, candidate.y, candidate.z) == false then\n            targetPos = candidate\n            break\n        end\n    end\nend\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"542263fc-e73e-0cb0-9094-dd3e0341a895",
+									true,
+								},
+								
+								{
+									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "South",
+							uuid = "6002616b-0609-f148-8b39-700ef94f8be3",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 7,
+							buffID = 5543,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Cursed Shriek Buff <= 7s",
+							uuid = "99c7f027-aad3-5984-a9f6-707857fa04c7",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 3,
+							buffID = 5543,
+							category = "Self",
+							name = "Self: Cursed Shriek Buff >= 3s",
+							uuid = "542263fc-e73e-0cb0-9094-dd3e0341a895",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 877.06989073874,
+				name = "[Lj Draw] Gaze Baits",
+				timeRange = true,
+				timelineIndex = 163,
+				timerEndOffset = 33,
+				uuid = "5227182f-916d-f861-a908-b752291aeefe",
 				version = 2,
 			},
 		},
