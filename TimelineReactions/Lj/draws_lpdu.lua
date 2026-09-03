@@ -4938,7 +4938,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "if self.markerInitialized ~= true then\n    local id = eventArgs.markerID\n\n    if id == 675 then\n        data.ljMysteryIceFake = true\n        self.tellLine = \"▽      FAKE ice (Cones)\"\n    elseif id == 676 then\n        data.ljMysteryIceFake = false\n        self.tellLine = \"▼      TRUE ice (Cones)\"\n    elseif id == 677 then\n        data.ljMysteryThunderFake = true\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n        self.tellLine = \"□      FAKE lightning (Lines)\"\n    elseif id == 678 then\n        data.ljMysteryThunderFake = false\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n        self.tellLine = \"■      TRUE lightning (Lines)\"\n    else\n        self.used = true\n        return\n    end\n\n    self.sendAt = Now() + math.random(1000, 1500)\n    self.markerInitialized = true\nend\n\nif Now() < self.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\nthen\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. self.tellLine)\nend\nself.used = true",
+							actionLua = "if self.markerInitialized ~= true then\n    local id = eventArgs.markerID\n    local element\n    local markerFake\n\n    if id == 675 then\n        element = \"ice\"\n        markerFake = true\n    elseif id == 676 then\n        element = \"ice\"\n        markerFake = false\n    elseif id == 677 then\n        element = \"lightning\"\n        markerFake = true\n    elseif id == 678 then\n        element = \"lightning\"\n        markerFake = false\n    else\n        self.used = true\n        return\n    end\n\n    local effectiveFake = markerFake\n    local mana = data.ljManaCharge\n\n    if mana ~= nil then\n        local storedFake\n        if element == \"ice\" then\n            storedFake = mana.iceFake\n        else\n            storedFake = mana.lightningFake\n        end\n\n        if storedFake == nil then\n            if element == \"ice\" then\n                mana.iceFake = markerFake\n            else\n                mana.lightningFake = markerFake\n            end\n        else\n            effectiveFake = storedFake ~= markerFake\n        end\n    end\n\n    if element == \"ice\" then\n        data.ljMysteryIceFake = effectiveFake\n        self.tellLine = effectiveFake\n            and \"▽      FAKE ice (Cones)\"\n            or \"▼      TRUE ice (Cones)\"\n    else\n        data.ljMysteryThunderFake = effectiveFake\n        data.ljGazeForceDefault = false\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n\n        self.tellLine = effectiveFake\n            and \"□      FAKE lightning (Lines)\"\n            or \"■      TRUE lightning (Lines)\"\n    end\n\n    self.sendAt = Now() + math.random(1000, 1500)\n    self.markerInitialized = true\nend\n\nif Now() < self.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\nthen\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. self.tellLine)\nend\nself.used = true",
 							conditions = 
 							{
 								
@@ -6144,6 +6144,103 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal side = \"north\"\nlocal seq = data.ljMysteryThunderSeq or 0\nlocal forceDefault = data.ljGazeForceDefault == true\ndata.ljGazeBaitTargets = data.ljGazeBaitTargets or {}\nlocal cached = data.ljGazeBaitTargets[side]\n\nlocal aoes = data.ljMysteryThunderAOEs or {}\nlocal lastAOE = data.ljMysteryThunderLastAOE\nif not forceDefault and (\n    data.ljMysteryThunderFake == nil or #aoes == 0\n    or lastAOE == nil or TimeSince(lastAOE) < 150\n) then\n    return\nend\n\nif cached == nil or cached.seq ~= seq or cached.forceDefault ~= forceDefault then\n    local centerX = 100\n    local centerZ = 100\n    local chosenX\n    local chosenZ\n\n    if forceDefault then\n        chosenX = 100\n        chosenZ = 97\n    else\n        local function insideBadThunder(x, z, aoe)\n            if aoe.isTelegraphed == data.ljMysteryThunderFake then\n                return false\n            end\n            local dx = x - aoe.x\n            local dz = z - aoe.z\n            local s = math.sin(aoe.heading)\n            local c = math.cos(aoe.heading)\n            local forward = dx * s + dz * c\n            local lateral = dx * c - dz * s\n            return forward >= -0.5\n                and forward <= 40.5\n                and math.abs(lateral) <= 5.5\n        end\n\n        local found = false\n        for radius = 3, 5 do\n            for step = 0, 6 do\n                local offset = math.rad(step * 10)\n                for direction = 1, -1, -2 do\n                    if step == 0 and direction == -1 then\n                        break\n                    end\n                    local angle = offset * direction\n                    local x = centerX + math.sin(angle) * radius\n                    local z = centerZ + (-1) * math.cos(angle) * radius\n                    local unsafe = false\n                    for _, aoe in ipairs(aoes) do\n                        if insideBadThunder(x, z, aoe) then\n                            unsafe = true\n                            break\n                        end\n                    end\n                    if not unsafe then\n                        chosenX = x\n                        chosenZ = z\n                        found = true\n                        break\n                    end\n                end\n                if found then break end\n            end\n            if found then break end\n        end\n    end\n\n    if chosenX == nil or chosenZ == nil then\n        return\n    end\n\n    cached = {\n        x = chosenX,\n        z = chosenZ,\n        seq = seq,\n        forceDefault = forceDefault,\n    }\n    data.ljGazeBaitTargets[side] = cached\nend\n\nlocal sourcePos = player.pos\nlocal targetPos = { x = cached.x, y = sourcePos.y, z = cached.z }\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    TensorCore.getCachedDrawer(\n        0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2\n    ):addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading, baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									false,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "North",
+							uuid = "0dd0dc2d-b322-6fdd-b593-019afbfed7ae",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local player = TensorCore.mGetPlayer()\nlocal side = \"south\"\nlocal seq = data.ljMysteryThunderSeq or 0\nlocal forceDefault = data.ljGazeForceDefault == true\ndata.ljGazeBaitTargets = data.ljGazeBaitTargets or {}\nlocal cached = data.ljGazeBaitTargets[side]\n\nlocal aoes = data.ljMysteryThunderAOEs or {}\nlocal lastAOE = data.ljMysteryThunderLastAOE\nif not forceDefault and (\n    data.ljMysteryThunderFake == nil or #aoes == 0\n    or lastAOE == nil or TimeSince(lastAOE) < 150\n) then\n    return\nend\n\nif cached == nil or cached.seq ~= seq or cached.forceDefault ~= forceDefault then\n    local centerX = 100\n    local centerZ = 100\n    local chosenX\n    local chosenZ\n\n    if forceDefault then\n        chosenX = 100\n        chosenZ = 103\n    else\n        local function insideBadThunder(x, z, aoe)\n            if aoe.isTelegraphed == data.ljMysteryThunderFake then\n                return false\n            end\n            local dx = x - aoe.x\n            local dz = z - aoe.z\n            local s = math.sin(aoe.heading)\n            local c = math.cos(aoe.heading)\n            local forward = dx * s + dz * c\n            local lateral = dx * c - dz * s\n            return forward >= -0.5\n                and forward <= 40.5\n                and math.abs(lateral) <= 5.5\n        end\n\n        local found = false\n        for radius = 3, 5 do\n            for step = 0, 6 do\n                local offset = math.rad(step * 10)\n                for direction = 1, -1, -2 do\n                    if step == 0 and direction == -1 then\n                        break\n                    end\n                    local angle = offset * direction\n                    local x = centerX + math.sin(angle) * radius\n                    local z = centerZ + (1) * math.cos(angle) * radius\n                    local unsafe = false\n                    for _, aoe in ipairs(aoes) do\n                        if insideBadThunder(x, z, aoe) then\n                            unsafe = true\n                            break\n                        end\n                    end\n                    if not unsafe then\n                        chosenX = x\n                        chosenZ = z\n                        found = true\n                        break\n                    end\n                end\n                if found then break end\n            end\n            if found then break end\n        end\n    end\n\n    if chosenX == nil or chosenZ == nil then\n        return\n    end\n\n    cached = {\n        x = chosenX,\n        z = chosenZ,\n        seq = seq,\n        forceDefault = forceDefault,\n    }\n    data.ljGazeBaitTargets[side] = cached\nend\n\nlocal sourcePos = player.pos\nlocal targetPos = { x = cached.x, y = sourcePos.y, z = cached.z }\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    TensorCore.getCachedDrawer(\n        0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2\n    ):addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading, baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"99c7f027-aad3-5984-a9f6-707857fa04c7",
+									true,
+								},
+								
+								{
+									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "South",
+							uuid = "6002616b-0609-f148-8b39-700ef94f8be3",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 3,
+							buffDuration = 7,
+							buffID = 5543,
+							category = "Self",
+							comparator = 2,
+							name = "Self: Cursed Shriek Buff",
+							uuid = "99c7f027-aad3-5984-a9f6-707857fa04c7",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							name = "Self: DPS",
+							partyTargetType = "DPS",
+							uuid = "c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				mechanicTime = 877.06989073874,
+				name = "[Lj Draw] Gaze Baits",
+				timeRange = true,
+				timelineIndex = 163,
+				timerEndOffset = 33,
+				uuid = "a4812aa0-abc6-4b8a-96c6-4111fd11cd10",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
 							actionLua = "local sourcePos = TensorCore.mGetPlayer().pos\nlocal targetPos = { x = 100, y = 0, z = 96 }\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0.75 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
 							conditions = 
 							{
@@ -6219,16 +6316,17 @@ local tbl =
 						},
 					},
 				},
+				enabled = false,
 				eventType = 12,
 				mechanicTime = 877.06989073874,
-				name = "[Lj Draw] Gaze Baits",
+				name = "[Lj Draw] OLD Gaze Baits",
 				timeRange = true,
 				timelineIndex = 163,
 				timerEndOffset = 33,
 				uuid = "43f3e179-a856-191b-8143-829a94cbd4d0",
 				version = 2,
 			},
-			inheritedIndex = 1,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -6241,48 +6339,17 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nif player == nil or player.pos == nil then\n    self.used = true\n    return\nend\n\nlocal side = \"north\"\nlocal candidates = {\n    { x = 100, z = 96 },\n    { x = 104, z = 94 },\n    { x = 96, z = 94 },\n    { x = 100, z = 92 },\n    { x = 106, z = 96 },\n    { x = 94, z = 96 },\n}\nlocal seq = data.ljMysteryThunderSeq or 0\ndata.ljGazeBaitTargets = data.ljGazeBaitTargets or {}\nlocal cached = data.ljGazeBaitTargets[side]\nlocal aoes = data.ljMysteryThunderAOEs or {}\nlocal lastAOE = data.ljMysteryThunderLastAOE\nif data.ljMysteryThunderFake == nil or #aoes == 0\n    or lastAOE == nil or TimeSince(lastAOE) < 150\nthen\n    return\nend\n\nlocal function insideBadThunder(point, aoe)\n    if aoe.isTelegraphed == data.ljMysteryThunderFake then\n        return false\n    end\n    local dx = point.x - aoe.x\n    local dz = point.z - aoe.z\n    local s = math.sin(aoe.heading)\n    local c = math.cos(aoe.heading)\n    local forward = dx * s + dz * c\n    local lateral = dx * c - dz * s\n    return forward >= -0.5 and forward <= 40.5 and math.abs(lateral) <= 5.5\nend\n\nif cached == nil or cached.seq ~= seq then\n    local chosen = candidates[1]\n    for _, candidate in ipairs(candidates) do\n        local unsafe = false\n        for _, aoe in ipairs(aoes) do\n            if insideBadThunder(candidate, aoe) then\n                unsafe = true\n                break\n            end\n        end\n        if not unsafe then\n            chosen = candidate\n            break\n        end\n    end\n    cached = { x = chosen.x, z = chosen.z, seq = seq }\n    data.ljGazeBaitTargets[side] = cached\nend\n\nlocal sourcePos = player.pos\nlocal targetPos = { x = cached.x, y = sourcePos.y, z = cached.z }\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    TensorCore.getCachedDrawer(\n        0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2\n    ):addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading, baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\nself.used = true",
+							actionLua = "data.ljManaCharge = {\n    payoffSent = false,\n}\nself.used = true",
 							conditions = 
 							{
 								
 								{
-									"99c7f027-aad3-5984-a9f6-707857fa04c7",
-									true,
-								},
-								
-								{
-									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
-									false,
-								},
-							},
-							gVar = "ACR_RikuWAR3_CD",
-							name = "North",
-							uuid = "0dd0dc2d-b322-6fdd-b593-019afbfed7ae",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local player = TensorCore.mGetPlayer()\nif player == nil or player.pos == nil then\n    self.used = true\n    return\nend\n\nlocal side = \"south\"\nlocal candidates = {\n    { x = 100, z = 104 },\n    { x = 96, z = 106 },\n    { x = 104, z = 106 },\n    { x = 100, z = 108 },\n    { x = 94, z = 104 },\n    { x = 106, z = 104 },\n}\nlocal seq = data.ljMysteryThunderSeq or 0\ndata.ljGazeBaitTargets = data.ljGazeBaitTargets or {}\nlocal cached = data.ljGazeBaitTargets[side]\nlocal aoes = data.ljMysteryThunderAOEs or {}\nlocal lastAOE = data.ljMysteryThunderLastAOE\nif data.ljMysteryThunderFake == nil or #aoes == 0\n    or lastAOE == nil or TimeSince(lastAOE) < 150\nthen\n    return\nend\n\nlocal function insideBadThunder(point, aoe)\n    if aoe.isTelegraphed == data.ljMysteryThunderFake then\n        return false\n    end\n    local dx = point.x - aoe.x\n    local dz = point.z - aoe.z\n    local s = math.sin(aoe.heading)\n    local c = math.cos(aoe.heading)\n    local forward = dx * s + dz * c\n    local lateral = dx * c - dz * s\n    return forward >= -0.5 and forward <= 40.5 and math.abs(lateral) <= 5.5\nend\n\nif cached == nil or cached.seq ~= seq then\n    local chosen = candidates[1]\n    for _, candidate in ipairs(candidates) do\n        local unsafe = false\n        for _, aoe in ipairs(aoes) do\n            if insideBadThunder(candidate, aoe) then\n                unsafe = true\n                break\n            end\n        end\n        if not unsafe then\n            chosen = candidate\n            break\n        end\n    end\n    cached = { x = chosen.x, z = chosen.z, seq = seq }\n    data.ljGazeBaitTargets[side] = cached\nend\n\nlocal sourcePos = player.pos\nlocal targetPos = { x = cached.x, y = sourcePos.y, z = cached.z }\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0.75 then\n    TensorCore.getCachedDrawer(\n        0xFF00FFFF, 0xFF0088FF, 0xFF0000FF, 0xFFFFFFFF, 2\n    ):addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading, baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"99c7f027-aad3-5984-a9f6-707857fa04c7",
-									true,
-								},
-								
-								{
-									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+									"1cec7334-c5ec-a7d8-a34a-09eae6632fa2",
 									true,
 								},
 							},
-							gVar = "ACR_RikuWAR3_CD",
-							name = "South",
-							uuid = "6002616b-0609-f148-8b39-700ef94f8be3",
+							name = "Reset Mana Charge State",
+							uuid = "017cc044-da43-52b4-9761-79b333478354",
 							version = 2.1,
 						},
 					},
@@ -6293,158 +6360,23 @@ local tbl =
 					{
 						data = 
 						{
-							buffCheckType = 3,
-							buffDuration = 30,
-							buffID = 5543,
-							category = "Self",
-							comparator = 2,
-							name = "Self: Cursed Shriek Buff",
-							uuid = "99c7f027-aad3-5984-a9f6-707857fa04c7",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							name = "Self: DPS",
-							partyTargetType = "DPS",
-							uuid = "c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
+							category = "Lua",
+							conditionLua = "return eventArgs.entityContentID == 7131\n    and eventArgs.spellID == 47780",
+							dequeueIfLuaFalse = true,
+							name = "Kefka Mana Charge",
+							uuid = "1cec7334-c5ec-a7d8-a34a-09eae6632fa2",
 							version = 3,
 						},
 					},
 				},
-				enabled = false,
-				eventType = 12,
+				eventType = 2,
 				mechanicTime = 877.06989073874,
-				name = "[Lj Draw] Gaze Baits",
+				name = "[Lj Data] Begin Mana Charge",
 				timeRange = true,
 				timelineIndex = 163,
-				timerEndOffset = 33,
-				uuid = "a4812aa0-abc6-4b8a-96c6-4111fd11cd10",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljGazeBaits = data.ljGazeBaits or {}\nlocal state = data.ljGazeBaits\n\nif state.north == nil then\n    state.north = {\n        { x = 100, y = 0, z = 96 },\n        { x = 104, y = 0, z = 94 },\n        { x = 96, y = 0, z = 94 },\n        { x = 100, y = 0, z = 92 },\n        { x = 106, y = 0, z = 96 },\n        { x = 94, y = 0, z = 96 },\n    }\n    state.south = {\n        { x = 100, y = 0, z = 104 },\n        { x = 96, y = 0, z = 106 },\n        { x = 104, y = 0, z = 106 },\n        { x = 100, y = 0, z = 108 },\n        { x = 94, y = 0, z = 104 },\n        { x = 106, y = 0, z = 104 },\n    }\nend\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal candidates = state.north\nlocal targetPos = candidates[1]\n\nif TensorCore.Avoidance.inAnyAOE(targetPos.x, targetPos.y, targetPos.z) == true then\n    for i = 2, #candidates do\n        local candidate = candidates[i]\n        if TensorCore.Avoidance.inAnyAOE(candidate.x, candidate.y, candidate.z) == false then\n            targetPos = candidate\n            break\n        end\n    end\nend\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"99c7f027-aad3-5984-a9f6-707857fa04c7",
-									true,
-								},
-								
-								{
-									"542263fc-e73e-0cb0-9094-dd3e0341a895",
-									true,
-								},
-								
-								{
-									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
-									false,
-								},
-							},
-							gVar = "ACR_RikuWAR3_CD",
-							name = "North",
-							uuid = "0dd0dc2d-b322-6fdd-b593-019afbfed7ae",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljGazeBaits = data.ljGazeBaits or {}\nlocal state = data.ljGazeBaits\n\nif state.north == nil then\n    state.north = {\n        { x = 100, y = 0, z = 96 },\n        { x = 104, y = 0, z = 94 },\n        { x = 96, y = 0, z = 94 },\n        { x = 100, y = 0, z = 92 },\n        { x = 106, y = 0, z = 96 },\n        { x = 94, y = 0, z = 96 },\n    }\n    state.south = {\n        { x = 100, y = 0, z = 104 },\n        { x = 96, y = 0, z = 106 },\n        { x = 104, y = 0, z = 106 },\n        { x = 100, y = 0, z = 108 },\n        { x = 94, y = 0, z = 104 },\n        { x = 106, y = 0, z = 104 },\n    }\nend\n\nlocal sourcePos = TensorCore.mGetPlayer().pos\nlocal candidates = state.south\nlocal targetPos = candidates[1]\n\nif TensorCore.Avoidance.inAnyAOE(targetPos.x, targetPos.y, targetPos.z) == true then\n    for i = 2, #candidates do\n        local candidate = candidates[i]\n        if TensorCore.Avoidance.inAnyAOE(candidate.x, candidate.y, candidate.z) == false then\n            targetPos = candidate\n            break\n        end\n    end\nend\n\nlocal heading = TensorCore.getHeadingToTarget(sourcePos, targetPos)\nlocal totalDistance = TensorCore.getDistance2d(sourcePos, targetPos)\n\nlocal scale = math.min(1, totalDistance / 15)\nlocal baseWidth = math.max(0.5, 1 * scale)\nlocal tipWidth = math.max(1.5, 3 * scale)\nlocal tipLength = math.max(2, 3 * scale)\nlocal baseLength = totalDistance - tipLength\n\nif baseLength > 0 then\n    local arrowDrawer = TensorCore.getCachedDrawer(\n        0xFF00FFFF,\n        0xFF0088FF,\n        0xFF0000FF,\n        0xFFFFFFFF,\n        2\n    )\n\n    arrowDrawer:addArrow(\n        sourcePos.x, sourcePos.y, sourcePos.z,\n        heading,\n        baseLength, baseWidth, tipLength, tipWidth,\n        false, Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n    )\nend\n\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"99c7f027-aad3-5984-a9f6-707857fa04c7",
-									true,
-								},
-								
-								{
-									"542263fc-e73e-0cb0-9094-dd3e0341a895",
-									true,
-								},
-								
-								{
-									"c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
-									true,
-								},
-							},
-							gVar = "ACR_RikuWAR3_CD",
-							name = "South",
-							uuid = "6002616b-0609-f148-8b39-700ef94f8be3",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							buffCheckType = 3,
-							buffDuration = 7,
-							buffID = 5543,
-							category = "Self",
-							comparator = 2,
-							name = "Self: Cursed Shriek Buff <= 7s",
-							uuid = "99c7f027-aad3-5984-a9f6-707857fa04c7",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							buffCheckType = 3,
-							buffDuration = 3,
-							buffID = 5543,
-							category = "Self",
-							name = "Self: Cursed Shriek Buff >= 3s",
-							uuid = "542263fc-e73e-0cb0-9094-dd3e0341a895",
-							version = 3,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							name = "Self: DPS",
-							partyTargetType = "DPS",
-							uuid = "c2dc8d6a-9854-0548-9c50-fb9ceddb58f7",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				eventType = 12,
-				mechanicTime = 877.06989073874,
-				name = "[Lj Draw] Gaze Baits",
-				timeRange = true,
-				timelineIndex = 163,
-				timerEndOffset = 33,
-				uuid = "43945b17-c374-d680-88ef-e3e1b1b9edd4",
+				timerEndOffset = 2,
+				timerStartOffset = -2,
+				uuid = "34a00941-84e8-d8f9-b0d6-dad427708e1c",
 				version = 2,
 			},
 		},
@@ -6501,6 +6433,35 @@ local tbl =
 				timerEndOffset = 8,
 				timerStartOffset = -9,
 				uuid = "aa00c1dc-5baa-d1d8-ac9e-9f8db7fd726d",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljGazeForceDefault = true\ndata.ljGazeBaitTargets = nil\nself.used = true",
+							name = "Restore Default Gaze Baits",
+							uuid = "6a8998a9-d4bf-dce9-a2ed-64db44532127",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 885.32629175592,
+				name = "[Lj Data] Restore Default Gaze Baits",
+				timelineIndex = 164,
+				timerOffset = 1,
+				uuid = "d1e3f14d-b924-05f1-8552-c32d77b4484e",
 				version = 2,
 			},
 		},
