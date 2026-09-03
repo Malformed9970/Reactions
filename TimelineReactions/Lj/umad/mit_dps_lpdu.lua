@@ -120,9 +120,10 @@ local tbl =
 				timelineIndex = 6,
 				timerEndOffset = -1,
 				timerStartOffset = -14.5,
-				uuid = "7d79f386-bafc-6b6e-9035-3dcf129227a0",
+				uuid = "49cc850c-3bb6-8479-8fef-7408016409f9",
 				version = 2,
 			},
+			inheritedIndex = 1,
 		},
 		
 		{
@@ -190,11 +191,14 @@ local tbl =
 				timelineIndex = 6,
 				timerEndOffset = -1,
 				timerStartOffset = -14.5,
-				uuid = "0e41c449-52f4-4164-8834-b7fdf001cc24",
+				uuid = "a702fd6b-1521-bb89-b1ae-bfc1794e5e5b",
 				version = 2,
 			},
 			inheritedIndex = 2,
 		},
+	},
+	[7] = 
+	{
 		
 		{
 			data = 
@@ -304,7 +308,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -337,17 +341,17 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 38.012854917972,
+				mechanicTime = 42.238586763472,
 				name = "[Lj Mit] Phys Ranged - Primary",
 				randomTimeout = 10,
 				timeRange = true,
-				timelineIndex = 6,
+				timelineIndex = 7,
 				timerEndOffset = -1,
-				timerStartOffset = -14.5,
-				uuid = "a545c726-5d98-bd92-a89c-7c8ee1e95c9d",
+				timerStartOffset = -14.89999961853,
+				uuid = "48b7cad2-4662-307d-8a48-c8d46daba322",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 1,
 		},
 	},
 	[12] = 
@@ -613,7 +617,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -710,7 +714,7 @@ local tbl =
 							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 62.553324919213,
@@ -796,6 +800,59 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+									true,
+								},
+							},
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 62.553324919213,
+				name = "[Lj Mit] Nature's Minne",
+				timeRange = true,
+				timelineIndex = 12,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "d97ee4dc-afa3-1345-b313-3540e20953f3",
+				version = 2,
+			},
+		},
 	},
 	[25] = 
 	{
@@ -862,7 +919,7 @@ local tbl =
 				name = "[Lj Mit] Feint - Primary",
 				timeRange = true,
 				timelineIndex = 25,
-				timerEndOffset = -1,
+				timerEndOffset = 1,
 				timerStartOffset = -14.5,
 				uuid = "32c4fc52-d09f-454a-b61b-2a2c091aa2d6",
 				version = 2,
@@ -932,7 +989,7 @@ local tbl =
 				name = "[Lj Mit] Addle - Primary",
 				timeRange = true,
 				timelineIndex = 25,
-				timerEndOffset = -1,
+				timerEndOffset = 1,
 				timerStartOffset = -14.5,
 				uuid = "fc5630d6-40cd-fff7-a243-d639ac8cbfb7",
 				version = 2,
@@ -1048,7 +1105,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -1086,12 +1143,12 @@ local tbl =
 				randomTimeout = 10,
 				timeRange = true,
 				timelineIndex = 25,
-				timerEndOffset = -1,
+				timerEndOffset = 1,
 				timerStartOffset = -14.5,
 				uuid = "0e35a86e-df18-299f-9430-12b0b952b5ae",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 3,
 		},
 	},
 	[34] = 
@@ -1357,7 +1414,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -1680,7 +1737,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -1778,7 +1835,7 @@ local tbl =
 							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 235.34477128997,
@@ -1861,6 +1918,59 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "9c9e6319-3951-b879-a0b0-2fc6429fd6f3",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+									true,
+								},
+							},
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 235.34477128997,
+				name = "[Lj Mit] Nature's Minne",
+				timeRange = true,
+				timelineIndex = 41,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "833b07b7-78ff-30cc-947d-ff6e1bed1a25",
 				version = 2,
 			},
 		},
@@ -2128,7 +2238,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -2183,7 +2293,7 @@ local tbl =
 				uuid = "c99cdf2c-9373-22ae-8758-e7320ee78646",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
 		},
 	},
 	[66] = 
@@ -2451,7 +2561,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -2664,6 +2774,132 @@ local tbl =
 							{
 								
 								{
+									"c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+									true,
+								},
+							},
+							gVar = "ACR_TensorMagnum3_Hotbar_Dismantle",
+							uuid = "ae6912a5-fb91-3542-8411-f786fa2a3106",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MACHINIST",
+							name = "Self: MCH",
+							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 370.25754620621,
+				name = "[Lj Mit] Dismantle",
+				timeRange = true,
+				timelineIndex = 72,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "0e0ace5d-4b68-5f45-a075-474f01b0a0b8",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+									true,
+								},
+								
+								{
+									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+									true,
+								},
+							},
+							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
+							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "REDMAGE",
+							name = "Self: RDM",
+							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 370.25754620621,
+				name = "[Lj Mit] Magick Barrier",
+				timeRange = true,
+				timelineIndex = 72,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "28c47436-964d-4eb9-961b-4c5c028a2893",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"7c259250-e60f-cf60-ac51-224d92e3db21",
 									true,
 								},
@@ -2773,7 +3009,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -2828,7 +3064,7 @@ local tbl =
 				uuid = "af24e527-0b5f-4aaa-99fb-651dc41cd31b",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 5,
 		},
 		
 		{
@@ -2845,12 +3081,12 @@ local tbl =
 							{
 								
 								{
-									"c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
 							},
-							gVar = "ACR_TensorMagnum3_Hotbar_Dismantle",
-							uuid = "ae6912a5-fb91-3542-8411-f786fa2a3106",
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
 							variableTogglesType = 2,
 							version = 2.1,
 						},
@@ -2865,94 +3101,21 @@ local tbl =
 							category = "Self",
 							conditionType = 13,
 							dequeueIfLuaFalse = true,
-							jobValue = "MACHINIST",
-							name = "Self: MCH",
-							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 370.25754620621,
-				name = "[Lj Mit] Dismantle",
+				name = "[Lj Mit] Nature's Minne",
 				timeRange = true,
 				timelineIndex = 72,
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
-				uuid = "0e0ace5d-4b68-5f45-a075-474f01b0a0b8",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
-									true,
-								},
-								
-								{
-									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
-									true,
-								},
-							},
-							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
-							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "REDMAGE",
-							name = "Self: RDM",
-							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 370.25754620621,
-				name = "[Lj Mit] Magick Barrier",
-				timeRange = true,
-				timelineIndex = 72,
-				timerEndOffset = -1,
-				timerStartOffset = -9.5,
-				uuid = "28c47436-964d-4eb9-961b-4c5c028a2893",
+				uuid = "555bc131-0901-1eb7-a643-0588c3d61d41",
 				version = 2,
 			},
 		},
@@ -3370,7 +3533,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -3425,7 +3588,7 @@ local tbl =
 				uuid = "02cb87b6-3f30-a16e-91dc-968cc4a01385",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 2,
 		},
 	},
 	[97] = 
@@ -3554,7 +3717,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -3610,7 +3773,7 @@ local tbl =
 				uuid = "c536c7aa-3920-e8f7-a402-30405c2c19bd",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 1,
 		},
 	},
 	[107] = 
@@ -3655,7 +3818,7 @@ local tbl =
 							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 557.21788210262,
@@ -3738,6 +3901,59 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "007f7f36-483f-99df-abde-48b3b2a8ddd4",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+									true,
+								},
+							},
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 557.21788210262,
+				name = "[Lj Mit] Nature's Minne",
+				timeRange = true,
+				timelineIndex = 107,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "13e19161-a0b8-d790-81ef-8335b7247f9a",
 				version = 2,
 			},
 		},
@@ -4009,7 +4225,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -4064,7 +4280,7 @@ local tbl =
 				uuid = "0b486997-d4d1-d381-bedb-820ed9f98ade",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 2,
 		},
 	},
 	[115] = 
@@ -4405,7 +4621,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -4461,7 +4677,7 @@ local tbl =
 				uuid = "83f55317-a2fa-31fb-8409-dcd91a05770e",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 	},
 	[137] = 
@@ -4506,7 +4722,7 @@ local tbl =
 							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 690.41578400282,
@@ -4783,7 +4999,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -4838,11 +5054,84 @@ local tbl =
 				uuid = "0c023618-de9a-e26b-b103-c56b342d9886",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 3,
 		},
 	},
 	[157] = 
 	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+									true,
+								},
+								
+								{
+									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+									true,
+								},
+							},
+							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
+							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "REDMAGE",
+							name = "Self: RDM",
+							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 846.19462329432,
+				name = "[Lj Mit] Magick Barrier",
+				timeRange = true,
+				timelineIndex = 157,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "14fd5314-91ca-9569-8b89-af1227ba94b6",
+				version = 2,
+			},
+		},
 		
 		{
 			data = 
@@ -4967,7 +5256,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -5023,7 +5312,7 @@ local tbl =
 				uuid = "ebb3eb8c-21af-e0f8-a831-82911b0d6726",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -5040,17 +5329,12 @@ local tbl =
 							{
 								
 								{
-									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
-									true,
-								},
-								
-								{
-									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
 							},
-							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
-							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
 							variableTogglesType = 2,
 							version = 2.1,
 						},
@@ -5065,36 +5349,21 @@ local tbl =
 							category = "Self",
 							conditionType = 13,
 							dequeueIfLuaFalse = true,
-							jobValue = "REDMAGE",
-							name = "Self: RDM",
-							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 							version = 3,
 						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
-							version = 3,
-						},
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 846.19462329432,
-				name = "[Lj Mit] Magick Barrier",
+				name = "[Lj Mit] Nature's Minne",
 				timeRange = true,
 				timelineIndex = 157,
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
-				uuid = "14fd5314-91ca-9569-8b89-af1227ba94b6",
+				uuid = "475a5415-3726-f5a2-9263-f8bd53b60800",
 				version = 2,
 			},
 		},
@@ -5225,7 +5494,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -5280,7 +5549,7 @@ local tbl =
 				uuid = "9178e8d6-7585-d509-a92b-8cd11725e965",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 1,
 		},
 	},
 	[165] = 
@@ -5464,7 +5733,7 @@ local tbl =
 							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 895.49672653853,
@@ -5635,6 +5904,79 @@ local tbl =
 							{
 								
 								{
+									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+									true,
+								},
+								
+								{
+									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+									true,
+								},
+							},
+							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
+							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "REDMAGE",
+							name = "Self: RDM",
+							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 975.94101651753,
+				name = "[Lj Mit] Magick Barrier",
+				timeRange = true,
+				timelineIndex = 176,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "b17984d6-d430-8385-b56e-c2acac6b767e",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"7c259250-e60f-cf60-ac51-224d92e3db21",
 									true,
 								},
@@ -5744,7 +6086,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -5800,7 +6142,7 @@ local tbl =
 				uuid = "46000d17-9f6a-975e-9944-ac112c9c90c8",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 2,
 		},
 		
 		{
@@ -5817,17 +6159,12 @@ local tbl =
 							{
 								
 								{
-									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
-									true,
-								},
-								
-								{
-									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
 							},
-							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
-							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
 							variableTogglesType = 2,
 							version = 2.1,
 						},
@@ -5842,36 +6179,21 @@ local tbl =
 							category = "Self",
 							conditionType = 13,
 							dequeueIfLuaFalse = true,
-							jobValue = "REDMAGE",
-							name = "Self: RDM",
-							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 							version = 3,
 						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
-							version = 3,
-						},
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 975.94101651753,
-				name = "[Lj Mit] Magick Barrier",
+				name = "[Lj Mit] Nature's Minne",
 				timeRange = true,
 				timelineIndex = 176,
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
-				uuid = "b17984d6-d430-8385-b56e-c2acac6b767e",
+				uuid = "ac64ce56-7f28-b624-82a2-658ba142b57c",
 				version = 2,
 			},
 		},
@@ -6071,7 +6393,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -6126,7 +6448,7 @@ local tbl =
 				uuid = "39bddaa4-4f95-4558-aeb6-3281d9062a96",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 2,
 		},
 	},
 	[195] = 
@@ -6465,7 +6787,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -6682,6 +7004,132 @@ local tbl =
 							{
 								
 								{
+									"c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+									true,
+								},
+							},
+							gVar = "ACR_TensorMagnum3_Hotbar_Dismantle",
+							uuid = "ae6912a5-fb91-3542-8411-f786fa2a3106",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MACHINIST",
+							name = "Self: MCH",
+							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 1138.4497474604,
+				name = "[Lj Mit] Dismantle",
+				timeRange = true,
+				timelineIndex = 222,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "d183ef9d-e70a-82b9-ada2-ab02aacdf43a",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+									true,
+								},
+								
+								{
+									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+									true,
+								},
+							},
+							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
+							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "REDMAGE",
+							name = "Self: RDM",
+							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1138.4497474604,
+				name = "[Lj Mit] Magick Barrier",
+				timeRange = true,
+				timelineIndex = 222,
+				timerEndOffset = -1,
+				timerStartOffset = -9.5,
+				uuid = "6b329e0c-af8e-6128-9b2f-3e999f0ddc00",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
 									"7c259250-e60f-cf60-ac51-224d92e3db21",
 									true,
 								},
@@ -6791,7 +7239,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -6846,7 +7294,7 @@ local tbl =
 				uuid = "39d69864-32a4-6238-ab43-9c74ed2465b8",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 4,
 		},
 		
 		{
@@ -6863,12 +7311,12 @@ local tbl =
 							{
 								
 								{
-									"c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
 							},
-							gVar = "ACR_TensorMagnum3_Hotbar_Dismantle",
-							uuid = "ae6912a5-fb91-3542-8411-f786fa2a3106",
+							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
+							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
 							variableTogglesType = 2,
 							version = 2.1,
 						},
@@ -6883,94 +7331,21 @@ local tbl =
 							category = "Self",
 							conditionType = 13,
 							dequeueIfLuaFalse = true,
-							jobValue = "MACHINIST",
-							name = "Self: MCH",
-							uuid = "c3fcfda9-bfd8-1d9b-b7b4-1154d8d77c9c",
+							jobValue = "BARD",
+							name = "Self: BRD",
+							uuid = "c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 							version = 3,
 						},
-						inheritedIndex = 3,
+						inheritedIndex = 1,
 					},
 				},
 				mechanicTime = 1138.4497474604,
-				name = "[Lj Mit] Dismantle",
+				name = "[Lj Mit] Nature's Minne",
 				timeRange = true,
 				timelineIndex = 222,
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
-				uuid = "d183ef9d-e70a-82b9-ada2-ab02aacdf43a",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
-									true,
-								},
-								
-								{
-									"da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
-									true,
-								},
-							},
-							gVar = "ACR_RikuRDM3_Hotbar_MagickBarrier",
-							uuid = "b72c4571-63c3-36a1-acc2-b9e6d3e1960d",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "REDMAGE",
-							name = "Self: RDM",
-							uuid = "83c6a17b-723e-3cbd-9155-9e9c69e2d26b",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 4,
-							inRangeValue = 30,
-							minTargetPercent = true,
-							name = "Party Range: <= 30y",
-							partyTargetNumber = 100,
-							partyTargetSubType = "Number",
-							uuid = "da63e6cf-f2cc-e5fa-bcad-5cd7d5cc7662",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 1138.4497474604,
-				name = "[Lj Mit] Magick Barrier",
-				timeRange = true,
-				timelineIndex = 222,
-				timerEndOffset = -1,
-				timerStartOffset = -9.5,
-				uuid = "6b329e0c-af8e-6128-9b2f-3e999f0ddc00",
+				uuid = "5287e302-f5e0-6d21-9a49-b2e1f1c49580",
 				version = 2,
 			},
 		},
@@ -7239,7 +7614,7 @@ local tbl =
 							uuid = "83d0ea0a-4934-2421-a692-59d0959b18f9",
 							version = 3,
 						},
-						inheritedIndex = 1,
+						inheritedIndex = 2,
 					},
 					
 					{
