@@ -511,7 +511,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local pos = {x=eventArgs.x, y=eventArgs.y+1, z=eventArgs.z}\nlocal timer = eventArgs.duration * 1000\nlocal showBG = true\nlocal size = 1\n\nif pos and table.valid(pos) then\n\tAnyoneCore.addWorldTextCountdown(timer, pos, AnyoneCore.white, showBG, size)\nend\n\nself.used = true\nself.eventConditionMismatch = true",
+						actionLua = "local timer = eventArgs.duration * 1000\nlocal showBG = true\nlocal size = 1\nlocal height = 1\n\nif eventArgs.targetAttach then\n    AnyoneCore.addWorldTextCountdownOnEnt(\n        timer,\n        eventArgs.targetAttach,\n        AnyoneCore.white,\n        showBG,\n        size,\n        height\n    )\nelse\n    local pos = {x = eventArgs.x, y = eventArgs.y + height, z = eventArgs.z}\n    AnyoneCore.addWorldTextCountdown(timer, pos, AnyoneCore.white, showBG, size)\nend\n\nself.used = true\n--self.eventConditionMismatch = true",
 						conditions = 
 						{
 							
