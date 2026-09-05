@@ -8844,6 +8844,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				enabled = false,
 				mechanicTime = 235.34477128997,
 				name = "[SGE] Toggle M Swift",
 				timelineIndex = 41,
@@ -12212,6 +12213,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				enabled = false,
 				mechanicTime = 341.70452758191,
 				name = "[SGE] Toggle M Swift",
 				timelineIndex = 66,
@@ -18431,6 +18433,19 @@ local tbl =
 					{
 						data = 
 						{
+							buffID = 4192,
+							category = "Party",
+							conditionLua = "return TensorCore.mGetEntity(eventArgs.detectionTargetID).aggropercentage => 100",
+							name = "DT: Epic Hero Buff",
+							partyTargetType = "Detection Target",
+							uuid = "6042f30b-197d-3105-b6ee-1d6272ec688f",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
 							category = "Filter",
 							conditions = 
 							{
@@ -18450,20 +18465,7 @@ local tbl =
 							uuid = "f83b9af9-50b4-36ad-a4db-ddab072152e0",
 							version = 3,
 						},
-						inheritedIndex = 3,
-					},
-					
-					{
-						data = 
-						{
-							buffID = 4192,
-							category = "Party",
-							conditionLua = "return TensorCore.mGetEntity(eventArgs.detectionTargetID).aggropercentage => 100",
-							name = "DT: Epic Hero Buff",
-							partyTargetType = "Detection Target",
-							uuid = "6042f30b-197d-3105-b6ee-1d6272ec688f",
-							version = 3,
-						},
+						inheritedIndex = 4,
 					},
 				},
 				mechanicTime = 574.57649748723,
