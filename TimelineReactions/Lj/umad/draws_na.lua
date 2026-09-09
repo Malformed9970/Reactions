@@ -2726,6 +2726,107 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "if ArgusDrawsPlus ~= nil then\n    if data.ljArgusPlusPreviousBrightness == nil then\n        data.ljArgusPlusPreviousBrightness = ArgusDrawsPlus.getExtraBrightness()\n    end\n    ArgusDrawsPlus.setExtraBrightness(true)\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"3a884823-56a3-2447-b844-82562160d6de",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Save and Enable Brightness",
+							uuid = "cf07bf61-a83b-99d0-ba6c-3459424eb3a7",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return ArgusDrawsPlus ~= nil and ArgusDrawsPlus.getEnabled() == true",
+							dequeueIfLuaFalse = true,
+							name = "ArgusDraws+",
+							uuid = "3a884823-56a3-2447-b844-82562160d6de",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 507.31761539671,
+				name = "[Lj Draw] Toggle Argus+ Brightness",
+				timelineIndex = 91,
+				uuid = "76808346-2dec-20c8-92fa-41bf9cc3ea5f",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local previous = eventArgs.oldData.ljArgusPlusPreviousBrightness\nif previous ~= nil and ArgusDrawsPlus ~= nil then\n    ArgusDrawsPlus.setExtraBrightness(previous)\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"fba23b1c-5867-fe5c-a5a7-bda75dfee039",
+									true,
+								},
+							},
+							name = "Restore Previous Brightness",
+							uuid = "48fc46df-9834-98b5-9dd2-ab8ce05c16d7",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return ArgusDrawsPlus ~= nil and ArgusDrawsPlus.getEnabled() == true",
+							dequeueIfLuaFalse = true,
+							name = "ArgusDraws+",
+							uuid = "fba23b1c-5867-fe5c-a5a7-bda75dfee039",
+							version = 3,
+						},
+					},
+				},
+				eventType = 9,
+				mechanicTime = 507.31761539671,
+				name = "[Lj Draw] Restore Argus+ Brightness",
+				timeRange = true,
+				timelineIndex = 91,
+				timerEndOffset = 1000,
+				timerStartOffset = -1000,
+				uuid = "c0147577-9ae8-ac0b-9e24-213dac49e245",
+				version = 2,
+			},
+		},
 	},
 	[93] = 
 	{
@@ -2875,7 +2976,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local center = { x = 100, y = 0, z = 100 }\nlocal arenaRadius = 20\nlocal lineLength = 40\nlocal lineWidth = 6\nlocal playerCutoutRadius = 1.25\nlocal firstHitTimeout = 4500\nlocal hitInterval = 225\nlocal finalHitTimeout = firstHitTimeout + hitInterval * 7\nlocal green = 0x9900FF00 -- pure green, 60% alpha\nlocal transparent = 0x00000000\nlocal drawHeight = 0.05 -- raised flat overlay clears the decorative floor mesh\n\nlocal function normaliseAngle(angle)\n    while angle > math.pi do angle = angle - 2 * math.pi end\n    while angle <= -math.pi do angle = angle + 2 * math.pi end\n    return angle\nend\n\nlocal function buildExpectedLines()\n    local first = data.ljUltimaBlasterSources[1].position\n    local second = data.ljUltimaBlasterSources[2].position\n    local firstAngle = math.atan2(first.x - center.x, first.z - center.z)\n    local secondAngle = math.atan2(second.x - center.x, second.z - center.z)\n    local initialStep = normaliseAngle(secondAngle - firstAngle)\n    local sourceRadius = TensorCore.getDistance2d(center, first)\n    local targetRadius = 19\n    local lines = {}\n\n    for order = 1, 8 do\n        -- The final sequence rotates in the opposite direction to the dashes.\n        local sourceAngle = firstAngle - initialStep * (order - 1)\n        -- Players resolve halfway toward the next intercardinal on the far side.\n        local targetAngle = sourceAngle + math.pi - initialStep * 0.5\n        local sourcePos = {\n            x = center.x + math.sin(sourceAngle) * sourceRadius,\n            y = drawHeight,\n            z = center.z + math.cos(sourceAngle) * sourceRadius,\n        }\n        local targetPos = {\n            x = center.x + math.sin(targetAngle) * targetRadius,\n            y = drawHeight,\n            z = center.z + math.cos(targetAngle) * targetRadius,\n        }\n\n        lines[order] = {\n            sourcePos = sourcePos,\n            heading = TensorCore.getHeadingToTarget(sourcePos, targetPos),\n        }\n    end\n\n    return lines\nend\n\nlocal channel = Argus2.getNextUnusedChannel(true)\nif channel == nil then\n    self.used = true\n    return\nend\n\nlocal expectedLines = buildExpectedLines()\n\n-- Keep the occlusion pipeline, but omit terrain warping. The slightly raised\n-- flat base bridges the decorative holes instead of reproducing their shape.\nlocal baseFlags =\n    Argus2.RenderFlags.FLAG_OCCLUSION_BASE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal occludeFlags =\n    Argus2.RenderFlags.FLAG_OCCLUDE |\n    Argus2.RenderFlags.FLAG_RENDER_OVERLAY\nlocal safeDrawer = TensorCore.getStaticFlatDrawer(green, 0, channel, baseFlags)\nlocal dangerDrawer = TensorCore.getStaticFlatDrawer(transparent, 0, channel, occludeFlags)\ndangerDrawer.heightOffset = drawHeight\nlocal player = TensorCore.mGetPlayer()\n\nsafeDrawer:addTimedCircle(\n    finalHitTimeout,\n    center.x, drawHeight, center.z,\n    arenaRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect\n    baseFlags\n)\n\n-- Keep the character readable beneath the overlay without reducing the green\n-- visibility across the rest of the arena.\ndangerDrawer:addTimedCircleOnEnt(\n    finalHitTimeout,\n    player.id,\n    playerCutoutRadius,\n    0,     -- delay\n    false, -- oldDraw\n    true,  -- doNotDetect: visibility cutout, not a danger area\n    occludeFlags\n)\n\nfor order, line in ipairs(expectedLines) do\n    if order ~= data.ljUltimaBlasterPlayerNumber then\n        local lineTimeout = firstHitTimeout + hitInterval * (order - 1)\n        dangerDrawer:addTimedRect(\n            lineTimeout,\n            line.sourcePos.x, line.sourcePos.y, line.sourcePos.z,\n            lineLength,\n            lineWidth,\n            line.heading,\n            0,     -- delay\n            false, -- oldDraw\n            false, -- doNotDetect: block dashes until this numbered hit resolves\n            occludeFlags\n        )\n    end\nend\n\nself.used = true",
+							actionLua = "-- Green is safe from the OTHER numbered beams; your own bait still hits you.\n-- Fixed firing origins are predicted from the opening dash order. Hidden\n-- Kefkas need not have moved to those origins yet, so do not attach to them.\nlocal sources = data.ljUltimaBlasterSources\nlocal targets = data.ljUltimaBlasterTargets\nlocal channel = Argus2.getNextUnusedChannel(true)\nif channel == nil then\n    self.used = true\n    return\nend\n\nlocal state = { lines = {}, bySource = {}, remaining = 8, active = true }\ndata.ljLimitCutDraw = state\nfunction state.clear(draw)\n    if draw.base then\n        Argus.deleteTimedShape(draw.base)\n        draw.base = nil\n    end\n    for _, line in ipairs(draw.lines) do\n        if line.uuid then\n            Argus.deleteTimedShape(line.uuid)\n            line.uuid = nil\n        end\n    end\n    draw.active = false\nend\n\n-- Use one fixed plane just above the decorative floor. Terrain projection\n-- can change as scene models appear/disappear; keep it out of this draw.\n-- UI rendering remains behind characters, without a player cutout.\nlocal drawHeight = 0.15\nlocal surfaceFlags = Argus2.RenderFlags.FLAG_RENDER_UI\nlocal baseFlags = surfaceFlags | Argus2.RenderFlags.FLAG_OCCLUSION_BASE\nlocal dangerFlags = surfaceFlags | Argus2.RenderFlags.FLAG_OCCLUDE\nlocal safeDrawer = TensorCore.getCachedFlatDrawer(\n    0x6600FF00, 0x6600FF00, 0x6600FF00, 0xCC66FF66, 1.5, channel, baseFlags)\n\nlocal first = sources[1].position\nlocal second = sources[2].position\nlocal firstAngle = math.atan2(first.x - 100, first.z - 100)\nlocal delta = math.atan2(second.x - 100, second.z - 100) - firstAngle\nlocal step = math.atan2(math.sin(delta), math.cos(delta))\nlocal dx, dz = first.x - 100, first.z - 100\nlocal radius = math.sqrt(dx * dx + dz * dz)\n\nfor order = 1, 8 do\n    local angle = firstAngle - step * (order - 1)\n    local line = {\n        position = { x = 100 + math.sin(angle) * radius,\n                     y = drawHeight, z = 100 + math.cos(angle) * radius },\n        targetId = targets[order],\n        resolved = false,\n    }\n    state.lines[order] = line\n    state.bySource[sources[order].entityId] = line\n    if order ~= data.ljUltimaBlasterPlayerNumber then\n        local target = TensorCore.mGetEntity(line.targetId)\n        if not target then\n            state.clear(state)\n            self.used = true\n            return\n        end\n        -- ShapeDrawer has no fixed-world-origin + target-attachment overload.\n        -- Let Argus resolve the moving target every render frame; never re-aim\n        -- this shape on the slower TensorReactions update pulse.\n        line.uuid = Argus2.addTimedRectFilled(\n            10000, line.position.x, drawHeight, line.position.z,\n            100, 6, TensorCore.getHeadingToTarget(line.position, target.pos),\n            0x00000000, 0x00000000, 0x00000000,\n            0,              -- delay\n            nil,            -- fixed world source; no source entity attachment\n            line.targetId,  -- native target tracking\n            true,           -- keep the full beam length\n            0x00000000, 0, 0, 0, 0, -- invisible, flat blocker\n            false,          -- oldDraw\n            false,          -- doNotDetect: retain safe-jump detection\n            0, false,       -- no heading offset; allow native target aiming\n            dangerFlags, channel)\n        if not line.uuid then\n            state.clear(state)\n            self.used = true\n            return\n        end\n    end\nend\n\n-- These are fail-safe lifetimes, not hit predictions. Remove the safe base\n-- before any blocker can expire if a cast event is missed.\nstate.expiresAt = Now() + 9000\nstate.base = safeDrawer:addTimedCircle(\n    9000, 100, drawHeight, 100, 20, 0, false, true, baseFlags)\nif not state.base then state.clear(state) end\nself.used = true",
 							conditions = 
 							{
 								
@@ -2928,8 +3029,7 @@ local tbl =
 						data = 
 						{
 							category = "Lua",
-							conditionLua = "return data.ljUltimaBlasterSources ~= nil\n      and #data.ljUltimaBlasterSources == 8\n      and data.ljUltimaBlasterPlayerNumber ~= nil",
-							dequeueIfLuaFalse = true,
+							conditionLua = "return data.ljUltimaBlasterSources ~= nil\n    and #data.ljUltimaBlasterSources == 8\n    and data.ljUltimaBlasterTargets ~= nil\n    and #data.ljUltimaBlasterTargets == 8\n    and data.ljUltimaBlasterPlayerNumber ~= nil",
 							name = "Data Vars",
 							uuid = "ba69b783-143c-3260-b1f9-cd5227e1ab68",
 							version = 3,
@@ -2955,7 +3055,113 @@ local tbl =
 				timelineIndex = 101,
 				timerEndOffset = 5,
 				timerStartOffset = 3,
-				uuid = "79a87816-ba96-842b-b714-a43ddd347ffb",
+				uuid = "f52ad783-1c20-fac5-a88d-4e3011155f67",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local state = data.ljLimitCutDraw\nif Now() >= state.expiresAt then\n    state.clear(state)\n    self.used = true\n    return\nend\n\n-- Argus tracks target positions directly. This pulse only handles lost targets\n-- and timeout cleanup; it must not overwrite the native attachment or heading.\nfor _, line in ipairs(state.lines) do\n    if line.uuid and not TensorCore.mGetEntity(line.targetId) then\n        state.clear(state)\n        self.used = true\n        return\n    end\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"4ee66423-76eb-a3ac-ac56-a99e79c3e79c",
+									true,
+								},
+							},
+							name = "Maintain Limit Cut Draw",
+							uuid = "d1dab78c-12ac-cfe7-9384-e427c95dea62",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljLimitCutDraw ~= nil and data.ljLimitCutDraw.active == true",
+							name = "Limit Cut Active",
+							uuid = "4ee66423-76eb-a3ac-ac56-a99e79c3e79c",
+							version = 3,
+						},
+					},
+				},
+				loop = true,
+				mechanicTime = 521.36069634686,
+				name = "[Lj Draw] Limit Cut Tracking",
+				throttleTime = 50,
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 15,
+				timerStartOffset = 3,
+				uuid = "43437c3d-d339-b675-ac4d-2d314648747b",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local state = data.ljLimitCutDraw\nif state and state.active then\n    local line = state.bySource[eventArgs.entityID]\n    if line and not line.resolved then\n        line.resolved = true\n        if line.uuid then\n            Argus.deleteTimedShape(line.uuid)\n            line.uuid = nil\n        end\n        state.remaining = state.remaining - 1\n        if state.remaining == 0 then state.clear(state) end\n    end\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"610db947-5049-b4d4-8975-e7ec3fa5ebec",
+									true,
+								},
+							},
+							name = "Clear Resolved Beam",
+							uuid = "b7c16ebb-f773-60f0-be1d-124fa4045159",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47844,
+							name = "Ultima Blaster Hit",
+							uuid = "610db947-5049-b4d4-8975-e7ec3fa5ebec",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				loop = true,
+				mechanicTime = 521.36069634686,
+				name = "[Lj Draw] Limit Cut Resolve",
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 15,
+				timerStartOffset = 3,
+				uuid = "86a401d9-a251-2389-80b3-8e052d1c7ec4",
 				version = 2,
 			},
 		},
@@ -5088,7 +5294,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "if self.markerInitialized ~= true then\n    local id = eventArgs.markerID\n\n    if id == 675 then\n        data.ljMysteryIceFake = true\n        self.tellLine = \"▽      FAKE ice (Cones)\"\n    elseif id == 676 then\n        data.ljMysteryIceFake = false\n        self.tellLine = \"▼      TRUE ice (Cones)\"\n    elseif id == 677 then\n        data.ljMysteryThunderFake = true\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n        self.tellLine = \"□      FAKE lightning (Lines)\"\n    elseif id == 678 then\n        data.ljMysteryThunderFake = false\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n        self.tellLine = \"■      TRUE lightning (Lines)\"\n    else\n        self.used = true\n        return\n    end\n\n    self.sendAt = Now() + math.random(1000, 1500)\n    self.markerInitialized = true\nend\n\nif Now() < self.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\nthen\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. self.tellLine)\nend\nself.used = true",
+							actionLua = "if self.markerInitialized ~= true then\n    local id = eventArgs.markerID\n    local element\n    local markerFake\n\n    if id == 675 then\n        element = \"ice\"\n        markerFake = true\n    elseif id == 676 then\n        element = \"ice\"\n        markerFake = false\n    elseif id == 677 then\n        element = \"lightning\"\n        markerFake = true\n    elseif id == 678 then\n        element = \"lightning\"\n        markerFake = false\n    else\n        self.used = true\n        return\n    end\n\n    local effectiveFake = markerFake\n    local mana = data.ljManaCharge\n\n    if mana ~= nil then\n        local storedFake\n        if element == \"ice\" then\n            storedFake = mana.iceFake\n        else\n            storedFake = mana.lightningFake\n        end\n\n        if storedFake == nil then\n            if element == \"ice\" then\n                mana.iceFake = markerFake\n            else\n                mana.lightningFake = markerFake\n            end\n        else\n            effectiveFake = storedFake ~= markerFake\n        end\n    end\n\n    if element == \"ice\" then\n        data.ljMysteryIceFake = effectiveFake\n        self.tellLine = effectiveFake\n            and \"▽      FAKE ice (Cones)\"\n            or \"▼      TRUE ice (Cones)\"\n    else\n        data.ljMysteryThunderFake = effectiveFake\n        data.ljGazeForceDefault = false\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n\n        self.tellLine = effectiveFake\n            and \"□      FAKE lightning (Lines)\"\n            or \"■      TRUE lightning (Lines)\"\n    end\n\n    self.sendAt = Now() + math.random(1000, 1500)\n    self.markerInitialized = true\nend\n\nif Now() < self.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\nthen\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. self.tellLine)\nend\nself.used = true",
 							conditions = 
 							{
 								
@@ -5098,7 +5304,7 @@ local tbl =
 								},
 							},
 							name = "Fancy Ice/Lightning Tell",
-							uuid = "17a90bed-cc22-7398-9656-c8f715a2c7a3",
+							uuid = "e6202e4e-e620-66f6-b42d-cc98f8201b42",
 							version = 2.1,
 						},
 					},
@@ -6480,6 +6686,58 @@ local tbl =
 			},
 			inheritedIndex = 2,
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljManaCharge = {\n    payoffSent = false,\n}\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"1cec7334-c5ec-a7d8-a34a-09eae6632fa2",
+									true,
+								},
+							},
+							name = "Reset Mana Charge State",
+							uuid = "017cc044-da43-52b4-9761-79b333478354",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return eventArgs.entityContentID == 7131\n    and eventArgs.spellID == 47780",
+							dequeueIfLuaFalse = true,
+							name = "Kefka Mana Charge",
+							uuid = "1cec7334-c5ec-a7d8-a34a-09eae6632fa2",
+							version = 3,
+						},
+					},
+				},
+				eventType = 2,
+				mechanicTime = 877.06989073874,
+				name = "[Lj Data] Begin Mana Charge",
+				timeRange = true,
+				timelineIndex = 163,
+				timerEndOffset = 2,
+				timerStartOffset = -2,
+				uuid = "ce877d67-801a-e19c-9741-cb73f47e1350",
+				version = 2,
+			},
+		},
 	},
 	[164] = 
 	{
@@ -6869,6 +7127,56 @@ local tbl =
 				timerEndOffset = 15,
 				timerStartOffset = 2,
 				uuid = "60d16738-3f46-2bd7-8e1e-8dc9cdf42444",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "ArgusDrawsPlus.setExtraBrightness(false)\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"3a884823-56a3-2447-b844-82562160d6de",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							name = "Disable Brightness",
+							uuid = "cf07bf61-a83b-99d0-ba6c-3459424eb3a7",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return ArgusDrawsPlus ~= nil and ArgusDrawsPlus.getEnabled() == true",
+							dequeueIfLuaFalse = true,
+							name = "ArgusDraws+",
+							uuid = "3a884823-56a3-2447-b844-82562160d6de",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 934.65552902023,
+				name = "[Lj Draw] Toggle Argus+ Brightness",
+				timelineIndex = 170,
+				timerOffset = 1,
+				uuid = "4d4e8a77-f503-810b-84bc-6a65505fc352",
 				version = 2,
 			},
 		},

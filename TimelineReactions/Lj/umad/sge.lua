@@ -12,71 +12,6 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "local settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\Lj\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSGESettings.lua]]\n\nif not Lj_UMADSGE_Settings then\n    Lj_UMADSGE_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADSGE_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADSGE_Settings\nlocal settingsChanged = false\n\nif settings.firstZoeShield ~= \"Mystery Magic\" and settings.firstZoeShield ~= \"Wave Cannon\" then\n    settings.firstZoeShield = \"Mystery Magic\"\n    settingsChanged = true\nend\n\nif settings.usePotions ~= true and settings.usePotions ~= false then\n    settings.usePotions = true\n    settingsChanged = true\nend\n\nif settingsChanged then\n    if not FolderExists(settingsFolder) then\n        FolderCreate(settingsFolder)\n    end\n    FileSave(settingsPath, settings)\nend\n\nLj_UMADSGE_FirstZoeShield = settings.firstZoeShield\nLj_UMADSGE_UsePotions = settings.usePotions\n\nlocal flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize\nGUI:SetNextWindowSize(260, 0, GUI.SetCond_Always)\nlocal visible = GUI:Begin(\"Lj Sage Settings###LjUMADSGESettings\", true, flags)\n\nif visible then\n    GUI:Text(\"Lj Sage Settings\")\n\n    GUI:Text(\"Use Potions\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Start of P2, P3 Cleave, P4 Antilight, P5 Enrage\")\n    end\n    GUI:SameLine(110)\n    local potionIndex = settings.usePotions and 1 or 2\n    GUI:PushItemWidth(120)\n    local newPotionIndex, potionChanged = GUI:Combo(\"##UMADSGEUsePotions\", potionIndex, {\"Yes\", \"No\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Start of P2, P3 Cleave, P4 Antilight, P5 Enrage\")\n    end\n    GUI:PopItemWidth()\n    if potionChanged then\n        settings.usePotions = newPotionIndex == 1\n        Lj_UMADSGE_UsePotions = settings.usePotions\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"First Zoe Shield\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Mystery Magic is default and works for Ikuya, Wave Cannon is for LPDU where almost no mit is available for tower soaks, you need to move fast\")\n    end\n    GUI:SameLine(110)\n    local selectedIndex = settings.firstZoeShield == \"Wave Cannon\" and 2 or 1\n    GUI:PushItemWidth(120)\n    local newIndex, changed = GUI:Combo(\"##UMADSGEFirstZoeShield\", selectedIndex, {\"Mystery Magic\", \"Wave Cannon\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Mystery Magic is default and works for Ikuya, Wave Cannon is for LPDU where almost no mit is available for tower soaks, you need to move fast\")\n    end\n    GUI:PopItemWidth()\n    if changed then\n        settings.firstZoeShield = newIndex == 2 and \"Wave Cannon\" or \"Mystery Magic\"\n        Lj_UMADSGE_FirstZoeShield = settings.firstZoeShield\n        FileSave(settingsPath, settings)\n    end\nend\n\nGUI:End()\nself.used = true",
-							name = "Draw Lj Sage Settings",
-							uuid = "28e857a5-b724-416a-8623-32718c1bb97e",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				eventType = 13,
-				mechanicTime = 15.261765625,
-				name = "Lj Sage Settings",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = -5,
-				timerStartOffset = -30,
-				uuid = "b4f4e470-5253-5d43-a007-3792c71e4146",
-				version = 2,
-			},
-			inheritedIndex = 1,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
-							gVar = "ACR_RikuWAR3_CD",
-							uuid = "9a17440e-4710-700d-b90f-f154c8188764",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				eventType = 17,
-				mechanicTime = 15.261765625,
-				name = "Opener Cancel",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -15.300000190735,
-				uuid = "c23d0c09-b8cc-f34a-a167-c96f58db0daa",
-				version = 2,
-			},
-			inheritedIndex = 2,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							conditions = 
 							{
@@ -250,6 +185,794 @@ local tbl =
 				uuid = "e2cabc61-c269-be46-8292-149eaa3f96aa",
 				version = 2,
 			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "6398a557-95ba-8807-9883-92b9f5e68fdd",
+							version = 2.1,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_AOE",
+							uuid = "a7f52f81-c123-9dfb-824d-fe64e4b92048",
+							version = 2.1,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_SmartAOE",
+							uuid = "d76e033d-14a9-e16a-9174-b6204f2eb193",
+							version = 2.1,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_DoT",
+							uuid = "c2970b67-cbcb-423e-950c-aa91d99e88dc",
+							version = 2.1,
+						},
+						inheritedIndex = 4,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_SmartDoT",
+							uuid = "42f031cd-e4e5-248a-abba-47e5ac7276c8",
+							version = 2.1,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Potion",
+							gVarValue = 2,
+							uuid = "26a7018e-18ba-e941-abc8-ca3179c95ed3",
+							version = 2.1,
+						},
+						inheritedIndex = 6,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Lucid",
+							uuid = "ce798ff5-de6b-669d-8158-d7cf784467cf",
+							version = 2.1,
+						},
+						inheritedIndex = 7,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_KardiaMT",
+							gVarValue = 2,
+							uuid = "3fe756f8-6f2b-240c-908d-4d6546a4e78d",
+							version = 2.1,
+						},
+						inheritedIndex = 8,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Rhizomata",
+							uuid = "bc0127b1-71bb-7334-ab29-0e52743e3c4c",
+							version = 2.1,
+						},
+						inheritedIndex = 9,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Phlegma",
+							uuid = "e5733fec-9079-ab57-baf3-6c82ef79bdbc",
+							version = 2.1,
+						},
+						inheritedIndex = 10,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_ToxikonWeave",
+							gVarValue = 2,
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Attacks",
+							uuid = "34056070-e4b1-7432-9c32-4e594eb7068e",
+							version = 2.1,
+						},
+						inheritedIndex = 12,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Psyche",
+							uuid = "8cfce92d-63e9-0df4-b728-73b3f6bb5f4e",
+							version = 2.1,
+						},
+						inheritedIndex = 13,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_MovementSwiftcast",
+							gVarValue = 2,
+							uuid = "3cff111f-56ee-e7d1-85e2-f6eecba10921",
+							version = 2.1,
+						},
+						inheritedIndex = 14,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_DyskrasiaWeave",
+							gVarValue = 2,
+							uuid = "c67dd5d1-86b5-6087-8395-29dc3a19627f",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_2Toxikon",
+							gVarValue = 2,
+							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_KBCancel",
+							gVarValue = 2,
+							uuid = "1c56faa5-be4e-fe13-8370-3866eafde2a8",
+							version = 2.1,
+						},
+						inheritedIndex = 17,
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 15.261765625,
+				name = "[SGE] Toggles",
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerOffset = -12.299999237061,
+				timerStartOffset = -5,
+				uuid = "f9d04d43-ef85-2171-b3ba-67572612ca73",
+				version = 2,
+			},
+			inheritedIndex = 4,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"53d292a9-114e-4b73-ade9-8a05229e04b5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Krasis",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 15.261765625,
+				name = "[SGE] Krasis",
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerOffset = -5,
+				timerStartOffset = -5,
+				uuid = "cedcb153-1675-ea3b-b331-9d519402b84a",
+				version = 2,
+			},
+			inheritedIndex = 5,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Haima",
+							targetType = "Main Tank",
+							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 15.261765625,
+				name = "[SGE] Haima",
+				timelineIndex = 1,
+				timerEndOffset = 5,
+				timerOffset = -3,
+				timerStartOffset = -5,
+				uuid = "b25567f0-8dbf-10ba-bce9-1b755e51d9c4",
+				version = 2,
+			},
+			inheritedIndex = 6,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Healbar_Kardia",
+							targetType = "Main Tank",
+							uuid = "c0a9c51e-79a0-c1be-b647-992fb1fced0e",
+							variableIsHover = true,
+							variableTogglesType = 3,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2605,
+							category = "Party",
+							name = "MT Buff: Kardion Missing",
+							partyTargetType = "Main Tank",
+							uuid = "738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 15.261765625,
+				name = "[SGE] Kardia MT",
+				timelineIndex = 1,
+				timerOffset = -1,
+				uuid = "febf9fac-75a7-ab1f-8ca5-db6b496ca613",
+				version = 2,
+			},
+			inheritedIndex = 7,
+		},
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Settings",
+				uuid = "40a22779-6202-e9dd-ad56-1a82e3326a0f",
+			},
+			objectType = "folder",
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\Lj\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSGESettings.lua]]\n\nif not Lj_UMADSGE_Settings then\n    Lj_UMADSGE_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADSGE_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADSGE_Settings\nlocal settingsChanged = false\n\nif settings.firstZoeShield ~= \"Mystery Magic\" and settings.firstZoeShield ~= \"Wave Cannon\" then\n    settings.firstZoeShield = \"Mystery Magic\"\n    settingsChanged = true\nend\n\nif settings.usePotions ~= true and settings.usePotions ~= false then\n    settings.usePotions = true\n    settingsChanged = true\nend\n\nif settingsChanged then\n    if not FolderExists(settingsFolder) then\n        FolderCreate(settingsFolder)\n    end\n    FileSave(settingsPath, settings)\nend\n\nLj_UMADSGE_FirstZoeShield = settings.firstZoeShield\nLj_UMADSGE_UsePotions = settings.usePotions\n\nlocal flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize\nGUI:SetNextWindowSize(260, 0, GUI.SetCond_Always)\nlocal visible = GUI:Begin(\"Lj Sage Settings###LjUMADSGESettings\", true, flags)\n\nif visible then\n    GUI:Text(\"Lj Sage Settings\")\n\n    GUI:Text(\"Use Potions\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Start of P2, P3 Cleave, P4 Antilight, P5 Enrage\")\n    end\n    GUI:SameLine(110)\n    local potionIndex = settings.usePotions and 1 or 2\n    GUI:PushItemWidth(120)\n    local newPotionIndex, potionChanged = GUI:Combo(\"##UMADSGEUsePotions\", potionIndex, {\"Yes\", \"No\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Start of P2, P3 Cleave, P4 Antilight, P5 Enrage\")\n    end\n    GUI:PopItemWidth()\n    if potionChanged then\n        settings.usePotions = newPotionIndex == 1\n        Lj_UMADSGE_UsePotions = settings.usePotions\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"First Zoe Shield\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Mystery Magic is default and works for Ikuya, Wave Cannon is for LPDU where almost no mit is available for tower soaks, you need to move fast\")\n    end\n    GUI:SameLine(110)\n    local selectedIndex = settings.firstZoeShield == \"Wave Cannon\" and 2 or 1\n    GUI:PushItemWidth(120)\n    local newIndex, changed = GUI:Combo(\"##UMADSGEFirstZoeShield\", selectedIndex, {\"Mystery Magic\", \"Wave Cannon\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Mystery Magic is default and works for Ikuya, Wave Cannon is for LPDU where almost no mit is available for tower soaks, you need to move fast\")\n    end\n    GUI:PopItemWidth()\n    if changed then\n        settings.firstZoeShield = newIndex == 2 and \"Wave Cannon\" or \"Mystery Magic\"\n        Lj_UMADSGE_FirstZoeShield = settings.firstZoeShield\n        FileSave(settingsPath, settings)\n    end\nend\n\nGUI:End()\nself.used = true",
+							name = "Draw Lj Sage Settings",
+							uuid = "28e857a5-b724-416a-8623-32718c1bb97e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				displayPath = "Settings",
+				eventType = 13,
+				mechanicTime = 15.261765625,
+				name = "Lj Sage Settings",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = -5,
+				timerStartOffset = -30,
+				uuid = "b4f4e470-5253-5d43-a007-3792c71e4146",
+				version = 2,
+			},
+			inheritedIndex = 9,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "Leta.settings.Toggles[\"Heal\"].bool = false\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"b2f3afa8-1e0b-5809-9cc2-c0f3ca172ab8",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Disable Leta Heal",
+							uuid = "3892fc66-70de-7b0e-af2b-4d4ab5e796da",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.Reactions.dmu.healerMitigation = false\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"fe3a83ec-08f3-942a-90b6-9f0f04e8097d",
+									true,
+								},
+							},
+							name = "Disable Anyone Healer Mits",
+							uuid = "c17dc816-e7f3-aa68-b08b-2a3a2e12cf46",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Leta ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "Leta Senpai",
+							uuid = "b2f3afa8-1e0b-5809-9cc2-c0f3ca172ab8",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.healerMitigation",
+							dequeueIfLuaFalse = true,
+							name = "Anyone Kun",
+							uuid = "fe3a83ec-08f3-942a-90b6-9f0f04e8097d",
+							version = 3,
+						},
+					},
+				},
+				displayPath = "Settings",
+				mechanicTime = 15.261765625,
+				name = "Disable Leta & Anyone",
+				timelineIndex = 1,
+				timerOffset = -15.300000190735,
+				uuid = "a467b997-33b3-ec34-9752-ce508186e22b",
+				version = 2,
+			},
+			inheritedIndex = 10,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"32419d45-9eca-26fc-8371-75b0e0fad1b9",
+									true,
+								},
+								
+								{
+									"6354d8b6-092c-0b2a-b5d1-d873daf5031d",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetType = "Enemy",
+							uuid = "12d5a81b-03af-8c5c-b190-a1647532b4aa",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							conditionType = 2,
+							contentid = 0,
+							uuid = "32419d45-9eca-26fc-8371-75b0e0fad1b9",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return FFXIV_Common_BotRunning",
+							name = "Assist Enabled",
+							uuid = "6354d8b6-092c-0b2a-b5d1-d873daf5031d",
+							version = 3,
+						},
+					},
+				},
+				displayPath = "Settings",
+				loop = true,
+				mechanicTime = 15.261765625,
+				name = "Target Enemy",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 1170,
+				timerStartOffset = -15.300000190735,
+				uuid = "af37f79a-ea4a-ee84-8934-3ea9c32cf424",
+				version = 2,
+			},
+			inheritedIndex = 11,
+		},
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Opener and Targeting",
+				uuid = "50fb1337-1402-5191-a954-101f8251ea13",
+			},
+			objectType = "folder",
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"e683864d-5724-9909-b9f3-c63703b2aa9f",
+									true,
+								},
+							},
+							gVar = "ACR_RikuWAR3_CD",
+							uuid = "9a17440e-4710-700d-b90f-f154c8188764",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "e683864d-5724-9909-b9f3-c63703b2aa9f",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				displayPath = "Opener and Targeting",
+				eventType = 17,
+				mechanicTime = 15.261765625,
+				name = "[SGE] Opener Cancel",
+				timeRange = true,
+				timelineIndex = 1,
+				timerStartOffset = -15.300000190735,
+				uuid = "c23d0c09-b8cc-f34a-a167-c96f58db0daa",
+				version = 2,
+			},
+			inheritedIndex = 13,
 		},
 		
 		{
@@ -776,6 +1499,7 @@ local tbl =
 						inheritedIndex = 14,
 					},
 				},
+				displayPath = "Opener and Targeting",
 				eventType = 16,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Opener",
@@ -786,7 +1510,7 @@ local tbl =
 				uuid = "e4dfd30f-34bd-c288-8b39-14d3318b0983",
 				version = 2,
 			},
-			inheritedIndex = 6,
+			inheritedIndex = 14,
 		},
 		
 		{
@@ -1178,6 +1902,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Opener and Targeting",
 				eventType = 9,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Wipe",
@@ -1189,703 +1914,17 @@ local tbl =
 				uuid = "aec72e14-2095-a98c-a572-05e0f7a9bf54",
 				version = 2,
 			},
-			inheritedIndex = 7,
+			inheritedIndex = 15,
 		},
 		
 		{
 			data = 
 			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "Leta.settings.Toggles[\"Heal\"].bool = false\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"b2f3afa8-1e0b-5809-9cc2-c0f3ca172ab8",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							name = "Disable Leta Heal",
-							uuid = "3892fc66-70de-7b0e-af2b-4d4ab5e796da",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "AnyoneCore.Settings.Reactions.dmu.healerMitigation = false\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"fe3a83ec-08f3-942a-90b6-9f0f04e8097d",
-									true,
-								},
-							},
-							name = "Disable Anyone Healer Mits",
-							uuid = "c17dc816-e7f3-aa68-b08b-2a3a2e12cf46",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return Leta ~= nil",
-							dequeueIfLuaFalse = true,
-							name = "Leta Senpai",
-							uuid = "b2f3afa8-1e0b-5809-9cc2-c0f3ca172ab8",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.healerMitigation",
-							dequeueIfLuaFalse = true,
-							name = "Anyone Kun",
-							uuid = "fe3a83ec-08f3-942a-90b6-9f0f04e8097d",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 15.261765625,
-				name = "Disable Leta & Anyone",
-				timelineIndex = 1,
-				timerOffset = -15.300000190735,
-				uuid = "a467b997-33b3-ec34-9752-ce508186e22b",
-				version = 2,
+				displayPath = "",
+				name = "Templates",
+				uuid = "669948aa-b036-e904-9c59-0776aa0ad534",
 			},
-			inheritedIndex = 8,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							conditions = 
-							{
-								
-								{
-									"32419d45-9eca-26fc-8371-75b0e0fad1b9",
-									true,
-								},
-								
-								{
-									"6354d8b6-092c-0b2a-b5d1-d873daf5031d",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							setTarget = true,
-							targetType = "Enemy",
-							uuid = "12d5a81b-03af-8c5c-b190-a1647532b4aa",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							conditionType = 2,
-							contentid = 0,
-							uuid = "32419d45-9eca-26fc-8371-75b0e0fad1b9",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return FFXIV_Common_BotRunning",
-							name = "Assist Enabled",
-							uuid = "6354d8b6-092c-0b2a-b5d1-d873daf5031d",
-							version = 3,
-						},
-					},
-				},
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "Target Enemy",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1170,
-				timerStartOffset = -15.300000190735,
-				uuid = "af37f79a-ea4a-ee84-8934-3ea9c32cf424",
-				version = 2,
-			},
-			inheritedIndex = 9,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_CD",
-							uuid = "6398a557-95ba-8807-9883-92b9f5e68fdd",
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_AOE",
-							uuid = "a7f52f81-c123-9dfb-824d-fe64e4b92048",
-							version = 2.1,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_SmartAOE",
-							uuid = "d76e033d-14a9-e16a-9174-b6204f2eb193",
-							version = 2.1,
-						},
-						inheritedIndex = 3,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_DoT",
-							uuid = "c2970b67-cbcb-423e-950c-aa91d99e88dc",
-							version = 2.1,
-						},
-						inheritedIndex = 4,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_SmartDoT",
-							uuid = "42f031cd-e4e5-248a-abba-47e5ac7276c8",
-							version = 2.1,
-						},
-						inheritedIndex = 5,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Potion",
-							gVarValue = 2,
-							uuid = "26a7018e-18ba-e941-abc8-ca3179c95ed3",
-							version = 2.1,
-						},
-						inheritedIndex = 6,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Lucid",
-							uuid = "ce798ff5-de6b-669d-8158-d7cf784467cf",
-							version = 2.1,
-						},
-						inheritedIndex = 7,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_KardiaMT",
-							gVarValue = 2,
-							uuid = "3fe756f8-6f2b-240c-908d-4d6546a4e78d",
-							version = 2.1,
-						},
-						inheritedIndex = 8,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Rhizomata",
-							uuid = "bc0127b1-71bb-7334-ab29-0e52743e3c4c",
-							version = 2.1,
-						},
-						inheritedIndex = 9,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Phlegma",
-							uuid = "e5733fec-9079-ab57-baf3-6c82ef79bdbc",
-							version = 2.1,
-						},
-						inheritedIndex = 10,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_ToxikonWeave",
-							gVarValue = 2,
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Attacks",
-							uuid = "34056070-e4b1-7432-9c32-4e594eb7068e",
-							version = 2.1,
-						},
-						inheritedIndex = 12,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Psyche",
-							uuid = "8cfce92d-63e9-0df4-b728-73b3f6bb5f4e",
-							version = 2.1,
-						},
-						inheritedIndex = 13,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_MovementSwiftcast",
-							gVarValue = 2,
-							uuid = "3cff111f-56ee-e7d1-85e2-f6eecba10921",
-							version = 2.1,
-						},
-						inheritedIndex = 14,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_DyskrasiaWeave",
-							gVarValue = 2,
-							uuid = "c67dd5d1-86b5-6087-8395-29dc3a19627f",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_2Toxikon",
-							gVarValue = 2,
-							uuid = "89a2a281-ece0-b47d-ae01-2141d1630972",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_KBCancel",
-							gVarValue = 2,
-							uuid = "1c56faa5-be4e-fe13-8370-3866eafde2a8",
-							version = 2.1,
-						},
-						inheritedIndex = 17,
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "a7ff75cf-1c65-b308-9b67-891e93f1c4f5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 15.261765625,
-				name = "[SGE] Toggles",
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerOffset = -12.299999237061,
-				timerStartOffset = -5,
-				uuid = "f9d04d43-ef85-2171-b3ba-67572612ca73",
-				version = 2,
-			},
-			inheritedIndex = 10,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"53d292a9-114e-4b73-ade9-8a05229e04b5",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Krasis",
-							targetType = "Main Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "53d292a9-114e-4b73-ade9-8a05229e04b5",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 15.261765625,
-				name = "[SGE] Krasis",
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerOffset = -5,
-				timerStartOffset = -5,
-				uuid = "cedcb153-1675-ea3b-b331-9d519402b84a",
-				version = 2,
-			},
-			inheritedIndex = 11,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Haima",
-							targetType = "Main Tank",
-							uuid = "9f150df4-47fb-823d-a797-346087437cd2",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 13,
-							dequeueIfLuaFalse = true,
-							jobValue = "SAGE",
-							name = "Self: SGE",
-							uuid = "26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-							version = 3,
-						},
-						inheritedIndex = 1,
-					},
-				},
-				mechanicTime = 15.261765625,
-				name = "[SGE] Haima",
-				timelineIndex = 1,
-				timerEndOffset = 5,
-				timerOffset = -3,
-				timerStartOffset = -5,
-				uuid = "b25567f0-8dbf-10ba-bce9-1b755e51d9c4",
-				version = 2,
-			},
-			inheritedIndex = 12,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
-									true,
-								},
-							},
-							gVar = "ACR_RikuSGE3_Healbar_Kardia",
-							targetType = "Main Tank",
-							uuid = "c0a9c51e-79a0-c1be-b647-992fb1fced0e",
-							variableIsHover = true,
-							variableTogglesType = 3,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							buffCheckType = 2,
-							buffID = 2605,
-							category = "Party",
-							name = "MT Buff: Kardion Missing",
-							partyTargetType = "Main Tank",
-							uuid = "738f5cf2-ec60-616d-9a2c-f2dbd06647e8",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 15.261765625,
-				name = "[SGE] Kardia MT",
-				timelineIndex = 1,
-				timerOffset = -1,
-				uuid = "febf9fac-75a7-ab1f-8ca5-db6b496ca613",
-				version = 2,
-			},
-			inheritedIndex = 13,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-				},
-				conditions = 
-				{
-				},
-				enabled = false,
-				mechanicTime = 15.261765625,
-				name = "======TEMPLATES======",
-				timelineIndex = 1,
-				uuid = "0e44798a-cf0d-5da5-98dc-c9638fc3aa0c",
-				version = 2,
-			},
-			inheritedIndex = 14,
+			objectType = "folder",
 		},
 		
 		{
@@ -1970,6 +2009,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Kerachole",
@@ -1980,7 +2020,7 @@ local tbl =
 				uuid = "d157bf51-1947-4b85-a282-b387445aeaba",
 				version = 2,
 			},
-			inheritedIndex = 15,
+			inheritedIndex = 17,
 		},
 		
 		{
@@ -2046,6 +2086,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Ixochole",
@@ -2056,7 +2097,7 @@ local tbl =
 				uuid = "9eb6b0f6-bbcb-96be-89c5-62faee039dd9",
 				version = 2,
 			},
-			inheritedIndex = 16,
+			inheritedIndex = 18,
 		},
 		
 		{
@@ -2122,6 +2163,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Holos",
@@ -2132,7 +2174,7 @@ local tbl =
 				uuid = "0c66b7f8-9c53-609d-a647-4239ca592181",
 				version = 2,
 			},
-			inheritedIndex = 17,
+			inheritedIndex = 19,
 		},
 		
 		{
@@ -2180,6 +2222,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Druochole",
@@ -2190,7 +2233,7 @@ local tbl =
 				uuid = "c431ad2a-bd1e-f439-885e-3220fbe389c7",
 				version = 2,
 			},
-			inheritedIndex = 18,
+			inheritedIndex = 20,
 		},
 		
 		{
@@ -2256,6 +2299,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Panhaima",
@@ -2266,7 +2310,7 @@ local tbl =
 				uuid = "3685d17b-db88-0b0c-86d9-afc217c20573",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 21,
 		},
 		
 		{
@@ -2332,6 +2376,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Philosophia",
@@ -2342,7 +2387,7 @@ local tbl =
 				uuid = "bd32b382-6df9-26eb-91c3-729d5b0a9f90",
 				version = 2,
 			},
-			inheritedIndex = 20,
+			inheritedIndex = 22,
 		},
 		
 		{
@@ -2408,6 +2453,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Zoe Pneuma",
@@ -2418,7 +2464,7 @@ local tbl =
 				uuid = "04e89e4a-9787-f27d-aec7-e28fb9385f5b",
 				version = 2,
 			},
-			inheritedIndex = 21,
+			inheritedIndex = 23,
 		},
 		
 		{
@@ -2540,6 +2586,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Eukrasian Prognosis",
@@ -2550,7 +2597,7 @@ local tbl =
 				uuid = "6e91851c-5b9e-69d5-965a-2a793a396194",
 				version = 2,
 			},
-			inheritedIndex = 22,
+			inheritedIndex = 24,
 		},
 		
 		{
@@ -2658,6 +2705,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Zoe Eukrasian Prognosis",
@@ -2668,7 +2716,7 @@ local tbl =
 				uuid = "4703876f-65bc-091c-8c99-5913bd336bb4",
 				version = 2,
 			},
-			inheritedIndex = 23,
+			inheritedIndex = 25,
 		},
 		
 		{
@@ -2797,6 +2845,7 @@ local tbl =
 						inheritedIndex = 5,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Eukrasian Diagnosis",
@@ -2807,7 +2856,7 @@ local tbl =
 				uuid = "42d5daec-f3ec-8225-ad1a-1dd6bf6caa8d",
 				version = 2,
 			},
-			inheritedIndex = 24,
+			inheritedIndex = 26,
 		},
 		
 		{
@@ -2852,6 +2901,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Soteria",
@@ -2862,7 +2912,7 @@ local tbl =
 				uuid = "0fe4d5b5-c648-f826-bbec-b218fa6d8e87",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 27,
 		},
 		
 		{
@@ -2952,6 +3002,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Pepsis",
@@ -2962,7 +3013,7 @@ local tbl =
 				uuid = "05c19294-4a12-43f9-8b36-c9392a4f5b55",
 				version = 2,
 			},
-			inheritedIndex = 26,
+			inheritedIndex = 28,
 		},
 		
 		{
@@ -3009,6 +3060,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Haima",
@@ -3019,7 +3071,7 @@ local tbl =
 				uuid = "603eeb46-03d3-4fb3-9c83-39ba571ded80",
 				version = 2,
 			},
-			inheritedIndex = 27,
+			inheritedIndex = 29,
 		},
 		
 		{
@@ -3085,6 +3137,7 @@ local tbl =
 						},
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Physis",
@@ -3095,7 +3148,7 @@ local tbl =
 				uuid = "1c479603-d17c-55b8-abe2-071da6d8d2ce",
 				version = 2,
 			},
-			inheritedIndex = 28,
+			inheritedIndex = 30,
 		},
 		
 		{
@@ -3142,6 +3195,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Taurochole",
@@ -3152,7 +3206,7 @@ local tbl =
 				uuid = "783f028d-927d-1ea8-afbb-ea4feac9fdad",
 				version = 2,
 			},
-			inheritedIndex = 29,
+			inheritedIndex = 31,
 		},
 		
 		{
@@ -3199,6 +3253,7 @@ local tbl =
 						inheritedIndex = 1,
 					},
 				},
+				displayPath = "Templates",
 				enabled = false,
 				mechanicTime = 15.261765625,
 				name = "[SGE] Krasis",
@@ -3209,7 +3264,7 @@ local tbl =
 				uuid = "d92c91e8-17c3-aa0b-b415-620c2c356fd5",
 				version = 2,
 			},
-			inheritedIndex = 30,
+			inheritedIndex = 32,
 		},
 	},
 	
@@ -30835,20 +30890,6 @@ local tbl =
 			},
 			inheritedIndex = 2,
 		},
-		
-		{
-			data = 
-			{
-				name = "[Draw] P5 Exaflares",
-				uuid = "247ac03f-e53d-4399-b38d-bce4dbeb70e5",
-				version = 2,
-			},
-			inheritedObjectUUID = "dd6428d9-a7b5-42eb-9c77-49c655a81657",
-			inheritedOverwrites = 
-			{
-				enabled = false,
-			},
-		},
 	},
 	[210] = 
 	{
@@ -32327,7 +32368,6 @@ local tbl =
 				name = "[SGE] Eukrasian Prognosis",
 				timelineIndex = 220,
 				timerEndOffset = -1,
-				timerOffset = -2,
 				timerStartOffset = -5,
 				uuid = "5d43879e-d59a-7f2e-8344-8d3e4a81b671",
 				version = 2,
