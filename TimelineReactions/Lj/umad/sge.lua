@@ -17403,7 +17403,7 @@ local tbl =
 				name = "[SGE] Eukrasian Diagnosis",
 				timelineIndex = 105,
 				timerEndOffset = 5,
-				timerOffset = -4,
+				timerOffset = -5,
 				timerStartOffset = -5,
 				uuid = "f9a7da29-004d-c01a-8416-de66c5bd8ea5",
 				version = 2,
@@ -17490,10 +17490,11 @@ local tbl =
 				},
 				mechanicTime = 556.00428210262,
 				name = "[SGE] Eukrasian Prognosis",
+				timeRange = true,
 				timelineIndex = 106,
-				timerEndOffset = -1,
+				timerEndOffset = 5,
 				timerOffset = -1,
-				timerStartOffset = -6,
+				timerStartOffset = -1,
 				uuid = "7ca2aae0-9bd2-9d39-99cb-fdb58eb1a7cc",
 				version = 2,
 			},
@@ -18300,6 +18301,11 @@ local tbl =
 								{
 									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
 									true,
+								},
+								
+								{
+									"8e64fb9f-1869-808d-ad07-99579bff1ced",
+									false,
 								},
 								
 								{
