@@ -696,7 +696,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return FFXIV_Common_BotRunning\n--return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "3fa8ea45-c4f9-4e71-9eba-ef17f6fdf983",
@@ -816,6 +816,195 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
+						actionLua = "local id = eventArgs.entityID\nlocal green = GUI:ColorConvertFloat4ToU32(0, 1, 0, 0.3)\nlocal white = GUI:ColorConvertFloat4ToU32(1, 1, 1, 1)\nlocal renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\nif Argus.isEntityVisible(id) then\n    local exists = false\n    local remove = {}\n\n    for index = 0, Argus.getNumTimedDraws() - 1 do\n        local shape, _, _, _, _, _, _, uuid, colorStart, colorEnd =\n            Argus.getTimedDrawBaseInfo(index)\n\n        if shape == \"circle\" and colorStart == green and colorEnd == green then\n            local attachedID, _, _, _, _, _, outline, thickness, _, _, _, _, _, flags =\n                Argus.getTimedDrawOptArgs(index)\n\n            if Argus.getTimedCircleInfo(index) == 2\n                and outline == white\n                and thickness == 2\n                and flags == renderFlags\n            then\n                -- Tanks can be removed without a visibility change; their circles fall back to 0,0,0\n                if TensorCore.mGetEntity(attachedID) == nil then\n                    remove[#remove + 1] = uuid\n                elseif attachedID == id then\n                    exists = true\n                end\n            end\n        end\n    end\n\n    for _, uuid in ipairs(remove) do\n        Argus.deleteTimedShape(uuid)\n    end\n\n    if not exists then\n        local drawer = TensorCore.getCachedDrawer(green, nil, green, white, 2)\n        drawer:addTimedCircleOnEnt(900000, id, 2, 0, false, true, renderFlags)\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"a1cff27a-90df-5170-aad1-656611d35225",
+								true,
+							},
+							
+							{
+								"0ff0bc7f-d022-26db-ab80-ef9c05301c3d",
+								true,
+							},
+							
+							{
+								"6c8824b3-08b2-19c7-905e-47d5f466e804",
+								true,
+							},
+						},
+						name = "Add Ceruleum Fuel Draw",
+						uuid = "c457db8b-8ad3-ecb2-9907-b5af6ccbe0b8",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local id = eventArgs.entityID\nlocal green = GUI:ColorConvertFloat4ToU32(0, 1, 0, 0.3)\nlocal white = GUI:ColorConvertFloat4ToU32(1, 1, 1, 1)\nlocal renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\nif not Argus.isEntityVisible(id) then\n    local remove = {}\n\n    for index = 0, Argus.getNumTimedDraws() - 1 do\n        local shape, _, _, _, _, _, _, uuid, colorStart, colorEnd =\n            Argus.getTimedDrawBaseInfo(index)\n\n        if shape == \"circle\" and colorStart == green and colorEnd == green then\n            local attachedID, _, _, _, _, _, outline, thickness, _, _, _, _, _, flags =\n                Argus.getTimedDrawOptArgs(index)\n\n            if Argus.getTimedCircleInfo(index) == 2\n                and outline == white\n                and thickness == 2\n                and flags == renderFlags\n            then\n                -- Tanks can be removed without a visibility change; their circles fall back to 0,0,0\n                if attachedID == id or TensorCore.mGetEntity(attachedID) == nil then\n                    remove[#remove + 1] = uuid\n                end\n            end\n        end\n    end\n\n    for _, uuid in ipairs(remove) do\n        Argus.deleteTimedShape(uuid)\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"a1cff27a-90df-5170-aad1-656611d35225",
+								true,
+							},
+							
+							{
+								"0ff0bc7f-d022-26db-ab80-ef9c05301c3d",
+								true,
+							},
+							
+							{
+								"6c8824b3-08b2-19c7-905e-47d5f466e804",
+								false,
+							},
+						},
+						name = "Remove Ceruleum Fuel Draw",
+						uuid = "ede511a7-85c7-ff2b-928b-df5251136434",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 12,
+						localMapIDList = 
+						{
+							729,
+							791,
+						},
+						name = "Rival Wings",
+						uuid = "a1cff27a-90df-5170-aad1-656611d35225",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 2009031,
+						name = "Ceruleum Tank",
+						uuid = "0ff0bc7f-d022-26db-ab80-ef9c05301c3d",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 3,
+						name = "Is Visible",
+						uuid = "6c8824b3-08b2-19c7-905e-47d5f466e804",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws & UI",
+			eventType = 22,
+			name = "Lj: RW | Draw | Ceruleum Fuel",
+			uuid = "e925d7ed-c3d0-9236-89f3-8ad22e6d5c85",
+			version = 2,
+		},
+		inheritedIndex = 10,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local id = eventArgs.entityID\nlocal green = GUI:ColorConvertFloat4ToU32(0, 1, 0, 0.3)\nlocal white = GUI:ColorConvertFloat4ToU32(1, 1, 1, 1)\nlocal renderFlags = Argus2.RenderFlags.FLAG_RENDER_OVERLAY\n\ndo\n    local remove = {}\n\n    for index = 0, Argus.getNumTimedDraws() - 1 do\n        local shape, _, _, _, _, _, _, uuid, colorStart, colorEnd =\n            Argus.getTimedDrawBaseInfo(index)\n\n        if shape == \"circle\" and colorStart == green and colorEnd == green then\n            local attachedID, _, _, _, _, _, outline, thickness, _, _, _, _, _, flags =\n                Argus.getTimedDrawOptArgs(index)\n\n            if Argus.getTimedCircleInfo(index) == 2\n                and outline == white\n                and thickness == 2\n                and flags == renderFlags\n            then\n                -- Tanks can be removed without a visibility change; their circles fall back to 0,0,0\n                if attachedID == id or TensorCore.mGetEntity(attachedID) == nil then\n                    remove[#remove + 1] = uuid\n                end\n            end\n        end\n    end\n\n    for _, uuid in ipairs(remove) do\n        Argus.deleteTimedShape(uuid)\n    end\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"cdac52cd-7c41-78b2-9d92-f71ba4461c82",
+								true,
+							},
+							
+							{
+								"09786401-5797-cb2a-91ae-baf9f489033b",
+								true,
+							},
+						},
+						name = "Remove Fuel Draw",
+						uuid = "8812eb0f-7397-8803-89a5-9c16109e9ef2",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 12,
+						dequeueIfLuaFalse = true,
+						localMapIDList = 
+						{
+							729,
+							791,
+						},
+						name = "Rival Wings",
+						uuid = "09786401-5797-cb2a-91ae-baf9f489033b",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventEntityName = "Ceruleum Tank",
+						name = "Ceruleum Tank",
+						uuid = "cdac52cd-7c41-78b2-9d92-f71ba4461c82",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Draws & UI",
+			eventType = 6,
+			name = "Lj: RW | Draw | Ceruleum Fuel Cleanup",
+			uuid = "17cbc5e4-c83c-b096-8ac6-3b11307af967",
+			version = 2,
+		},
+		inheritedIndex = 11,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
 						actionLua = "local player = TensorCore.mGetPlayer()\nlocal enemies = TensorCore.getEntityGroupList(\"Enemy\")\nlocal drawer = TensorCore.getStaticDrawer(436209407, 1.0)\n\nfor _, enemy in pairs(enemies) do\n    if enemy and enemy.alive and enemy.targetid == player.id then\n        \n        drawer:addLine(\n            enemy.pos.x, enemy.pos.y, enemy.pos.z,\n            player.pos.x, player.pos.y, player.pos.z,\n            3.0, 3.0\n        )\n        \n        drawer:addCircle(enemy.pos.x, enemy.pos.y, enemy.pos.z, 0.25, false)\n    end\nend\n\nself.used = true",
 						conditions = 
 						{
@@ -853,7 +1042,7 @@ local tbl =
 			uuid = "82396a12-a25a-d0ce-8a9d-85182210f8e5",
 			version = 2,
 		},
-		inheritedIndex = 10,
+		inheritedIndex = 12,
 	},
 	
 	{
@@ -903,7 +1092,7 @@ local tbl =
 			uuid = "5888e169-4ac7-9972-8eb0-db75099eefba",
 			version = 2,
 		},
-		inheritedIndex = 11,
+		inheritedIndex = 13,
 	},
 	
 	{
@@ -916,7 +1105,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local player = TensorCore.mGetPlayer()\nlocal drawer = Argus2.ShapeDrawer:new(0, nil, 0, 4278190335, 2.0)\nlocal range = 5\ndrawer:addCircle(player.pos.x, player.pos.y, player.pos.z, range, true)\n\nself.used = true\n",
+						actionLua = "ljMaxRangeDraw = ljMaxRangeDraw or {}\nlocal state = ljMaxRangeDraw\nlocal radius = 5\n\nif state.radius ~= radius then\n    if state.uuid then\n        Argus.deleteTimedShape(state.uuid)\n    end\n\n    local player = TensorCore.mGetPlayer()\n    local drawer = TensorCore.getCachedDrawer(0, nil, 0, 4278190335, 2)\n    state.uuid = drawer:addTimedCircleOnEnt(1800000, player.id, radius, 0, false, true, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    state.radius = radius\nend\n\nself.used = true",
 						conditions = 
 						{
 							
@@ -952,7 +1141,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local player = TensorCore.mGetPlayer()\nlocal drawer = Argus2.ShapeDrawer:new(0, nil, 0, 4278190335, 2.0)\nlocal range = 25\ndrawer:addCircle(player.pos.x, player.pos.y, player.pos.z, range, true)\n\nself.used = true\n",
+						actionLua = "ljMaxRangeDraw = ljMaxRangeDraw or {}\nlocal state = ljMaxRangeDraw\nlocal radius = 25\n\nif state.radius ~= radius then\n    if state.uuid then\n        Argus.deleteTimedShape(state.uuid)\n    end\n\n    local player = TensorCore.mGetPlayer()\n    local drawer = TensorCore.getCachedDrawer(0, nil, 0, 4278190335, 2)\n    state.uuid = drawer:addTimedCircleOnEnt(1800000, player.id, radius, 0, false, true, Argus2.RenderFlags.FLAG_RENDER_OVERLAY)\n    state.radius = radius\nend\n\nself.used = true",
 						conditions = 
 						{
 							
@@ -979,6 +1168,25 @@ local tbl =
 						gVar = "ACR_TensorMagnum3_CD",
 						name = "Ranged",
 						uuid = "02aee8b7-5c1e-b215-9a44-438473ca9ace",
+						version = 2.1,
+					},
+				},
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local state = ljMaxRangeDraw\n\nif state and state.uuid then\n    Argus.deleteTimedShape(state.uuid)\n    state.uuid = nil\n    state.radius = nil\nend\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"99b1ce8c-93f7-37fd-b29c-5db185f4127b",
+								false,
+							},
+						},
+						name = "Clear",
+						uuid = "90cf28b7-cf29-ecd8-a8b0-bbe7004e6411",
 						version = 2.1,
 					},
 				},
@@ -1128,14 +1336,407 @@ local tbl =
 					},
 					inheritedIndex = 9,
 				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"32454d08-b746-c2ae-8ccd-ea1691ffefca",
+								true,
+							},
+							
+							{
+								"363d1656-11d0-8a6f-9b64-7c676743d496",
+								true,
+							},
+							
+							{
+								"ea280700-a1ea-0dca-9480-4eec4ebb6ffa",
+								true,
+							},
+						},
+						name = "Draw Active",
+						partyTargetNumber = 0,
+						uuid = "99b1ce8c-93f7-37fd-b29c-5db185f4127b",
+						version = 3,
+					},
+				},
 			},
 			displayPath = "Draws & UI",
-			eventType = 12,
 			name = "Lj: PvP | Draw | Max Range",
 			uuid = "e3fdc640-4b68-659a-a6b5-63fb14708b84",
 			version = 2,
 		},
-		inheritedIndex = 12,
+		inheritedIndex = 14,
+	},
+	
+	{
+		data = 
+		{
+			displayPath = "",
+			name = "Enemy Limit Breaks",
+			uuid = "7bf44330-5ec6-c4d5-b6e9-d65be833b7f3",
+		},
+		objectType = "folder",
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "local drawer = TensorCore.getStaticDrawer(4278190335, 1.5)\ndrawer:addTimedCircleOnEnt(2000, eventArgs.entityID, 15, 0, false, true)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"a36ce8f5-39f1-81f1-ad70-65a9b51836dd",
+								true,
+							},
+							
+							{
+								"9206659c-67ab-9913-ab00-45d0f07c2241",
+								true,
+							},
+							
+							{
+								"036e6238-e032-1311-9f0b-c961c5a298d3",
+								true,
+							},
+						},
+						name = "Draw Contradance",
+						uuid = "641215ac-7920-0985-8e8a-47100104258b",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "a36ce8f5-39f1-81f1-ad70-65a9b51836dd",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 29432,
+						name = "Contradance",
+						uuid = "9206659c-67ab-9913-ab00-45d0f07c2241",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						conditionType = 10,
+						dequeueIfLuaFalse = true,
+						inGroupTargetType = "Enemy",
+						name = "Enemy",
+						partyTargetType = "Event Entity",
+						uuid = "036e6238-e032-1311-9f0b-c961c5a298d3",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Enemy Limit Breaks",
+			eventType = 2,
+			name = "Lj: PvP | Draw | Contradance",
+			uuid = "bd08831f-0735-6529-b6db-dd2daaebc647",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.ljLbDraws = data.ljLbDraws or {}\nlocal state = data.ljLbDraws\nlocal id = eventArgs.entityID\n\nif state[id] then\n    Argus.deleteTimedShape(state[id])\nend\n\nstate[id] = TensorCore.getCachedDrawer(0x400000FF, nil, 0x400000FF, 0xFF0000FF, 2):addTimedCircleOnEnt(4500, id, 6)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"da1c9c63-4d72-755b-b34a-81be3089d05f",
+								true,
+							},
+							
+							{
+								"37da88f4-20a6-6bc3-a0e8-571eadaa0d3c",
+								true,
+							},
+							
+							{
+								"da1c9c63-4d72-755b-b34a-81be3089d05f",
+								true,
+							},
+							
+							{
+								"a139557f-b27d-986c-b76d-253924899bf0",
+								true,
+							},
+						},
+						name = "Draw - Relentless Rush",
+						uuid = "c12909e6-ccb3-f3ac-918e-510582d01f43",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "da1c9c63-4d72-755b-b34a-81be3089d05f",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgType = 2,
+						eventSpellID = 29130,
+						name = "Relentless Rush",
+						uuid = "37da88f4-20a6-6bc3-a0e8-571eadaa0d3c",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.entityID)\n\nreturn ent ~= nil and ent.pvpteam ~= TensorCore.mGetPlayer().pvpteam",
+						dequeueIfLuaFalse = true,
+						name = "Enemy",
+						uuid = "a139557f-b27d-986c-b76d-253924899bf0",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Enemy Limit Breaks",
+			eventType = 2,
+			name = "Lj: PvP | Draw | Relentless Rush",
+			uuid = "7e091bf3-71fa-3dbf-a145-4b8242e62857",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "data.ljLbDraws = data.ljLbDraws or {}\nlocal state = data.ljLbDraws\nlocal id = eventArgs.entityID\nlocal drawer = TensorCore.getCachedDrawer(0x400000FF, nil, 0x400000FF, 0xFF0000FF, 2)\nlocal x, y, z = eventArgs.castPosX, eventArgs.castPosY, eventArgs.castPosZ\n\n-- 29267 relocates the barrier without resetting its 15s duration\nif eventArgs.spellID == 29267 and state[id] and drawer:updateTimedCircle(state[id], nil, x, y, z) then\n    self.used = true\n    return\nend\n\nif state[id] then\n    Argus.deleteTimedShape(state[id])\nend\n\nstate[id] = drawer:addTimedCircle(15000, x, y, z, 5)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"ac111ba7-0c5c-0187-9f64-822464b46fcc",
+								true,
+							},
+							
+							{
+								"c9eddc35-eb79-bd19-b89d-1bed9df0fd91",
+								true,
+							},
+							
+							{
+								"ac111ba7-0c5c-0187-9f64-822464b46fcc",
+								true,
+							},
+							
+							{
+								"66c64922-6cfe-c3e8-a4e8-d0e9bfeab4ef",
+								true,
+							},
+						},
+						name = "Draw - Mesotes",
+						uuid = "3baa6b43-8e19-e790-89fc-0276afa269c2",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "ac111ba7-0c5c-0187-9f64-822464b46fcc",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						name = "Mesotes",
+						spellIDList = 
+						{
+							29266,
+							29267,
+						},
+						uuid = "c9eddc35-eb79-bd19-b89d-1bed9df0fd91",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.entityID)\n\nreturn ent ~= nil and ent.pvpteam ~= TensorCore.mGetPlayer().pvpteam",
+						dequeueIfLuaFalse = true,
+						name = "Enemy",
+						uuid = "66c64922-6cfe-c3e8-a4e8-d0e9bfeab4ef",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Enemy Limit Breaks",
+			eventType = 2,
+			name = "Lj: PvP | Draw | Mesotes",
+			uuid = "c2b7b031-1adb-a6a6-ae7e-2e6d468d0233",
+			version = 2,
+		},
+		inheritedIndex = 18,
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "TensorCore.getCachedDrawer(0x400000FF, nil, 0x400000FF, 0xFF0000FF, 2):addTimedCircleOnEnt(3000, eventArgs.entityID, 15)\n\nself.used = true",
+						conditions = 
+						{
+							
+							{
+								"5379a380-d177-fc0d-8778-e204a8d787c3",
+								true,
+							},
+							
+							{
+								"01bcc63a-caf9-a228-89a5-59480e9e8ed2",
+								true,
+							},
+							
+							{
+								"6dcd4dd7-2ed5-c1c0-ab59-ee3e3741cf1d",
+								true,
+							},
+						},
+						name = "Draw - Megaflare",
+						uuid = "d61a443c-c67e-d408-9a3c-261c30b09e3b",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "return TensorCore.isPVPMap()",
+						dequeueIfLuaFalse = true,
+						name = "PVP Map",
+						uuid = "5379a380-d177-fc0d-8778-e204a8d787c3",
+						version = 3,
+					},
+					inheritedIndex = 1,
+				},
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 2,
+						eventEntityContentID = 6566,
+						name = "Demi-Bahamut",
+						uuid = "01bcc63a-caf9-a228-89a5-59480e9e8ed2",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local ent = TensorCore.mGetEntity(eventArgs.entityID)\nlocal owner = ent and TensorCore.mGetEntity(ent.ownerid)\n\nreturn owner ~= nil and owner.pvpteam ~= TensorCore.mGetPlayer().pvpteam",
+						dequeueIfLuaFalse = true,
+						name = "Enemy",
+						uuid = "6dcd4dd7-2ed5-c1c0-ab59-ee3e3741cf1d",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Enemy Limit Breaks",
+			eventType = 5,
+			name = "Lj: PvP | Draw | Megaflare",
+			uuid = "e0172c2b-61cd-0155-b207-5b409c2d3290",
+			version = 2,
+		},
 	},
 	
 	{
@@ -1269,7 +1870,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "00bf10ee-435c-a2e8-aa70-61cb7f9173da",
@@ -1361,7 +1962,7 @@ local tbl =
 			uuid = "777258da-b427-f2e9-9cdf-6cf8ad56ecee",
 			version = 2,
 		},
-		inheritedIndex = 14,
+		inheritedIndex = 21,
 	},
 	
 	{
@@ -1442,7 +2043,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "0179d548-ccb7-0218-b24a-63fb55c4a810",
@@ -1749,7 +2350,7 @@ local tbl =
 			uuid = "d27f6f56-9a8a-455c-89a6-0adaa21e0a86",
 			version = 2,
 		},
-		inheritedIndex = 15,
+		inheritedIndex = 22,
 	},
 	
 	{
@@ -1826,7 +2427,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "c8f59f34-8cc0-6795-88e5-dde808ffb454",
@@ -2100,7 +2701,7 @@ local tbl =
 			uuid = "0ec88ca0-cdf4-d740-bb3d-e1df624ccaaf",
 			version = 2,
 		},
-		inheritedIndex = 16,
+		inheritedIndex = 23,
 	},
 	
 	{
@@ -2197,7 +2798,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "56567c6a-bd47-599a-a8d6-95b3de8074b4",
@@ -2231,6 +2832,7 @@ local tbl =
 							1302,
 							394,
 							4096,
+							3171,
 						},
 						matchAnyBuff = true,
 						name = "Target: Buff Check",
@@ -2254,6 +2856,7 @@ local tbl =
 							1302,
 							394,
 							4096,
+							3171,
 						},
 						category = "Party",
 						name = "Enemy: Missing Buffs",
@@ -2511,7 +3114,7 @@ local tbl =
 			uuid = "374bd26d-c4ea-e88e-a601-1da2cb34a2b6",
 			version = 2,
 		},
-		inheritedIndex = 17,
+		inheritedIndex = 24,
 	},
 	
 	{
@@ -2571,7 +3174,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "0efbcdc5-3297-65f0-aa91-e0abdc8dc600",
@@ -2849,11 +3452,10 @@ local tbl =
 			},
 			displayPath = "Combat",
 			name = "Lj: PvP | Target | Interrupt Heal",
-			throttleTime = 1500,
 			uuid = "7f97e235-ee9c-a9f7-a2eb-c7a50050e8b3",
 			version = 2,
 		},
-		inheritedIndex = 18,
+		inheritedIndex = 25,
 	},
 	
 	{
@@ -2972,7 +3574,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "59f5f160-a5d0-e58e-88dd-9d9c65b9d6a9",
@@ -3191,6 +3793,57 @@ local tbl =
 				{
 					data = 
 					{
+						buffID = 1420,
+						category = "Party",
+						name = "Enemy: Mech",
+						partyTargetType = "Detection Target",
+						uuid = "94ffa0bd-ae78-d46a-8c6d-92607a398312",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Party",
+						comparator = 2,
+						conditionType = 2,
+						hpValue = 25,
+						name = "Enemy: HP <= 25%",
+						partyTargetType = "Detection Target",
+						uuid = "ffdc217e-f150-bb60-908a-5f1c55e07f2c",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Filter",
+						conditions = 
+						{
+							
+							{
+								"ffdc217e-f150-bb60-908a-5f1c55e07f2c",
+								true,
+							},
+							
+							{
+								"94ffa0bd-ae78-d46a-8c6d-92607a398312",
+								false,
+							},
+						},
+						matchAnyBuff = true,
+						name = "OR: <= 25% or No Mech",
+						partyTargetNumber = 0,
+						uuid = "85f124ab-5ab6-27af-a05f-a67e193bdda3",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
 						category = "Filter",
 						conditions = 
 						{
@@ -3214,6 +3867,11 @@ local tbl =
 								"ad4339be-4543-925c-b5de-68d92f136c17",
 								true,
 							},
+							
+							{
+								"85f124ab-5ab6-27af-a05f-a67e193bdda3",
+								true,
+							},
 						},
 						filterTargetSubtype = "Lowest HP",
 						filterTargetType = "ContentID",
@@ -3222,6 +3880,7 @@ local tbl =
 						uuid = "91a67de6-9ef6-5f50-ab5e-78f5f06f4d9d",
 						version = 3,
 					},
+					inheritedIndex = 21,
 				},
 				
 				{
@@ -3246,12 +3905,14 @@ local tbl =
 								true,
 							},
 						},
+						filterTargetSubtype = "Lowest HP",
 						filterTargetType = "ContentID",
 						name = "F - Enemy <= 40y Range",
 						partyTargetContentID = 0,
 						uuid = "1775b902-b84a-ade3-a351-4097e017264b",
 						version = 3,
 					},
+					inheritedIndex = 22,
 				},
 			},
 			displayPath = "Combat",
@@ -3259,7 +3920,7 @@ local tbl =
 			uuid = "15c3c3d6-66cc-96ef-95fe-a850d6bcdfc7",
 			version = 2,
 		},
-		inheritedIndex = 19,
+		inheritedIndex = 26,
 	},
 	
 	{
@@ -3334,7 +3995,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "f4550245-cd73-c161-a7ad-364d880405d9",
@@ -3526,7 +4187,7 @@ local tbl =
 			uuid = "5cc6f157-e779-1ea1-a6e5-8f03e85ae32e",
 			version = 2,
 		},
-		inheritedIndex = 22,
+		inheritedIndex = 29,
 	},
 	
 	{
@@ -3539,7 +4200,7 @@ local tbl =
 					data = 
 					{
 						aType = "Alert",
-						alertDuration = 7000,
+						alertDuration = 8000,
 						alertPriority = 2,
 						alertScale = 1,
 						alertTTS = true,
@@ -3622,7 +4283,7 @@ local tbl =
 						category = "Lua",
 						conditionLua = "if self.duplicateAccepted ~= nil then\n    return self.duplicateAccepted\nend\n\nlocal now = Now()\nlocal last = data.ljWildfireSelfLastAlert\n\nself.duplicateAccepted =\n    last == nil or now - last >= 1000\n\nif self.duplicateAccepted then\n    data.ljWildfireSelfLastAlert = now\nend\n\nreturn self.duplicateAccepted",
 						dequeueIfLuaFalse = true,
-						name = "Duplicate Spam Protection",
+						name = "Wildfire Duplicate Spam Protection",
 						uuid = "96375a4f-ef44-afa9-9610-cb6048f78dac",
 						version = 3,
 					},
@@ -3634,7 +4295,7 @@ local tbl =
 			uuid = "fe8ed107-b88b-c1f2-92af-77543837550e",
 			version = 2,
 		},
-		inheritedIndex = 23,
+		inheritedIndex = 30,
 	},
 	
 	{
@@ -3647,7 +4308,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\n\n-- Buffs to track on Enemy players\nlocal enemyBuffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Scales\", ids = { 4096 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } },\n\t{ name = \"Covered\", ids = { 1301 } }\n}\n\n-- Buffs to track on Friendly players (your team)\nlocal friendlyBuffsToTrack = {\n    { name = \"Wildfire\", ids = { 1323 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\n-- Determine which list of buffs to check based on team\nlocal isFriendly = (ent.pvpteam == player.pvpteam)\nlocal buffsToCheck = isFriendly and friendlyBuffsToTrack or enemyBuffsToTrack\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff from the selected list\nfor _, buffData in ipairs(buffsToCheck) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff then\n    local duration = activeBuff.duration or 0\n    if duration <= 0 then \n        duration = 10 -- Fallback duration\n    end\n    \n    local timerMs = math.floor(duration * 1000)\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 1.5)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
+						actionLua = "local targetID = eventArgs.detectionTargetID\nlocal ent = TensorCore.mGetEntity(targetID)\nlocal player = TensorCore.mGetPlayer()\n\nif not ent then\n    self.used = true\n    self.eventConditionMismatch = true\n    return\nend\n\nlocal currentTime = Now()\n\n-- Buffs to track on Enemy players\nlocal enemyBuffsToTrack = {\n    { name = \"Chiten\", ids = { 1240 } },\n    { name = \"Scales\", ids = { 4096 } },\n    { name = \"Invul\",  ids = { 1302, 3039, 394 } },\n    { name = \"Covered\", ids = { 1301 } },\n    { name = \"RoE\", ids = { 3171 } }\n}\n\n-- Buffs to track on Friendly players (your team)\nlocal friendlyBuffsToTrack = {\n    { name = \"Wildfire\", ids = { 1323 } }\n}\n\nlocal activeBuff = nil\nlocal activeText = \"\"\n\n-- Determine which list of buffs to check based on team\nlocal isFriendly = (ent.pvpteam == player.pvpteam)\nlocal buffsToCheck = isFriendly and friendlyBuffsToTrack or enemyBuffsToTrack\n\ndata.ljNextDrawTime = data.ljNextDrawTime or {}\ndata.ljNextDrawTime[targetID] = data.ljNextDrawTime[targetID] or {}\n\n-- Find the active buff from the selected list\nfor _, buffData in ipairs(buffsToCheck) do\n    for _, buffID in ipairs(buffData.ids) do\n        local buff = TensorCore.getBuff(targetID, buffID)\n        if buff then\n            activeBuff = buff\n            activeText = buffData.name\n            break \n        end\n    end\n    if activeBuff then break end\nend\n\n-- Draw WorldText on specific entity\nif activeBuff then\n    local duration = activeBuff.duration or 0\n    if duration <= 0 then \n        duration = 10 -- Fallback duration\n    end\n    \n    local timerMs = math.floor(duration * 1000)\n    local nextAllowedDraw = data.ljNextDrawTime[targetID][activeText] or 0\n    \n    -- Avoid spam draw\n    if currentTime >= nextAllowedDraw then\n        AnyoneCore.addTimedWorldTextOnEnt(timerMs, activeText, targetID, AnyoneCore.white, true, 1.5, 2)\n        data.ljNextDrawTime[targetID][activeText] = currentTime + timerMs\n    end\nend\n\nself.used = true\nself.eventConditionMismatch = true",
 						conditions = 
 						{
 							
@@ -3699,6 +4360,7 @@ local tbl =
 							4096,
 							1323,
 							1301,
+							3171,
 						},
 						category = "Party",
 						matchAnyBuff = true,
@@ -3736,7 +4398,7 @@ local tbl =
 			uuid = "57d43549-0906-9a6e-9c34-555e2e79e0b2",
 			version = 2,
 		},
-		inheritedIndex = 24,
+		inheritedIndex = 31,
 	},
 	
 	{
@@ -3898,7 +4560,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "c61005ce-7dbf-a77b-a24e-95f1fc281220",
@@ -3988,7 +4650,7 @@ local tbl =
 			uuid = "ad452ec0-37a5-82ab-ad7b-de7c801d86b6",
 			version = 2,
 		},
-		inheritedIndex = 26,
+		inheritedIndex = 33,
 	},
 	
 	{
@@ -4254,7 +4916,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "0d4f6789-878e-72a1-b090-69cf2f3242c3",
@@ -4442,7 +5104,7 @@ local tbl =
 			uuid = "86bcef7b-50e5-082f-971d-d5c3fd7d03ee",
 			version = 2,
 		},
-		inheritedIndex = 27,
+		inheritedIndex = 34,
 	},
 	
 	{
@@ -4545,7 +5207,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "0d4f6789-878e-72a1-b090-69cf2f3242c3",
@@ -4634,7 +5296,7 @@ local tbl =
 			uuid = "97c161b8-82c2-a45a-a192-1955d8a9ce3c",
 			version = 2,
 		},
-		inheritedIndex = 28,
+		inheritedIndex = 35,
 	},
 	
 	{
@@ -4734,7 +5396,7 @@ local tbl =
 			uuid = "38266338-193d-d0be-a961-cf2abda5c7fb",
 			version = 2,
 		},
-		inheritedIndex = 30,
+		inheritedIndex = 37,
 	},
 	
 	{
@@ -4829,7 +5491,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "058ebad1-5aa7-c9ce-8b28-6c7221af1019",
@@ -4921,7 +5583,7 @@ local tbl =
 			uuid = "465292e4-8338-277d-ad48-c44adfe7cbe0",
 			version = 2,
 		},
-		inheritedIndex = 31,
+		inheritedIndex = 38,
 	},
 	
 	{
@@ -5010,7 +5672,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Bot Enabled",
 						uuid = "93fb6aab-008b-7b97-aca4-ca078bd876b4",
@@ -5048,7 +5710,7 @@ local tbl =
 			uuid = "652fe8d9-229a-e0fc-83eb-858b670aa321",
 			version = 2,
 		},
-		inheritedIndex = 32,
+		inheritedIndex = 39,
 	},
 	
 	{
@@ -5277,7 +5939,7 @@ local tbl =
 			uuid = "91ea61f5-efab-eead-b737-4e21468f7710",
 			version = 2,
 		},
-		inheritedIndex = 33,
+		inheritedIndex = 40,
 	}, 
 	inheritedProfiles = 
 	{
