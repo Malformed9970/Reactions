@@ -44,7 +44,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Assist Enabled",
 						uuid = "7ad85a47-c001-3ac1-b0c3-b2bf308876b5",
@@ -372,7 +372,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						name = "Assist Enabled",
 						uuid = "b497d225-1e84-8649-af35-54c3fb6909a4",
 						version = 3,
@@ -581,7 +581,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						name = "Assist Enabled",
 						uuid = "a1bb26b8-385d-11b8-afe3-f3e7e30e4ed5",
 						version = 3,
@@ -635,7 +635,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						name = "Assist Enabled",
 						uuid = "a1bb26b8-385d-11b8-afe3-f3e7e30e4ed5",
 						version = 3,
@@ -831,7 +831,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Assist Enabled",
 						uuid = "715ef1e2-eb78-fb50-9037-b5c483c79ece",
@@ -955,7 +955,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						dequeueIfLuaFalse = true,
 						name = "Assist Enabled",
 						uuid = "492694b5-1e9b-e7f9-9e97-ec283930ebbe",
@@ -1880,7 +1880,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning or (KitanoiFuncs and KitanoiFuncs.AreKitanoiAddonsRunning()) or (HusbandoMaxStatus and HusbandoMaxStatus()) or false",
+						conditionLua = "return ACR.IsActive()",
 						name = "Bot Enabled",
 						uuid = "6625b085-e682-6937-b10f-d88d17f25b9d",
 						version = 3,
@@ -2249,7 +2249,7 @@ local tbl =
 					data = 
 					{
 						category = "Lua",
-						conditionLua = "return FFXIV_Common_BotRunning",
+						conditionLua = "return ACR.IsActive()",
 						name = "Assist Enabled",
 						uuid = "3fd0ed4a-7460-c6db-a800-b72bb3c5826c",
 						version = 3,
