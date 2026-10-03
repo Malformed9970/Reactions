@@ -163,7 +163,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\\\\\Lj\\\\\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSDrawSettings.lua]]\n\nif not Lj_UMADDRAWS_Settings then\n    Lj_UMADDRAWS_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADDRAWS_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADDRAWS_Settings\nlocal settingsChanged = false\n\nif settings.stompies ~= \"Roles\" and settings.stompies ~= \"Group 1/Group 2\" then\n    settings.stompies = \"Group 1/Group 2\"\n    settingsChanged = true\nend\n\nif settings.accelBombStillness ~= true and settings.accelBombStillness ~= false then\n    settings.accelBombStillness = true\n    settingsChanged = true\nend\n\nif settings.accelBombMotion ~= true and settings.accelBombMotion ~= false then\n    settings.accelBombMotion = true\n    settingsChanged = true\nend\n\nif settings.limitCutMacro ~= \"Disabled\" and settings.limitCutMacro ~= \"Echo Chat\" and settings.limitCutMacro ~= \"Party Chat\" then\n    settings.limitCutMacro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4Macro ~= \"Disabled\" and settings.p4Macro ~= \"Echo Chat\" and settings.p4Macro ~= \"Party Chat\" then\n    settings.p4Macro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4IceLightningMacro == nil then\n    settings.p4IceLightningMacro = settings.p4Macro\n    settingsChanged = true\nelseif settings.p4IceLightningMacro ~= \"Disabled\" and settings.p4IceLightningMacro ~= \"Echo Chat\" and settings.p4IceLightningMacro ~= \"Party Chat\" then\n    settings.p4IceLightningMacro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4AutoMark == nil and settings.p4SelfMark ~= nil then\n    settings.p4AutoMark = settings.p4SelfMark\n    settings.p4SelfMark = nil\n    settingsChanged = true\nelseif settings.p4SelfMark ~= nil then\n    settings.p4SelfMark = nil\n    settingsChanged = true\nend\n\nif settings.p4AutoMark == true then\n    settings.p4AutoMark = \"Self Only\"\n    settingsChanged = true\nelseif settings.p4AutoMark == false then\n    settings.p4AutoMark = \"Disabled\"\n    settingsChanged = true\nelseif settings.p4AutoMark ~= \"Disabled\" and settings.p4AutoMark ~= \"Self Only\" then\n    settings.p4AutoMark = \"Disabled\"\n    settingsChanged = true\nend\n\nif settingsChanged then\n    if not FolderExists(settingsFolder) then\n        FolderCreate(settingsFolder)\n    end\n    FileSave(settingsPath, settings)\nend\n\nLj_UMADDRAWS_Stompies = settings.stompies\nLj_UMADDRAWS_AccelBombStillness = settings.accelBombStillness\nLj_UMADDRAWS_AccelBombMotion = settings.accelBombMotion\nLj_UMADDRAWS_LimitCutMacro = settings.limitCutMacro\nLj_UMADDRAWS_P4Macro = settings.p4Macro\nLj_UMADDRAWS_P4IceLightningMacro = settings.p4IceLightningMacro\nLj_UMADDRAWS_P4AutoMark = settings.p4AutoMark\n\nlocal flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize\nGUI:SetNextWindowSize(300, 0, GUI.SetCond_Always)\nlocal visible = GUI:Begin(\"Lj Draw Settings###LjUMADSDRAWSettings\", true, flags)\n\nif visible then\n    GUI:Text(\"Lj Draw Settings\")\n\n    GUI:Text(\"Stompies\")\n    GUI:SameLine(150)\n    local stompiesIndex = settings.stompies == \"Group 1/Group 2\" and 2 or 1\n    GUI:PushItemWidth(140)\n    local newStompiesIndex, stompiesChanged = GUI:Combo(\"##LjUMADRAWStompies\", stompiesIndex, {\"Roles\", \"Group 1/Group 2\"})\n    if GUI:IsItemHovered() then\n        if settings.stompies == \"Group 1/Group 2\" then\n            GUI:SetTooltip(\"ZsQ Raidplan, Group 1 West, Group 2 East\")\n        else\n            GUI:SetTooltip(\"Tanks and Melee Pos to West, Healers and Ranged to East/LPDU\")\n        end\n    end\n    GUI:PopItemWidth()\n    if stompiesChanged then\n        settings.stompies = newStompiesIndex == 2 and \"Group 1/Group 2\" or \"Roles\"\n        Lj_UMADDRAWS_Stompies = settings.stompies\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Limit Cut Macro\")\n    GUI:SameLine(150)\n    local limitCutMacroIndex = settings.limitCutMacro == \"Echo Chat\" and 2 or (settings.limitCutMacro == \"Party Chat\" and 3 or 1)\n    GUI:PushItemWidth(140)\n    local newLimitCutMacroIndex, limitCutMacroChanged = GUI:Combo(\"##LjUMADRAWLimitCutMacro\", limitCutMacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n    GUI:PopItemWidth()\n    if limitCutMacroChanged then\n        settings.limitCutMacro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newLimitCutMacroIndex]\n        Lj_UMADDRAWS_LimitCutMacro = settings.limitCutMacro\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"P4 Macro\")\n    GUI:SameLine(150)\n    local p4MacroIndex = settings.p4Macro == \"Echo Chat\" and 2 or (settings.p4Macro == \"Party Chat\" and 3 or 1)\n    GUI:PushItemWidth(140)\n    local newP4MacroIndex, p4MacroChanged = GUI:Combo(\"##LjUMADRAWP4Macro\", p4MacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n    GUI:PopItemWidth()\n    if p4MacroChanged then\n        settings.p4Macro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newP4MacroIndex]\n        Lj_UMADDRAWS_P4Macro = settings.p4Macro\n        FileSave(settingsPath, settings)\n    end\n\n    if settings.p4Macro ~= \"Disabled\" then\n        GUI:Text(\"P4 Ice/Lightning Macro\")\n        GUI:SameLine(150)\n        local p4IceLightningMacroIndex = settings.p4IceLightningMacro == \"Echo Chat\" and 2 or (settings.p4IceLightningMacro == \"Party Chat\" and 3 or 1)\n        GUI:PushItemWidth(140)\n        local newP4IceLightningMacroIndex, p4IceLightningMacroChanged = GUI:Combo(\"##LjUMADRAWP4IceLightningMacro\", p4IceLightningMacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n        GUI:PopItemWidth()\n        if p4IceLightningMacroChanged then\n            settings.p4IceLightningMacro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newP4IceLightningMacroIndex]\n            Lj_UMADDRAWS_P4IceLightningMacro = settings.p4IceLightningMacro\n            FileSave(settingsPath, settings)\n        end\n    end\n\n    GUI:Text(\"P4 Auto Mark\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Support: Short Spread = Bind 1, Long Spread = Ignore 1\\nDPS: Short Spread = Bind 2, Long Spread = Ignore 2\")\n    end\n    GUI:SameLine(150)\n    local p4AutoMarkIndex = settings.p4AutoMark == \"Self Only\" and 2 or 1\n    GUI:PushItemWidth(140)\n    local newP4AutoMarkIndex, p4AutoMarkChanged = GUI:Combo(\"##LjUMADRAWP4AutoMark\", p4AutoMarkIndex, {\"Disabled\", \"Self Only\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Support: Short Spread = Bind 1, Long Spread = Ignore 1\\nDPS: Short Spread = Bind 2, Long Spread = Ignore 2\")\n    end\n    GUI:PopItemWidth()\n    if p4AutoMarkChanged then\n        settings.p4AutoMark = newP4AutoMarkIndex == 2 and \"Self Only\" or \"Disabled\"\n        Lj_UMADDRAWS_P4AutoMark = settings.p4AutoMark\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Accel Bomb Stillness\")\n    GUI:SameLine(150)\n    local stillnessIndex = settings.accelBombStillness and 1 or 2\n    GUI:PushItemWidth(140)\n    local newStillnessIndex, stillnessChanged = GUI:Combo(\"##LjUMADRAWAccelBombStillness\", stillnessIndex, {\"Enabled\", \"Disabled\"})\n    GUI:PopItemWidth()\n    if stillnessChanged then\n        settings.accelBombStillness = newStillnessIndex == 1\n        Lj_UMADDRAWS_AccelBombStillness = settings.accelBombStillness\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Accel Bomb Motion\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"This will jump up and down for you, don't move!\")\n    end\n    GUI:SameLine(150)\n    local motionIndex = settings.accelBombMotion and 1 or 2\n    GUI:PushItemWidth(140)\n    local newMotionIndex, motionChanged = GUI:Combo(\"##LjUMADRAWAccelBombMotion\", motionIndex, {\"Enabled\", \"Disabled\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"This will jump up and down for you, don't move!\")\n    end\n    GUI:PopItemWidth()\n    if motionChanged then\n        settings.accelBombMotion = newMotionIndex == 1\n        Lj_UMADDRAWS_AccelBombMotion = settings.accelBombMotion\n        FileSave(settingsPath, settings)\n    end\nend\n\nGUI:End()\nself.used = true",
+							actionLua = "local settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\\\\\Lj\\\\\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSDrawSettings.lua]]\n\nif not Lj_UMADDRAWS_Settings then\n    Lj_UMADDRAWS_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADDRAWS_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADDRAWS_Settings\nlocal settingsChanged = false\n\nif settings.p1UptimeArrows ~= true and settings.p1UptimeArrows ~= false then\n    settings.p1UptimeArrows = false\n    settingsChanged = true\nend\n\nif settings.stompies ~= \"Roles\" and settings.stompies ~= \"Group 1/Group 2\" then\n    settings.stompies = \"Group 1/Group 2\"\n    settingsChanged = true\nend\n\nif settings.accelBombStillness ~= true and settings.accelBombStillness ~= false then\n    settings.accelBombStillness = true\n    settingsChanged = true\nend\n\nif settings.accelBombMotion ~= true and settings.accelBombMotion ~= false then\n    settings.accelBombMotion = true\n    settingsChanged = true\nend\n\nif settings.limitCutMacro ~= \"Disabled\" and settings.limitCutMacro ~= \"Echo Chat\" and settings.limitCutMacro ~= \"Party Chat\" then\n    settings.limitCutMacro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4Macro ~= \"Disabled\" and settings.p4Macro ~= \"Echo Chat\" and settings.p4Macro ~= \"Party Chat\" then\n    settings.p4Macro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4IceLightningMacro == nil then\n    settings.p4IceLightningMacro = settings.p4Macro\n    settingsChanged = true\nelseif settings.p4IceLightningMacro ~= \"Disabled\" and settings.p4IceLightningMacro ~= \"Echo Chat\" and settings.p4IceLightningMacro ~= \"Party Chat\" then\n    settings.p4IceLightningMacro = \"Disabled\"\n    settingsChanged = true\nend\n\nif settings.p4IceLightningLastSetOnly ~= true and settings.p4IceLightningLastSetOnly ~= false then\n    settings.p4IceLightningLastSetOnly = false\n    settingsChanged = true\nend\n\nif settings.p4AutoMark == nil and settings.p4SelfMark ~= nil then\n    settings.p4AutoMark = settings.p4SelfMark\n    settings.p4SelfMark = nil\n    settingsChanged = true\nelseif settings.p4SelfMark ~= nil then\n    settings.p4SelfMark = nil\n    settingsChanged = true\nend\n\nif settings.p4AutoMark == true then\n    settings.p4AutoMark = \"Self Only\"\n    settingsChanged = true\nelseif settings.p4AutoMark == false then\n    settings.p4AutoMark = \"Disabled\"\n    settingsChanged = true\nelseif settings.p4AutoMark ~= \"Disabled\" and settings.p4AutoMark ~= \"Self Only\" then\n    settings.p4AutoMark = \"Disabled\"\n    settingsChanged = true\nend\n\nif settingsChanged then\n    if not FolderExists(settingsFolder) then\n        FolderCreate(settingsFolder)\n    end\n    FileSave(settingsPath, settings)\nend\n\nLj_UMADDRAWS_P1UptimeArrows = settings.p1UptimeArrows\nLj_UMADDRAWS_Stompies = settings.stompies\nLj_UMADDRAWS_AccelBombStillness = settings.accelBombStillness\nLj_UMADDRAWS_AccelBombMotion = settings.accelBombMotion\nLj_UMADDRAWS_LimitCutMacro = settings.limitCutMacro\nLj_UMADDRAWS_P4Macro = settings.p4Macro\nLj_UMADDRAWS_P4IceLightningMacro = settings.p4IceLightningMacro\nLj_UMADDRAWS_P4IceLightningLastSetOnly = settings.p4IceLightningLastSetOnly\nLj_UMADDRAWS_P4AutoMark = settings.p4AutoMark\n\nlocal flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize\nGUI:SetNextWindowSize(300, 0, GUI.SetCond_Always)\nlocal visible = GUI:Begin(\"Lj Draw Settings###LjUMADSDRAWSettings\", true, flags)\n\nif visible then\n    GUI:Text(\"Lj Draw Settings\")\n\n    GUI:Text(\"P1 Uptime Arrows\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Merry Go Round only: N+W and S+E arrow pairs cut the corner for melee uptime\")\n    end\n    GUI:SameLine(150)\n    local uptimeArrowsIndex = settings.p1UptimeArrows and 2 or 1\n    GUI:PushItemWidth(140)\n    local newUptimeArrowsIndex, uptimeArrowsChanged = GUI:Combo(\"##LjUMADRAWP1UptimeArrows\", uptimeArrowsIndex, {\"Disabled\", \"Enabled\"})\n    GUI:PopItemWidth()\n    if uptimeArrowsChanged then\n        settings.p1UptimeArrows = newUptimeArrowsIndex == 2\n        Lj_UMADDRAWS_P1UptimeArrows = settings.p1UptimeArrows\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Stompies\")\n    GUI:SameLine(150)\n    local stompiesIndex = settings.stompies == \"Group 1/Group 2\" and 2 or 1\n    GUI:PushItemWidth(140)\n    local newStompiesIndex, stompiesChanged = GUI:Combo(\"##LjUMADRAWStompies\", stompiesIndex, {\"Roles\", \"Group 1/Group 2\"})\n    if GUI:IsItemHovered() then\n        if settings.stompies == \"Group 1/Group 2\" then\n            GUI:SetTooltip(\"ZsQ Raidplan, Group 1 West, Group 2 East\")\n        else\n            GUI:SetTooltip(\"Tanks and Melee Pos to West, Healers and Ranged to East/LPDU\")\n        end\n    end\n    GUI:PopItemWidth()\n    if stompiesChanged then\n        settings.stompies = newStompiesIndex == 2 and \"Group 1/Group 2\" or \"Roles\"\n        Lj_UMADDRAWS_Stompies = settings.stompies\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Limit Cut Macro\")\n    GUI:SameLine(150)\n    local limitCutMacroIndex = settings.limitCutMacro == \"Echo Chat\" and 2 or (settings.limitCutMacro == \"Party Chat\" and 3 or 1)\n    GUI:PushItemWidth(140)\n    local newLimitCutMacroIndex, limitCutMacroChanged = GUI:Combo(\"##LjUMADRAWLimitCutMacro\", limitCutMacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n    GUI:PopItemWidth()\n    if limitCutMacroChanged then\n        settings.limitCutMacro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newLimitCutMacroIndex]\n        Lj_UMADDRAWS_LimitCutMacro = settings.limitCutMacro\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"P4 Macro\")\n    GUI:SameLine(150)\n    local p4MacroIndex = settings.p4Macro == \"Echo Chat\" and 2 or (settings.p4Macro == \"Party Chat\" and 3 or 1)\n    GUI:PushItemWidth(140)\n    local newP4MacroIndex, p4MacroChanged = GUI:Combo(\"##LjUMADRAWP4Macro\", p4MacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n    GUI:PopItemWidth()\n    if p4MacroChanged then\n        settings.p4Macro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newP4MacroIndex]\n        Lj_UMADDRAWS_P4Macro = settings.p4Macro\n        FileSave(settingsPath, settings)\n    end\n\n    if settings.p4Macro ~= \"Disabled\" then\n        GUI:Text(\"P4 Ice/Lightning Macro\")\n        GUI:SameLine(150)\n        local p4IceLightningMacroIndex = settings.p4IceLightningMacro == \"Echo Chat\" and 2 or (settings.p4IceLightningMacro == \"Party Chat\" and 3 or 1)\n        GUI:PushItemWidth(140)\n        local newP4IceLightningMacroIndex, p4IceLightningMacroChanged = GUI:Combo(\"##LjUMADRAWP4IceLightningMacro\", p4IceLightningMacroIndex, {\"Disabled\", \"Echo Chat\", \"Party Chat\"})\n        GUI:PopItemWidth()\n        if p4IceLightningMacroChanged then\n            settings.p4IceLightningMacro = ({\"Disabled\", \"Echo Chat\", \"Party Chat\"})[newP4IceLightningMacroIndex]\n            Lj_UMADDRAWS_P4IceLightningMacro = settings.p4IceLightningMacro\n            FileSave(settingsPath, settings)\n        end\n\n        if settings.p4IceLightningMacro ~= \"Disabled\" then\n            GUI:Indent(12)\n            GUI:Bullet()\n            GUI:Text(\"Last Set Only\")\n            if GUI:IsItemHovered() then\n                GUI:SetTooltip(\"P4 Ice/Lightning Macro: only send for the final set after Mana Charge (stored + new combined)\")\n            end\n            GUI:SameLine(150)\n            local lastSetOnlyIndex = settings.p4IceLightningLastSetOnly and 2 or 1\n            GUI:PushItemWidth(140)\n            local newLastSetOnlyIndex, lastSetOnlyChanged = GUI:Combo(\"##LjUMADRAWP4IceLightningLastSetOnly\", lastSetOnlyIndex, {\"Disabled\", \"Enabled\"})\n            GUI:PopItemWidth()\n            if lastSetOnlyChanged then\n                settings.p4IceLightningLastSetOnly = newLastSetOnlyIndex == 2\n                Lj_UMADDRAWS_P4IceLightningLastSetOnly = settings.p4IceLightningLastSetOnly\n                FileSave(settingsPath, settings)\n            end\n            GUI:Unindent(12)\n        end\n    end\n\n    GUI:Text(\"P4 Auto Mark\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Support: Short Spread = Bind 1, Long Spread = Ignore 1\\nDPS: Short Spread = Bind 2, Long Spread = Ignore 2\")\n    end\n    GUI:SameLine(150)\n    local p4AutoMarkIndex = settings.p4AutoMark == \"Self Only\" and 2 or 1\n    GUI:PushItemWidth(140)\n    local newP4AutoMarkIndex, p4AutoMarkChanged = GUI:Combo(\"##LjUMADRAWP4AutoMark\", p4AutoMarkIndex, {\"Disabled\", \"Self Only\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"Support: Short Spread = Bind 1, Long Spread = Ignore 1\\nDPS: Short Spread = Bind 2, Long Spread = Ignore 2\")\n    end\n    GUI:PopItemWidth()\n    if p4AutoMarkChanged then\n        settings.p4AutoMark = newP4AutoMarkIndex == 2 and \"Self Only\" or \"Disabled\"\n        Lj_UMADDRAWS_P4AutoMark = settings.p4AutoMark\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Accel Bomb Stillness\")\n    GUI:SameLine(150)\n    local stillnessIndex = settings.accelBombStillness and 1 or 2\n    GUI:PushItemWidth(140)\n    local newStillnessIndex, stillnessChanged = GUI:Combo(\"##LjUMADRAWAccelBombStillness\", stillnessIndex, {\"Enabled\", \"Disabled\"})\n    GUI:PopItemWidth()\n    if stillnessChanged then\n        settings.accelBombStillness = newStillnessIndex == 1\n        Lj_UMADDRAWS_AccelBombStillness = settings.accelBombStillness\n        FileSave(settingsPath, settings)\n    end\n\n    GUI:Text(\"Accel Bomb Motion\")\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"This will jump up and down for you, don't move!\")\n    end\n    GUI:SameLine(150)\n    local motionIndex = settings.accelBombMotion and 1 or 2\n    GUI:PushItemWidth(140)\n    local newMotionIndex, motionChanged = GUI:Combo(\"##LjUMADRAWAccelBombMotion\", motionIndex, {\"Enabled\", \"Disabled\"})\n    if GUI:IsItemHovered() then\n        GUI:SetTooltip(\"This will jump up and down for you, don't move!\")\n    end\n    GUI:PopItemWidth()\n    if motionChanged then\n        settings.accelBombMotion = newMotionIndex == 1\n        Lj_UMADDRAWS_AccelBombMotion = settings.accelBombMotion\n        FileSave(settingsPath, settings)\n    end\nend\n\nGUI:End()\nself.used = true",
 							name = "[Lj Draw] Settings",
 							uuid = "6156b892-c4a6-d230-86c7-939835f0f9dd",
 							version = 2.1,
@@ -1000,6 +1000,112 @@ local tbl =
 				timerEndOffset = 5,
 				timerStartOffset = -5,
 				uuid = "eedb07bb-314c-ae05-bef9-4fcedcf972eb",
+				version = 2,
+			},
+		},
+	},
+	[30] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "-- P1 Tele-trouncing uptime spots (BossMod \"Big box (CW) with uptime arrows NE/SW\").\n-- Only the two unmatched pairs on the 2/4 intercards change: they cut the corner towards\n-- the 1/3 stack spots for melee uptime. The Merry Go Round markers already drawn on the\n-- default spots are found by arena position, deleted, and redrawn on the uptime spots.\n-- Loops until those markers exist, then marks itself done for the pull. If they still\n-- haven't appeared by 153.0s (normally ~152.26s), the uptime spots are drawn anyway.\n\nlocal playerID = TensorCore.mGetPlayer().id\nlocal getBuff = TensorCore.getBuff\n\n-- Tele-Portent debuffs (first/second of each direction).\nlocal directionBuffs = {\n    up = { 4876, 5079 },\n    down = { 4877, 5080 },\n    right = { 4878, 5081 },\n    left = { 4879, 5082 },\n}\n\nlocal shortDirection, longDirection, shortTime, longTime\nlocal count = 0\nfor direction, ids in pairs(directionBuffs) do\n    for i = 1, 2 do\n        local buff = getBuff(playerID, ids[i])\n        if buff ~= nil then\n            count = count + 1\n            if shortTime == nil or buff.duration < shortTime then\n                longDirection, longTime = shortDirection, shortTime\n                shortDirection, shortTime = direction, buff.duration\n            else\n                longDirection, longTime = direction, buff.duration\n            end\n        end\n    end\nend\n\n-- Debuffs not both applied yet; try again next loop.\nif count < 2 then\n    self.used = true\n    return\nend\n\n-- Default Merry Go Round spot -> direction, and the uptime spot for each direction.\nlocal uptimeSetups = {\n    [\"left:up\"] = {\n        defaults = { { x = 94, z = 112, direction = \"left\" }, { x = 88, z = 112, direction = \"up\" } },\n        uptime = { up = { x = 94, z = 112 }, left = { x = 94, z = 106 } },\n    },\n    [\"right:down\"] = {\n        defaults = { { x = 106, z = 88, direction = \"right\" }, { x = 112, z = 88, direction = \"down\" } },\n        uptime = { down = { x = 106, z = 88 }, right = { x = 106, z = 94 } },\n    },\n}\n\nlocal hasLeftUp = (shortDirection == \"left\" and longDirection == \"up\") or (shortDirection == \"up\" and longDirection == \"left\")\nlocal hasRightDown = (shortDirection == \"right\" and longDirection == \"down\") or (shortDirection == \"down\" and longDirection == \"right\")\nlocal setup = (hasLeftUp and uptimeSetups[\"left:up\"]) or (hasRightDown and uptimeSetups[\"right:down\"]) or nil\n\n-- Not an uptime pair: default spots are already correct.\nif setup == nil then\n    data.ljP1UptimeArrowsDone = true\n    self.used = true\n    return\nend\n\nlocal center = { x = 100, y = 0.05, z = 100 }\n\nlocal function isNear(x, z, pos)\n    return math.abs(x - pos.x) < 0.2 and math.abs(z - pos.z) < 0.2\nend\n\nlocal function defaultSpotAt(x, z)\n    local defaults = setup.defaults\n    for i = 1, #defaults do\n        if isNear(x, z, defaults[i]) then\n            return defaults[i]\n        end\n    end\n    return nil\nend\n\n-- Collect the markers on the default spots plus the centre arrow.\nlocal circlesToMove = {}\nlocal uuidsToDelete = {}\nlocal arrowColor\nfor i = 1, Argus.getNumTimedDraws() do\n    local shapeType, x, _, z, _, _, _, uuid, colorStart = Argus.getTimedDrawBaseInfo(i)\n    if uuid and x then\n        if shapeType == \"circle\" then\n            local spot = defaultSpotAt(x, z)\n            if spot then\n                local radius = Argus.getTimedCircleInfo(i)\n                circlesToMove[#circlesToMove + 1] = { direction = spot.direction, color = colorStart, radius = radius }\n                uuidsToDelete[#uuidsToDelete + 1] = uuid\n            end\n        elseif shapeType == \"arrow\" and isNear(x, z, center) then\n            arrowColor = colorStart\n            uuidsToDelete[#uuidsToDelete + 1] = uuid\n        end\n    end\nend\n\nif #circlesToMove == 0 then\n    -- Markers not drawn yet; try again next loop.\n    if TensorReactions_CurrentTimer < 153.0 then\n        self.used = true\n        return\n    end\n\n    -- Fallback: Anyone's draw never appeared, so draw the uptime spots ourselves.\n    local pinkColor = 3539271935\n    local greenColor = 1359019776\n    circlesToMove = {\n        { direction = shortDirection, color = pinkColor, radius = 0.25 },\n        { direction = shortDirection, color = greenColor, radius = 0.75 },\n        { direction = longDirection, color = pinkColor, radius = 0.25 },\n        { direction = longDirection, color = greenColor, radius = 0.75 },\n    }\n    arrowColor = greenColor\nend\n\nfor i = 1, #uuidsToDelete do\n    Argus.deleteTimedShape(uuidsToDelete[i])\nend\n\nlocal worldTexts = AnyoneCore.Data.timedWorldTextDraws\nif worldTexts then\n    local textUuids = {}\n    for _, text in pairs(worldTexts) do\n        local pos = text.pos\n        if pos and defaultSpotAt(pos.x, pos.z) then\n            textUuids[#textUuids + 1] = text.uuid\n        end\n    end\n    for i = 1, #textUuids do\n        AnyoneCore.removeTimedWorldText(textUuids[i])\n    end\nend\n\n-- Redraw each marker on its direction's uptime spot until that arrow resolves.\nlocal shortPos = setup.uptime[shortDirection]\nlocal longPos = setup.uptime[longDirection]\nlocal shortMs = shortTime * 1000\nlocal longMs = longTime * 1000\n\nfor i = 1, #circlesToMove do\n    local circle = circlesToMove[i]\n    local pos = setup.uptime[circle.direction]\n    local drawTime = circle.direction == shortDirection and shortMs or longMs\n    local drawer = TensorCore.getStaticFlatDrawer(circle.color)\n    drawer:addTimedCircle(drawTime, pos.x, 0.05, pos.z, circle.radius, 0, true, true, 0)\nend\n\nlocal worldText = AnyoneCore.addTimedWorldText\nlocal white = AnyoneCore.COLOR_WHITE\nworldText(shortMs, \"1\", { x = shortPos.x, y = 0.5, z = shortPos.z }, white, true, 1)\nworldText(longMs, \"2\", { x = longPos.x, y = 0.5, z = longPos.z }, white, true, 1)\n\n-- Centre arrow towards the pair (3:1 flare, 1:1 head).\nif arrowColor then\n    local midPos = { x = (shortPos.x + longPos.x) / 2, y = 0.05, z = (shortPos.z + longPos.z) / 2 }\n    local heading = TensorCore.getHeadingToTarget(center, midPos)\n    local tipLength = 3\n    local baseLength = TensorCore.getDistance2d(center, midPos) - 2 - tipLength\n    if baseLength > 0 then\n        local arrowDrawer = TensorCore.getStaticFlatDrawer(arrowColor)\n        arrowDrawer:addTimedArrow(\n            4000,\n            center.x, center.y, center.z,\n            heading,\n            baseLength, 1, tipLength, 3,\n            0, true\n        )\n    end\nend\n\ndata.ljP1UptimeArrowsDone = true\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"732c93b4-d970-28cd-83b3-7bce1739d596",
+									true,
+								},
+								
+								{
+									"7c19b1e2-ee26-a9d4-9788-2b44f45e0610",
+									true,
+								},
+								
+								{
+									"20bf2dd5-78a3-14da-a703-b704c2000a66",
+									true,
+								},
+								
+								{
+									"f772a438-8a6e-73e4-91f2-dbe90fa453e3",
+									true,
+								},
+							},
+							name = "Draw Uptime Spots",
+							uuid = "da6f4cd3-3d62-9334-a7e8-a4392e8c5d7f",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore ~= nil",
+							dequeueIfLuaFalse = true,
+							name = "AnyoneCore",
+							uuid = "732c93b4-d970-28cd-83b3-7bce1739d596",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return Lj_UMADDRAWS_P1UptimeArrows == true",
+							dequeueIfLuaFalse = true,
+							name = "Uptime Arrows Enabled",
+							uuid = "7c19b1e2-ee26-a9d4-9788-2b44f45e0610",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.p1TeleTrounceStrat == 1",
+							dequeueIfLuaFalse = true,
+							name = "Merry Go Round",
+							uuid = "20bf2dd5-78a3-14da-a703-b704c2000a66",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return data.ljP1UptimeArrowsDone ~= true",
+							dequeueIfLuaFalse = true,
+							name = "Not Done",
+							uuid = "f772a438-8a6e-73e4-91f2-dbe90fa453e3",
+							version = 3,
+						},
+					},
+				},
+				eventType = 12,
+				loop = true,
+				mechanicTime = 151.47790545531,
+				name = "[Lj Draw] P1 Uptime Arrows",
+				timeRange = true,
+				timelineIndex = 30,
+				timerEndOffset = 5,
+				uuid = "19f15ebd-266b-f1f7-bf69-b0d94a813261",
 				version = 2,
 			},
 		},
@@ -5144,7 +5250,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "if self.markerInitialized ~= true then\n    local id = eventArgs.markerID\n    local element\n    local markerFake\n\n    if id == 675 then\n        element = \"ice\"\n        markerFake = true\n    elseif id == 676 then\n        element = \"ice\"\n        markerFake = false\n    elseif id == 677 then\n        element = \"lightning\"\n        markerFake = true\n    elseif id == 678 then\n        element = \"lightning\"\n        markerFake = false\n    else\n        self.used = true\n        return\n    end\n\n    local effectiveFake = markerFake\n    local mana = data.ljManaCharge\n\n    if mana ~= nil then\n        local storedFake\n        if element == \"ice\" then\n            storedFake = mana.iceFake\n        else\n            storedFake = mana.lightningFake\n        end\n\n        if storedFake == nil then\n            if element == \"ice\" then\n                mana.iceFake = markerFake\n            else\n                mana.lightningFake = markerFake\n            end\n        else\n            effectiveFake = storedFake ~= markerFake\n        end\n    end\n\n    if element == \"ice\" then\n        data.ljMysteryIceFake = effectiveFake\n        self.tellLine = effectiveFake\n            and \"▽      FAKE ice (Cones)\"\n            or \"▼      TRUE ice (Cones)\"\n    else\n        data.ljMysteryThunderFake = effectiveFake\n        data.ljGazeForceDefault = false\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n\n        self.tellLine = effectiveFake\n            and \"□      FAKE lightning (Lines)\"\n            or \"■      TRUE lightning (Lines)\"\n    end\n\n    self.sendAt = Now() + math.random(1000, 1500)\n    self.markerInitialized = true\nend\n\nif Now() < self.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\nthen\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. self.tellLine)\nend\nself.used = true",
+							actionLua = "if self.markerInitialized ~= true then\n    local id = eventArgs.markerID\n    local element\n    local markerFake\n\n    if id == 675 then\n        element = \"ice\"\n        markerFake = true\n    elseif id == 676 then\n        element = \"ice\"\n        markerFake = false\n    elseif id == 677 then\n        element = \"lightning\"\n        markerFake = true\n    elseif id == 678 then\n        element = \"lightning\"\n        markerFake = false\n    else\n        self.used = true\n        return\n    end\n\n    local effectiveFake = markerFake\n    self.isFinalSet = false\n    local mana = data.ljManaCharge\n\n    if mana ~= nil then\n        local storedFake\n        if element == \"ice\" then\n            storedFake = mana.iceFake\n        else\n            storedFake = mana.lightningFake\n        end\n\n        if storedFake == nil then\n            if element == \"ice\" then\n                mana.iceFake = markerFake\n            else\n                mana.lightningFake = markerFake\n            end\n        else\n            effectiveFake = storedFake ~= markerFake\n            self.isFinalSet = true\n        end\n    end\n\n    if element == \"ice\" then\n        data.ljMysteryIceFake = effectiveFake\n        self.tellLine = effectiveFake\n            and \"▽      FAKE ice (Cones)\"\n            or \"▼      TRUE ice (Cones)\"\n    else\n        data.ljMysteryThunderFake = effectiveFake\n        data.ljGazeForceDefault = false\n        data.ljMysteryThunderSeq = (data.ljMysteryThunderSeq or 0) + 1\n        data.ljMysteryThunderAOEs = {}\n        data.ljMysteryThunderLastAOE = nil\n        data.ljGazeBaitTargets = nil\n\n        self.tellLine = effectiveFake\n            and \"□      FAKE lightning (Lines)\"\n            or \"■      TRUE lightning (Lines)\"\n    end\n\n    local sendAt = Now() + math.random(1000, 1500)\n    local nextSendAt = data.ljIceLightningNextSendAt\n    if nextSendAt ~= nil and sendAt < nextSendAt then\n        sendAt = nextSendAt\n    end\n    data.ljIceLightningNextSendAt = sendAt + math.random(600, 1500)\n    self.sendAt = sendAt\n    self.markerInitialized = true\nend\n\nif Now() < self.sendAt then\n    return\nend\n\nlocal mode = Lj_UMADDRAWS_P4IceLightningMacro\nif Lj_UMADDRAWS_P4Macro ~= \"Disabled\"\n    and (mode == \"Echo Chat\" or mode == \"Party Chat\")\n    and (Lj_UMADDRAWS_P4IceLightningLastSetOnly ~= true or self.isFinalSet)\nthen\n    local prefix = mode == \"Party Chat\" and \"/p \" or \"/e \"\n    TensorCore.sendParsedChatMessage(prefix .. self.tellLine)\nend\nself.used = true",
 							conditions = 
 							{
 								
@@ -5179,7 +5285,7 @@ local tbl =
 				name = "[Lj Macro] Ice/Lightning Tell",
 				timeRange = true,
 				timelineIndex = 151,
-				timerEndOffset = 100,
+				timerEndOffset = 105,
 				timerStartOffset = 4,
 				uuid = "22511047-d04b-0e55-9dec-4f2ae047ad8a",
 				version = 2,
@@ -6271,6 +6377,85 @@ local tbl =
 				timerEndOffset = 5,
 				timerStartOffset = -12,
 				uuid = "667b343b-6b9d-9230-8a88-0ede8c541345",
+				version = 2,
+			},
+		},
+	},
+	[161] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "-- Black (50069) / White (50068) Antilight each hit the half of the arena on\n-- their caster's side; the split runs through centre, perpendicular to the\n-- line between the two casters.\n\n-- Beyond Death (1382/5464, or the survive-group aura 131) => stand in your\n-- wound colour; otherwise (Allagan Field) => stand in the opposite colour.\nlocal caster = TensorCore.mGetEntity(eventArgs.entityID)\nif not caster then\n    self.used = true\n    return\nend\n\nlocal state = data.ljAntilightHalves\nif not state then\n    state = {}\n    data.ljAntilightHalves = state\nend\nif eventArgs.spellID == 50069 then\n    state.black = { x = caster.pos.x, z = caster.pos.z }\nelse\n    state.white = { x = caster.pos.x, z = caster.pos.z }\nend\nif state.drawn or not state.black or not state.white then\n    self.used = true\n    return\nend\n\nlocal player = TensorCore.mGetPlayer()\nlocal woundColor\nif TensorCore.hasAnyBuff(player, 4888, 5542) then\n    woundColor = \"BLACK\"\nelseif TensorCore.hasAnyBuff(player, 4887, 5541) then\n    woundColor = \"WHITE\"\nend\nif not woundColor then\n    self.used = true\n    return\nend\nstate.drawn = true\n\nlocal _, activeAura1, activeAura2 = Argus.getEntityAuras(player.id)\nlocal deathRequired = TensorCore.hasAnyBuff(player, 1382, 5464)\n    or activeAura1 == 131 or activeAura2 == 131\nlocal safeColor = woundColor\nif not deathRequired then\n    safeColor = woundColor == \"BLACK\" and \"WHITE\" or \"BLACK\"\nend\nlocal safePos, unsafePos = state.black, state.white\nif safeColor == \"WHITE\" then\n    safePos, unsafePos = state.white, state.black\nend\n\nlocal timeout = 5600 -- channel start -> Antilight resolve (~5.5s)\nlocal drawHeight = 0.15\nlocal radius = 20\nlocal center = { x = 100, y = drawHeight, z = 100 }\nlocal safeHeading = TensorCore.getHeadingToTarget(center, {\n    x = center.x + (safePos.x - unsafePos.x),\n    y = drawHeight,\n    z = center.z + (safePos.z - unsafePos.z),\n})\nlocal unsafeHeading = safeHeading + math.pi\n\nlocal channel = Argus2.getNextUnusedChannel(true) or 0\nlocal baseFlags = Argus2.RenderFlags.FLAG_RENDER_UI | Argus2.RenderFlags.FLAG_OCCLUSION_BASE\nlocal safeDrawer = TensorCore.getCachedFlatDrawer(\n    0x6600FF00, 0x6600FF00, 0x6600FF00, 0xCC66FF66, 1.5, channel, baseFlags)\nlocal unsafeDrawer = TensorCore.getCachedFlatDrawer(\n    0x660000FF, 0x660000FF, 0x660000FF, 0xCC6666FF, 1.5, channel, baseFlags)\nsafeDrawer:addTimedCone(timeout, center.x, drawHeight, center.z,\n    radius, math.pi, safeHeading, 0, false, true, baseFlags)\nunsafeDrawer:addTimedCone(timeout, center.x, drawHeight, center.z,\n    radius, math.pi, unsafeHeading, 0, false, true, baseFlags)\nself.used = true\n",
+							conditions = 
+							{
+								
+								{
+									"5f0583ff-11c1-814a-bf7e-27f1a7c9edab",
+									true,
+								},
+								
+								{
+									"2b837a22-827f-2c03-a684-7483af359399",
+									true,
+								},
+							},
+							name = "Draw Safe/Unsafe Halves",
+							uuid = "ec4d7af0-7745-c3ef-a369-3dabd73b9319",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return ArgusDrawsPlus ~= nil and ArgusDrawsPlus.getEnabled() == true",
+							dequeueIfLuaFalse = true,
+							name = "ArgusDraws+",
+							uuid = "5f0583ff-11c1-814a-bf7e-27f1a7c9edab",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgOptionType = 3,
+							eventArgType = 2,
+							name = "Black/White Antilight",
+							spellIDList = 
+							{
+								50068,
+								50069,
+							},
+							uuid = "2b837a22-827f-2c03-a684-7483af359399",
+							version = 3,
+						},
+					},
+				},
+				eventType = 3,
+				loop = true,
+				mechanicTime = 868.62945888075,
+				name = "[Lj Draw] Antilight Safe Half",
+				timeRange = true,
+				timelineIndex = 161,
+				timerStartOffset = -12,
+				uuid = "50410f6a-3782-88f0-b421-71ea59e7f7d9",
 				version = 2,
 			},
 		},
@@ -7672,7 +7857,32 @@ local tbl =
 								},
 							},
 							gVar = "ACR_TensorMagnum3_CD",
+							name = "ArgusDraws+",
 							uuid = "9f1bea58-6fc8-d2e2-bdf5-1b548d2ce87c",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local impactRadius = 6\nlocal stepDistance = math.sqrt(50)\nlocal firstImpactMs = 4220\nlocal stepCadenceMs = 520\n\nlocal drawer = TensorCore.getCachedDrawer(\n    0x4000FFFF,\n    0x400088FF,\n    0x400000FF,\n    0xFFFFFFFF,\n    2\n)\n\nlocal sourcePos = {\n    x = eventArgs.x,\n    y = eventArgs.y,\n    z = eventArgs.z\n}\n\nfor step = 0, 7 do\n    local pos = TensorCore.getPosInDirection(\n        sourcePos,\n        eventArgs.heading,\n        stepDistance * step\n    )\n\n    drawer:addTimedCircle(\n        firstImpactMs + stepCadenceMs * step,\n        pos.x,\n        pos.y,\n        pos.z,\n        impactRadius,\n        0,\n        true,\n        false\n    )\nend\n\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"9207737d-68be-b251-804a-cfa2f109fef0",
+									true,
+								},
+								
+								{
+									"4df7efe1-f599-71ef-8c60-7a64b45aa10c",
+									false,
+								},
+							},
+							name = "PoorDraws-",
+							uuid = "1b23c4b0-b584-c858-a7d5-222eae5be42d",
 							version = 2.1,
 						},
 					},
@@ -7712,6 +7922,37 @@ local tbl =
 				timelineIndex = 209,
 				timerEndOffset = 15,
 				uuid = "1c90096b-6c73-ec02-9994-043ec1ac4042",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "local green = 1493237504\nlocal red = 1174405375\nlocal count = Argus.getNumTimedDraws()\nif count > 0 then\n    local kill = data.ljP5ExaKill\n    if kill == nil then\n        kill = { channels = {}, uuids = {} }\n        data.ljP5ExaKill = kill\n    end\n    local channels, uuids, n = kill.channels, kill.uuids, 0\n\n    for i = 1, count do\n        local shapeType, x, _, z, _, _, _, uuid, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n        if shapeType == \"circle\" then\n            if colorStart == green or colorEnd == green then\n                local radius = Argus.getTimedCircleInfo(i)\n                if math.abs(radius - 20) < 0.1 and math.abs(x - 100) < 0.5 and math.abs(z - 100) < 0.5 then\n                    channels[select(15, Argus.getTimedDrawOptArgs(i))] = true\n                    n = n + 1\n                    uuids[n] = uuid\n                end\n            elseif colorStart == red or colorEnd == red then\n                local radius = Argus.getTimedCircleInfo(i)\n                local dx, dz = x - 100, z - 100\n                if math.abs(radius - 6) < 0.1 and dx * dx + dz * dz <= 401 then\n                    n = n + 1\n                    uuids[n] = uuid\n                end\n            end\n        end\n    end\n\n    for i = 1, count do\n        local shapeType, _, _, _, _, _, _, uuid, colorStart, colorEnd = Argus.getTimedDrawBaseInfo(i)\n        if shapeType == \"circle\" and (colorStart == green or colorEnd == green) then\n            local radius = Argus.getTimedCircleInfo(i)\n            if math.abs(radius - 6) < 0.1 and channels[select(15, Argus.getTimedDrawOptArgs(i))] then\n                n = n + 1\n                uuids[n] = uuid\n            end\n        end\n    end\n\n    for k = 1, n do\n        Argus.deleteTimedShape(uuids[k])\n        uuids[k] = nil\n    end\nend\n\nself.used = true",
+							name = "Lua",
+							uuid = "0fc4be3e-557d-db51-94e2-8b93f58f892e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 12,
+				mechanicTime = 1063.6903949829,
+				name = "[Lj Draw] Remove Anyone's Exaflares",
+				timeRange = true,
+				timelineIndex = 209,
+				timerEndOffset = 15,
+				uuid = "7a01b82d-7720-775d-a13a-19529f7eddbe",
 				version = 2,
 			},
 		},

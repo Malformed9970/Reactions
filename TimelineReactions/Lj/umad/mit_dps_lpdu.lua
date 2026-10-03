@@ -818,6 +818,11 @@ local tbl =
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
+								
+								{
+									"967147d7-e859-1fdd-ab8d-337400a6f620",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
 							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
@@ -842,6 +847,22 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "967147d7-e859-1fdd-ab8d-337400a6f620",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 62.553324919213,
 				name = "[Lj Mit] Nature's Minne",
@@ -850,6 +871,80 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "d97ee4dc-afa3-1345-b313-3540e20953f3",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 62.553324919213,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 12,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "f1107ba1-6a58-8829-ad37-669de082f997",
 				version = 2,
 			},
 		},
@@ -1939,6 +2034,11 @@ local tbl =
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
+								
+								{
+									"c5764e8d-761b-9aef-825f-2f3dc40a8e4b",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
 							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
@@ -1963,6 +2063,22 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "c5764e8d-761b-9aef-825f-2f3dc40a8e4b",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 235.34477128997,
 				name = "[Lj Mit] Nature's Minne",
@@ -1971,6 +2087,80 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "833b07b7-78ff-30cc-947d-ff6e1bed1a25",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 235.34477128997,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 41,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "85882aef-59c4-b20b-96d9-ab54e6e1c4b7",
 				version = 2,
 			},
 		},
@@ -3084,6 +3274,11 @@ local tbl =
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
+								
+								{
+									"eee8abaa-1f87-48f3-a6e3-b9f85f6015b5",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
 							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
@@ -3108,6 +3303,22 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "eee8abaa-1f87-48f3-a6e3-b9f85f6015b5",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 370.25754620621,
 				name = "[Lj Mit] Nature's Minne",
@@ -3116,6 +3327,80 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "555bc131-0901-1eb7-a643-0588c3d61d41",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 370.25754620621,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 72,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "e3548545-be78-777d-8229-4ca83f0a8390",
 				version = 2,
 			},
 		},
@@ -3922,6 +4207,11 @@ local tbl =
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
+								
+								{
+									"7240b8db-b950-4910-96c5-2a3e11400b4d",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
 							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
@@ -3946,6 +4236,22 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "7240b8db-b950-4910-96c5-2a3e11400b4d",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 557.21788210262,
 				name = "[Lj Mit] Nature's Minne",
@@ -3954,6 +4260,80 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "13e19161-a0b8-d790-81ef-8335b7247f9a",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 557.21788210262,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 107,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "5040cdde-323e-2cff-842f-83ef2aada168",
 				version = 2,
 			},
 		},
@@ -5057,7 +5437,7 @@ local tbl =
 			inheritedIndex = 3,
 		},
 	},
-	[157] = 
+	[159] = 
 	{
 		
 		{
@@ -5122,13 +5502,13 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 846.19462329432,
+				mechanicTime = 855.99403801671,
 				name = "[Lj Mit] Magick Barrier",
 				timeRange = true,
-				timelineIndex = 157,
+				timelineIndex = 159,
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
-				uuid = "14fd5314-91ca-9569-8b89-af1227ba94b6",
+				uuid = "89ad0c55-b971-2ffc-a092-cd5c24fe9444",
 				version = 2,
 			},
 		},
@@ -5302,14 +5682,14 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 846.19462329432,
+				mechanicTime = 855.99403801671,
 				name = "[Lj Mit] Phys Ranged - Primary",
 				randomTimeout = 10,
 				timeRange = true,
-				timelineIndex = 157,
+				timelineIndex = 159,
 				timerEndOffset = -1,
 				timerStartOffset = -14.5,
-				uuid = "ebb3eb8c-21af-e0f8-a831-82911b0d6726",
+				uuid = "383443d1-f993-0de4-bc61-21c0af4106c5",
 				version = 2,
 			},
 			inheritedIndex = 2,
@@ -5330,6 +5710,11 @@ local tbl =
 								
 								{
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
+									true,
+								},
+								
+								{
+									"dc88237b-3932-501c-8f44-e33559e1621c",
 									true,
 								},
 							},
@@ -5356,19 +5741,109 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "dc88237b-3932-501c-8f44-e33559e1621c",
+							version = 3,
+						},
+					},
 				},
-				mechanicTime = 846.19462329432,
+				mechanicTime = 855.99403801671,
 				name = "[Lj Mit] Nature's Minne",
 				timeRange = true,
-				timelineIndex = 157,
+				timelineIndex = 159,
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
-				uuid = "475a5415-3726-f5a2-9263-f8bd53b60800",
+				uuid = "9224ab6d-f27a-b280-b636-f9affbdbb674",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 855.99403801671,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 159,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "fb0bd6af-9587-2f99-af07-034454ac84fa",
 				version = 2,
 			},
 		},
 	},
-	[160] = 
+	[162] = 
 	{
 		
 		{
@@ -5539,14 +6014,14 @@ local tbl =
 						},
 					},
 				},
-				mechanicTime = 868.13803801671,
+				mechanicTime = 872.48857073874,
 				name = "[Lj Mit] Phys Ranged - Secondary",
 				randomTimeout = 10,
 				timeRange = true,
-				timelineIndex = 160,
+				timelineIndex = 162,
 				timerEndOffset = -1,
 				timerStartOffset = -14.5,
-				uuid = "9178e8d6-7585-d509-a92b-8cd11725e965",
+				uuid = "a146331f-bb15-4ecd-89dc-ba22f6ab5d5b",
 				version = 2,
 			},
 			inheritedIndex = 1,
@@ -6162,6 +6637,11 @@ local tbl =
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
+								
+								{
+									"4cc1142b-2291-02d6-ab3e-a8980a68768a",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
 							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
@@ -6186,6 +6666,22 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "4cc1142b-2291-02d6-ab3e-a8980a68768a",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 975.94101651753,
 				name = "[Lj Mit] Nature's Minne",
@@ -6194,6 +6690,80 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "ac64ce56-7f28-b624-82a2-658ba142b57c",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 975.94101651753,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 176,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "30427ad5-8505-cf6f-beea-cfce662d3e1c",
 				version = 2,
 			},
 		},
@@ -7314,6 +7884,11 @@ local tbl =
 									"c4cd30fb-79d1-0338-b548-ef1ce0d8f8b5",
 									true,
 								},
+								
+								{
+									"2c65f9a5-f95d-6517-9513-6791db24ee77",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem3_Hotbar_NaturesMinne",
 							uuid = "3a779a69-9b44-5e1a-b86a-c38fca0aca30",
@@ -7338,6 +7913,22 @@ local tbl =
 						},
 						inheritedIndex = 1,
 					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "2c65f9a5-f95d-6517-9513-6791db24ee77",
+							version = 3,
+						},
+					},
 				},
 				mechanicTime = 1138.4497474604,
 				name = "[Lj Mit] Nature's Minne",
@@ -7346,6 +7937,80 @@ local tbl =
 				timerEndOffset = -1,
 				timerStartOffset = -9.5,
 				uuid = "5287e302-f5e0-6d21-9a49-b2e1f1c49580",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+									true,
+								},
+								
+								{
+									"3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+									true,
+								},
+							},
+							gVar = "ACR_RikuMNK3_Hotbar_Mantra",
+							uuid = "074669d8-7ed9-a2c8-b715-d94a74a8f533",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "MONK",
+							name = "Self: MNK",
+							uuid = "b068e3d6-876a-45bb-b857-4f64f4d85d3d",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							category = "Party",
+							comparator = 2,
+							conditionType = 4,
+							inRangeValue = 30,
+							minTargetPercent = true,
+							name = "Party Range: <= 30y",
+							partyTargetNumber = 100,
+							partyTargetSubType = "Number",
+							uuid = "3e7a80e8-689e-b1aa-be62-7c5a75c66866",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1138.4497474604,
+				name = "[Lj Mit] Mantra",
+				timeRange = true,
+				timelineIndex = 222,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "0530ace8-223a-63b2-819d-8e67b5ab0099",
 				version = 2,
 			},
 		},
