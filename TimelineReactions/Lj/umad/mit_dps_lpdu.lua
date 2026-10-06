@@ -7488,6 +7488,78 @@ local tbl =
 			},
 		},
 	},
+	[221] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"d03827ca-3f9f-5461-92f2-9b9b2dfbbde2",
+									true,
+								},
+								
+								{
+									"5682de85-25a7-9458-ad2b-ca2fbd43370e",
+									true,
+								},
+							},
+							gVar = "ACR_TensorViper3_Hotbar_Feint",
+							uuid = "ae1a8597-0aed-56a6-979d-b5088f6665a8",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 9,
+							dequeueIfLuaFalse = true,
+							name = "Self: Melee",
+							partyTargetType = "Melee DPS",
+							uuid = "d03827ca-3f9f-5461-92f2-9b9b2dfbbde2",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return AnyoneCore.Settings.Reactions.dmu.primaryMitigation == true",
+							dequeueIfLuaFalse = true,
+							name = "Primary Mitigation",
+							uuid = "5682de85-25a7-9458-ad2b-ca2fbd43370e",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 1133.3461474604,
+				name = "[Lj Mit] Feint - Primary",
+				timeRange = true,
+				timelineIndex = 221,
+				timerEndOffset = -1,
+				timerStartOffset = -14.5,
+				uuid = "70d2ca1d-b445-2f7a-8f01-da78916d596e",
+				version = 2,
+			},
+		},
+	},
 	[222] = 
 	{
 		
