@@ -957,6 +957,37 @@ local tbl =
 			},
 			inheritedIndex = 18,
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\nAnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\n\nself.used = true",
+							gVar = "ACR_RikuSGE3_CD",
+							uuid = "d2089605-088c-d8e1-a680-940da0458fef",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 15.261765625,
+				name = "Wipe",
+				timeRange = true,
+				timelineIndex = 1,
+				timerEndOffset = 1200,
+				timerStartOffset = -16,
+				uuid = "bb712fe4-a5e5-5026-84ea-113e374438c4",
+				version = 2,
+			},
+		},
 	}, 
 	[9] = 
 	{
