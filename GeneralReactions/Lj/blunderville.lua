@@ -21,7 +21,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "local player = TensorCore.mGetPlayer()\nlocal cam = player.camera\n\nif TensorCore.getDistance2d(cam, player.pos) > 0.5 then\n    Argus.setMisdirectionHeading(TensorCore.restoreHeading(TensorCore.getHeadingToTarget(player.pos, cam)))\nend\n\nself.used = true\n",
+						actionLua = "local player = TensorCore.mGetPlayer()\nlocal cam = player.camera\n\nArgus.setMisdirectionHeading(TensorCore.restoreHeading(TensorCore.getHeadingToTarget(player.pos, cam)))\n\nself.used = true\n",
 						conditions = 
 						{
 							
