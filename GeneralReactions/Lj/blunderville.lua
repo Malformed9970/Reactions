@@ -102,7 +102,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "-- Blunderville (map 1165) next-impact telegraphs for the repeating instant hazards, learned live each round.\n-- Hits are grouped per emitter (moving hazards by entity, turn-taking emitters by proximity). Each group's\n-- volleys are recorded with Now(); once a volley has been seen followed by another, the next time it fires the\n-- follow-up is drawn until it lands, with a countdown when it is 1s or more away (both ends for lines).\n-- Learned cycles are keyed by position, which is identical every round, so they persist in ljBlundervilleLearned\n-- and are saved to LuaMods\\ffxivminion\\Lj\\BlundervilleLearned.lua (by Save Learned Hazards when leaving the map)\n-- and loaded here, so later sessions predict from the first hit. A missing or unreadable file just starts empty.\n-- Only per-round draw state lives in data.ljBlunderville.learn. Event: OnEntityCast.\nlocal cfg = ljBlundervilleLearnCfg\nif cfg == nil or cfg.version ~= 3 then\n    cfg = {\n        version = 3,\n        -- entity: group by the moving emitter; radius: group emitters of the spell within this many yalms.\n        spells = {\n            [34801] = { entity = true, circle = 6 },\n            [34796] = { entity = true, circle = 5 },\n            [29795] = { entity = true, circle = 3 },\n            [34774] = { entity = true, line = 3 },\n            [34802] = { radius = 21, circle = 5 },\n            [34799] = { radius = 17, length = 4, width = 4 },\n            [34718] = { radius = 4.5, length = 4, width = 10 },\n            [34716] = { radius = 3.5, length = 3, width = 2 },\n        },\n    }\n    ljBlundervilleLearnCfg = cfg\nend\n\nlocal state = data.ljBlunderville\nif state == nil then\n    state = { groups = {}, lanes = {} }\n    data.ljBlunderville = state\nend\n-- Knowledge kept across rounds and sessions: what follows each hit (by position) and where each spell's emitters sit.\nlocal known = ljBlundervilleLearned\nif known == nil or known.version ~= 2 then\n    local folder = GetLuaModsPath() .. [[ffxivminion\\Lj\\]]\n    known = { version = 2, next = {}, emitters = {}, nextGroup = 0, dirty = false,\n        folder = folder, path = folder .. [[BlundervilleLearned.lua]] }\n\n    local saved = FileExists(known.path) and FileLoad(known.path) or nil\n    if type(saved) == \"table\" and saved.format == 1 then\n        known.nextGroup = tonumber(saved.nextGroup) or 0\n        for spellKey, list in pairs(saved.emitters or {}) do\n            local spellId = tonumber(spellKey)\n            if spellId and type(list) == \"table\" then\n                local emitters = {}\n                for _, e in ipairs(list) do\n                    emitters[#emitters + 1] = { x = e.x, y = e.y, z = e.z, group = e.group }\n                end\n                known.emitters[spellId] = emitters\n            end\n        end\n        for k, n in pairs(saved.next or {}) do\n            if type(n) == \"table\" and type(n.hits) == \"table\" then\n                known.next[k] = { volley = { hits = n.hits, keys = {} }, delay = tonumber(n.delay) or 0 }\n            end\n        end\n    end\n\n    -- Plain numbers and ASCII strings only, in the shape loaded above.\n    function known.export()\n        local out = { format = 1, nextGroup = known.nextGroup, emitters = {}, next = {} }\n        for spellId, list in pairs(known.emitters) do\n            local emitters = {}\n            for _, e in ipairs(list) do\n                emitters[#emitters + 1] = { x = e.x, y = e.y, z = e.z, group = e.group }\n            end\n            out.emitters[tostring(spellId)] = emitters\n        end\n        for k, n in pairs(known.next) do\n            local hits = {}\n            for _, h in ipairs(n.volley.hits) do\n                hits[#hits + 1] = { x = h.x, y = h.y, z = h.z, h = h.h, cx = h.cx, cz = h.cz }\n            end\n            out.next[k] = { delay = n.delay, hits = hits }\n        end\n        return out\n    end\n\n    function known.save()\n        if not FolderExists(known.folder) then\n            FolderCreate(known.folder)\n        end\n        FileSave(known.path, known.export())\n        known.dirty = false\n    end\n\n    ljBlundervilleLearned = known\nend\n-- Per-round state: each group's current volley and live draws.\nlocal learn = state.learn\nif learn == nil then\n    learn = { groups = {} }\n    state.learn = learn\nend\n\nlocal spell = eventArgs.spellID\nlocal spec = cfg.spells[spell]\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nif spec and ent then\n    local p = ent.pos\n    local now = Now()\n\n    -- Find this emitter's group.\n    local gid\n    if spec.entity then\n        gid = eventArgs.entityID\n    else\n        local list = known.emitters[spell]\n        if list == nil then\n            list = {}\n            known.emitters[spell] = list\n        end\n        local own\n        for _, e in ipairs(list) do\n            local dx, dz = e.x - p.x, e.z - p.z\n            local d2 = dx * dx + dz * dz\n            if d2 < 0.36 then\n                own = e\n                break\n            elseif d2 <= spec.radius * spec.radius then\n                if gid == nil then\n                    gid = e.group\n                elseif e.group ~= gid then\n                    -- This emitter links two groups; merge the other into ours.\n                    local old = e.group\n                    for _, o in ipairs(list) do\n                        if o.group == old then\n                            o.group = gid\n                        end\n                    end\n                end\n            end\n        end\n        if own then\n            gid = own.group\n        else\n            if gid == nil then\n                known.nextGroup = known.nextGroup + 1\n                gid = \"g\" .. known.nextGroup\n            end\n            list[#list + 1] = { x = p.x, y = p.y, z = p.z, group = gid }\n            known.dirty = true\n        end\n    end\n\n    local group = learn.groups[gid]\n    if group == nil then\n        group = { uuids = {} }\n        learn.groups[gid] = group\n    end\n\n    local key = string.format(\"%d:%d:%d:%d:%d:%d\", spell, math.floor(p.x * 2 + 0.5), math.floor(p.z * 2 + 0.5),\n        math.floor(eventArgs.heading * 2 + 0.5), math.floor((eventArgs.castPosX or 0) * 2 + 0.5), math.floor((eventArgs.castPosZ or 0) * 2 + 0.5))\n    local hit = { x = p.x, y = p.y, z = p.z, h = eventArgs.heading, cx = eventArgs.castPosX, cz = eventArgs.castPosZ }\n\n    local volley = group.volley\n    if volley == nil or now - volley.t > 150 then\n        -- A new volley: teach the previous volley's members what follows them, then predict what follows this one.\n        local fresh = { t = now, hits = {}, keys = {} }\n        if volley then\n            local delay = now - volley.t\n            for _, k in ipairs(volley.keys) do\n                if known.next[k] == nil then\n                    known.dirty = true\n                end\n                known.next[k] = { volley = fresh, delay = delay }\n            end\n        end\n        group.volley = fresh\n        volley = fresh\n\n        local uuids = group.uuids\n        for i = #uuids, 1, -1 do\n            Argus.deleteTimedShape(uuids[i])\n            uuids[i] = nil\n        end\n\n        local nextVolley = known.next[key]\n        local delay = nextVolley and nextVolley.delay or 0\n        local timeout = delay > 0 and delay + 400 or 1000\n        local countdown = delay >= 1000 and AnyoneCore and AnyoneCore.addWorldTextCountdown\n\n        if nextVolley then\n            local drawer = TensorCore.getMoogleDrawer()\n            for _, s in ipairs(nextVolley.volley.hits) do\n                if spec.line then\n                    local dx, dz = (s.cx or s.x) - s.x, (s.cz or s.z) - s.z\n                    local length = math.sqrt(dx * dx + dz * dz)\n                    uuids[#uuids + 1] = drawer:addTimedRect(timeout, s.x, s.y, s.z, length, spec.line, math.atan2(dx, dz))\n                    if countdown then\n                        -- Lines of 5y or more get a countdown at each end (the camera may only show one); shorter ones one centred.\n                        if s.countdownA == nil then\n                            if length >= 5 then\n                                s.countdownA = s\n                                s.countdownB = { x = s.cx, y = s.y, z = s.cz }\n                            else\n                                s.countdownA = { x = s.x + dx / 2, y = s.y, z = s.z + dz / 2 }\n                            end\n                        end\n                        AnyoneCore.addWorldTextCountdown(delay, s.countdownA, 0xFFFFFFFF, true, 1)\n                        if s.countdownB then\n                            AnyoneCore.addWorldTextCountdown(delay, s.countdownB, 0xFFFFFFFF, true, 1)\n                        end\n                    end\n                else\n                    if spec.circle then\n                        uuids[#uuids + 1] = drawer:addTimedCircle(timeout, s.x, s.y, s.z, spec.circle)\n                    else\n                        uuids[#uuids + 1] = drawer:addTimedCenteredRect(timeout, s.x, s.y, s.z, spec.length, spec.width, s.h)\n                    end\n                    if countdown then\n                        AnyoneCore.addWorldTextCountdown(delay, s, 0xFFFFFFFF, true, 1)\n                    end\n                end\n            end\n        end\n    end\n\n    volley.hits[#volley.hits + 1] = hit\n    volley.keys[#volley.keys + 1] = key\nend\n\nself.used = true\n",
+						actionLua = "-- Blunderville (map 1165) next-impact telegraphs for the repeating instant hazards, learned live each round.\n-- Hits are grouped per emitter (moving hazards by entity, turn-taking emitters by proximity). Each group's\n-- volleys are recorded with Now(); once a volley has been seen followed by another, the next time it fires the\n-- follow-up is drawn until it lands, with a countdown when it is 1s or more away (both ends for lines).\n-- Learned cycles are keyed by position, which is identical every round, so they persist in ljBlundervilleLearned\n-- and are saved to LuaMods\\ffxivminion\\Lj\\BlundervilleLearned.lua (by Save Learned Hazards when leaving the map)\n-- and loaded here, so later sessions predict from the first hit. A missing or unreadable file just starts empty.\n-- The file also keeps the stage 3 route's hazard periods (known.periods, written by S3 - Route Observe).\n-- Only per-round draw state lives in data.ljBlunderville.learn. Event: OnEntityCast.\nlocal cfg = ljBlundervilleLearnCfg\nif cfg == nil or cfg.version ~= 3 then\n    cfg = {\n        version = 3,\n        -- entity: group by the moving emitter; radius: group emitters of the spell within this many yalms.\n        spells = {\n            [34801] = { entity = true, circle = 6 },\n            [34796] = { entity = true, circle = 5 },\n            [29795] = { entity = true, circle = 3 },\n            [34774] = { entity = true, line = 3 },\n            [34802] = { radius = 21, circle = 5 },\n            [34799] = { radius = 17, length = 4, width = 4 },\n            [34718] = { radius = 4.5, length = 4, width = 10 },\n            [34716] = { radius = 3.5, length = 3, width = 2 },\n        },\n    }\n    ljBlundervilleLearnCfg = cfg\nend\n\nlocal state = data.ljBlunderville\nif state == nil then\n    state = { groups = {}, lanes = {} }\n    data.ljBlunderville = state\nend\n-- Knowledge kept across rounds and sessions: what follows each hit (by position) and where each spell's emitters sit.\nlocal known = ljBlundervilleLearned\nif known == nil or known.version ~= 3 then\n    local folder = GetLuaModsPath() .. [[ffxivminion\\Lj\\]]\n    known = { version = 3, next = {}, emitters = {}, periods = {}, nextGroup = 0, dirty = false,\n        folder = folder, path = folder .. [[BlundervilleLearned.lua]] }\n\n    local saved = FileExists(known.path) and FileLoad(known.path) or nil\n    if type(saved) == \"table\" and saved.format == 1 then\n        known.nextGroup = tonumber(saved.nextGroup) or 0\n        for spellKey, list in pairs(saved.emitters or {}) do\n            local spellId = tonumber(spellKey)\n            if spellId and type(list) == \"table\" then\n                local emitters = {}\n                for _, e in ipairs(list) do\n                    emitters[#emitters + 1] = { x = e.x, y = e.y, z = e.z, group = e.group }\n                end\n                known.emitters[spellId] = emitters\n            end\n        end\n        for k, n in pairs(saved.next or {}) do\n            if type(n) == \"table\" and type(n.hits) == \"table\" then\n                known.next[k] = { volley = { hits = n.hits, keys = {} }, delay = tonumber(n.delay) or 0 }\n            end\n        end\n        for k, period in pairs(saved.periods or {}) do\n            known.periods[k] = tonumber(period)\n        end\n    end\n\n    -- Plain numbers and ASCII strings only, in the shape loaded above.\n    function known.export()\n        local out = { format = 1, nextGroup = known.nextGroup, emitters = {}, next = {}, periods = {} }\n        for spellId, list in pairs(known.emitters) do\n            local emitters = {}\n            for _, e in ipairs(list) do\n                emitters[#emitters + 1] = { x = e.x, y = e.y, z = e.z, group = e.group }\n            end\n            out.emitters[tostring(spellId)] = emitters\n        end\n        for k, n in pairs(known.next) do\n            local hits = {}\n            for _, h in ipairs(n.volley.hits) do\n                hits[#hits + 1] = { x = h.x, y = h.y, z = h.z, h = h.h, cx = h.cx, cz = h.cz }\n            end\n            out.next[k] = { delay = n.delay, hits = hits }\n        end\n        for k, period in pairs(known.periods) do\n            out.periods[k] = math.floor(period + 0.5)\n        end\n        return out\n    end\n\n    function known.save()\n        if not FolderExists(known.folder) then\n            FolderCreate(known.folder)\n        end\n        FileSave(known.path, known.export())\n        known.dirty = false\n    end\n\n    ljBlundervilleLearned = known\nend\n-- Per-round state: each group's current volley and live draws.\nlocal learn = state.learn\nif learn == nil then\n    learn = { groups = {} }\n    state.learn = learn\nend\n\nlocal spell = eventArgs.spellID\nlocal spec = cfg.spells[spell]\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nif spec and ent then\n    local p = ent.pos\n    local now = Now()\n\n    -- Find this emitter's group.\n    local gid\n    if spec.entity then\n        gid = eventArgs.entityID\n    else\n        local list = known.emitters[spell]\n        if list == nil then\n            list = {}\n            known.emitters[spell] = list\n        end\n        local own\n        for _, e in ipairs(list) do\n            local dx, dz = e.x - p.x, e.z - p.z\n            local d2 = dx * dx + dz * dz\n            if d2 < 0.36 then\n                own = e\n                break\n            elseif d2 <= spec.radius * spec.radius then\n                if gid == nil then\n                    gid = e.group\n                elseif e.group ~= gid then\n                    -- This emitter links two groups; merge the other into ours.\n                    local old = e.group\n                    for _, o in ipairs(list) do\n                        if o.group == old then\n                            o.group = gid\n                        end\n                    end\n                end\n            end\n        end\n        if own then\n            gid = own.group\n        else\n            if gid == nil then\n                known.nextGroup = known.nextGroup + 1\n                gid = \"g\" .. known.nextGroup\n            end\n            list[#list + 1] = { x = p.x, y = p.y, z = p.z, group = gid }\n            known.dirty = true\n        end\n    end\n\n    local group = learn.groups[gid]\n    if group == nil then\n        group = { uuids = {} }\n        learn.groups[gid] = group\n    end\n\n    local key = string.format(\"%d:%d:%d:%d:%d:%d\", spell, math.floor(p.x * 2 + 0.5), math.floor(p.z * 2 + 0.5),\n        math.floor(eventArgs.heading * 2 + 0.5), math.floor((eventArgs.castPosX or 0) * 2 + 0.5), math.floor((eventArgs.castPosZ or 0) * 2 + 0.5))\n    local hit = { x = p.x, y = p.y, z = p.z, h = eventArgs.heading, cx = eventArgs.castPosX, cz = eventArgs.castPosZ }\n\n    local volley = group.volley\n    if volley == nil or now - volley.t > 150 then\n        -- A new volley: teach the previous volley's members what follows them, then predict what follows this one.\n        local fresh = { t = now, hits = {}, keys = {} }\n        if volley then\n            local delay = now - volley.t\n            for _, k in ipairs(volley.keys) do\n                if known.next[k] == nil then\n                    known.dirty = true\n                end\n                known.next[k] = { volley = fresh, delay = delay }\n            end\n        end\n        group.volley = fresh\n        volley = fresh\n\n        local uuids = group.uuids\n        for i = #uuids, 1, -1 do\n            Argus.deleteTimedShape(uuids[i])\n            uuids[i] = nil\n        end\n\n        local nextVolley = known.next[key]\n        local delay = nextVolley and nextVolley.delay or 0\n        local timeout = delay > 0 and delay + 400 or 1000\n        local countdown = delay >= 1000 and AnyoneCore and AnyoneCore.addWorldTextCountdown\n\n        if nextVolley then\n            local drawer = TensorCore.getMoogleDrawer()\n            for _, s in ipairs(nextVolley.volley.hits) do\n                if spec.line then\n                    local dx, dz = (s.cx or s.x) - s.x, (s.cz or s.z) - s.z\n                    local length = math.sqrt(dx * dx + dz * dz)\n                    uuids[#uuids + 1] = drawer:addTimedRect(timeout, s.x, s.y, s.z, length, spec.line, math.atan2(dx, dz))\n                    if countdown then\n                        -- Lines of 5y or more get a countdown at each end (the camera may only show one); shorter ones one centred.\n                        if s.countdownA == nil then\n                            if length >= 5 then\n                                s.countdownA = s\n                                s.countdownB = { x = s.cx, y = s.y, z = s.cz }\n                            else\n                                s.countdownA = { x = s.x + dx / 2, y = s.y, z = s.z + dz / 2 }\n                            end\n                        end\n                        AnyoneCore.addWorldTextCountdown(delay, s.countdownA, 0xFFFFFFFF, true, 1)\n                        if s.countdownB then\n                            AnyoneCore.addWorldTextCountdown(delay, s.countdownB, 0xFFFFFFFF, true, 1)\n                        end\n                    end\n                else\n                    if spec.circle then\n                        uuids[#uuids + 1] = drawer:addTimedCircle(timeout, s.x, s.y, s.z, spec.circle)\n                    else\n                        uuids[#uuids + 1] = drawer:addTimedCenteredRect(timeout, s.x, s.y, s.z, spec.length, spec.width, s.h)\n                    end\n                    if countdown then\n                        AnyoneCore.addWorldTextCountdown(delay, s, 0xFFFFFFFF, true, 1)\n                    end\n                end\n            end\n        end\n    end\n\n    volley.hits[#volley.hits + 1] = hit\n    volley.keys[#volley.keys + 1] = key\nend\n\nself.used = true\n",
 						conditions = 
 						{
 							
@@ -755,7 +755,7 @@ local tbl =
 					data = 
 					{
 						buffCheckType = 7,
-						buffDuration = 1,
+						buffDuration = 0.5,
 						buffIDList = 
 						{
 							3698,
@@ -765,7 +765,7 @@ local tbl =
 						},
 						category = "Self",
 						comparator = 2,
-						name = "Order <= 1s",
+						name = "Order <= 0.5s",
 						uuid = "7707f3b3-12e0-726e-b499-e32ea7539562",
 						version = 3,
 					},
@@ -775,6 +775,77 @@ local tbl =
 			eventType = 12,
 			name = "S1 - Forced March - Face Path",
 			uuid = "68747662-93c0-f0fb-ba00-a81097710592",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "-- Stage 1: 34775 pendulum rows (3 cells each at x 0.5/3.5/6.5, mirrored on alternate rows). A sweep crosses the row in\n-- ~0.4s, rests, then sweeps back starting from the cell it ended on: 2041 of 2044 logged sweeps, median rest 1.78s\n-- (p5 1.72, p95 1.84). The rest is the safe window, so on each sweep's last hit draw the row only for the last 0.8s\n-- before it comes back. Event: OnEntityCast (34775).\nlocal state = data.ljBlunderville\nif state == nil then\n    state = { groups = {}, lanes = {} }\n    data.ljBlunderville = state\nend\nlocal rows = state.pendulums\nif rows == nil then\n    rows = {}\n    state.pendulums = rows\nend\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nif ent then\n    local p = ent.pos\n    local key = math.floor(p.z + 0.5)\n    local row = rows[key]\n    if row == nil then\n        row = {}\n        rows[key] = row\n    end\n    local now = Now()\n    local middle = math.abs(math.abs(p.x) - 3.5) < 0.6\n    if middle then\n        row.middleT = now\n    elseif row.middleT and now - row.middleT < 450 then\n        -- This end cell finished a sweep; the return sweep starts here in ~1.78s.\n        row.middleT = nil\n        local cx = p.x > 0 and 3.5 or -3.5\n        TensorCore.getMoogleDrawer():addTimedCenteredRect(1250, cx, p.y, p.z, 9, 3, eventArgs.heading, 980)\n    end\nend\n\nself.used = true\n",
+						conditions = 
+						{
+							
+							{
+								"4ed1ddc5-1845-b8b0-93b5-3999a0260afc",
+								true,
+							},
+							
+							{
+								"acfb6405-8797-e442-b8bc-5e1ad5ff15cf",
+								true,
+							},
+						},
+						name = "Draw - Return Sweep",
+						uuid = "736e3748-ed08-cd04-be82-f220ebe81daf",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						name = "Spell 34775",
+						spellIDList = 
+						{
+							34775,
+						},
+						uuid = "4ed1ddc5-1845-b8b0-93b5-3999a0260afc",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						dequeueIfLuaFalse = true,
+						localmapid = 1165,
+						name = "Map 1165",
+						uuid = "acfb6405-8797-e442-b8bc-5e1ad5ff15cf",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Stage 1",
+			eventType = 2,
+			name = "S1 - Pendulum Return Sweep",
+			uuid = "7cc57114-03e5-87cb-97bd-dd3b63079f59",
 			version = 2,
 		},
 	},
@@ -1145,6 +1216,216 @@ local tbl =
 			eventType = 3,
 			name = "S3 - Samurai Swing",
 			uuid = "03ac48c8-93ad-695e-8cc2-45ca8395e94b",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "-- Stage 3 route: record when each repeating hazard fires, keyed by spell and position (identical every round).\n-- Each emitter fires on a fixed period (2.5-11s); the period is learned from consecutive hits and kept in\n-- ljBlundervilleLearned.periods so it is saved with the other learned data. The route overlay predicts from these.\n-- Event: OnEntityCast (34801, 34802, 34796, 29795).\nlocal state = data.ljBlunderville\nif state == nil then\n    state = { groups = {}, lanes = {} }\n    data.ljBlunderville = state\nend\nlocal seen = state.routeSeen\nif seen == nil then\n    seen = { list = {} }\n    state.routeSeen = seen\nend\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nif ent then\n    local p = ent.pos\n    local spell = eventArgs.spellID\n    local key = string.format(\"%d:%d:%d\", spell, math.floor(p.x * 2 + 0.5), math.floor(p.z * 2 + 0.5))\n    local now = Now()\n    local s = seen[key]\n    if s == nil then\n        s = { key = key, spell = spell, x = p.x, z = p.z }\n        seen[key] = s\n        seen.list[#seen.list + 1] = s\n    elseif s.last then\n        local gap = now - s.last\n        if gap >= 1000 and gap <= 15000 then\n            -- A missed hit only lengthens a gap, so the shortest plausible gap is the period.\n            if s.period == nil or gap < s.period - 300 then\n                s.period = gap\n            elseif math.abs(gap - s.period) < 300 then\n                s.period = s.period + (gap - s.period) * 0.25\n            end\n            local known = ljBlundervilleLearned\n            if known and known.periods then\n                local saved = known.periods[key]\n                if saved == nil or gap < saved - 300 then\n                    known.periods[key] = gap\n                    known.dirty = true\n                elseif math.abs(gap - saved) < 300 then\n                    known.periods[key] = saved + (gap - saved) * 0.25\n                end\n            end\n        end\n    end\n    s.last = now\nend\n\nself.used = true\n",
+						conditions = 
+						{
+							
+							{
+								"90d5bc72-c9b4-5070-9e52-609e5b28a291",
+								true,
+							},
+							
+							{
+								"b31a897e-b91d-4863-8ceb-8e468d966ebe",
+								true,
+							},
+						},
+						name = "Record Hazard Timing",
+						uuid = "9bf983a4-bffb-168d-95e9-ebb74242d583",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						name = "Repeating Hazards",
+						spellIDList = 
+						{
+							34801,
+							34802,
+							34796,
+							29795,
+						},
+						uuid = "90d5bc72-c9b4-5070-9e52-609e5b28a291",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						dequeueIfLuaFalse = true,
+						localmapid = 1165,
+						name = "Map 1165",
+						uuid = "b31a897e-b91d-4863-8ceb-8e468d966ebe",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Stage 3",
+			eventType = 2,
+			name = "S3 - Route Observe",
+			uuid = "f616f879-242f-72e7-8bab-49e315765445",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "-- Stage 3 route: ramp rollers. A 34812 channel at the ramp top starts a roller that hits its lane at z 190.4 (+1.0s),\n-- 196.4 (+1.5s), 202.4 (+1.94s), 208.4 (+2.38s) and 214.4 (+2.81s), and each lane repeats every 6s (medians over 355\n-- cycles). The samurai's sword spin is left out: no stun in the logs ever came from it, even with players 3-8y away.\n-- Event: OnEntityChannel (34812).\nlocal state = data.ljBlunderville\nif state == nil then\n    state = { groups = {}, lanes = {} }\n    data.ljBlunderville = state\nend\nlocal seen = state.routeSeen\nif seen == nil then\n    seen = { list = {} }\n    state.routeSeen = seen\nend\n\nlocal roller = ljBlundervilleRouteRoller\nif roller == nil or roller.version ~= 1 then\n    roller = {\n        version = 1,\n        steps = { { 34812, 190.4, 1000 }, { 34804, 196.4, 1500 }, { 34804, 202.4, 1937 }, { 34804, 208.4, 2375 }, { 34804, 214.4, 2813 } },\n    }\n    ljBlundervilleRouteRoller = roller\nend\n\nlocal ent = TensorCore.mGetEntity(eventArgs.entityID)\nif ent then\n    local x = ent.pos.x\n    local now = Now()\n    for _, step in ipairs(roller.steps) do\n        local key = string.format(\"%d:%d:%d\", step[1], math.floor(x * 2 + 0.5), math.floor(step[2] * 2 + 0.5))\n        local s = seen[key]\n        if s == nil then\n            s = { key = key, spell = step[1], x = x, z = step[2], period = 6000 }\n            seen[key] = s\n            seen.list[#seen.list + 1] = s\n        end\n        s.last = now + step[3]\n    end\nend\n\nself.used = true\n",
+						conditions = 
+						{
+							
+							{
+								"c9a86a53-aaec-cb78-84d4-b7fcbe63ccc1",
+								true,
+							},
+							
+							{
+								"19e5d988-1723-6680-b965-184e242d658b",
+								true,
+							},
+						},
+						name = "Record Roller Timing",
+						uuid = "05bf47f2-82d1-9141-8d22-f15e515e91e8",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Event",
+						dequeueIfLuaFalse = true,
+						eventArgOptionType = 3,
+						eventArgType = 2,
+						name = "Spell 34812",
+						spellIDList = 
+						{
+							34812,
+						},
+						uuid = "c9a86a53-aaec-cb78-84d4-b7fcbe63ccc1",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						dequeueIfLuaFalse = true,
+						localmapid = 1165,
+						name = "Map 1165",
+						uuid = "19e5d988-1723-6680-b965-184e242d658b",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Stage 3",
+			eventType = 3,
+			name = "S3 - Route Rollers",
+			uuid = "5ebe051d-3112-7b4c-abee-6c847bc6d8be",
+			version = 2,
+		},
+	},
+	
+	{
+		data = 
+		{
+			actions = 
+			{
+				
+				{
+					data = 
+					{
+						aType = "Lua",
+						actionLua = "-- Stage 3 route overlay. Plans the fastest safe way down the course from the predicted hazard timings and draws it:\n-- green = run this now, amber ring with \"WAIT x.x\" = stop here until the timer ends, faint white = the rest of the route.\n-- Planner: time-aware Dijkstra over a 1y grid of the walkable course (walls from vfallguy's stage 3 map), 25y ahead,\n-- where every move is checked against each hazard's next activations (last hit + learned period, from the Route\n-- Observe/Channels reactions). Replans every 150ms from the current position. Event: OnFrame.\nlocal route = ljBlundervilleRoute\nif route == nil or route.version ~= 1 then\n    route = {\n        version = 1,\n        speed = 6 / 1000,       -- yalms per ms\n        margin = 450,           -- ms either side of a hit treated as dangerous\n        tightMargin = 120,      -- fallback margin when cornered\n        slack = 0,              -- extra ms after each hit (more made the sim slower and hit more often)\n        pad = 1.0,              -- yalms added to every hazard radius\n        ahead = 25,             -- rows (yalms) planned ahead\n        maxWait = 7000,\n        replanEvery = 150,\n        cols = 27, rows = 169, x0 = -13, z0 = 124,\n        shapes = {\n            [34801] = { r = 6 }, [34802] = { r = 5 }, [34796] = { r = 5 }, [29795] = { r = 3 },\n            [34812] = { half = 3 }, [34804] = { half = 3 },\n        },\n        heights = { 135.6, 36.2, 139.0, 35.5, 139.1, 34.5, 143.0, 34.3, 143.1, 33.6, 147.0, 33.4, 147.1, 32.8, 150.9, 32.5,\n            151.0, 31.9, 180.7, 28.8, 218.9, 15.1, 229.7, 14.5, 236.8, 13.5, 262.9, 6.0, 273.2, 6.0, 286.9, 3.2 },\n        dx = { 1, -1, 0, 0, 1, 1, -1, -1, 1, 1, -1, -1, 2, 2, -2, -2 },\n        dz = { 0, 0, 1, -1, 1, -1, 1, -1, 2, -2, 2, -2, 1, -1, 1, -1 },\n        len = {}, dIdx = {},\n        walk = {}, edgeOk = {}, edgeHaz = {}, nodeHaz = {},\n        inst = {}, instKey = {}, instShape = {},\n        actGen = {}, actLast = {}, actPeriod = {},\n        best = {}, prev = {}, dep = {}, stamp = {}, gen = 0, sgen = 0,\n        heapT = {}, heapN = {},\n        pathNode = {}, planX = {}, planZ = {}, planArr = {}, planDep = {}, planN = 0, planAt = 0,\n        go = TensorCore.getCachedDrawer(nil, nil, 0xB000FF00, 0xFF00FF00, 1.5),\n        rest = TensorCore.getCachedDrawer(nil, nil, 0x40FFFFFF, 0x80FFFFFF, 1),\n        hold = TensorCore.getCachedDrawer(nil, nil, 0x5000A5FF, 0xFF00A5FF, 2.5),\n    }\n\n    local function inRect(x, z, x1, x2, z1, z2)\n        return x >= x1 and x <= x2 and z >= z1 and z <= z2\n    end\n    local prisms = { -9, 211, 9, 211, -2.5, 202, 2.5, 202, -9, 194, 9, 194, 0, 188 }\n    local function inTrapezium(x, z, dx1, z1, dx2, z2)\n        local coeff = (dx2 - dx1) / (z2 - z1)\n        return z >= z2 and z <= z1 and math.abs(x) < dx1 - z1 * coeff + coeff * z\n    end\n    local function blocked(x, z)\n        if x < -14 or x > 14 then\n            return true\n        end\n        if (x + 4) ^ 2 + (z - 292) ^ 2 <= 2.25 or (x - 4) ^ 2 + (z - 292) ^ 2 <= 2.25\n            or inRect(x, z, -10, -3.3, 285.5, 293) or inRect(x, z, 3.3, 10, 285.5, 293)\n            or inRect(x, z, -2, 2, 271, 278) or inRect(x, z, -5.5, 5.5, 262.5, 271) then\n            return true\n        end\n        -- exaflare lane columns\n        if ((z >= 247.5 and z <= 256) or (z >= 238.5 and z <= 246.5))\n            and ((x >= -9.5 and x <= -5.5) or (x >= -2 and x <= 2) or (x >= 5.5 and x <= 9.5)) then\n            return true\n        end\n        for q = 1, #prisms, 2 do\n            if math.abs(x - prisms[q]) + math.abs(z - prisms[q + 1]) <= 4 then\n                return true\n            end\n        end\n        if inTrapezium(x, z, 1.1, 151.5, 3.3, 139) or inTrapezium(x, z, 4.3, 133.5, 8.5, 123.7) then\n            return true\n        end\n        if z >= 123 and z <= 139 then\n            -- final corridor corners: (14,139) -> (7,136) -> (13,123), mirrored\n            local ax = math.abs(x)\n            if -3 * (ax - 14) + 7 * (z - 139) < 0 and -13 * (ax - 7) - 6 * (z - 136) < 0 then\n                return true\n            end\n        end\n        return false\n    end\n\n    local cols, rows = route.cols, route.rows\n    for k = 1, 16 do\n        route.len[k] = math.sqrt(route.dx[k] ^ 2 + route.dz[k] ^ 2)\n        route.dIdx[k] = route.dz[k] * cols + route.dx[k]\n    end\n    for r = 0, rows - 1 do\n        for c = 0, cols - 1 do\n            route.walk[r * cols + c + 1] = not blocked(route.x0 + c, route.z0 + r)\n        end\n    end\n    for r = 0, rows - 1 do\n        for c = 0, cols - 1 do\n            local i = r * cols + c + 1\n            if route.walk[i] then\n                for k = 1, 16 do\n                    local c2, r2 = c + route.dx[k], r + route.dz[k]\n                    local ok = c2 >= 0 and c2 < cols and r2 >= 0 and r2 < rows and route.walk[r2 * cols + c2 + 1]\n                    if ok then\n                        local x, z = route.x0 + c, route.z0 + r\n                        for f = 0.25, 0.75, 0.25 do\n                            if blocked(x + route.dx[k] * f, z + route.dz[k] * f) then\n                                ok = false\n                                break\n                            end\n                        end\n                    end\n                    route.edgeOk[(i - 1) * 16 + k] = ok or nil\n                end\n            end\n        end\n    end\n\n    function route.heightAt(z)\n        local h = route.heights\n        if z <= h[1] then\n            return h[2]\n        end\n        for q = 3, #h, 2 do\n            if z <= h[q] then\n                return h[q - 1] + (z - h[q - 2]) / (h[q] - h[q - 2]) * (h[q + 1] - h[q - 1])\n            end\n        end\n        return h[#h]\n    end\n\n    -- Entry and exit distance of segment (x,z)+(ux,uz)*s, s in [0,len], through a hazard grown by pad; nil if it misses.\n    local function clip(x, z, ux, uz, len, hx, hz, shape)\n        local sIn, sOut\n        if shape.r then\n            local R = shape.r + route.pad\n            local fx, fz = x - hx, z - hz\n            local b = ux * fx + uz * fz\n            local disc = b * b - (fx * fx + fz * fz - R * R)\n            if disc < 0 then\n                return nil\n            end\n            disc = math.sqrt(disc)\n            sIn, sOut = -b - disc, -b + disc\n        else\n            local H = shape.half + route.pad\n            sIn, sOut = -math.huge, math.huge\n            for axis = 1, 2 do\n                local p, u, h = x, ux, hx\n                if axis == 2 then\n                    p, u, h = z, uz, hz\n                end\n                if math.abs(u) < 1e-9 then\n                    if p < h - H or p > h + H then\n                        return nil\n                    end\n                else\n                    local a, b = (h - H - p) / u, (h + H - p) / u\n                    if a > b then\n                        a, b = b, a\n                    end\n                    sIn, sOut = math.max(sIn, a), math.min(sOut, b)\n                end\n            end\n        end\n        sIn, sOut = math.max(sIn, 0), math.min(sOut, len)\n        if sIn > sOut then\n            return nil\n        end\n        return sIn, sOut\n    end\n\n    -- Fixed geometry for a hazard position: which grid nodes it covers and where it cuts each nearby move.\n    function route.register(key, spell, hx, hz)\n        local shape = route.shapes[spell]\n        local idx = #route.instKey + 1\n        route.instKey[idx] = key\n        route.inst[key] = idx\n        local reach = (shape.r or shape.half * 1.42) + route.pad + 2.5\n        local c1, c2 = math.max(0, math.floor(hx - reach - route.x0)), math.min(cols - 1, math.ceil(hx + reach - route.x0))\n        local r1, r2 = math.max(0, math.floor(hz - reach - route.z0)), math.min(rows - 1, math.ceil(hz + reach - route.z0))\n        for r = r1, r2 do\n            for c = c1, c2 do\n                local i = r * cols + c + 1\n                if route.walk[i] then\n                    local x, z = route.x0 + c, route.z0 + r\n                    if clip(x, z, 1, 0, 0, hx, hz, shape) then\n                        local list = route.nodeHaz[i]\n                        if list == nil then\n                            list = {}\n                            route.nodeHaz[i] = list\n                        end\n                        list[#list + 1] = idx\n                    end\n                    for k = 1, 16 do\n                        local e = (i - 1) * 16 + k\n                        if route.edgeOk[e] then\n                            local len = route.len[k]\n                            local sIn, sOut = clip(x, z, route.dx[k] / len, route.dz[k] / len, len, hx, hz, shape)\n                            if sIn then\n                                local list = route.edgeHaz[e]\n                                if list == nil then\n                                    list = {}\n                                    route.edgeHaz[e] = list\n                                end\n                                list[#list + 1] = idx\n                                list[#list + 1] = sIn / route.speed\n                                list[#list + 1] = sOut / route.speed\n                            end\n                        end\n                    end\n                end\n            end\n        end\n        return idx\n    end\n\n    -- Current timing margin (ms); plan() tightens it when nothing is safe at the normal margin.\n    route.m = route.margin\n\n    -- Latest activation of hazard idx within [lo, hi] (ms), or nil.\n    local function activation(idx, lo, hi)\n        if route.actGen[idx] ~= route.gen then\n            return nil\n        end\n        local a, P = route.actLast[idx], route.actPeriod[idx]\n        if P == nil then\n            if a >= lo and a <= hi then\n                return a\n            end\n            return nil\n        end\n        local th = a + math.floor((hi - a) / P) * P\n        if th >= lo then\n            return th\n        end\n        return nil\n    end\n\n    -- Earliest departure >= ta along edge e that no hazard catches, or nil.\n    local function depart(e, ta)\n        local list = route.edgeHaz[e]\n        if list == nil then\n            return ta\n        end\n        local m = route.m\n        local td = ta\n        for _ = 1, 12 do\n            local moved = false\n            for q = 1, #list, 3 do\n                local tIn = list[q + 1]\n                local th = activation(list[q], td + tIn - m, td + list[q + 2] + m + route.slack)\n                if th then\n                    td = th + m - tIn + 1\n                    moved = true\n                end\n            end\n            if not moved then\n                return td\n            end\n            if td - ta > route.maxWait then\n                return nil\n            end\n        end\n        return nil\n    end\n\n    local function waitOk(i, ta, td)\n        local list = route.nodeHaz[i]\n        if list then\n            for q = 1, #list do\n                if activation(list[q], ta - route.m, td + route.m + route.slack) then\n                    return false\n                end\n            end\n        end\n        return true\n    end\n\n    local heapT, heapN = route.heapT, route.heapN\n    local heapSize = 0\n    local function push(t, n)\n        heapSize = heapSize + 1\n        local q = heapSize\n        while q > 1 do\n            local parent = math.floor(q / 2)\n            if heapT[parent] <= t then\n                break\n            end\n            heapT[q], heapN[q] = heapT[parent], heapN[parent]\n            q = parent\n        end\n        heapT[q], heapN[q] = t, n\n    end\n    local function pop()\n        local t, n = heapT[1], heapN[1]\n        local lastT, lastN = heapT[heapSize], heapN[heapSize]\n        heapSize = heapSize - 1\n        local q = 1\n        while true do\n            local child = q * 2\n            if child > heapSize then\n                break\n            end\n            if child < heapSize and heapT[child + 1] < heapT[child] then\n                child = child + 1\n            end\n            if heapT[child] >= lastT then\n                break\n            end\n            heapT[q], heapN[q] = heapT[child], heapN[child]\n            q = child\n        end\n        heapT[q], heapN[q] = lastT, lastN\n        return t, n\n    end\n\n    function route.plan(now, px, pz, seen, periods)\n        route.gen = route.gen + 1\n        local gen = route.gen\n        for _, s in ipairs(seen.list) do\n            local idx = route.inst[s.key] or route.register(s.key, s.spell, s.x, s.z)\n            local P = periods and periods[s.key] or s.period\n            if s.last and now - s.last < 30000 then\n                route.actGen[idx] = gen\n                route.actLast[idx] = s.last\n                route.actPeriod[idx] = P\n            end\n        end\n\n        -- Start from the nearest walkable node.\n        local c0 = math.min(cols - 1, math.max(0, math.floor(px - route.x0 + 0.5)))\n        local r0 = math.min(rows - 1, math.max(0, math.floor(pz - route.z0 + 0.5)))\n        local start, startD\n        for r = math.max(0, r0 - 2), math.min(rows - 1, r0 + 2) do\n            for c = math.max(0, c0 - 2), math.min(cols - 1, c0 + 2) do\n                local i = r * cols + c + 1\n                if route.walk[i] then\n                    local d = (route.x0 + c - px) ^ 2 + (route.z0 + r - pz) ^ 2\n                    if startD == nil or d < startD then\n                        start, startD = i, d\n                    end\n                end\n            end\n        end\n        route.planN = 0\n        route.planAt = now\n        if start == nil then\n            return\n        end\n        local rStart = math.floor((start - 1) / cols)\n        local rMin, rMax = math.max(0, rStart - route.ahead), math.min(rows - 1, rStart + 4)\n\n        local best, prev, dep, stamp = route.best, route.prev, route.dep, route.stamp\n        local edgeOk, dIdx, dz, len = route.edgeOk, route.dIdx, route.dz, route.len\n        local goal, goalRow, goalT\n        -- If nothing gets anywhere at the normal margin (cornered in a pocket), retry tighter rather than stand still.\n        for attempt = 1, 2 do\n            route.m = attempt == 1 and route.margin or route.tightMargin\n            route.sgen = route.sgen + 1\n            local sgen = route.sgen\n            heapSize = 0\n            goal = nil\n            stamp[start], best[start], prev[start], dep[start] = sgen, now + math.sqrt(startD) / route.speed, nil, nil\n            push(best[start], start)\n            while heapSize > 0 do\n                local t, i = pop()\n                if t <= best[i] then\n                    local r = math.floor((i - 1) / cols)\n                    if goal == nil or r < goalRow or (r == goalRow and t < goalT) then\n                        goal, goalRow, goalT = i, r, t\n                    end\n                    if r <= rMin then\n                        break\n                    end\n                    local base = (i - 1) * 16\n                    for k = 1, 16 do\n                        local e = base + k\n                        local r2 = r + dz[k]\n                        if edgeOk[e] and r2 >= rMin and r2 <= rMax then\n                            local td = depart(e, t)\n                            if td and (td - t < 60 or waitOk(i, t, td)) then\n                                local j = i + dIdx[k]\n                                local tj = td + len[k] / route.speed\n                                if stamp[j] ~= sgen or tj < best[j] then\n                                    stamp[j], best[j], prev[j], dep[j] = sgen, tj, i, td\n                                    push(tj, j)\n                                end\n                            end\n                        end\n                    end\n                end\n            end\n            if goal ~= start then\n                break\n            end\n        end\n\n        -- Walk back from the goal, then keep only the corners and the hold points.\n        local path = route.pathNode\n        local n = 0\n        local i = goal\n        while i do\n            n = n + 1\n            path[n] = i\n            i = prev[i]\n        end\n        local out = 0\n        local lastDx, lastDz\n        for q = n, 1, -1 do\n            local node = path[q]\n            local nextNode = path[q - 1]\n            local depT = nextNode and dep[nextNode] or best[node]\n            local x = route.x0 + (node - 1) % cols\n            local z = route.z0 + math.floor((node - 1) / cols)\n            local hold = depT - best[node] > 100\n            local ddx, ddz\n            if nextNode then\n                ddx = (nextNode - 1) % cols - (node - 1) % cols\n                ddz = math.floor((nextNode - 1) / cols) - math.floor((node - 1) / cols)\n            end\n            -- A node mid-way along a straight run with no hold is not a waypoint.\n            if out == 0 or hold or ddx ~= lastDx or ddz ~= lastDz then\n                out = out + 1\n                route.planX[out], route.planZ[out] = x, z\n                route.planArr[out], route.planDep[out] = best[node], depT\n            end\n            lastDx, lastDz = ddx, ddz\n        end\n        route.planN = out\n    end\n\n    ljBlundervilleRoute = route\nend\n\nlocal state = data.ljBlunderville\nlocal seen = state and state.routeSeen\nlocal player = TensorCore.mGetPlayer()\nlocal p = player.pos\nlocal now = Now()\nif seen and now - route.planAt >= route.replanEvery then\n    local known = ljBlundervilleLearned\n    route.plan(now, p.x, p.z, seen, known and known.periods)\nend\n\nlocal n = route.planN\nif seen and n > 0 then\n    local holdAt\n    for q = 1, n do\n        if route.planDep[q] - route.planArr[q] > 100 and route.planDep[q] - now > 100 then\n            holdAt = q\n            break\n        end\n    end\n    -- The first waypoint is only the grid node nearest the player; skip it unless it is a hold.\n    local first = (holdAt == 1 or n == 1) and 1 or 2\n    local fx, fz = p.x, p.z\n    local fy = p.y + 0.05\n    for q = first, n do\n        local tx, tz = route.planX[q], route.planZ[q]\n        local ddx, ddz = tx - fx, tz - fz\n        local L = math.sqrt(ddx * ddx + ddz * ddz)\n        if L > 0.3 then\n            local drawer = (holdAt == nil or q <= holdAt) and route.go or route.rest\n            drawer:addRect(fx, fy, fz, L, 0.45, math.atan2(ddx, ddz))\n        end\n        fx, fz = tx, tz\n        fy = route.heightAt(tz) + 0.05\n    end\n    if holdAt then\n        local hx, hz = route.planX[holdAt], route.planZ[holdAt]\n        local hy = holdAt == 1 and p.y or route.heightAt(hz)\n        route.hold:addCircle(hx, hy, hz, 1)\n        -- One AnyoneCore countdown per hold, so it ticks smoothly on its own. Replans nudge the departure time by\n        -- a few ms, so it is only replaced when the hold moves or shifts by more than 300ms, and holds under 0.5s\n        -- get no text at all (those blips made the text flash).\n        if AnyoneCore and AnyoneCore.addWorldTextCountdown then\n            local depart = route.planDep[holdAt]\n            if route.textUuid and (hx ~= route.textX or hz ~= route.textZ or math.abs(depart - route.textDepart) > 300) then\n                if AnyoneCore.removeTimedWorldText then\n                    AnyoneCore.removeTimedWorldText(route.textUuid)\n                end\n                route.textUuid = nil\n            end\n            if route.textUuid == nil and depart - now >= 500 then\n                route.textUuid = AnyoneCore.addWorldTextCountdown(depart - now, { x = hx, y = hy + 1.5, z = hz }, 0xFF00A5FF,\n                    true, 1.3, 0, \"WAIT \")\n                route.textX, route.textZ, route.textDepart = hx, hz, depart\n            end\n        end\n    elseif route.textUuid then\n        -- The hold vanished (plan changed); drop its countdown unless it was finishing anyway.\n        if route.textDepart - now > 150 and AnyoneCore and AnyoneCore.removeTimedWorldText then\n            AnyoneCore.removeTimedWorldText(route.textUuid)\n        end\n        route.textUuid = nil\n    end\nend\n\nself.used = true\n",
+						conditions = 
+						{
+							
+							{
+								"2d48f32e-ab84-d234-8584-e64cb68fb0b9",
+								true,
+							},
+							
+							{
+								"e0c7bf22-9abc-07c0-bbd3-1970800a106d",
+								true,
+							},
+						},
+						name = "Plan + Draw Route",
+						uuid = "a6ee1a6e-f9cf-3ad6-bedb-b86756a5f6ad",
+						version = 2.1,
+					},
+				},
+			},
+			conditions = 
+			{
+				
+				{
+					data = 
+					{
+						category = "Self",
+						conditionType = 8,
+						dequeueIfLuaFalse = true,
+						localmapid = 1165,
+						name = "Map 1165",
+						uuid = "2d48f32e-ab84-d234-8584-e64cb68fb0b9",
+						version = 3,
+					},
+				},
+				
+				{
+					data = 
+					{
+						category = "Lua",
+						conditionLua = "local p = TensorCore.mGetPlayer().pos\nreturn p.x > -20 and p.x < 20 and p.z > 118 and p.z < 300",
+						name = "On Stage 3 Course",
+						uuid = "e0c7bf22-9abc-07c0-bbd3-1970800a106d",
+						version = 3,
+					},
+				},
+			},
+			displayPath = "Stage 3",
+			eventType = 12,
+			name = "S3 - Route Overlay",
+			uuid = "9b341800-b050-7c0e-a8a8-02003aaefbac",
 			version = 2,
 		},
 	},
