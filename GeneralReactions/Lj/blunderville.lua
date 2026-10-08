@@ -21,7 +21,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "-- Blunderville (map 1165) misdirection override: make WASD behave as if misdirection were not applied.\n-- W follows the camera's forward heading, S goes back, A/D go left/right, diagonals combine.\n-- Event: OnFrame (the hand re-spins every frame). Conditions: Self Map ID 1165 (dequeue), Temporary Misdirection 3694.\nlocal player = TensorCore.mGetPlayer()\nlocal cam = player.camera\n\n-- Skip in first person, where the camera sits on the player and has no usable forward heading.\nif TensorCore.getDistance2d(cam, player.pos) > 0.5 then\n    local forward = (GUI:IsKeyDown(0x57) and 1 or 0) - (GUI:IsKeyDown(0x53) and 1 or 0)\n    local right = (GUI:IsKeyDown(0x44) and 1 or 0) - (GUI:IsKeyDown(0x41) and 1 or 0)\n    if forward ~= 0 or right ~= 0 then\n        -- Movement under misdirection runs opposite to camera -> player (confirmed in game), so forward is player -> camera.\n        -- Heading turns counter-clockwise, so left is +pi/2 and right is -pi/2.\n        local base = TensorCore.getHeadingToTarget(player.pos, cam)\n        Argus.setMisdirectionHeading(TensorCore.restoreHeading(base + math.atan2(-right, forward)))\n    end\nend\n\nself.used = true\n",
+						actionLua = "local player = TensorCore.mGetPlayer()\nlocal cam = player.camera\n\nif TensorCore.getDistance2d(cam, player.pos) > 0.5 then\n    Argus.setMisdirectionHeading(TensorCore.restoreHeading(TensorCore.getHeadingToTarget(player.pos, cam)))\nend\n\nself.used = true\n",
 						conditions = 
 						{
 							
@@ -35,7 +35,7 @@ local tbl =
 								true,
 							},
 						},
-						name = "Steer by WASD + Camera",
+						name = "Steer by Camera",
 						uuid = "c8cc9975-076f-5cd2-9966-a6b1ce3581c1",
 						version = 2.1,
 					},
@@ -691,7 +691,7 @@ local tbl =
 					data = 
 					{
 						aType = "Lua",
-						actionLua = "-- Stage 1 forced march (3698 Forward March, 3699 About Face, 3700 Left Face, 3701 Right Face): when the order\n-- expires the game turns you (Left/Right/About) and marches you from your current facing. With 1s left (alongside\n-- the Stop action), face the direction that makes the march run along camera forward (player -> camera, as the\n-- misdirection steer uses) plus the order's offset. Uses Player:SetFacing (instant): TensorACR Lock Face did not\n-- turn the character while stopped (Debug - March, 2026-10-07). Stop Moving needs no resume.\n-- Event: OnFrame.\nlocal face = ljBlundervilleMarchFace\nif face == nil or face.version ~= 5 then\n    -- Facing offset per order; left of facing = +pi/2 (confirmed: Right Face turned the player -pi/2 before marching).\n    face = { version = 5, offset = { [3698] = 0, [3699] = math.pi, [3700] = -math.pi / 2, [3701] = math.pi / 2 } }\n    ljBlundervilleMarchFace = face\nend\n\nlocal player = TensorCore.mGetPlayer()\nlocal cam = player.camera\nif TensorCore.getDistance2d(cam, player.pos) > 0.5 then\n    local forward = TensorCore.getHeadingToTarget(player.pos, cam)\n    for id, offset in pairs(face.offset) do\n        if TensorCore.getBuff(player, id) then\n            local heading = forward + offset\n            local p = player.pos\n            Player:SetFacing(p.x + math.sin(heading) * 10, p.y, p.z + math.cos(heading) * 10)\n            break\n        end\n    end\nend\n\nself.used = true\n",
+						actionLua = "-- Stage 1 forced march (3698 Forward March, 3699 About Face, 3700 Left Face, 3701 Right Face): when the order\n-- expires the game turns you (Left/Right/About) and marches you from your current facing. With 1s left (alongside\n-- the Stop Moving action), face the direction that makes the march run along camera forward (player -> camera, as\n-- the misdirection steer uses) plus the order's offset. Player:SetFacing is a core Minion call, so this works with any\n-- ACR or none (TensorACR Lock Face depends on the ACR). Stop Moving needs no resume. Event: OnFrame.\nlocal face = ljBlundervilleMarchFace\nif face == nil or face.version ~= 7 then\n    -- Facing offset per order; left of facing = +pi/2 (Right Face turned the player -pi/2 before marching).\n    face = { version = 7, offset = { [3698] = 0, [3699] = math.pi, [3700] = -math.pi / 2, [3701] = math.pi / 2 } }\n    ljBlundervilleMarchFace = face\nend\n\nlocal player = TensorCore.mGetPlayer()\nlocal cam = player.camera\nif TensorCore.getDistance2d(cam, player.pos) > 0.5 then\n    local forward = TensorCore.getHeadingToTarget(player.pos, cam)\n    for id, offset in pairs(face.offset) do\n        if TensorCore.getBuff(player, id) then\n            local heading = forward + offset\n            local p = player.pos\n            TensorCore.mGetPlayer():SetFacing(p.x + math.sin(heading) * 10, p.y, p.z + math.cos(heading) * 10)\n            break\n        end\n    end\nend\n\nself.used = true",
 						conditions = 
 						{
 							
@@ -1558,16 +1558,6 @@ local tbl =
 			uuid = "1d51591f-0a72-ad24-8c4f-fe34a5cd2e57",
 			version = 2,
 		},
-	},
-	
-	{
-		data = 
-		{
-			displayPath = "",
-			name = "Speed Boost",
-			uuid = "b85b6815-eb18-7bcc-a789-035488eba52c",
-		},
-		objectType = "folder",
 	},
 	
 	{
