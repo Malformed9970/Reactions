@@ -978,6 +978,7 @@ local tbl =
 				conditions = 
 				{
 				},
+				eventType = 9,
 				mechanicTime = 15.261765625,
 				name = "Wipe",
 				timeRange = true,
