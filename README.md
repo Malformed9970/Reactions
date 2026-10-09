@@ -14,7 +14,12 @@ My TensorReactions profiles: a general base profile, PvP, Blunderville, and time
 ## Installation
 
 1. In AnyoneCore, go to SYSTEM > Third Party, then the Sources tab.
-2. Add the repository URL: github.com/Malformed9970/Reactions
+2. Add the repository URL:
+
+   ```
+   github.com/Malformed9970/Reactions
+   ```
+
 3. Update and reload from the Updater tab. The profiles then show up under Lj in TensorReactions, in both general and timeline reactions.
 
 - If you want to manually install then download the files from here and place in `MINIONAPP\Bots\FFXIVMinion64\LuaMods\TensorReactions` in their respective folders. Keep in mind you will have to do this every time I change a file to receive updates if you do not use AnyoneCore for updates.
