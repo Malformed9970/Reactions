@@ -17,7 +17,7 @@ My TensorReactions profiles: a general base profile, PvP, Blunderville, and time
 2. Add the repository URL:
 
    ```
-   github.com/Malformed9970/Reactions
+   https://github.com/Malformed9970/Reactions
    ```
 
 3. Update and reload from the Updater tab. The profiles then show up under Lj in TensorReactions, in both general and timeline reactions.
