@@ -1755,6 +1755,11 @@ local tbl =
 									"f42fcf58-4ee4-5d34-b704-a05c40d26263",
 									true,
 								},
+								
+								{
+									"292450ca-81e9-ecef-acfb-2e2d142109e7",
+									true,
+								},
 							},
 							displayPath = "Exdeath",
 							filterTargetType = "ContentID",
