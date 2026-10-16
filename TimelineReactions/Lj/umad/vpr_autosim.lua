@@ -6,20 +6,6 @@ local tbl =
 		{
 			data = 
 			{
-				name = "[VPR] Pool Gauge",
-				uuid = "e62fc435-971b-3068-b270-07a530fab95d",
-				version = 2,
-			},
-			inheritedObjectUUID = "c719da3e-ee16-0211-9704-ebf4d125e64e",
-			inheritedOverwrites = 
-			{
-				enabled = false,
-			},
-		},
-		
-		{
-			data = 
-			{
 				displayPath = "",
 				name = "AutoSim LB",
 				uuid = "59526a8f-233e-8787-861b-7430bc390a7b",
@@ -122,7 +108,7 @@ local tbl =
 				uuid = "ede3db8d-f692-9524-b963-9a088762a577",
 				version = 2,
 			},
-			inheritedIndex = 23,
+			inheritedIndex = 22,
 		},
 		
 		{
@@ -158,7 +144,7 @@ local tbl =
 				uuid = "6cf7cb68-993e-0577-962f-649367a7a32a",
 				version = 2,
 			},
-			inheritedIndex = 24,
+			inheritedIndex = 23,
 		},
 		
 		{
@@ -202,7 +188,7 @@ local tbl =
 				uuid = "51c1ee4d-6f67-1d2d-a148-1ea692356f8c",
 				version = 2,
 			},
-			inheritedIndex = 25,
+			inheritedIndex = 24,
 		},
 		
 		{
@@ -238,7 +224,7 @@ local tbl =
 				uuid = "4ea4c64b-bd6e-4075-88ed-0739d32d8420",
 				version = 2,
 			},
-			inheritedIndex = 26,
+			inheritedIndex = 25,
 		},
 		
 		{
@@ -360,7 +346,7 @@ local tbl =
 				uuid = "66226c27-2c18-9e81-986f-837936723c53",
 				version = 2,
 			},
-			inheritedIndex = 27,
+			inheritedIndex = 26,
 		},
 		
 		{
@@ -396,7 +382,7 @@ local tbl =
 				uuid = "ee5a1e95-39f2-489c-b18e-6e1059e0a232",
 				version = 2,
 			},
-			inheritedIndex = 28,
+			inheritedIndex = 27,
 		},
 		
 		{
@@ -575,7 +561,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\nacr.clearAutoSimPhases(\"Positional\")\nacr.clearAutoSimPhases(\"TargetLifetime\", 0)\nacr.clearAutoSimPhases(\"DotAvailability\", 0)\nacr.clearAutoSimPhases(\"TargetLifetime\", 1)\nacr.clearAutoSimPhases(\"DotAvailability\", 1)\nacr.clearAutoSimTarget(1)\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo: two targets from P3 +35 to +85, before the Vacuum Wave knockback separates the bosses.\n    SelfCircle5Yd = {\n        { startTime = 483.96, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 472.395, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange3Yd = {\n        { startTime = 483.96, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange5Yd = {\n        { startTime = 483.96, endTime = 511.46, value = 2 },\n    },\n    TargetLifetime = {\n        { startTime = 0, endTime = 197.52, value = 1, targetSlot = 0 },\n        { startTime = 207.88, endTime = 381.481, value = 1, targetSlot = 0 },\n        { startTime = 427.46, endTime = 720.490, value = 1, targetSlot = 0 },\n        { startTime = 724.930, endTime = 856.953, value = 1, targetSlot = 0 },\n        { startTime = 887.943, endTime = 1106.098, value = 1, targetSlot = 0 },\n        { startTime = 427.46, endTime = 720.490, value = 1, targetSlot = 1 },\n    },\n    DotAvailability = {\n        { startTime = 0, endTime = 197.52, targetSlot = 0 },\n        { startTime = 207.88, endTime = 381.481, targetSlot = 0 },\n        { startTime = 427.46, endTime = 720.490, targetSlot = 0 },\n        { startTime = 724.930, endTime = 856.953, targetSlot = 0 },\n        { startTime = 887.943, endTime = 1106.098, targetSlot = 0 },\n        { startTime = 427.46, endTime = 430.62, targetSlot = 1 },\n        { startTime = 462.395, endTime = 544.89, targetSlot = 1 },\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Raid buffs are on a 120s cooldown: a window never starts before the previous window + 120.\n-- Applied here and after every Resync shift; a window ending at the kill keeps that end,\n-- and a window pushed past the kill is removed.\nfunction state.applyRaidBuffFloor()\n    local buffs = {}\n    for _, phase in ipairs(state.phases) do\n        if phase.phaseType == \"RaidBuff\" then\n            buffs[#buffs + 1] = phase\n        end\n    end\n    table.sort(buffs, function(a, b)\n        return a.startTime < b.startTime\n    end)\n    local removedAny = false\n    for index = 2, #buffs do\n        local phase = buffs[index]\n        local earliest = buffs[index - 1].startTime + 120\n        if phase.startTime < earliest then\n            local shift = earliest - phase.startTime\n            phase.startTime = earliest\n            if phase.endTime < state.killTime then\n                phase.endTime = math.min(phase.endTime + shift, state.killTime)\n            end\n            if phase.endTime <= phase.startTime then\n                acr.removeAutoSimPhase(phase.id)\n                phase.removed = true\n                removedAny = true\n            else\n                local phaseID = acr.setAutoSimPhase(phase.id, phase.startTime, phase.endTime, phase.value)\n                if phaseID then\n                    phase.id = phaseID\n                else\n                    -- Clipping removed it; its ID is no longer valid.\n                    phase.removed = true\n                    removedAny = true\n                end\n            end\n        end\n    end\n    if removedAny then\n        for index = #state.phases, 1, -1 do\n            if state.phases[index].removed then\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\nstate.applyRaidBuffFloor()\n\n-- P2 Kefka 1 HP lock: by 378 in 90% of 38 logged pulls and 80 FFLogs kills (median 375.6);\n-- P2 ends ~381.5. [AutoSim] P2 Kefka 1 HP moves the start earlier when Kefka locks sooner,\n-- and Targetability and Resync closes it when Kefka goes untargetable.\nlocal p2LockStart = 378\nlocal p2LockID = acr.addAutoSimPhase(\"BossModifier\", p2LockStart, state.boundaries[4].time, 0)\nif p2LockID then\n    local lock = {\n        id = p2LockID,\n        phaseType = \"BossModifier\",\n        startTime = p2LockStart,\n        endTime = state.boundaries[4].time,\n        value = 0,\n    }\n    -- Registered in state.phases so P1/P2 resyncs shift it.\n    state.phases[#state.phases + 1] = lock\n    state.phaseTwoDamageLock = lock\nend\n\n-- Boundary uncertainties from 507 logged pulls (p10-p90): P1 end 197.31-197.97, P2 end 381.03-382.20,\n-- P4 start 4.41-4.52s after P3 end, P4 end 132.06-132.38s after P4 start (101 pulls reaching P5),\n-- P5 start 30.94-31.05s after P4 end. P3 end keeps +/-10.\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 1)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
+							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\nacr.clearAutoSimPhases(\"Positional\")\nacr.clearAutoSimPhases(\"TargetLifetime\", 0)\nacr.clearAutoSimPhases(\"DotAvailability\", 0)\nacr.clearAutoSimPhases(\"TargetLifetime\", 1)\nacr.clearAutoSimPhases(\"DotAvailability\", 1)\nacr.clearAutoSimTarget(1)\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo: two targets from P3 +35 to +85, before the Vacuum Wave knockback separates the bosses.\n    SelfCircle5Yd = {\n        { startTime = 483.96, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 472.395, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange3Yd = {\n        { startTime = 483.96, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange5Yd = {\n        { startTime = 483.96, endTime = 511.46, value = 2 },\n    },\n    TargetLifetime = {\n        { startTime = 0, endTime = 197.52, value = 1, targetSlot = 0 },\n        { startTime = 207.88, endTime = 381.481, value = 1, targetSlot = 0 },\n        { startTime = 427.46, endTime = 720.490, value = 1, targetSlot = 0 },\n        { startTime = 724.930, endTime = 856.953, value = 1, targetSlot = 0 },\n        { startTime = 887.943, endTime = 1106.098, value = 1, targetSlot = 0 },\n        { startTime = 427.46, endTime = 720.490, value = 1, targetSlot = 1 },\n    },\n    DotAvailability = {\n        { startTime = 0, endTime = 197.52, targetSlot = 0 },\n        { startTime = 207.88, endTime = 381.481, targetSlot = 0 },\n        { startTime = 427.46, endTime = 720.490, targetSlot = 0 },\n        { startTime = 724.930, endTime = 856.953, targetSlot = 0 },\n        { startTime = 887.943, endTime = 1106.098, targetSlot = 0 },\n        { startTime = 427.46, endTime = 430.62, targetSlot = 1 },\n        { startTime = 462.395, endTime = 544.89, targetSlot = 1 },\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Raid buffs are on a 120s cooldown: a window never starts before the previous window + 120.\n-- Applied here and after every Resync shift; a window ending at the kill keeps that end,\n-- and a window pushed past the kill is removed.\nfunction state.applyRaidBuffFloor()\n    local buffs = {}\n    for _, phase in ipairs(state.phases) do\n        if phase.phaseType == \"RaidBuff\" then\n            buffs[#buffs + 1] = phase\n        end\n    end\n    table.sort(buffs, function(a, b)\n        return a.startTime < b.startTime\n    end)\n    local removedAny = false\n    for index = 2, #buffs do\n        local phase = buffs[index]\n        local earliest = buffs[index - 1].startTime + 120\n        if phase.startTime < earliest then\n            local shift = earliest - phase.startTime\n            phase.startTime = earliest\n            if phase.endTime < state.killTime then\n                phase.endTime = math.min(phase.endTime + shift, state.killTime)\n            end\n            if phase.endTime <= phase.startTime then\n                acr.removeAutoSimPhase(phase.id)\n                phase.removed = true\n                removedAny = true\n            else\n                local phaseID = acr.setAutoSimPhase(phase.id, phase.startTime, phase.endTime, phase.value)\n                if phaseID then\n                    phase.id = phaseID\n                else\n                    -- Clipping removed it; its ID is no longer valid.\n                    phase.removed = true\n                    removedAny = true\n                end\n            end\n        end\n    end\n    if removedAny then\n        for index = #state.phases, 1, -1 do\n            if state.phases[index].removed then\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\nstate.applyRaidBuffFloor()\n\n-- P2 Kefka 1 HP lock: by 378 in 90% of 38 logged pulls and 80 FFLogs kills (median 375.6);\n-- P2 ends ~381.5. [AutoSim] P2 Kefka 1 HP moves the start earlier when Kefka locks sooner,\n-- and Targetability and Resync closes it when Kefka goes untargetable.\nlocal p2LockStart = 378\nlocal p2LockID = acr.addAutoSimPhase(\"BossModifier\", p2LockStart, state.boundaries[4].time, 0)\nif p2LockID then\n    local lock = {\n        id = p2LockID,\n        phaseType = \"BossModifier\",\n        startTime = p2LockStart,\n        endTime = state.boundaries[4].time,\n        value = 0,\n    }\n    -- Registered in state.phases so P1/P2 resyncs shift it.\n    state.phases[#state.phases + 1] = lock\n    state.phaseTwoDamageLock = lock\nend\n\n-- Boundary uncertainties from 507 logged pulls (p10-p90): P1 end 197.31-197.97, P2 end 381.03-382.20,\n-- P4 start 4.41-4.52s after P3 end, P4 end 132.06-132.38s after P4 start (101 pulls reaching P5),\n-- P5 start 30.94-31.05s after P4 end. P3 end keeps +/-10.\n-- P1 end: +/-5.\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 5)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
 							name = "Initialize AutoSim Schedule",
 							uuid = "878c8fac-b413-121d-a4a8-b26b67eb7f2f",
 							version = 2.1,
@@ -653,7 +639,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 3\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
+							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
 							name = "Range Hack +3",
 							uuid = "fc43c4db-6db0-f2fe-83bd-083d5498e468",
 							version = 2.1,
@@ -846,7 +832,7 @@ local tbl =
 				uuid = "722c3310-932c-c1de-bad1-3be45a0350ec",
 				version = 2,
 			},
-			inheritedIndex = 19,
+			inheritedIndex = 18,
 		},
 		
 		{
@@ -878,7 +864,7 @@ local tbl =
 				uuid = "6a569e59-0b93-a6d5-8818-68ad6509dab6",
 				version = 2,
 			},
-			inheritedIndex = 20,
+			inheritedIndex = 19,
 		},
 		
 		{
@@ -1033,7 +1019,7 @@ local tbl =
 				uuid = "56fe1f91-7f68-d056-b3f6-b7ae16f0d753",
 				version = 2,
 			},
-			inheritedIndex = 21,
+			inheritedIndex = 20,
 		},
 		
 		{
@@ -1066,7 +1052,7 @@ local tbl =
 				uuid = "bb712fe4-a5e5-5026-84ea-113e374438c4",
 				version = 2,
 			},
-			inheritedIndex = 22,
+			inheritedIndex = 21,
 		},
 	}, 
 	[9] = 
@@ -1246,51 +1232,6 @@ local tbl =
 				timelineIndex = 38,
 				uuid = "fee317f0-67c3-51e3-856c-85a58ea7c524",
 				version = 2,
-			},
-		},
-	},
-	[39] = 
-	{
-		
-		{
-			data = 
-			{
-				name = "[VPR] Hold Vicewinder 1",
-				uuid = "c1c94507-91cf-2fcd-ac6e-528a03b13ae1",
-				version = 2,
-			},
-			inheritedObjectUUID = "06a02f4a-2fbc-cd04-b77b-af7d9e904cf1",
-			inheritedOverwrites = 
-			{
-				enabled = false,
-			},
-		},
-		
-		{
-			data = 
-			{
-				name = "[VPR] Hold Vicewinder 2",
-				uuid = "e38e693d-3535-9788-a25f-e5fd3b5ac118",
-				version = 2,
-			},
-			inheritedObjectUUID = "fcb3535c-271b-1782-ab20-abc6af30e223",
-			inheritedOverwrites = 
-			{
-				enabled = false,
-			},
-		},
-		
-		{
-			data = 
-			{
-				name = "[VPR] Hold Reawaken",
-				uuid = "c523560d-da6e-b7dc-95ba-7bb5ce15bd7b",
-				version = 2,
-			},
-			inheritedObjectUUID = "6929710b-5db9-3d83-9949-5ec28e5b9795",
-			inheritedOverwrites = 
-			{
-				enabled = false,
 			},
 		},
 	},

@@ -25,36 +25,12 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "ACR_TensorReaper4_TargetHitRadiusAdjust = 3\nACR_TensorReaper4_ActionRangeAdjust = 3\nself.used = true",
+							actionLua = "ACR_TensorReaper4_TargetHitRadiusAdjust = 0\nACR_TensorReaper4_ActionRangeAdjust = 3\nself.used = true",
 							name = "Range Hack +3",
 							uuid = "fc43c4db-6db0-f2fe-83bd-083d5498e468",
 							version = 2.1,
 						},
 						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"c30e4e67-cb04-f9d9-a237-599f784648b6",
-									true,
-								},
-								
-								{
-									"48df2a70-4f13-1b97-808b-fbf7481aa995",
-									true,
-								},
-							},
-							gVar = "ACR_TensorReaper4_Hotbar_TrueNorth",
-							uuid = "bd838977-3021-4b19-bdb5-3f9efb9e7698",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
 					},
 					
 					{
@@ -79,6 +55,31 @@ local tbl =
 							uuid = "70ddc2c5-f009-9be1-94e0-64a5d73e1142",
 							version = 2.1,
 						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"c30e4e67-cb04-f9d9-a237-599f784648b6",
+									true,
+								},
+								
+								{
+									"2e4d6f1d-b93f-fc27-9932-9e140fd9668c",
+									true,
+								},
+							},
+							gVar = "ACR_TensorReaper4_Hotbar_HellsIngressTarget",
+							uuid = "bd838977-3021-4b19-bdb5-3f9efb9e7698",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+						inheritedIndex = 4,
 					},
 					
 					{
@@ -386,7 +387,7 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorViper4_KBCancel",
+							gVar = "ACR_TensorReaper4_KBCancel",
 							gVarValue = 2,
 							uuid = "b2a82871-f699-cf69-ab38-bb9772da0a56",
 							version = 2.1,
@@ -397,7 +398,7 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorViper4_Potion",
+							gVar = "ACR_TensorReaper4_Potion",
 							uuid = "de23fff8-72d9-19a4-bcbd-209d4aac3957",
 							version = 2.1,
 						},
@@ -407,7 +408,7 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorViper4_Burn",
+							gVar = "ACR_TensorReaper4_Burn",
 							gVarValue = 2,
 							uuid = "6849070c-d470-a9dd-abd0-691077e5b78b",
 							version = 2.1,
@@ -997,7 +998,7 @@ local tbl =
 			},
 		},
 	},
-	[94] = 
+	[93] = 
 	{
 		
 		{
@@ -1021,10 +1022,10 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 513.32988332111,
+				mechanicTime = 511.44225832111,
 				name = "Target Exdeath",
-				timelineIndex = 94,
-				uuid = "615e5771-c62f-657c-8da3-7fb4201f85c1",
+				timelineIndex = 93,
+				uuid = "615ff3c8-6250-8f07-8447-c2f5ec36df71",
 				version = 2,
 			},
 		},
@@ -1043,7 +1044,7 @@ local tbl =
 						{
 							aType = "ACR",
 							acrOptionType = "Hold Action",
-							holdActionDuration = 7,
+							holdActionDuration = 15,
 							holdActionID = 24404,
 							uuid = "d7a923a2-b0a7-92d2-a55d-e7a6efd3c5eb",
 							version = 2.1,
@@ -1056,7 +1057,6 @@ local tbl =
 				mechanicTime = 556.00428210262,
 				name = "Hold Arcane Crest - Max",
 				timelineIndex = 106,
-				timerOffset = -6,
 				uuid = "0c465bb1-e88d-8ab4-8dd2-4a3b3e6787a1",
 				version = 2,
 			},
@@ -1206,6 +1206,41 @@ local tbl =
 			},
 			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
+		},
+		
+		{
+			data = 
+			{
+				name = "[AutoSim] P3 Boss Dying",
+				uuid = "52237833-53ea-b8e0-9849-82288998b841",
+				version = 2,
+			},
+			inheritedObjectUUID = "de6b998f-cd15-f018-a589-0b4d717cd523",
+			inheritedOverwrites = 
+			{
+				conditions = 
+				{
+					
+					{
+						type = "add",
+						value = 
+						{
+							data = 
+							{
+								name = "DT: HP <= 1.5% HP",
+								uuid = "a99f5edc-e2df-f7ba-a689-e0384bdf575e",
+								version = 3,
+							},
+							inheritedObjectUUID = "cd523053-646a-4abc-8cbc-7e9865b98205",
+							inheritedOverwrites = 
+							{
+								hpType = 2,
+								hpValue = 1,
+							},
+						},
+					},
+				},
+			},
 		},
 	},
 	[151] = 
@@ -1460,6 +1495,7 @@ local tbl =
 				conditions = 
 				{
 				},
+				enabled = false,
 				mechanicTime = 1154.7445474604,
 				name = "Arcane Crest",
 				timeRange = true,
