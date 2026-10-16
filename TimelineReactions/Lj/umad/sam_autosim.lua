@@ -12,18 +12,6 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 3\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
-							name = "Extend Target and Action Ranges 3.0",
-							uuid = "96c709d8-2799-9e40-a959-a71a423991d3",
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							gVar = "ACR_TensorWeeb4_CD",
 							uuid = "49f643e0-e835-0feb-959a-5ad49d1a03b8",
@@ -105,22 +93,22 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Hold10Kenki",
-							gVarValue = 2,
-							uuid = "ce105aff-9589-458d-8397-d86bbb38862c",
+							gVar = "ACR_TensorWeeb4_Meditate",
+							uuid = "1c7a3f60-62f0-3385-9768-8a8223496d9d",
 							version = 2.1,
 						},
-						inheritedIndex = 10,
 					},
 					
 					{
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Meditate",
-							uuid = "1c7a3f60-62f0-3385-9768-8a8223496d9d",
+							gVar = "ACR_TensorWeeb4_Hold10Kenki",
+							gVarValue = 2,
+							uuid = "ce105aff-9589-458d-8397-d86bbb38862c",
 							version = 2.1,
 						},
+						inheritedIndex = 10,
 					},
 					
 					{
@@ -147,6 +135,16 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_KBCancel",
+							uuid = "578a0f31-9a8c-6820-b1e5-77b99f44c23b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
 							gVar = "ACR_TensorWeeb4_JumpIn",
 							gVarValue = 2,
 							uuid = "6849070c-d470-a9dd-abd0-691077e5b78b",
@@ -159,21 +157,11 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_KBCancel",
-							uuid = "578a0f31-9a8c-6820-b1e5-77b99f44c23b",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
 							gVar = "ACR_TensorWeeb4_Potion",
 							uuid = "e5389749-71bf-c804-b937-9d0006f2c322",
 							version = 2.1,
 						},
-						inheritedIndex = 16,
+						inheritedIndex = 15,
 					},
 					
 					{
@@ -185,7 +173,7 @@ local tbl =
 							uuid = "b88cf1f8-75e3-1c25-8a0f-3e7a8a71527b",
 							version = 2.1,
 						},
-						inheritedIndex = 17,
+						inheritedIndex = 16,
 					},
 				},
 				conditions = 
@@ -218,6 +206,18 @@ local tbl =
 							version = 2.1,
 						},
 						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
+							name = "Range Hack +3",
+							uuid = "8a3a14b2-071d-0919-974c-012e30a670f1",
+							version = 2.1,
+						},
+						inheritedIndex = 2,
 					},
 					
 					{
@@ -1004,7 +1004,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo: two targets from P3 +35 to +85, before the Vacuum Wave knockback separates the bosses.\n    SelfCircle5Yd = {\n        { startTime = 482.395, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 472.395, endTime = 511.46, value = 2 },\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Raid buffs are on a 120s cooldown: a window never starts before the previous window + 120.\n-- Applied here and after every Resync shift; a window ending at the kill keeps that end,\n-- and a window pushed past the kill is removed.\nfunction state.applyRaidBuffFloor()\n    local buffs = {}\n    for _, phase in ipairs(state.phases) do\n        if phase.phaseType == \"RaidBuff\" then\n            buffs[#buffs + 1] = phase\n        end\n    end\n    table.sort(buffs, function(a, b)\n        return a.startTime < b.startTime\n    end)\n    local removedAny = false\n    for index = 2, #buffs do\n        local phase = buffs[index]\n        local earliest = buffs[index - 1].startTime + 120\n        if phase.startTime < earliest then\n            local shift = earliest - phase.startTime\n            phase.startTime = earliest\n            if phase.endTime < state.killTime then\n                phase.endTime = math.min(phase.endTime + shift, state.killTime)\n            end\n            if phase.endTime <= phase.startTime then\n                acr.removeAutoSimPhase(phase.id)\n                phase.removed = true\n                removedAny = true\n            else\n                phase.id = acr.setAutoSimPhase(phase.id, phase.startTime, phase.endTime, phase.value) or phase.id\n            end\n        end\n    end\n    if removedAny then\n        for index = #state.phases, 1, -1 do\n            if state.phases[index].removed then\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\nstate.applyRaidBuffFloor()\n\n-- P2 Kefka 1 HP lock: by 378 in 90% of 38 logged pulls and 80 FFLogs kills (median 375.6);\n-- P2 ends ~381.5. [AutoSim] P2 Kefka 1 HP moves the start earlier when Kefka locks sooner,\n-- and Targetability and Resync closes it when Kefka goes untargetable.\nlocal p2LockStart = 378\nlocal p2LockID = acr.addAutoSimPhase(\"BossModifier\", p2LockStart, state.boundaries[4].time, 0)\nif p2LockID then\n    local lock = {\n        id = p2LockID,\n        phaseType = \"BossModifier\",\n        startTime = p2LockStart,\n        endTime = state.boundaries[4].time,\n        value = 0,\n    }\n    -- Registered in state.phases so P1/P2 resyncs shift it.\n    state.phases[#state.phases + 1] = lock\n    state.phaseTwoDamageLock = lock\nend\n\n-- Boundary uncertainties from 507 logged pulls (p10-p90): P1 end 197.31-197.97, P2 end 381.03-382.20,\n-- P4 start 4.41-4.52s after P3 end, P4 end 132.06-132.38s after P4 start (101 pulls reaching P5),\n-- P5 start 30.94-31.05s after P4 end. P3 end keeps +/-10.\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 1)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
+							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo: two targets from P3 +35 to +85, before the Vacuum Wave knockback separates the bosses.\n    SelfCircle5Yd = {\n        { startTime = 482.395, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 472.395, endTime = 511.46, value = 2 },\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Raid buffs are on a 120s cooldown: a window never starts before the previous window + 120.\n-- Applied here and after every Resync shift; a window ending at the kill keeps that end,\n-- and a window pushed past the kill is removed.\nfunction state.applyRaidBuffFloor()\n    local buffs = {}\n    for _, phase in ipairs(state.phases) do\n        if phase.phaseType == \"RaidBuff\" then\n            buffs[#buffs + 1] = phase\n        end\n    end\n    table.sort(buffs, function(a, b)\n        return a.startTime < b.startTime\n    end)\n    local removedAny = false\n    for index = 2, #buffs do\n        local phase = buffs[index]\n        local earliest = buffs[index - 1].startTime + 120\n        if phase.startTime < earliest then\n            local shift = earliest - phase.startTime\n            phase.startTime = earliest\n            if phase.endTime < state.killTime then\n                phase.endTime = math.min(phase.endTime + shift, state.killTime)\n            end\n            if phase.endTime <= phase.startTime then\n                acr.removeAutoSimPhase(phase.id)\n                phase.removed = true\n                removedAny = true\n            else\n                phase.id = acr.setAutoSimPhase(phase.id, phase.startTime, phase.endTime, phase.value) or phase.id\n            end\n        end\n    end\n    if removedAny then\n        for index = #state.phases, 1, -1 do\n            if state.phases[index].removed then\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\nstate.applyRaidBuffFloor()\n\n-- P2 Kefka 1 HP lock: by 378 in 90% of 38 logged pulls and 80 FFLogs kills (median 375.6);\n-- P2 ends ~381.5. [AutoSim] P2 Kefka 1 HP moves the start earlier when Kefka locks sooner,\n-- and Targetability and Resync closes it when Kefka goes untargetable.\nlocal p2LockStart = 378\nlocal p2LockID = acr.addAutoSimPhase(\"BossModifier\", p2LockStart, state.boundaries[4].time, 0)\nif p2LockID then\n    local lock = {\n        id = p2LockID,\n        phaseType = \"BossModifier\",\n        startTime = p2LockStart,\n        endTime = state.boundaries[4].time,\n        value = 0,\n    }\n    -- Registered in state.phases so P1/P2 resyncs shift it.\n    state.phases[#state.phases + 1] = lock\n    state.phaseTwoDamageLock = lock\nend\n\n-- Boundary uncertainties from 507 logged pulls (p10-p90): P1 end 197.31-197.97, P2 end 381.03-382.20,\n-- P4 start 4.41-4.52s after P3 end, P4 end 132.06-132.38s after P4 start (101 pulls reaching P5),\n-- P5 start 30.94-31.05s after P4 end. P3 end keeps +/-10.\n-- P1 end: +/-5.\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 5)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
 							name = "Initialize AutoSim Schedule",
 							uuid = "37f9abcc-443e-a2d3-aca6-b7002eb21a06",
 							version = 2.1,
@@ -1129,6 +1129,7 @@ local tbl =
 				conditions = 
 				{
 				},
+				enabled = false,
 				mechanicTime = 42.238586763472,
 				name = "Target and Action Ranges 0 at 43s",
 				timelineIndex = 7,
@@ -1281,10 +1282,11 @@ local tbl =
 				conditions = 
 				{
 				},
+				enabled = false,
 				mechanicTime = 45.866090329028,
 				name = "Target and Action Ranges 3 at 47s",
 				timelineIndex = 9,
-				timerOffset = 1.133909670972,
+				timerOffset = 1.133909702301,
 				uuid = "1636cccf-b7fd-f14d-a88b-c706959a672a",
 				version = 2,
 			},
@@ -1978,207 +1980,6 @@ local tbl =
 			},
 		},
 	},
-	[41] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 235.34477128997,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 41,
-				timerOffset = 1,
-				uuid = "132d8e54-50ab-f563-bf65-f7a59db59b12",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljCircle = false\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"aac966b5-395c-51f9-822f-9a384ed48b27",
-									true,
-								},
-								
-								{
-									"e8a7abaf-4a01-000a-8a64-a7bc2c035a04",
-									true,
-								},
-							},
-							gVar = "ACR_TensorMagnum3_CD",
-							name = "Chat: Stack",
-							uuid = "1399195c-dcad-5c02-adc4-204a53418bb8",
-							version = 2.1,
-						},
-						inheritedIndex = 1,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljCircle = true\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"aac966b5-395c-51f9-822f-9a384ed48b27",
-									true,
-								},
-								
-								{
-									"5cee7cb4-357d-c3ff-8fd8-5d164ff13ad0",
-									true,
-								},
-							},
-							gVar = "ACR_TensorMagnum3_CD",
-							name = "Chat: Circle",
-							uuid = "4575cd23-f8bc-5430-9bef-2310b2c913ff",
-							version = 2.1,
-						},
-						inheritedIndex = 2,
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljCircle = false\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"aac966b5-395c-51f9-822f-9a384ed48b27",
-									true,
-								},
-								
-								{
-									"d868d7ed-a439-e369-8e64-dbd0cda2872c",
-									true,
-								},
-							},
-							gVar = "ACR_TensorMagnum3_CD",
-							name = "Chat: Cone",
-							uuid = "a5737ad2-4f50-94a9-87e5-3924821fcafd",
-							version = 2.1,
-						},
-						inheritedIndex = 3,
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							name = "Event: Self",
-							partyTargetType = "Event Entity",
-							uuid = "aac966b5-395c-51f9-822f-9a384ed48b27",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Event",
-							eventArgType = 2,
-							eventMarkerID = 715,
-							name = "Marker: Stack",
-							uuid = "e8a7abaf-4a01-000a-8a64-a7bc2c035a04",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Event",
-							eventArgType = 2,
-							eventMarkerID = 716,
-							name = "Marker: Circle",
-							uuid = "5cee7cb4-357d-c3ff-8fd8-5d164ff13ad0",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Event",
-							eventArgType = 2,
-							eventMarkerID = 717,
-							name = "Marker: Cone",
-							uuid = "d868d7ed-a439-e369-8e64-dbd0cda2872c",
-							version = 3,
-						},
-					},
-				},
-				eventType = 4,
-				loop = true,
-				mechanicTime = 235.34477128997,
-				name = "[TTS] Marker",
-				timeRange = true,
-				timelineIndex = 41,
-				timerEndOffset = 90,
-				timerStartOffset = -5,
-				uuid = "1d0cd10a-a188-d129-b8ba-3ad5db14e9d7",
-				version = 2,
-			},
-			inheritedIndex = 2,
-		},
-	},
 	[43] = 
 	{
 		
@@ -2209,55 +2010,6 @@ local tbl =
 				timerOffset = -3,
 				timerStartOffset = -3,
 				uuid = "74ccfe72-f00d-14a1-bf81-f1929cdbe6d0",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 249.21799166092,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 43,
-				timerOffset = 1,
-				uuid = "57bac08c-e63c-7b01-8235-6f2916a80b27",
 				version = 2,
 			},
 		},
@@ -2295,55 +2047,6 @@ local tbl =
 				version = 2,
 			},
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 259.26759932438,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 47,
-				timerOffset = 1,
-				uuid = "7b61294d-c2e2-087c-99a0-3416a03065b5",
-				version = 2,
-			},
-		},
 	},
 	[49] = 
 	{
@@ -2375,54 +2078,6 @@ local tbl =
 				timerOffset = -3,
 				timerStartOffset = -3,
 				uuid = "0299c894-bf09-95c2-85d0-f86af66f776d",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 270.25091459497,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 49,
-				timerOffset = 1,
-				uuid = "7c3e130e-72b0-8985-b608-a6f8366922e5",
 				version = 2,
 			},
 		},
@@ -2460,55 +2115,6 @@ local tbl =
 				version = 2,
 			},
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 280.23863811015,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 53,
-				timerOffset = 1,
-				uuid = "3881f138-a3ee-82dd-8b30-ab1f14d2fb7c",
-				version = 2,
-			},
-		},
 	},
 	[55] = 
 	{
@@ -2540,55 +2146,6 @@ local tbl =
 				timerOffset = -3,
 				timerStartOffset = -3,
 				uuid = "d60836a7-a02c-d6eb-8486-1dd109ed8989",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				enabled = false,
-				mechanicTime = 291.26647895232,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 55,
-				timerOffset = 1,
-				uuid = "5c890bc9-5a77-1e20-afc5-d6f54380e6d9",
 				version = 2,
 			},
 		},
@@ -2626,54 +2183,6 @@ local tbl =
 				version = 2,
 			},
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 301.30844266449,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 59,
-				timerOffset = 1,
-				uuid = "b64fb115-f461-063c-aa08-8c385876f65c",
-				version = 2,
-			},
-		},
 	},
 	[61] = 
 	{
@@ -2708,54 +2217,6 @@ local tbl =
 				version = 2,
 			},
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"77f29d50-e889-bfa0-bedb-46d3da20a60f",
-									false,
-								},
-							},
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return data.ljCircle == true",
-							dequeueIfLuaFalse = true,
-							uuid = "77f29d50-e889-bfa0-bedb-46d3da20a60f",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 312.32654954394,
-				name = "Target and Action Ranges 0",
-				timelineIndex = 61,
-				timerOffset = 1,
-				uuid = "687a36f7-9140-f409-95cc-0c6b158f0700",
-				version = 2,
-			},
-		},
 	},
 	[65] = 
 	{
@@ -2787,35 +2248,6 @@ local tbl =
 				timerOffset = -3,
 				timerStartOffset = -3,
 				uuid = "79b390d7-fd06-a5ce-b8a6-15d730d53257",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 3\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
-							name = "Set Target and Action Ranges 3",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 322.39247758191,
-				name = "Target and Action Ranges 3",
-				timelineIndex = 65,
-				timerOffset = 0.76141321659088,
-				uuid = "f7b4a6e0-9162-fab3-9275-df7971c3c4b8",
 				version = 2,
 			},
 		},

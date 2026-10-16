@@ -484,6 +484,95 @@ local tbl =
 			objectType = "folder",
 		},
 	},
+	[101] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"3b0f0b07-6b44-2fc8-b2f6-72a4135bfe94",
+									true,
+								},
+							},
+							gVar = "ACR_TensorMagnum3_CD",
+							setTarget = true,
+							targetContentID = 7691,
+							targetType = "ContentID",
+							uuid = "baf2eb39-6977-b826-8874-c383a772185a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							conditionType = 6,
+							inRangeValue = 24,
+							uuid = "3b0f0b07-6b44-2fc8-b2f6-72a4135bfe94",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 521.36069634686,
+				name = "Target Chaos",
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 4,
+				timerOffset = 2,
+				uuid = "acec5997-1f1b-dc3d-b06c-54a50f1d72f5",
+				version = 2,
+			},
+			inheritedIndex = 1,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							gVar = "ACR_TensorMagnum3_CD",
+							setTarget = true,
+							targetContentID = 6052,
+							targetType = "ContentID",
+							uuid = "baf2eb39-6977-b826-8874-c383a772185a",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 521.36069634686,
+				name = "Target Exdeath",
+				timelineIndex = 101,
+				timerEndOffset = 3,
+				timerOffset = 6,
+				timerStartOffset = -3,
+				uuid = "e510d13f-07f7-6580-87f5-b61ea3581444",
+				version = 2,
+			},
+			inheritedIndex = 2,
+		},
+	},
 	[148] = 
 	{
 		
@@ -496,6 +585,41 @@ local tbl =
 			},
 			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
+		},
+		
+		{
+			data = 
+			{
+				name = "[AutoSim] P3 Boss Dying",
+				uuid = "5c54f150-6fb6-6aab-a64d-ba7fcc53f644",
+				version = 2,
+			},
+			inheritedObjectUUID = "de6b998f-cd15-f018-a589-0b4d717cd523",
+			inheritedOverwrites = 
+			{
+				conditions = 
+				{
+					
+					{
+						type = "add",
+						value = 
+						{
+							data = 
+							{
+								name = "DT: HP <= 1.5% HP",
+								uuid = "49e996a5-8742-6e22-9981-ca8b306c4f55",
+								version = 3,
+							},
+							inheritedObjectUUID = "cd523053-646a-4abc-8cbc-7e9865b98205",
+							inheritedOverwrites = 
+							{
+								hpType = 2,
+								hpValue = 1,
+							},
+						},
+					},
+				},
+			},
 		},
 	},
 	[151] = 
