@@ -662,6 +662,44 @@ local tbl =
 							version = 2.1,
 						},
 					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljAutoSimChaosAura = \"Lie\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"9fcf63a6-e50e-dcc8-b293-08b043052f36",
+									true,
+								},
+							},
+							name = "Chaos Lie",
+							uuid = "a21ad30f-ee3f-a045-8d7e-f2ef5db5d4ee",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "data.ljAutoSimChaosAura = \"Truth\"\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"661a97c7-cbcd-9aab-9495-c9ae9187c302",
+									true,
+								},
+							},
+							name = "Chaos Truth",
+							uuid = "da43559a-3577-c6ae-8fdd-e4f373ad2c2a",
+							version = 2.1,
+						},
+					},
 				},
 				conditions = 
 				{
@@ -691,17 +729,130 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							eventArgType = 6,
+							eventIntValue = 2913,
+							name = "Event: Chaos Lie",
+							uuid = "9fcf63a6-e50e-dcc8-b293-08b043052f36",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 3,
+							eventArgType = 6,
+							eventIntValue = 2914,
+							name = "Event: Chaos Truth",
+							uuid = "661a97c7-cbcd-9aab-9495-c9ae9187c302",
+							version = 3,
+						},
+					},
 				},
 				displayPath = "AutoSim",
 				eventType = 25,
 				loop = true,
 				mechanicTime = 812.05085714286,
-				name = "[AutoSim] Track Exdeath Truth",
+				name = "[AutoSim] Track Exdeath & Chaos Truth",
 				timeRange = true,
 				timelineIndex = 151,
 				timerEndOffset = 58,
 				timerStartOffset = 4,
 				uuid = "77f5ccc7-2374-4639-a0b8-8617b28ccff8",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "-- Fire (Inferno) resolves at a fixed time after P4 start, whichever element Chaos casts first.\n-- Chaos's aura when it cast Inferno decides the shape: Truth drops twisters, Lie drops donuts.\n-- From 99 logged pulls, players stand still until the resolution, then move quickly:\n-- P4 +92 to +95.5 after twisters, P4 +96.5 to +98.5 after donuts (the Stray Flames hit).\n-- Each window starts 2.5s before a quarter of the party is moving and ends as most have stopped.\nlocal state = data.ljAutoSimDmu\nlocal aura = data.ljAutoSimChaosAura\nif state and aura then\n    local startOffset, endOffset = 94.1, 99.1\n    if aura == \"Truth\" then\n        startOffset, endOffset = 89.6, 95.6\n    end\n    -- P4 start as synced by Targetability and Resync.\n    local p4Start = state.boundaries[6].time\n    local startTime, endTime = p4Start + startOffset, p4Start + endOffset\n    local phaseID = TensorCore.API.TensorACR.addAutoSimPhase(\"CasterDowntime\", startTime, endTime)\n    if phaseID then\n        -- Registered in state.phases so Targetability and Resync shifts it.\n        state.phases[#state.phases + 1] = { id = phaseID, phaseType = \"CasterDowntime\", startTime = startTime, endTime = endTime, value = 1 }\n    end\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"4f91fa53-23f3-e2c6-970d-c9a0152e3ad9",
+									true,
+								},
+							},
+							name = "Fire Window",
+							uuid = "ec3ec0d4-8c71-265b-b29e-140a0b0e45ff",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "-- Water (Tsunami) resolves at a fixed time after P4 start, whichever element Chaos casts first.\n-- Chaos's aura when it cast Tsunami decides the shape: Lie drops twisters, Truth drops donuts.\n-- Only twisters need a window: from 99 logged pulls, players move quickly at P4 +115 to +117.5\n-- after them, while after donuts only about half the party moves.\nlocal state = data.ljAutoSimDmu\nif state and data.ljAutoSimChaosAura == \"Lie\" then\n    -- P4 start as synced by Targetability and Resync.\n    local p4Start = state.boundaries[6].time\n    local startTime, endTime = p4Start + 112.6, p4Start + 117.6\n    local phaseID = TensorCore.API.TensorACR.addAutoSimPhase(\"CasterDowntime\", startTime, endTime)\n    if phaseID then\n        -- Registered in state.phases so Targetability and Resync shifts it.\n        state.phases[#state.phases + 1] = { id = phaseID, phaseType = \"CasterDowntime\", startTime = startTime, endTime = endTime, value = 1 }\n    end\nend\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"cb0c0648-907e-7cba-b100-07c6acf89266",
+									true,
+								},
+							},
+							name = "Water Window",
+							uuid = "095d0f6f-2c02-783d-90ef-14d2d26cf7df",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47904,
+							name = "Event: Inferno",
+							uuid = "4f91fa53-23f3-e2c6-970d-c9a0152e3ad9",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							dequeueIfLuaFalse = true,
+							eventArgType = 2,
+							eventSpellID = 47905,
+							name = "Event: Tsunami",
+							uuid = "cb0c0648-907e-7cba-b100-07c6acf89266",
+							version = 3,
+						},
+					},
+				},
+				displayPath = "AutoSim",
+				eventType = 2,
+				loop = true,
+				mechanicTime = 812.05085714286,
+				name = "[AutoSim] Fire/Water Caster Downtime",
+				timeRange = true,
+				timelineIndex = 151,
+				timerEndOffset = 58,
+				timerStartOffset = 4,
+				uuid = "7cd2fd6b-cf94-6a72-958f-ff28c4452550",
 				version = 2,
 			},
 		},
