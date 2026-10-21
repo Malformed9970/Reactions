@@ -118,6 +118,26 @@ local tbl =
 									"daaca7e8-89e2-4f6b-bdc3-369f8e902d23",
 									true,
 								},
+							},
+							name = "Reset Anyone's Prepull",
+							uuid = "a5445cdd-dd21-203a-baea-9be108206f47",
+							version = 2.1,
+						},
+						inheritedIndex = 6,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"daaca7e8-89e2-4f6b-bdc3-369f8e902d23",
+									true,
+								},
 								
 								{
 									"d2d2b625-f88a-41e1-a3ee-3676b8cbcdfa",
@@ -441,7 +461,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\nAnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\n\nself.used = true",
+							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "d2089605-088c-d8e1-a680-940da0458fef",
 							version = 2.1,
@@ -787,6 +807,20 @@ local tbl =
 				uuid = "9cd7a302-fe38-a804-b0c6-2d571aa33d72",
 				version = 2,
 			},
+		},
+	},
+	[44] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "30baffa8-917d-7a2c-c958-8df6d4dbbeb8",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
 		},
 	},
 	[53] = 
@@ -1227,7 +1261,7 @@ local tbl =
 						{
 							data = 
 							{
-								name = "DT: HP <= 1.5% HP",
+								name = "DT: HP <= 1 HP",
 								uuid = "a99f5edc-e2df-f7ba-a689-e0384bdf575e",
 								version = 3,
 							},

@@ -122,6 +122,26 @@ local tbl =
 									"daaca7e8-89e2-4f6b-bdc3-369f8e902d23",
 									true,
 								},
+							},
+							name = "Reset Anyone's Prepull",
+							uuid = "85a9fe0b-d83b-8f7d-8cb8-e58537e88805",
+							version = 2.1,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"daaca7e8-89e2-4f6b-bdc3-369f8e902d23",
+									true,
+								},
 								
 								{
 									"d2d2b625-f88a-41e1-a3ee-3676b8cbcdfa",
@@ -405,7 +425,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\nAnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\n\nself.used = true",
+							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "d2089605-088c-d8e1-a680-940da0458fef",
 							version = 2.1,
@@ -465,6 +485,20 @@ local tbl =
 				displayPath = "",
 				name = "Lj\\umad\\autosimv2.6",
 				uuid = "51665afb-c421-26af-e477-e285902a608b",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
+	[44] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "38f58cf0-785b-27ac-4aa8-2d8eb9a9ed40",
 			},
 			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
@@ -606,7 +640,7 @@ local tbl =
 						{
 							data = 
 							{
-								name = "DT: HP <= 1.5% HP",
+								name = "DT: HP <= 1 HP",
 								uuid = "49e996a5-8742-6e22-9981-ca8b306c4f55",
 								version = 3,
 							},

@@ -1310,6 +1310,26 @@ local tbl =
 						},
 						inheritedIndex = 10,
 					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"56fa481a-db50-06c2-97ab-900b02425889",
+									true,
+								},
+							},
+							name = "Reset Anyone's Prepull",
+							uuid = "cbad8a1b-437b-bf56-8cb7-e81b8454e915",
+							version = 2.1,
+						},
+						inheritedIndex = 11,
+					},
 				},
 				conditions = 
 				{
@@ -1870,7 +1890,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\nAnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\n\nself.used = true",
+							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\n\n\nself.used = true",
 							conditions = 
 							{
 								
@@ -17410,6 +17430,160 @@ local tbl =
 			},
 			inheritedIndex = 4,
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b9202501-4d0a-bc75-bd81-c93aa9fdb054",
+									true,
+								},
+								
+								{
+									"187e0e50-a061-1255-84df-b1b61d2c1c69",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Attacks",
+							gVarValue = 2,
+							uuid = "9afbfd8a-b72b-ac9f-b82a-90b230dc6fb1",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b9202501-4d0a-bc75-bd81-c93aa9fdb054",
+									true,
+								},
+								
+								{
+									"143cc5e4-9081-7673-9987-7d315d4d0d95",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Attacks",
+							uuid = "78e6b6e4-70f9-b170-aa65-fabb42de7a79",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "b9202501-4d0a-bc75-bd81-c93aa9fdb054",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+					
+					{
+						data = 
+						{
+							buffCheckType = 2,
+							buffID = 2611,
+							category = "Self",
+							name = "Self: Have Zoe Buff",
+							uuid = "187e0e50-a061-1255-84df-b1b61d2c1c69",
+							version = 3,
+						},
+						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							buffID = 2609,
+							category = "Self",
+							name = "Self: Have Eukrasian Prognosis Buff",
+							partyTargetSubType = "Number",
+							partyTargetType = "Detection Target",
+							uuid = "143cc5e4-9081-7673-9987-7d315d4d0d95",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 554.19098210262,
+				name = "[SGE] Toggle Attack",
+				timelineIndex = 105,
+				uuid = "7109326d-aff3-be68-88fa-3cbce1c94fa4",
+				version = 2,
+			},
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"b9202501-4d0a-bc75-bd81-c93aa9fdb054",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_Attacks",
+							uuid = "9afbfd8a-b72b-ac9f-b82a-90b230dc6fb1",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							category = "Self",
+							conditionType = 13,
+							dequeueIfLuaFalse = true,
+							jobValue = "SAGE",
+							name = "Self: SGE",
+							uuid = "b9202501-4d0a-bc75-bd81-c93aa9fdb054",
+							version = 3,
+						},
+						inheritedIndex = 1,
+					},
+				},
+				mechanicTime = 554.19098210262,
+				name = "[SGE] Attack Fallback",
+				timelineIndex = 105,
+				timerOffset = 6,
+				uuid = "fd6cf527-f40d-daeb-afaa-b57e5db80557",
+				version = 2,
+			},
+		},
 	},
 	[106] = 
 	{
@@ -17429,11 +17603,6 @@ local tbl =
 								
 								{
 									"26fe8bf0-8e58-6157-9b67-e8a64a6b191a",
-									true,
-								},
-								
-								{
-									"0796f2c7-5782-7e71-8675-e259a5fdcac0",
 									true,
 								},
 							},
