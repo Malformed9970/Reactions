@@ -1,6 +1,6 @@
 # Reactions
 
-My TensorReactions profiles: a general base profile, PvP, Blunderville, and timelines for Dancing Mad (Ultimate) and R12S.
+My TensorReactions profiles: a general base profile, PvP, Blunderville, and timelines for Dancing Mad (Ultimate) and M12S.
 
 ## Requirements
 
@@ -38,7 +38,7 @@ The profile I inherit into everything else.
 
 Toolbox
 - Shortcuts to TensorReactions, the AnyoneCore Dev Monitor and ACR options
-- Role selector, exposed as GetCurrentRole() for quick reactions. Fine for "am I M1", no good for anything that needs the whole party's roles
+- Role selector, exposed as GetCurrentRole() for quick reactions. Fine for "am I M1", right click to set the rest of the party's roles if necessary
 - Map effects debugger for writing reactions
 - Duty helper with combat and raid options
 
@@ -75,9 +75,9 @@ Inherits Anyone's PvP profile for you.
 
 ### Lj\blunderville
 
-Gold Saucer Blunderville (map 1165).
+Gold Saucer Blunderville
 
-- Telegraphs for every stage, learned while you play and saved between runs
+- Telegraphs for every stage, automatically learns and improves the more you play
 - Stage 3 route overlay that plans a safe way up the ramp
 - Steers Misdirection by camera
 - Holds still for Acceleration Bomb and faces the path for forced march
@@ -91,15 +91,15 @@ Two draw profiles, one per strat:
 - draws_lpdu for LPDU
 - draws_na for NA
 
-Both cover arrows to your spots throughout, Limit Cut, crystals, black holes, Forsaken, gaze baits, exaflares and so on. The settings window turns on the optional parts: P1 uptime arrows, stompies, Limit Cut and P4 macros, P4 auto marking, and accel bomb stillness/motion handling.
+Both cover arrows to your spots throughout, Limit Cut, crystals, black holes, Forsaken, gaze baits, exaflares and so on. The settings window turns on the optional parts: P1 uptime arrows, stompies, Limit Cut and P4 macros, P4 auto self-marking, and accel bomb stillness/motion handling.
 
 
 Also in here:
 - accel_bomb_only: only the accel bomb handling, if you want it without the draws
 - mit_dps_lpdu: DPS mit plan for LPDU (Feint, Addle, ranged mit, Magick Barrier, Minne, Mantra). Turns off Anyone's mit
 - sge: Sage timeline with its own settings for potions and the first Zoe shield. Does not follow a specific mit plan but works fine in NA and EU PF with no changes usually
-- sam_autosim and vpr_autosim: AutoSim timelines for SAM and VPR. VPR has a limit break mode per phase
+- autosim profiles: Supports all job, make your own for BLM but inherit autosimv2.6
 
 ### Lj\r12s_p2_bananacodex
 
-Draws for Banana Codex in R12S phase 2.
+Draws for Banana Codex in M12S phase 2.
