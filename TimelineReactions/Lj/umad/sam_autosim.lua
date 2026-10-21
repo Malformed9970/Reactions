@@ -272,6 +272,26 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
+							actionLua = "AnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\nself.used = true",
+							conditions = 
+							{
+								
+								{
+									"81846290-41fb-41c6-9df4-7a8f6151d910",
+									true,
+								},
+							},
+							name = "Reset Anyone's Prepull",
+							uuid = "137bbb74-2529-5b61-b726-b72545691054",
+							version = 2.1,
+						},
+						inheritedIndex = 5,
+					},
+					
+					{
+						data = 
+						{
+							aType = "Lua",
 							actionLua = "gStartCombat = true\nself.used = true",
 							conditions = 
 							{
@@ -344,6 +364,18 @@ local tbl =
 							version = 3,
 						},
 					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 2,
+							eventCountdownTime = -5,
+							name = "<= -5s",
+							uuid = "81846290-41fb-41c6-9df4-7a8f6151d910",
+							version = 3,
+						},
+					},
 				},
 				eventType = 16,
 				mechanicTime = 15.261765625,
@@ -399,7 +431,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\nAnyoneCore.Settings.PrepullHelper.enabled = ljAnyoneCorePrepullHelper\n\nself.used = true",
+							actionLua = "gStartCombat = false\nTensorDrift_SlidecastForceHold = false\nTensorCore.API.TensorACR.setHardLockFace(false)\nTensorCore.API.TensorACR.toggleLockFace(false)\nTensorCore.mGetPlayer():ClearTarget()\nACR_TensorACR_HotbarCancel = true\n\nself.used = true",
 							gVar = "ACR_RikuSGE3_CD",
 							uuid = "d2089605-088c-d8e1-a680-940da0458fef",
 							version = 2.1,
