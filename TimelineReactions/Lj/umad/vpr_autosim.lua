@@ -639,7 +639,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
+							actionLua = "ACR_TensorViper4_TargetHitRadiusAdjust = 0\nACR_TensorViper4_ActionRangeAdjust = 3\nself.used = true",
 							name = "Range Hack +3",
 							uuid = "fc43c4db-6db0-f2fe-83bd-083d5498e468",
 							version = 2.1,
