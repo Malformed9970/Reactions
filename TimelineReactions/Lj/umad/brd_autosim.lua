@@ -17,6 +17,40 @@ local tbl =
 		{
 			data = 
 			{
+				name = "[AutoSim] Initialize DMU",
+				uuid = "1aa25afa-f7cb-f029-9660-70c0b57b2677",
+				version = 2,
+			},
+			inheritedObjectUUID = "694542e1-ae1e-876e-8e1c-280acead1235",
+			inheritedOverwrites = 
+			{
+				actions = 
+				{
+					
+					{
+						type = "add",
+						value = 
+						{
+							data = 
+							{
+								name = "Raid Buffs",
+								uuid = "7aba683b-4a88-df7b-9162-e5919f44937e",
+								version = 2.1,
+							},
+							inheritedObjectUUID = "f8c3e1e2-54a6-0ad6-ad72-d5a73d90a536",
+							inheritedOverwrites = 
+							{
+								actionLua = "-- Raid buff windows for the AutoSim schedule: edit the value and times here.\n-- value is the damage multiplier in every window (1.3 = 30% more damage). A window can set\n-- its own, e.g. { startTime = 1.560, endTime = 21.115, value = 1.2 }.\n-- Times are seconds since pull. Targetability and Resync moves the windows with each pull's\n-- phase timings and keeps each at least 120s after the previous one (the raid buff cooldown).\n-- Runs after Initialize AutoSim Schedule, which creates data.ljAutoSimDmu.\nlocal value = 1.1\nlocal windows = {\n    { startTime = 1.560, endTime = 21.115 }, -- P1\n    { startTime = 122.595, endTime = 142.506 }, -- P1\n    { startTime = 243.152, endTime = 262.214 }, -- P2\n    { startTime = 363.497, endTime = 382.736 }, -- P2\n    { startTime = 484.703, endTime = 502.520 }, -- P3\n    { startTime = 604.734, endTime = 623.706 }, -- P3\n    { startTime = 725.768, endTime = 745.411 }, -- P4\n    { startTime = 845.888, endTime = 865.798 }, -- P4\n    { startTime = 968.340, endTime = 987.002 }, -- P5\n    { startTime = 1088.214, endTime = 1106.098 }, -- P5, to the kill\n}\n\nlocal acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nfor _, window in ipairs(windows) do\n    local windowValue = window.value or value\n    local phaseID = acr.addAutoSimPhase(\"RaidBuff\", window.startTime, window.endTime, windowValue)\n    if phaseID then\n        -- Registered in state.phases so Targetability and Resync shifts it.\n        state.phases[#state.phases + 1] = {\n            id = phaseID,\n            phaseType = \"RaidBuff\",\n            startTime = window.startTime,\n            endTime = window.endTime,\n            value = windowValue,\n        }\n    end\nend\nstate.applyRaidBuffFloor()\nself.used = true",
+							},
+						},
+					},
+				},
+			},
+		},
+		
+		{
+			data = 
+			{
 				actions = 
 				{
 					
