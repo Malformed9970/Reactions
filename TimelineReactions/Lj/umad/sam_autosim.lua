@@ -6,188 +6,12 @@ local tbl =
 		{
 			data = 
 			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_CD",
-							uuid = "49f643e0-e835-0feb-959a-5ad49d1a03b8",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_AOE",
-							uuid = "8a3eee51-66a8-ff2c-95cd-d4d289790ec0",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_SmartAOE",
-							uuid = "09a65249-bdca-94eb-8815-2f864e00f063",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_DoTs",
-							uuid = "cbede249-c167-7452-bce6-af35ba12a805",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_SmartDoT",
-							uuid = "1f4c9c37-bcad-a9cc-80fb-3f07f249c0ea",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_60s",
-							uuid = "178f9722-d37a-13ac-af45-b92ca29a1c54",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_SafeJump",
-							uuid = "ebafd38b-b8af-b7a1-b8f6-8cb05523f48b",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Enpi",
-							uuid = "7424496e-521f-eb2c-9590-f113a3a05961",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Meditate",
-							uuid = "1c7a3f60-62f0-3385-9768-8a8223496d9d",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Hold10Kenki",
-							gVarValue = 2,
-							uuid = "ce105aff-9589-458d-8397-d86bbb38862c",
-							version = 2.1,
-						},
-						inheritedIndex = 10,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_TrueNorth",
-							uuid = "b2a82871-f699-cf69-ab38-bb9772da0a56",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Tengetsu",
-							uuid = "de23fff8-72d9-19a4-bcbd-209d4aac3957",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_KBCancel",
-							uuid = "578a0f31-9a8c-6820-b1e5-77b99f44c23b",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_JumpIn",
-							gVarValue = 2,
-							uuid = "6849070c-d470-a9dd-abd0-691077e5b78b",
-							version = 2.1,
-						},
-						inheritedIndex = 14,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Potion",
-							uuid = "e5389749-71bf-c804-b937-9d0006f2c322",
-							version = 2.1,
-						},
-						inheritedIndex = 15,
-					},
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Burn",
-							gVarValue = 2,
-							uuid = "b88cf1f8-75e3-1c25-8a0f-3e7a8a71527b",
-							version = 2.1,
-						},
-						inheritedIndex = 16,
-					},
-				},
-				conditions = 
-				{
-				},
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "Toggles",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "c14328ce-24bb-c0ce-9208-105c2b3300f8",
-				version = 2,
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "0e984576-9cfa-bfca-a66f-c6ec2478fec6",
 			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
 		},
 		
 		{
@@ -386,7 +210,7 @@ local tbl =
 				uuid = "91c76e83-8f06-ffc2-a513-496131da66f0",
 				version = 2,
 			},
-			inheritedIndex = 2,
+			inheritedIndex = 7,
 		},
 		
 		{
@@ -418,7 +242,7 @@ local tbl =
 				uuid = "0da4447a-710d-926a-a4a6-833a3070e442",
 				version = 2,
 			},
-			inheritedIndex = 3,
+			inheritedIndex = 8,
 		},
 		
 		{
@@ -451,7 +275,196 @@ local tbl =
 				uuid = "f1314026-9b4a-3398-b3ca-ed965bf08f1d",
 				version = 2,
 			},
-			inheritedIndex = 4,
+			inheritedIndex = 9,
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_CD",
+							uuid = "49f643e0-e835-0feb-959a-5ad49d1a03b8",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_AOE",
+							uuid = "8a3eee51-66a8-ff2c-95cd-d4d289790ec0",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_SmartAOE",
+							uuid = "09a65249-bdca-94eb-8815-2f864e00f063",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_DoTs",
+							uuid = "cbede249-c167-7452-bce6-af35ba12a805",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_SmartDoT",
+							uuid = "1f4c9c37-bcad-a9cc-80fb-3f07f249c0ea",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_60s",
+							uuid = "178f9722-d37a-13ac-af45-b92ca29a1c54",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_SafeJump",
+							uuid = "ebafd38b-b8af-b7a1-b8f6-8cb05523f48b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Enpi",
+							uuid = "7424496e-521f-eb2c-9590-f113a3a05961",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Meditate",
+							uuid = "1c7a3f60-62f0-3385-9768-8a8223496d9d",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hold10Kenki",
+							gVarValue = 2,
+							uuid = "ce105aff-9589-458d-8397-d86bbb38862c",
+							version = 2.1,
+						},
+						inheritedIndex = 10,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_TrueNorth",
+							uuid = "b2a82871-f699-cf69-ab38-bb9772da0a56",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Tengetsu",
+							uuid = "de23fff8-72d9-19a4-bcbd-209d4aac3957",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_KBCancel",
+							gVarValue = 2,
+							uuid = "578a0f31-9a8c-6820-b1e5-77b99f44c23b",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_JumpIn",
+							gVarValue = 2,
+							uuid = "6849070c-d470-a9dd-abd0-691077e5b78b",
+							version = 2.1,
+						},
+						inheritedIndex = 14,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Potion",
+							uuid = "e5389749-71bf-c804-b937-9d0006f2c322",
+							version = 2.1,
+						},
+						inheritedIndex = 15,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Burn",
+							gVarValue = 2,
+							uuid = "b88cf1f8-75e3-1c25-8a0f-3e7a8a71527b",
+							version = 2.1,
+						},
+						inheritedIndex = 16,
+					},
+				},
+				conditions = 
+				{
+				},
+				eventType = 16,
+				mechanicTime = 15.261765625,
+				name = "Toggles",
+				timeRange = true,
+				timelineIndex = 1,
+				timerStartOffset = -16,
+				uuid = "c14328ce-24bb-c0ce-9208-105c2b3300f8",
+				version = 2,
+			},
+			inheritedIndex = 10,
 		},
 		
 		{
@@ -476,623 +489,10 @@ local tbl =
 				uuid = "aae84d61-c39c-e486-a689-ce3069e4b13d",
 				version = 2,
 			},
-			inheritedIndex = 5,
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v1",
-				uuid = "366c4a8f-b66e-183d-a42a-1690bf6bda5a",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1102.669)\nacr.setAutoSimUnexpectedMovementPct(0)\nacr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimUncertainty()\n\nlocal state = {\n    killTime = 1102.669,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 198.311, uncertainty = 10, lead = 10 },\n        { kind = \"up\", time = 208.653, uncertainty = 10, lead = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 10, lead = 10 },\n        { kind = \"up\", time = 428.593, uncertainty = 10, lead = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 90, lead = 30.490 },\n        { kind = \"up\", time = 724.963, uncertainty = 10, lead = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 10, lead = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 10, lead = 10 },\n    },\n    bossContentIDs = {\n        [19504] = true,\n        [19506] = true,\n        [19508] = true,\n        [19509] = true,\n        [18475] = true,\n        [19511] = true,\n    },\n    targetableByEntity = {},\n    anyTargetable = true,\n    initialTargetable = true,\n}\n\nlocal phaseSpecs = {\n    FullDowntime = {\n    { startTime = 198.311, endTime = 208.653 },\n    { startTime = 381.481, endTime = 428.593 },\n    { startTime = 720.490, endTime = 724.963 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    CasterDowntime = {\n    { startTime = 32.789, endTime = 38.575 },\n    { startTime = 43.421, endTime = 54.017 },\n    { startTime = 87.300, endTime = 91.962 },\n    { startTime = 105.800, endTime = 110.424 },\n    { startTime = 151.500, endTime = 163.200 },\n    { startTime = 166.500, endTime = 174.200 },\n    { startTime = 182.065, endTime = 187.842 },\n    { startTime = 257.500, endTime = 270.933 },\n    { startTime = 278.500, endTime = 292.023 },\n    { startTime = 299.500, endTime = 313.025 },\n    { startTime = 320.500, endTime = 329.000 },\n    { startTime = 365.500, endTime = 371.300 },\n    { startTime = 490.500, endTime = 497.000 },\n    { startTime = 513.500, endTime = 527.500 },\n    { startTime = 574.000, endTime = 592.500 },\n    { startTime = 603.000, endTime = 626.500 },\n    { startTime = 630.500, endTime = 660.500 },\n    { startTime = 671.000, endTime = 683.500 },\n    { startTime = 699.000, endTime = 710.500 },\n    { startTime = 713.500, endTime = 717.500 },\n    { startTime = 795.000, endTime = 800.200 },\n    { startTime = 813.000, endTime = 826.500 },\n    { startTime = 832.000, endTime = 839.500 },\n    { startTime = 907.500, endTime = 916.800 },\n    { startTime = 920.800, endTime = 933.500 },\n    { startTime = 947.000, endTime = 957.800 },\n    { startTime = 962.700, endTime = 963.800 },\n    { startTime = 968.500, endTime = 970.000 },\n    },\n    MeleeDowntime = {\n    { startTime = 158.500, endTime = 163.200 },\n    { startTime = 365.500, endTime = 371.300 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1102.669, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 10)\ndata.ljAutoSimDmu = state\nACR_TensorWeeb4_Meditate = false\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "04a20e6e-bde9-f205-9fef-84e8f6a1a5d0",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v1",
-				enabled = false,
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "f948ff74-7197-4cd8-b0bd-24445f20c235",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\n\nif not state or not state.bossContentIDs[eventArgs.entityContentID] then\n    self.used = true\n    return\nend\n\nlocal wasAnyTargetable = state.anyTargetable\nif state.initialTargetable then\n    state.initialTargetable = false\n    state.targetableByEntity = {}\nend\n\nif eventArgs.isTargetable then\n    state.targetableByEntity[eventArgs.entityID] = true\nelse\n    state.targetableByEntity[eventArgs.entityID] = nil\nend\n\nlocal anyTargetable = false\nfor _, isTargetable in pairs(state.targetableByEntity) do\n    if isTargetable then\n        anyTargetable = true\n        break\n    end\nend\n\nstate.anyTargetable = anyTargetable\nACR_TensorWeeb4_Meditate = not anyTargetable\n\nlocal transitionKind\nif wasAnyTargetable and not anyTargetable then\n    transitionKind = \"down\"\nelseif not wasAnyTargetable and anyTargetable then\n    transitionKind = \"up\"\nend\n\nif not transitionKind then\n    self.used = true\n    return\nend\n\nlocal boundary = state.boundaries[state.nextBoundary]\nif not boundary or boundary.kind ~= transitionKind then\n    self.used = true\n    return\nend\n\nlocal now = acr.getAutoSimTime()\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\n\nfor _, phase in ipairs(state.phases) do\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        local phaseID = acr.setAutoSimPhase(\n            phase.id,\n            phase.startTime,\n            phase.endTime,\n            phase.value\n        )\n        if phaseID then\n            phase.id = phaseID\n        end\n    end\nend\n\nfor index = state.nextBoundary, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = state.nextBoundary + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "930dcd81-dbfe-a5fd-8eb3-b45b4d3f9820",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v1",
-				enabled = false,
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "a89edff8-9a1b-7421-86dd-98943c3fa96f",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v2",
-				uuid = "b01ba45e-a140-cd20-855b-905dc438ad4c",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\n\nif not state or not state.bossContentIDs[eventArgs.entityContentID] then\n    self.used = true\n    return\nend\n\nlocal wasAnyTargetable = state.anyTargetable\nif state.initialTargetable then\n    state.initialTargetable = false\n    state.targetableByEntity = {}\nend\n\nif eventArgs.isTargetable then\n    state.targetableByEntity[eventArgs.entityID] = true\nelse\n    state.targetableByEntity[eventArgs.entityID] = nil\nend\n\nlocal anyTargetable = false\nfor _, isTargetable in pairs(state.targetableByEntity) do\n    if isTargetable then\n        anyTargetable = true\n        break\n    end\nend\n\nstate.anyTargetable = anyTargetable\nACR_TensorWeeb4_Meditate = not anyTargetable\n\nlocal transitionKind\nif wasAnyTargetable and not anyTargetable then\n    transitionKind = \"down\"\nelseif not wasAnyTargetable and anyTargetable then\n    transitionKind = \"up\"\nend\n\nif not transitionKind then\n    self.used = true\n    return\nend\n\nlocal boundary = state.boundaries[state.nextBoundary]\nif not boundary or boundary.kind ~= transitionKind then\n    self.used = true\n    return\nend\n\nlocal now = acr.getAutoSimTime()\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\n\nfor _, phase in ipairs(state.phases) do\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        local phaseID = acr.setAutoSimPhase(\n            phase.id,\n            phase.startTime,\n            phase.endTime,\n            phase.value\n        )\n        if phaseID then\n            phase.id = phaseID\n        end\n    end\nend\n\nfor index = state.nextBoundary, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = state.nextBoundary + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "930dcd81-dbfe-a5fd-8eb3-b45b4d3f9820",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v2",
-				enabled = false,
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "27575c62-a904-1ce1-b38a-595e924a3c32",
-				version = 2,
-			},
-			inheritedIndex = 10,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1102.669)\nacr.setAutoSimUnexpectedMovementPct(0)\nacr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimUncertainty()\n\nlocal state = {\n    killTime = 1102.669,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0 },\n        { kind = \"down\", time = 381.481, uncertainty = 10, lead = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490 },\n        { kind = \"up\", time = 724.963, uncertainty = 10, lead = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 10, lead = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 10, lead = 10 },\n    },\n    bossContentIDs = {\n        [19504] = true,\n        [19506] = true,\n        [19508] = true,\n        [19509] = true,\n        [18475] = true,\n        [19511] = true,\n    },\n    targetableByEntity = {},\n    anyTargetable = true,\n    initialTargetable = true,\n}\n\nlocal phaseSpecs = {\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.963 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1102.669, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 10)\ndata.ljAutoSimDmu = state\n--ACR_TensorWeeb4_Meditate = false\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "04a20e6e-bde9-f205-9fef-84e8f6a1a5d0",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v2",
-				enabled = false,
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "8c4c0226-64cf-24b8-9e66-751a281facdd",
-				version = 2,
-			},
 			inheritedIndex = 11,
 		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v3",
-				uuid = "6151a72b-af3e-3786-bf11-364cb738bf87",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1102.669)\nacr.setAutoSimUnexpectedMovementPct(0)\nacr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"TargetLifetime\", 0)\nacr.clearAutoSimPhases(\"DotAvailability\", 0)\nacr.clearAutoSimPhases(\"TargetLifetime\", 1)\nacr.clearAutoSimPhases(\"DotAvailability\", 1)\nacr.clearAutoSimTarget(1)\n\nlocal state = {\n    killTime = 1102.669,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.963, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    SelfCircle5Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    SelfCircle8Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    Cone8Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    Line10Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    TargetLifetime = {\n        { startTime = 0, endTime = 1102.669, targetSlot = 0 },\n        { startTime = 427.46, endTime = 544.89, targetSlot = 1 },\n    },\n    DotAvailability = {\n        { startTime = 0, endTime = 1102.669, targetSlot = 0 },\n        { startTime = 427.46, endTime = 430.62, targetSlot = 1 },\n        { startTime = 462.395, endTime = 544.89, targetSlot = 1 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.963 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1102.669, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 10)\ndata.ljAutoSimDmu = state\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "04a20e6e-bde9-f205-9fef-84e8f6a1a5d0",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v3",
-				enabled = false,
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "23c92aba-9eea-3a18-85ff-fc529e2b9121",
-				version = 2,
-			},
-			inheritedIndex = 13,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nlocal contentID = eventArgs.entityContentID\n\nif not state or not state.bossContentIDs[contentID] then\n    self.used = true\n    return\nend\n\n-- Target assignment is independent of resync acceptance.\nif contentID == 6052 then\n    acr.setAutoSimTarget(1, eventArgs.entityID)\nelseif eventArgs.isTargetable then\n    acr.setAutoSimTarget(0, eventArgs.entityID)\nend\n\nlocal isDuo = contentID == 7691 or contentID == 6052\nif isDuo then\n    state.duoTargetable[contentID] = eventArgs.isTargetable\nend\n\nlocal now = acr.getAutoSimTime()\nlocal transitionKind = eventArgs.isTargetable and \"up\" or \"down\"\nlocal matchedIndex\nlocal boundary\nlocal bestDistance\n\n-- Match only unconsumed boundaries near their current predicted pull time.\n-- A later matching boundary can recover from an earlier missed event.\nfor index = state.nextBoundary, #state.boundaries do\n    local candidate = state.boundaries[index]\n    local delta = now - candidate.time\n    local bossMatches = (candidate.boss == \"duo\" and isDuo)\n        or (candidate.boss == \"kefka\" and contentID == 7131)\n    if bossMatches and candidate.kind == transitionKind\n        and delta >= -candidate.early and delta <= candidate.late then\n        local distance = math.abs(delta)\n        if not bestDistance or distance < bestDistance then\n            matchedIndex = index\n            boundary = candidate\n            bestDistance = distance\n        end\n    end\nend\n\nif not boundary then\n    self.used = true\n    return\nend\n\n-- Phase 3 ends only after both bosses have become untargetable.\nif boundary.boss == \"duo\" and transitionKind == \"down\"\n    and (state.duoTargetable[7691] or state.duoTargetable[6052]) then\n    self.used = true\n    return\nend\n\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\n\nfor _, phase in ipairs(state.phases) do\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        local phaseID = acr.setAutoSimPhase(\n            phase.id,\n            phase.startTime,\n            phase.endTime,\n            phase.value\n        )\n        if phaseID then\n            phase.id = phaseID\n        end\n    end\nend\n\nfor index = matchedIndex, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = matchedIndex + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "930dcd81-dbfe-a5fd-8eb3-b45b4d3f9820",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v3",
-				enabled = false,
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "54bc2e06-2677-718f-a2e4-2ea12d1de412",
-				version = 2,
-			},
-			inheritedIndex = 14,
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v4",
-				uuid = "a236e8e0-de55-d4ab-aaf7-f43a041c6929",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1102.669)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\n\nlocal state = {\n    killTime = 1102.669,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    SelfCircle5Yd = {\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    SelfCircle8Yd = {\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    Cone8Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    Line10Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    Line15Yd = { -- same timings as Line10Yd\n        { startTime = 427.46, endTime = 430.62, value = 2 },\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    TargetCircle5YdRange3Yd = { -- same timings as SelfCircle5Yd\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    TargetCircle5YdRange5Yd = { -- same timings as SelfCircle5Yd\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = { -- same timings as SelfCircle5Yd\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    TargetCircle5YdRange25Yd = { -- same timings as SelfCircle5Yd\n        { startTime = 462.395, endTime = 544.89, value = 2 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1102.669, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Potion guidance via BossModifier phases.\n-- Pot (846) cooldown is 270s: ~122 -> ~427 -> ~725 -> ~1073 fits.\n-- Phases go into state.phases so Targetability and Resync shifts them.\nlocal p3Start = state.boundaries[4].time\nlocal p3End = state.boundaries[5].time\nlocal p4Start = state.boundaries[6].time\nlocal potWindows = {\n    { startTime = 122.595, endTime = 152.595, value = 1.3 }, -- P1 2-min, raid buffs at 122.6\n    { startTime = p3Start + 0.1, endTime = p3Start + 30.1, value = 1.3 }, -- P3 start, no raid buffs\n    -- Late P3 until the 1 HP lock: a pot after ~455 is still on cooldown at P4 start (725),\n    -- so make the 604.7 raid buff window worth less than the P4 window.\n    { startTime = 600, endTime = p3End, value = 0.65 }, -- Late P3: keep pot/burst for P4\n    { startTime = p4Start + 0.1, endTime = p4Start + 30.1, value = 1.3 }, -- P4 start, raid buffs at 725.8\n    { startTime = state.killTime - 30, endTime = state.killTime, value = 1.3 }, -- Final 30s, raid buffs at 1088.2\n}\n\nfor _, window in ipairs(potWindows) do\n    local phaseID = acr.addAutoSimPhase(\n        \"BossModifier\",\n        window.startTime,\n        window.endTime,\n        window.value\n    )\n    if phaseID then\n        state.phases[#state.phases + 1] = {\n            id = phaseID,\n            phaseType = \"BossModifier\",\n            startTime = window.startTime,\n            endTime = window.endTime,\n            value = window.value,\n        }\n    end\nend\n\n-- Called by the P2/P3 zero-damage locks before they add their phase,\n-- because BossModifier phases cannot overlap.\nstate.trimBossModifiers = function(fromTime, toTime)\n    for index = #state.phases, 1, -1 do\n        local phase = state.phases[index]\n        if phase.phaseType == \"BossModifier\"\n            and phase.startTime < toTime and phase.endTime > fromTime then\n            local phaseID\n            if phase.startTime < fromTime then\n                phase.endTime = fromTime\n                phaseID = acr.setAutoSimPhase(\n                    phase.id,\n                    phase.startTime,\n                    phase.endTime,\n                    phase.value\n                )\n            else\n                acr.removeAutoSimPhase(phase.id)\n            end\n            if phaseID then\n                phase.id = phaseID\n            else\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 10)\n-- The kill time is uncertain by +/-5s from 10s before it; Resync moves this with the kill time.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "04a20e6e-bde9-f205-9fef-84e8f6a1a5d0",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v4",
-				enabled = false,
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "c73a64e3-48d1-91a7-84df-0f13257ee04e",
-				version = 2,
-			},
-			inheritedIndex = 16,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nlocal contentID = eventArgs.entityContentID\n\nif not state or not state.bossContentIDs[contentID] then\n    self.used = true\n    return\nend\n\n-- End phase 2's zero-damage period on the exact filtered Kefka.\nlocal damageLock = state.phaseTwoDamageLock\nif damageLock and not damageLock.closed\n    and eventArgs.entityID == damageLock.entityID\n    and not eventArgs.isTargetable then\n    local endedAt = acr.getAutoSimTime()\n    if endedAt > damageLock.startTime then\n        acr.setAutoSimPhase(damageLock.id, damageLock.startTime, endedAt, 0)\n    else\n        acr.removeAutoSimPhase(damageLock.id)\n    end\n    damageLock.closed = true\nend\n\nlocal phaseThreeLock = state.phaseThreeDamageLock\n\nlocal isDuo = contentID == 7691 or contentID == 6052\nif isDuo then\n    state.duoTargetable[contentID] = eventArgs.isTargetable\nend\n\nlocal now = acr.getAutoSimTime()\nlocal transitionKind = eventArgs.isTargetable and \"up\" or \"down\"\nlocal matchedIndex\nlocal boundary\nlocal bestDistance\n\n-- Match only unconsumed boundaries near their current predicted pull time.\n-- A later matching boundary can recover from an earlier missed event.\nfor index = state.nextBoundary, #state.boundaries do\n    local candidate = state.boundaries[index]\n    local delta = now - candidate.time\n    local bossMatches = (candidate.boss == \"duo\" and isDuo)\n        or (candidate.boss == \"kefka\" and contentID == 7131)\n    if bossMatches and candidate.kind == transitionKind\n        and delta >= -candidate.early and delta <= candidate.late then\n        local distance = math.abs(delta)\n        if not bestDistance or distance < bestDistance then\n            matchedIndex = index\n            boundary = candidate\n            bestDistance = distance\n        end\n    end\nend\n\nif not boundary then\n    self.used = true\n    return\nend\n\n-- Start the P4 transition only after both duo bosses are untargetable.\nif boundary.boss == \"duo\" and transitionKind == \"down\"\n    and (state.duoTargetable[7691] or state.duoTargetable[6052]) then\n    self.used = true\n    return\nend\n\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\nif state.killUncertaintyID then\n    acr.setAutoSimUncertainty(state.killUncertaintyID, state.killTime - 10, 5)\nend\n\n-- Damage stops being relevant once both duo bosses are untargetable.\n-- FullDowntime covers the remaining transition into Kefka.\n-- Shrinking closes before phases shift; extending closes after, so the lock\n-- never overlaps a BossModifier phase that has not moved yet.\nlocal function closePhaseThreeLock()\n    if not (phaseThreeLock and not phaseThreeLock.closed and matchedIndex == 5) then\n        return\n    end\n    if now > phaseThreeLock.startTime then\n        acr.setAutoSimPhase(\n            phaseThreeLock.id,\n            phaseThreeLock.startTime,\n            now,\n            0\n        )\n    else\n        acr.removeAutoSimPhase(phaseThreeLock.id)\n    end\n    phaseThreeLock.endTime = now\n    phaseThreeLock.closed = true\nend\n\nlocal lockShrinks = phaseThreeLock and now <= phaseThreeLock.endTime\nif lockShrinks then\n    closePhaseThreeLock()\nend\n\n-- At boundary 5 this moves FullDowntime's start to the exact duo-down time.\n-- At boundary 6 it moves FullDowntime's end to Kefka's exact targetable time.\n-- Move later phases first when shifting right and earlier phases first when\n-- shifting left, so a phase never overlaps a same-type phase that has not moved yet.\nlocal order = {}\nfor index = 1, #state.phases do\n    order[index] = index\nend\ntable.sort(order, function(a, b)\n    if delta > 0 then\n        return state.phases[a].startTime > state.phases[b].startTime\n    end\n    return state.phases[a].startTime < state.phases[b].startTime\nend)\n\nlocal removed = {}\nfor _, index in ipairs(order) do\n    local phase = state.phases[index]\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        if phase.endTime <= phase.startTime then\n            -- An early boundary left no time for a phase that ends at it.\n            acr.removeAutoSimPhase(phase.id)\n            removed[index] = true\n        else\n            local phaseID = acr.setAutoSimPhase(\n                phase.id,\n                phase.startTime,\n                phase.endTime,\n                phase.value\n            )\n            if phaseID then\n                phase.id = phaseID\n            else\n                removed[index] = true\n            end\n        end\n    end\nend\nfor index = #state.phases, 1, -1 do\n    if removed[index] then\n        table.remove(state.phases, index)\n    end\nend\n\nif not lockShrinks then\n    closePhaseThreeLock()\nend\n\nfor index = matchedIndex, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = matchedIndex + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "930dcd81-dbfe-a5fd-8eb3-b45b4d3f9820",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v4",
-				enabled = false,
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "45c7c6bc-594b-ae72-8380-67c16a076277",
-				version = 2,
-			},
-			inheritedIndex = 17,
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v5",
-				uuid = "668c4224-4457-42de-a001-f73611cc7cf5",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo target counts, tuned from 22 logged pulls (times are P3 start 427.46 + offset):\n    -- +85 to +92 Vacuum Wave knockback and limit cut: no two-boss hits.\n    -- +92 to +107 bosses 12-15y apart: self circles rarely reach both (6/21), other shapes do.\n    -- P3 start: bosses 16y apart; lines, cones and target circles hit both, self circles do not.\n    SelfCircle5Yd = {\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 534.46, endTime = 544.89, value = 2 }, -- P3 +107 to window end\n    },\n    SelfCircle8Yd = {\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 534.46, endTime = 544.89, value = 2 }, -- P3 +107 to window end\n    },\n    Cone8Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    Line10Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    Line15Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    TargetCircle5YdRange3Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    TargetCircle5YdRange5Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    TargetCircle5YdRange25Yd = {\n        { startTime = 427.46, endTime = 430.62, value = 2 }, -- P3 start\n        { startTime = 462.395, endTime = 512.46, value = 2 }, -- P3 +35 to +85\n        { startTime = 519.46, endTime = 544.89, value = 2 }, -- P3 +92 to window end\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction: 18 logged pulls are out of melee\n        -- from P2 end -13.5s to -9.0s (distance > 6-8y, matching the GCD gap).\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Potion guidance via BossModifier phases.\n-- Pot (846) cooldown is 270s: ~122 -> ~427 -> ~725 -> ~1073 fits.\n-- Phases go into state.phases so Targetability and Resync shifts them.\nlocal p3Start = state.boundaries[4].time\nlocal p3End = state.boundaries[5].time\nlocal p4Start = state.boundaries[6].time\nlocal potWindows = {\n    { startTime = 122.595, endTime = 152.595, value = 1.3 }, -- P1 2-min, raid buffs at 122.6\n    { startTime = p3Start + 0.1, endTime = p3Start + 30.1, value = 1.3 }, -- P3 start, no raid buffs\n    -- Late P3 until the 1 HP lock: a pot after ~455 is still on cooldown at P4 start (725),\n    -- so make the 604.7 raid buff window worth less than the P4 window.\n    { startTime = 600, endTime = p3End, value = 0.65 }, -- Late P3: keep pot/burst for P4\n    { startTime = p4Start + 0.1, endTime = p4Start + 30.1, value = 1.3 }, -- P4 start, raid buffs at 725.8\n    { startTime = state.killTime - 30, endTime = state.killTime, value = 1.3 }, -- Final 30s, raid buffs at 1088.2\n}\n\nfor _, window in ipairs(potWindows) do\n    local phaseID = acr.addAutoSimPhase(\n        \"BossModifier\",\n        window.startTime,\n        window.endTime,\n        window.value\n    )\n    if phaseID then\n        state.phases[#state.phases + 1] = {\n            id = phaseID,\n            phaseType = \"BossModifier\",\n            startTime = window.startTime,\n            endTime = window.endTime,\n            value = window.value,\n        }\n    end\nend\n\n-- Called by the P2/P3 zero-damage locks before they add their phase,\n-- because BossModifier phases cannot overlap.\nstate.trimBossModifiers = function(fromTime, toTime)\n    for index = #state.phases, 1, -1 do\n        local phase = state.phases[index]\n        if phase.phaseType == \"BossModifier\"\n            and phase.startTime < toTime and phase.endTime > fromTime then\n            local phaseID\n            if phase.startTime < fromTime then\n                phase.endTime = fromTime\n                phaseID = acr.setAutoSimPhase(\n                    phase.id,\n                    phase.startTime,\n                    phase.endTime,\n                    phase.value\n                )\n            else\n                acr.removeAutoSimPhase(phase.id)\n            end\n            if phaseID then\n                phase.id = phaseID\n            else\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 10)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "848283b6-ed8b-4bcc-8d1d-6c0ff83c4722",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v5",
-				enabled = false,
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "2597ff77-465c-46d7-904a-fee36a34d06b",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nlocal contentID = eventArgs.entityContentID\n\nif not state or not state.bossContentIDs[contentID] then\n    self.used = true\n    return\nend\n\n-- End phase 2's zero-damage period on the exact filtered Kefka.\nlocal damageLock = state.phaseTwoDamageLock\nif damageLock and not damageLock.closed\n    and eventArgs.entityID == damageLock.entityID\n    and not eventArgs.isTargetable then\n    local endedAt = acr.getAutoSimTime()\n    if endedAt > damageLock.startTime then\n        acr.setAutoSimPhase(damageLock.id, damageLock.startTime, endedAt, 0)\n    else\n        acr.removeAutoSimPhase(damageLock.id)\n    end\n    damageLock.closed = true\nend\n\nlocal phaseThreeLock = state.phaseThreeDamageLock\n\nlocal isDuo = contentID == 7691 or contentID == 6052\nif isDuo then\n    state.duoTargetable[contentID] = eventArgs.isTargetable\nend\n\nlocal now = acr.getAutoSimTime()\nlocal transitionKind = eventArgs.isTargetable and \"up\" or \"down\"\nlocal matchedIndex\nlocal boundary\nlocal bestDistance\n\n-- Match only unconsumed boundaries near their current predicted pull time.\n-- A later matching boundary can recover from an earlier missed event.\nfor index = state.nextBoundary, #state.boundaries do\n    local candidate = state.boundaries[index]\n    local delta = now - candidate.time\n    local bossMatches = (candidate.boss == \"duo\" and isDuo)\n        or (candidate.boss == \"kefka\" and contentID == 7131)\n    if bossMatches and candidate.kind == transitionKind\n        and delta >= -candidate.early and delta <= candidate.late then\n        local distance = math.abs(delta)\n        if not bestDistance or distance < bestDistance then\n            matchedIndex = index\n            boundary = candidate\n            bestDistance = distance\n        end\n    end\nend\n\nif not boundary then\n    self.used = true\n    return\nend\n\n-- Start the P4 transition only after both duo bosses are untargetable.\nif boundary.boss == \"duo\" and transitionKind == \"down\"\n    and (state.duoTargetable[7691] or state.duoTargetable[6052]) then\n    self.used = true\n    return\nend\n\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\nif state.killUncertaintyID then\n    acr.setAutoSimUncertainty(state.killUncertaintyID, state.killTime - 10, 5)\nend\n\n-- Damage stops being relevant once both duo bosses are untargetable.\n-- FullDowntime covers the remaining transition into Kefka.\n-- Shrinking closes before phases shift; extending closes after, so the lock\n-- never overlaps a BossModifier phase that has not moved yet.\nlocal function closePhaseThreeLock()\n    if not (phaseThreeLock and not phaseThreeLock.closed and matchedIndex == 5) then\n        return\n    end\n    if now > phaseThreeLock.startTime then\n        acr.setAutoSimPhase(\n            phaseThreeLock.id,\n            phaseThreeLock.startTime,\n            now,\n            0\n        )\n    else\n        acr.removeAutoSimPhase(phaseThreeLock.id)\n    end\n    phaseThreeLock.endTime = now\n    phaseThreeLock.closed = true\nend\n\nlocal lockShrinks = phaseThreeLock and now <= phaseThreeLock.endTime\nif lockShrinks then\n    closePhaseThreeLock()\nend\n\n-- At boundary 5 this moves FullDowntime's start to the exact duo-down time.\n-- At boundary 6 it moves FullDowntime's end to Kefka's exact targetable time.\n-- Move later phases first when shifting right and earlier phases first when\n-- shifting left, so a phase never overlaps a same-type phase that has not moved yet.\nlocal order = {}\nfor index = 1, #state.phases do\n    order[index] = index\nend\ntable.sort(order, function(a, b)\n    if delta > 0 then\n        return state.phases[a].startTime > state.phases[b].startTime\n    end\n    return state.phases[a].startTime < state.phases[b].startTime\nend)\n\nlocal removed = {}\nfor _, index in ipairs(order) do\n    local phase = state.phases[index]\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        if phase.endTime <= phase.startTime then\n            -- An early boundary left no time for a phase that ends at it.\n            acr.removeAutoSimPhase(phase.id)\n            removed[index] = true\n        else\n            local phaseID = acr.setAutoSimPhase(\n                phase.id,\n                phase.startTime,\n                phase.endTime,\n                phase.value\n            )\n            if phaseID then\n                phase.id = phaseID\n            else\n                removed[index] = true\n            end\n        end\n    end\nend\nfor index = #state.phases, 1, -1 do\n    if removed[index] then\n        table.remove(state.phases, index)\n    end\nend\n\nif not lockShrinks then\n    closePhaseThreeLock()\nend\n\nfor index = matchedIndex, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = matchedIndex + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "cf195be5-2db0-4163-bbed-0ada1c4fc224",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v5",
-				enabled = false,
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "828fbaf5-ac22-4092-b9e1-149adf1339b5",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v6",
-				uuid = "44806430-8f9c-992a-b6c5-16deba12c80d",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 10, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo: two targets from P3 +35 to +85, before the Vacuum Wave knockback separates the bosses.\n    SelfCircle5Yd = {\n        { startTime = 482.395, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 472.395, endTime = 511.46, value = 2 },\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 10)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "f7af7ea5-ec7f-7e9d-bc0c-58586a0fc445",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v6",
-				enabled = false,
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "b8fe32b4-f4e0-17c9-b2f1-cfd5bbff7988",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nlocal contentID = eventArgs.entityContentID\n\nif not state or not state.bossContentIDs[contentID] then\n    self.used = true\n    return\nend\n\n-- End phase 2's zero-damage period on the exact filtered Kefka.\nlocal damageLock = state.phaseTwoDamageLock\nif damageLock and not damageLock.closed\n    and eventArgs.entityID == damageLock.entityID\n    and not eventArgs.isTargetable then\n    local endedAt = acr.getAutoSimTime()\n    if endedAt > damageLock.startTime then\n        acr.setAutoSimPhase(damageLock.id, damageLock.startTime, endedAt, 0)\n    else\n        acr.removeAutoSimPhase(damageLock.id)\n    end\n    damageLock.closed = true\nend\n\nlocal phaseThreeLock = state.phaseThreeDamageLock\n\nlocal isDuo = contentID == 7691 or contentID == 6052\nif isDuo then\n    state.duoTargetable[contentID] = eventArgs.isTargetable\nend\n\nlocal now = acr.getAutoSimTime()\nlocal transitionKind = eventArgs.isTargetable and \"up\" or \"down\"\nlocal matchedIndex\nlocal boundary\nlocal bestDistance\n\n-- Match only unconsumed boundaries near their current predicted pull time.\n-- A later matching boundary can recover from an earlier missed event.\nfor index = state.nextBoundary, #state.boundaries do\n    local candidate = state.boundaries[index]\n    local delta = now - candidate.time\n    local bossMatches = (candidate.boss == \"duo\" and isDuo)\n        or (candidate.boss == \"kefka\" and contentID == 7131)\n    if bossMatches and candidate.kind == transitionKind\n        and delta >= -candidate.early and delta <= candidate.late then\n        local distance = math.abs(delta)\n        if not bestDistance or distance < bestDistance then\n            matchedIndex = index\n            boundary = candidate\n            bestDistance = distance\n        end\n    end\nend\n\nif not boundary then\n    self.used = true\n    return\nend\n\n-- Start the P4 transition only after both duo bosses are untargetable.\nif boundary.boss == \"duo\" and transitionKind == \"down\"\n    and (state.duoTargetable[7691] or state.duoTargetable[6052]) then\n    self.used = true\n    return\nend\n\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\nif state.killUncertaintyID then\n    acr.setAutoSimUncertainty(state.killUncertaintyID, state.killTime - 10, 5)\nend\n\n-- Damage stops being relevant once both duo bosses are untargetable.\n-- FullDowntime covers the remaining transition into Kefka.\n-- Shrinking closes before phases shift; extending closes after, so the lock\n-- never overlaps a BossModifier phase that has not moved yet.\nlocal function closePhaseThreeLock()\n    if not (phaseThreeLock and not phaseThreeLock.closed and matchedIndex == 5) then\n        return\n    end\n    if now > phaseThreeLock.startTime then\n        acr.setAutoSimPhase(\n            phaseThreeLock.id,\n            phaseThreeLock.startTime,\n            now,\n            0\n        )\n    else\n        acr.removeAutoSimPhase(phaseThreeLock.id)\n    end\n    phaseThreeLock.endTime = now\n    phaseThreeLock.closed = true\nend\n\nlocal lockShrinks = phaseThreeLock and now <= phaseThreeLock.endTime\nif lockShrinks then\n    closePhaseThreeLock()\nend\n\n-- At boundary 5 this moves FullDowntime's start to the exact duo-down time.\n-- At boundary 6 it moves FullDowntime's end to Kefka's exact targetable time.\n-- Move later phases first when shifting right and earlier phases first when\n-- shifting left, so a phase never overlaps a same-type phase that has not moved yet.\nlocal order = {}\nfor index = 1, #state.phases do\n    order[index] = index\nend\ntable.sort(order, function(a, b)\n    if delta > 0 then\n        return state.phases[a].startTime > state.phases[b].startTime\n    end\n    return state.phases[a].startTime < state.phases[b].startTime\nend)\n\nlocal removed = {}\nfor _, index in ipairs(order) do\n    local phase = state.phases[index]\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        if phase.endTime <= phase.startTime then\n            -- An early boundary left no time for a phase that ends at it.\n            acr.removeAutoSimPhase(phase.id)\n            removed[index] = true\n        else\n            local phaseID = acr.setAutoSimPhase(\n                phase.id,\n                phase.startTime,\n                phase.endTime,\n                phase.value\n            )\n            if phaseID then\n                phase.id = phaseID\n            else\n                removed[index] = true\n            end\n        end\n    end\nend\nfor index = #state.phases, 1, -1 do\n    if removed[index] then\n        table.remove(state.phases, index)\n    end\nend\n\nif not lockShrinks then\n    closePhaseThreeLock()\nend\n\nfor index = matchedIndex, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = matchedIndex + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "e4f52550-3d63-52ba-8b4f-71e33ce815d5",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v6",
-				enabled = false,
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "b85cd77f-1707-c93f-9bcb-37f3b8c34508",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim LB",
-				uuid = "10c270b1-8497-c0cc-886f-1f350bd38b7e",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "-- Per-phase Limit Break mode. Manual and Automatic both add the stun phase;\n-- only Automatic lets the Use Limit Break reactions press the Hotbar.\n-- Constants are built once per session (bump version to rebuild after editing them),\n-- so each frame only draws the GUI and does two cheap checks.\nif ljAutoSimLb == nil or ljAutoSimLb.version ~= 2 then\n    local folder = GetLuaModsPath() .. \"ffxivminion\\\\Lj\\\\\"\n    ljAutoSimLb = {\n        version = 2,\n        folder = folder,\n        path = folder .. \"AutoSimLBSettings.lua\",\n        flags = GUI.WindowFlags_NoTitleBar + GUI.WindowFlags_NoCollapse + GUI.WindowFlags_AlwaysAutoResize,\n        modes = { \"Disabled\", \"Manual\", \"Automatic\" },\n        -- GUI:Combo uses 1-based indices.\n        modeIndex = { Disabled = 1, Manual = 2, Automatic = 3 },\n        keys = { \"p4\", \"p5\" },\n        labels = { p4 = \"P4\", p5 = \"P5\" },\n        comboIDs = { p4 = \"##LjAutoSimLb_p4\", p5 = \"##LjAutoSimLb_p5\" },\n        -- World-swallower (09-29 logs): channel starts at P4 +47.4 and P5 +188.2;\n        -- ~4s channel, next GCD ~8.2s after the channel starts.\n        specs = {\n            p4 = { boundary = 6, offset = 47.36 },\n            p5 = { boundary = 8, offset = 188.17 },\n        },\n        stunDuration = 8.2,\n    }\n    -- Load saved modes; missing or unknown values fall back to Disabled.\n    local lb = ljAutoSimLb\n    ljAutoSimLbModes = FileExists(lb.path) and FileLoad(lb.path) or {}\n    local changed = false\n    for _, key in ipairs(lb.keys) do\n        if not lb.modeIndex[ljAutoSimLbModes[key]] then\n            ljAutoSimLbModes[key] = \"Disabled\"\n            changed = true\n        end\n    end\n    if changed then\n        if not FolderExists(lb.folder) then\n            FolderCreate(lb.folder)\n        end\n        FileSave(lb.path, ljAutoSimLbModes)\n    end\nend\n\nlocal lb = ljAutoSimLb\nlocal modes = ljAutoSimLbModes\n\n-- No title bar, so the window has no close button.\nlocal visible = GUI:Begin(\"Lj AutoSim LB###LjAutoSimLB\", true, lb.flags)\nif visible then\n    GUI:Text(\"Lj AutoSim LB\")\n    for i = 1, 2 do\n        local key = lb.keys[i]\n        GUI:Text(lb.labels[key])\n        GUI:SameLine(40)\n        GUI:PushItemWidth(110)\n        local selected, changed = GUI:Combo(lb.comboIDs[key], lb.modeIndex[modes[key]], lb.modes)\n        GUI:PopItemWidth()\n        if changed then\n            modes[key] = lb.modes[selected]\n            FileSave(lb.path, modes)\n        end\n    end\nend\nGUI:End()\n\n-- Keep each Limit Break stun phase in the AutoSim schedule in step with its mode.\n-- Per frame this is two lookups; phases are only added or removed when a mode changes.\nlocal state = data.ljAutoSimDmu\nif state then\n    local stuns = state.lbStunsByPhase\n    if stuns == nil then\n        stuns = {}\n        state.lbStunsByPhase = stuns\n    end\n    for i = 1, 2 do\n        local key = lb.keys[i]\n        local wanted = modes[key] ~= \"Disabled\"\n        local stun = stuns[key]\n        if wanted and stun == nil then\n            local spec = lb.specs[key]\n            local startTime = state.boundaries[spec.boundary].time + spec.offset\n            local endTime = startTime + lb.stunDuration\n            local phaseID = TensorCore.API.TensorACR.addAutoSimPhase(\"Stun\", startTime, endTime)\n            if phaseID then\n                -- Registered in state.phases so Targetability and Resync shifts it.\n                stun = { id = phaseID, phaseType = \"Stun\", startTime = startTime, endTime = endTime, value = 1 }\n                state.phases[#state.phases + 1] = stun\n            end\n            -- false marks a phase AutoSim clipped away, so it is not retried every frame.\n            stuns[key] = stun or false\n        elseif not wanted and stun ~= nil then\n            if stun then\n                for index = #state.phases, 1, -1 do\n                    if state.phases[index] == stun then\n                        TensorCore.API.TensorACR.removeAutoSimPhase(stun.id)\n                        table.remove(state.phases, index)\n                    end\n                end\n            end\n            stuns[key] = nil\n        end\n    end\nend\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"8c614eb8-dc7e-65d2-b2f3-2fba40dd20cd",
-									true,
-								},
-							},
-							uuid = "8de618b5-3745-157e-821d-4025da1aebf5",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Self",
-							conditionType = 9,
-							dequeueIfLuaFalse = true,
-							name = "Self: Melee",
-							partyTargetType = "Melee DPS",
-							uuid = "8c614eb8-dc7e-65d2-b2f3-2fba40dd20cd",
-							version = 3,
-						},
-					},
-				},
-				displayPath = "AutoSim LB",
-				eventType = 13,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim LB] Limit Break Modes",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "1703a88d-d44c-4af4-936b-8dae4cc643d4",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim v7",
-				uuid = "be5f2d30-b343-94de-8ffa-2f4190f3ba4c",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\n\nacr.setAutoSimKillTime(1106.098)\n--acr.setAutoSimUnexpectedMovementPct(0)\n--acr.setAutoSimUnexpectedMeleeDowntimePct(0)\nacr.clearAutoSimPhases(\"FullDowntime\")\nacr.clearAutoSimPhases(\"CasterDowntime\")\nacr.clearAutoSimPhases(\"MeleeDowntime\")\nacr.clearAutoSimPhases(\"RaidBuff\")\nacr.clearAutoSimPhases(\"BossModifier\")\nacr.clearAutoSimUncertainty()\nacr.clearAutoSimPhases(\"Stun\")\nacr.clearAutoSimPhases(\"SelfCircle5Yd\")\nacr.clearAutoSimPhases(\"SelfCircle8Yd\")\nacr.clearAutoSimPhases(\"Cone8Yd\")\nacr.clearAutoSimPhases(\"Line10Yd\")\nacr.clearAutoSimPhases(\"Line15Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange3Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange5Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange20Yd\")\nacr.clearAutoSimPhases(\"TargetCircle5YdRange25Yd\")\n\nlocal state = {\n    killTime = 1106.098,\n    nextBoundary = 1,\n    phases = {},\n    boundaries = {\n        { kind = \"down\", time = 197.52, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 207.88, uncertainty = 0, lead = 0, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 381.481, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 427.46, uncertainty = 0, lead = 0, boss = \"duo\", early = 10, late = 10 },\n        { kind = \"down\", time = 720.490, uncertainty = 10, lead = 30.490, boss = \"duo\", early = 30.49, late = 10 },\n        { kind = \"up\", time = 724.930, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"down\", time = 856.953, uncertainty = 1, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n        { kind = \"up\", time = 887.943, uncertainty = 0, lead = 10, boss = \"kefka\", early = 10, late = 10 },\n    },\n    bossContentIDs = {\n        [7131] = true, -- Kefka\n        [7691] = true, -- Chaos\n        [6052] = true, -- Exdeath\n    },\n    duoTargetable = { [7691] = true, [6052] = true },\n}\n\nlocal phaseSpecs = {\n    Stun = {\n        { startTime = 174.37, endTime = 180 },\n        { startTime = 387.876, endTime = 420 },\n    },\n    -- P3 duo: two targets from P3 +35 to +85, before the Vacuum Wave knockback separates the bosses.\n    SelfCircle5Yd = {\n        { startTime = 482.395, endTime = 511.46, value = 2 },\n    },\n    TargetCircle5YdRange20Yd = {\n        { startTime = 472.395, endTime = 511.46, value = 2 },\n    },\n    MeleeDowntime = {\n        -- P2 Trine run-out to Wings of Destruction\n        { startTime = 367.981, endTime = 372.481 },\n    },\n    FullDowntime = {\n    { startTime = 197.52, endTime = 207.88 },\n    { startTime = 381.481, endTime = 427.46 },\n    { startTime = 720.490, endTime = 724.930 },\n    { startTime = 856.953, endTime = 887.943 },\n    },\n    RaidBuff = {\n    { startTime = 1.560, endTime = 21.115, value = 1.1025 },\n    { startTime = 122.595, endTime = 142.506, value = 1.1025 },\n    { startTime = 243.152, endTime = 262.214, value = 1.1025 },\n    { startTime = 363.497, endTime = 382.736, value = 1.1025 },\n    { startTime = 484.703, endTime = 502.520, value = 1.1025 },\n    { startTime = 604.734, endTime = 623.706, value = 1.1025 },\n    { startTime = 725.768, endTime = 745.411, value = 1.1025 },\n    { startTime = 845.888, endTime = 865.798, value = 1.1025 },\n    { startTime = 968.340, endTime = 987.002, value = 1.1025 },\n    { startTime = 1088.214, endTime = 1106.098, value = 1.1025 },\n    },\n}\n\nfor phaseType, specs in pairs(phaseSpecs) do\n    for _, spec in ipairs(specs) do\n        local value = spec.value or 1\n        local phaseID = acr.addAutoSimPhase(\n            phaseType,\n            spec.startTime,\n            spec.endTime,\n            value,\n            spec.targetSlot or 0\n        )\n        if phaseID then\n            state.phases[#state.phases + 1] = {\n                id = phaseID,\n                phaseType = phaseType,\n                startTime = spec.startTime,\n                endTime = spec.endTime,\n                value = value,\n            }\n        end\n    end\nend\n\n-- Raid buffs are on a 120s cooldown: a window never starts before the previous window + 120.\n-- Applied here and after every Resync shift; a window ending at the kill keeps that end,\n-- and a window pushed past the kill is removed.\nfunction state.applyRaidBuffFloor()\n    local buffs = {}\n    for _, phase in ipairs(state.phases) do\n        if phase.phaseType == \"RaidBuff\" then\n            buffs[#buffs + 1] = phase\n        end\n    end\n    table.sort(buffs, function(a, b)\n        return a.startTime < b.startTime\n    end)\n    local removedAny = false\n    for index = 2, #buffs do\n        local phase = buffs[index]\n        local earliest = buffs[index - 1].startTime + 120\n        if phase.startTime < earliest then\n            local shift = earliest - phase.startTime\n            phase.startTime = earliest\n            if phase.endTime < state.killTime then\n                phase.endTime = math.min(phase.endTime + shift, state.killTime)\n            end\n            if phase.endTime <= phase.startTime then\n                acr.removeAutoSimPhase(phase.id)\n                phase.removed = true\n                removedAny = true\n            else\n                phase.id = acr.setAutoSimPhase(phase.id, phase.startTime, phase.endTime, phase.value) or phase.id\n            end\n        end\n    end\n    if removedAny then\n        for index = #state.phases, 1, -1 do\n            if state.phases[index].removed then\n                table.remove(state.phases, index)\n            end\n        end\n    end\nend\nstate.applyRaidBuffFloor()\n\n-- P2 Kefka 1 HP lock: by 378 in 90% of 38 logged pulls and 80 FFLogs kills (median 375.6);\n-- P2 ends ~381.5. [AutoSim] P2 Kefka 1 HP moves the start earlier when Kefka locks sooner,\n-- and Targetability and Resync closes it when Kefka goes untargetable.\nlocal p2LockStart = 378\nlocal p2LockID = acr.addAutoSimPhase(\"BossModifier\", p2LockStart, state.boundaries[4].time, 0)\nif p2LockID then\n    local lock = {\n        id = p2LockID,\n        phaseType = \"BossModifier\",\n        startTime = p2LockStart,\n        endTime = state.boundaries[4].time,\n        value = 0,\n    }\n    -- Registered in state.phases so P1/P2 resyncs shift it.\n    state.phases[#state.phases + 1] = lock\n    state.phaseTwoDamageLock = lock\nend\n\n-- Boundary uncertainties from 507 logged pulls (p10-p90): P1 end 197.31-197.97, P2 end 381.03-382.20,\n-- P4 start 4.41-4.52s after P3 end, P4 end 132.06-132.38s after P4 start (101 pulls reaching P5),\n-- P5 start 30.94-31.05s after P4 end. P3 end keeps +/-10.\n-- P1 end: +/-5.\nstate.uncertaintyID = acr.addAutoSimUncertainty(188.311, 5)\n-- 20 logged kills land at P5 +214.2 to +222.1 (midpoint +218.2 = this kill time); enrage deaths\n-- at +224.6. +/-5s covers +213.2 to +223.2, starting 10s before the kill; Resync moves it.\nstate.killUncertaintyID = acr.addAutoSimUncertainty(state.killTime - 10, 5)\ndata.ljAutoSimDmu = state\nself.used = true",
-							name = "Initialize AutoSim Schedule",
-							uuid = "37f9abcc-443e-a2d3-aca6-b7002eb21a06",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v7",
-				eventType = 16,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Initialize DMU",
-				timeRange = true,
-				timelineIndex = 1,
-				timerStartOffset = -16,
-				uuid = "ab127f8e-36dc-30fb-a5c2-9a5b596b9d43",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nlocal contentID = eventArgs.entityContentID\n\nif not state or not state.bossContentIDs[contentID] then\n    self.used = true\n    return\nend\n\n-- End phase 2's zero-damage period on the exact filtered Kefka.\nlocal damageLock = state.phaseTwoDamageLock\n-- The Init preset has no entity until Kefka reaches 1 HP, so it closes on Kefka's P2-end event.\nif damageLock and not damageLock.closed\n    and not eventArgs.isTargetable\n    and (eventArgs.entityID == damageLock.entityID\n        or (damageLock.entityID == nil and contentID == 7131 and state.nextBoundary == 3)) then\n    local endedAt = acr.getAutoSimTime()\n    if endedAt > damageLock.startTime then\n        acr.setAutoSimPhase(damageLock.id, damageLock.startTime, endedAt, 0)\n    else\n        acr.removeAutoSimPhase(damageLock.id)\n    end\n    damageLock.closed = true\n    -- Closed at the real time, so the resync shift below must not move it again.\n    for index = #state.phases, 1, -1 do\n        if state.phases[index] == damageLock then\n            table.remove(state.phases, index)\n        end\n    end\nend\n\nlocal phaseThreeLock = state.phaseThreeDamageLock\n\nlocal isDuo = contentID == 7691 or contentID == 6052\nif isDuo then\n    state.duoTargetable[contentID] = eventArgs.isTargetable\nend\n\nlocal now = acr.getAutoSimTime()\nlocal transitionKind = eventArgs.isTargetable and \"up\" or \"down\"\nlocal matchedIndex\nlocal boundary\nlocal bestDistance\n\n-- Match only unconsumed boundaries near their current predicted pull time.\n-- A later matching boundary can recover from an earlier missed event.\nfor index = state.nextBoundary, #state.boundaries do\n    local candidate = state.boundaries[index]\n    local delta = now - candidate.time\n    local bossMatches = (candidate.boss == \"duo\" and isDuo)\n        or (candidate.boss == \"kefka\" and contentID == 7131)\n    if bossMatches and candidate.kind == transitionKind\n        and delta >= -candidate.early and delta <= candidate.late then\n        local distance = math.abs(delta)\n        if not bestDistance or distance < bestDistance then\n            matchedIndex = index\n            boundary = candidate\n            bestDistance = distance\n        end\n    end\nend\n\nif not boundary then\n    self.used = true\n    return\nend\n\n-- Start the P4 transition only after both duo bosses are untargetable.\nif boundary.boss == \"duo\" and transitionKind == \"down\"\n    and (state.duoTargetable[7691] or state.duoTargetable[6052]) then\n    self.used = true\n    return\nend\n\nlocal expectedTime = boundary.time\nlocal delta = now - expectedTime\n\nstate.killTime = state.killTime + delta\nacr.setAutoSimKillTime(state.killTime)\nif state.killUncertaintyID then\n    acr.setAutoSimUncertainty(state.killUncertaintyID, state.killTime - 10, 5)\nend\n\n-- Damage stops being relevant once both duo bosses are untargetable.\n-- FullDowntime covers the remaining transition into Kefka.\n-- The lock ends at the P3 floor. A P3 end before it shrinks the lock before phases shift;\n-- a later P3 end leaves it, since damage after the floor is what ends P3.\nlocal function closePhaseThreeLock()\n    if not (phaseThreeLock and not phaseThreeLock.closed and matchedIndex == 5) then\n        return\n    end\n    if now > phaseThreeLock.startTime then\n        acr.setAutoSimPhase(\n            phaseThreeLock.id,\n            phaseThreeLock.startTime,\n            now,\n            0\n        )\n    else\n        acr.removeAutoSimPhase(phaseThreeLock.id)\n    end\n    phaseThreeLock.endTime = now\n    phaseThreeLock.closed = true\nend\n\nlocal lockShrinks = phaseThreeLock and now <= phaseThreeLock.endTime\nif lockShrinks then\n    closePhaseThreeLock()\nend\n\n-- At boundary 5 this moves FullDowntime's start to the exact duo-down time.\n-- At boundary 6 it moves FullDowntime's end to Kefka's exact targetable time.\n-- Move later phases first when shifting right and earlier phases first when\n-- shifting left, so a phase never overlaps a same-type phase that has not moved yet.\nlocal order = {}\nfor index = 1, #state.phases do\n    order[index] = index\nend\ntable.sort(order, function(a, b)\n    if delta > 0 then\n        return state.phases[a].startTime > state.phases[b].startTime\n    end\n    return state.phases[a].startTime < state.phases[b].startTime\nend)\n\nlocal removed = {}\nfor _, index in ipairs(order) do\n    local phase = state.phases[index]\n    local changed = false\n    if phase.startTime >= expectedTime - 0.0001 then\n        phase.startTime = phase.startTime + delta\n        changed = true\n    end\n    if phase.endTime >= expectedTime - 0.0001 then\n        phase.endTime = phase.endTime + delta\n        changed = true\n    end\n    if changed then\n        if phase.endTime <= phase.startTime then\n            -- An early boundary left no time for a phase that ends at it.\n            acr.removeAutoSimPhase(phase.id)\n            removed[index] = true\n        else\n            local phaseID = acr.setAutoSimPhase(\n                phase.id,\n                phase.startTime,\n                phase.endTime,\n                phase.value\n            )\n            if phaseID then\n                phase.id = phaseID\n            else\n                removed[index] = true\n            end\n        end\n    end\nend\nfor index = #state.phases, 1, -1 do\n    if removed[index] then\n        table.remove(state.phases, index)\n    end\nend\nstate.applyRaidBuffFloor()\n\nif not lockShrinks and phaseThreeLock and matchedIndex == 5 then\n    phaseThreeLock.closed = true\nend\n\nfor index = matchedIndex, #state.boundaries do\n    state.boundaries[index].time = state.boundaries[index].time + delta\nend\n\nstate.uncertaintyID = acr.addAutoSimUncertainty(now, 0)\nstate.nextBoundary = matchedIndex + 1\n\nlocal nextBoundary = state.boundaries[state.nextBoundary]\nif nextBoundary then\n    local uncertaintyTime = nextBoundary.time - nextBoundary.lead\n    if uncertaintyTime <= now then\n        uncertaintyTime = now + 0.001\n    end\n    state.uncertaintyID = acr.addAutoSimUncertainty(\n        uncertaintyTime,\n        nextBoundary.uncertainty\n    )\nend\n\nself.used = true",
-							name = "Track Boss State and Resync",
-							uuid = "e7801f27-a67c-17d5-ab7e-b68bf2ee8123",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim v7",
-				eventType = 26,
-				loop = true,
-				mechanicTime = 15.261765625,
-				name = "[AutoSim] Targetability and Resync",
-				timeRange = true,
-				timelineIndex = 1,
-				timerEndOffset = 1200,
-				timerStartOffset = -16,
-				uuid = "f140b26e-2677-ed16-9078-434ea7f8aa69",
-				version = 2,
-			},
-		},
 	}, 
-	[4] = 
+	[6] = 
 	{
 		
 		{
@@ -1104,21 +504,10 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							name = "Force Slidecast",
-							uuid = "061aac55-b872-cad8-a0cb-7603f90652f2",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "646b1d81-86ef-13d1-ae27-094ee6b8c21a",
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "20a73faa-8c9a-6f69-9627-0a309e859149",
+							variableTogglesType = 2,
 							version = 2.1,
 						},
 					},
@@ -1126,50 +515,19 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 34.922075823741,
-				name = "Force Slidecast",
-				throttleTime = 3000,
+				mechanicTime = 38.012854917972,
+				name = "Tengetsu",
 				timeRange = true,
-				timelineIndex = 4,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "233760ee-6ee4-3c30-9c2d-ea03335545dc",
+				timelineIndex = 6,
+				timerOffset = -3,
+				timerStartOffset = -3,
+				uuid = "2d0ed2bd-0654-8c64-b83b-9ca7f8bc40dc",
 				version = 2,
 			},
 		},
 	},
 	[7] = 
 	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 0\nACR_TensorWeeb4_ActionRangeAdjust = 0\nself.used = true",
-							name = "Set Target and Action Ranges 0",
-							uuid = "04ebcce9-d4d5-84e8-876b-0b8ed65bd6a4",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				enabled = false,
-				mechanicTime = 42.238586763472,
-				name = "Target and Action Ranges 0 at 43s",
-				timelineIndex = 7,
-				timerOffset = 0.76141321659088,
-				uuid = "5edcadcb-0488-e610-94b3-7a2692e4912c",
-				version = 2,
-			},
-		},
 		
 		{
 			data = 
@@ -1291,6 +649,20 @@ local tbl =
 			},
 		},
 	},
+	[8] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "cfc9a85d-a366-fa01-e8e6-e5436e9140ad",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
 	[9] = 
 	{
 		
@@ -1303,42 +675,18 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "ACR_TensorWeeb4_TargetHitRadiusAdjust = 3\nACR_TensorWeeb4_ActionRangeAdjust = 3\nself.used = true",
-							name = "Set Target and Action Ranges 3",
-							uuid = "cc4ef24f-7613-1870-be62-431a21ef24b8",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				enabled = false,
-				mechanicTime = 45.866090329028,
-				name = "Target and Action Ranges 3 at 47s",
-				timelineIndex = 9,
-				timerOffset = 1.133909702301,
-				uuid = "1636cccf-b7fd-f14d-a88b-c706959a672a",
-				version = 2,
-			},
-		},
-	},
-	[10] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
 							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
-							uuid = "20a73faa-8c9a-6f69-9627-0a309e859149",
+							conditions = 
+							{
+								
+								{
+									"4797f134-a91a-8707-bf70-b62edede8dfa",
+									true,
+								},
+							},
+							gVar = "ACR_TensorWeeb4_Hotbar_Gyoten",
+							targetType = "Enemy",
+							uuid = "ffab71d4-efae-37e4-b274-fe4ec495a868",
 							variableTogglesType = 2,
 							version = 2.1,
 						},
@@ -1346,60 +694,22 @@ local tbl =
 				},
 				conditions = 
 				{
-				},
-				mechanicTime = 49.498257793546,
-				name = "Tengetsu",
-				timeRange = true,
-				timelineIndex = 10,
-				timerOffset = -3,
-				timerStartOffset = -3,
-				uuid = "2d0ed2bd-0654-8c64-b83b-9ca7f8bc40dc",
-				version = 2,
-			},
-		},
-	},
-	[11] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
 					
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							name = "Force Slidecast",
-							uuid = "b4ce4e7b-9ccc-159a-85db-d9470bbbd9c6",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "5c70b37f-2d27-f070-aa0b-df767309c7e9",
-							version = 2.1,
+							conditionType = 6,
+							inRangeValue = 3,
+							uuid = "4797f134-a91a-8707-bf70-b62edede8dfa",
+							version = 3,
 						},
 					},
 				},
-				conditions = 
-				{
-				},
-				mechanicTime = 53.460753490642,
-				name = "Force Slidecast",
-				throttleTime = 4000,
-				timeRange = true,
-				timelineIndex = 11,
-				timerEndOffset = 10,
-				timerStartOffset = 5,
-				uuid = "ba67c001-ae0a-d545-873c-d23805700bef",
+				mechanicTime = 45.866090329028,
+				name = "Gyoten",
+				timelineIndex = 9,
+				timerOffset = 0.10000000149012,
+				uuid = "f8fdd1ea-636a-2dc6-89e7-0dbf4ea6c7af",
 				version = 2,
 			},
 		},
@@ -1450,49 +760,6 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							name = "Force Slidecast",
-							uuid = "7e2c8dd8-c13a-54d3-96a1-3421d875eb28",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "41a6a91d-30ac-6dcd-a596-75bcc600da21",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 87.304550672705,
-				name = "Force Slidecast",
-				throttleTime = 4000,
-				timeRange = true,
-				timelineIndex = 17,
-				timerEndOffset = 4,
-				timerStartOffset = -1,
-				uuid = "7851cc36-6b29-562f-8ff6-19675a8d9588",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
 							uuid = "20a73faa-8c9a-6f69-9627-0a309e859149",
@@ -1527,49 +794,6 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							name = "Force Slidecast",
-							uuid = "d91ec060-d66a-4a95-82a3-943b64a483d3",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "ab5260a1-9a05-6ac6-a3b5-3676a67ec36f",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 105.78798877162,
-				name = "Force Slidecast",
-				throttleTime = 4000,
-				timeRange = true,
-				timelineIndex = 22,
-				timerEndOffset = 4,
-				timerStartOffset = -1,
-				uuid = "b789a2cf-ceae-3412-ae26-7d53f2387319",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
 							aType = "ACR",
 							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
 							uuid = "20a73faa-8c9a-6f69-9627-0a309e859149",
@@ -1591,34 +815,6 @@ local tbl =
 				version = 2,
 			},
 		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_KBCancel",
-							gVarValue = 2,
-							uuid = "ea98ec22-d16d-e1ea-a16d-4fa249ce9788",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 105.78798877162,
-				name = "Toggle KB Cancel",
-				timelineIndex = 22,
-				uuid = "026d8f55-3bc2-da50-8a7a-83706a25ada5",
-				version = 2,
-			},
-		},
 	},
 	[25] = 
 	{
@@ -1626,75 +822,12 @@ local tbl =
 		{
 			data = 
 			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							name = "Force Slidecast",
-							uuid = "7c83e0b7-e3e8-5c35-8eff-66151548a2d6",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "886a21b3-6a00-d025-a82a-6a601f887427",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 118.07975730716,
-				name = "Force Slidecast",
-				throttleTime = 6500,
-				timeRange = true,
-				timelineIndex = 25,
-				timerEndOffset = 6,
-				timerStartOffset = -6,
-				uuid = "feb31e52-b21e-f9c6-a3a8-ae13099a5cf9",
-				version = 2,
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "d6de7358-1bba-aebc-517f-564e78efd1a8",
 			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
-							uuid = "20a73faa-8c9a-6f69-9627-0a309e859149",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 118.07975730716,
-				name = "Tengetsu",
-				timeRange = true,
-				timelineIndex = 25,
-				timerOffset = -3,
-				timerStartOffset = -3,
-				uuid = "386c35a9-abb4-1a85-bd50-9707cff5b1d9",
-				version = 2,
-			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
 		},
 	},
 	[26] = 
@@ -1764,6 +897,20 @@ local tbl =
 		{
 			data = 
 			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "50efe0ca-a868-13be-8a45-61889f1b451a",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
+	[35] = 
+	{
+		
+		{
+			data = 
+			{
 				actions = 
 				{
 					
@@ -1781,123 +928,13 @@ local tbl =
 				conditions = 
 				{
 				},
-				mechanicTime = 167.71168967762,
+				mechanicTime = 173.37050637968,
 				name = "Tengetsu",
 				timeRange = true,
-				timelineIndex = 34,
+				timelineIndex = 35,
 				timerOffset = -3,
 				timerStartOffset = -3,
 				uuid = "3dfd20a5-b0c0-8c61-af96-963c6e67be06",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"28b6cfab-05b1-f61f-8ab5-0ffc48bbe030",
-									false,
-								},
-							},
-							name = "Force Slidecast",
-							uuid = "d4cf8020-d00a-fcaa-a543-4352810f7d92",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "c9a3f276-a047-5c51-8ca8-69605cad852f",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							buffDuration = 5,
-							buffID = 5078,
-							category = "Self",
-							comparator = 2,
-							name = "Self: Confetti Buff",
-							uuid = "28b6cfab-05b1-f61f-8ab5-0ffc48bbe030",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 167.71168967762,
-				name = "Force Slidecast",
-				throttleTime = 3000,
-				timeRange = true,
-				timelineIndex = 34,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "c8ffc8fd-a124-9817-b129-8dc53dbc594e",
-				version = 2,
-			},
-		},
-	},
-	[36] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = true\nself.used = true",
-							name = "Force Slidecast",
-							uuid = "d4cf8020-d00a-fcaa-a543-4352810f7d92",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "TensorDrift_SlidecastForceHold = false\nself.used = true",
-							name = "End Slide",
-							uuid = "c9a3f276-a047-5c51-8ca8-69605cad852f",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 186.42310109999,
-				name = "Force Slidecast",
-				throttleTime = 3000,
-				timeRange = true,
-				timelineIndex = 36,
-				timerEndOffset = 2,
-				timerStartOffset = -2,
-				uuid = "6aa72271-b590-db34-8ebf-326e92bbb681",
 				version = 2,
 			},
 		},
@@ -1936,51 +973,7 @@ local tbl =
 			},
 		},
 	},
-	[38] = 
-	{
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "272923d7-eae2-b2f4-9641-8978040e6295",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Hold Action",
-							holdActionDuration = 32,
-							holdActionID = 7489,
-							uuid = "412872c4-7965-c9ed-80bb-84ee0ea00580",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 197.52218784626,
-				name = "[AutoSim] Hold Higanbana P1 End",
-				timelineIndex = 38,
-				timerOffset = -30,
-				uuid = "967e53f0-838f-4f01-b662-945b2a18564a",
-				version = 2,
-			},
-		},
-	},
-	[39] = 
+	[41] = 
 	{
 		
 		{
@@ -1993,9 +986,9 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Potion",
-							gVarValue = 2,
-							uuid = "19d9f14f-86f3-e04a-885f-43e533dd083c",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "20a73faa-8c9a-6f69-9627-0a309e859149",
+							variableTogglesType = 2,
 							version = 2.1,
 						},
 					},
@@ -2003,11 +996,13 @@ local tbl =
 				conditions = 
 				{
 				},
-				enabled = false,
-				mechanicTime = 207.87965305988,
-				name = "Toggle Potion",
-				timelineIndex = 39,
-				uuid = "78054407-f7f7-4cef-a7e1-f8f475beb08f",
+				mechanicTime = 235.34477128997,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 41,
+				timerOffset = -3,
+				timerStartOffset = -3,
+				uuid = "386c35a9-abb4-1a85-bd50-9707cff5b1d9",
 				version = 2,
 			},
 		},
@@ -2044,6 +1039,20 @@ local tbl =
 				uuid = "74ccfe72-f00d-14a1-bf81-f1929cdbe6d0",
 				version = 2,
 			},
+		},
+	},
+	[44] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "0b748969-effe-20b5-50dc-95b320200879",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
 		},
 	},
 	[47] = 
@@ -2324,223 +1333,12 @@ local tbl =
 		{
 			data = 
 			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Hold Action",
-							gVar = "ACR_TensorWeeb4_Meditate",
-							gVarValue = 2,
-							holdActionDuration = 48,
-							holdActionID = 7497,
-							uuid = "1c03ea4a-fceb-a0a8-a504-cbca41d6127b",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 370.25754620621,
-				name = "Hold Meditate",
-				timelineIndex = 72,
-				uuid = "3a731995-e5f0-6b6d-b0af-5776b501ff75",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
 				displayPath = "",
-				name = "AutoSim",
-				uuid = "812a4bce-62fc-b4a0-8550-948d5aa74003",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "d62b2230-42bf-a924-8f11-3212db1761c0",
 			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local state = data.ljAutoSimDmu\nif not state then return end\nif state.nextBoundary > 3 then\n    self.used = true\n    return\nend\n\nlocal acr = TensorCore.API.TensorACR\nlocal now = acr.getAutoSimTime()\nlocal lock = state.phaseTwoDamageLock\nif lock then\n    -- The Init preset: start it now when Kefka locked before the preset start.\n    if not lock.entityID then\n        lock.entityID = eventArgs.detectionTargetID\n        if not lock.closed and now < lock.startTime then\n            local phaseID = acr.setAutoSimPhase(lock.id, now, lock.endTime, 0)\n            if phaseID then\n                lock.id = phaseID\n                lock.startTime = now\n            end\n        end\n    end\n    self.used = true\n    return\nend\n-- Cover the remaining attackable time and transition downtime.\n-- The tracked entity's untargetable event closes this at the actual time.\nlocal endTime = state.boundaries[4].time\nif now >= endTime then\n    self.used = true\n    return\nend\n-- Remove overlapping AutoSim v5 BossModifier windows before locking.\nif state.trimBossModifiers then\n    state.trimBossModifiers(now, endTime)\nend\nlocal id = acr.addAutoSimPhase(\"BossModifier\", now, endTime, 0)\nif id then\n    state.phaseTwoDamageLock = {\n        id = id,\n        startTime = now,\n        entityID = eventArgs.detectionTargetID,\n    }\nend\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"efeb0a00-bd99-9e2a-8d87-edbb294adaa9",
-									true,
-								},
-							},
-							name = "Begin P2 zero damage",
-							uuid = "08c98fdb-abdd-e300-898a-786cc8cb75ca",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Party",
-							comparator = 2,
-							conditionType = 2,
-							hpType = 2,
-							hpValue = 1,
-							name = "DT: HP <= 1",
-							partyTargetType = "Detection Target",
-							uuid = "c37a68fd-6fc8-1ae2-acf6-8827a0cdf17c",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"c37a68fd-6fc8-1ae2-acf6-8827a0cdf17c",
-									true,
-								},
-							},
-							filterTargetType = "ContentID",
-							name = "Kefka at 1 HP",
-							partyTargetContentID = 7131,
-							uuid = "efeb0a00-bd99-9e2a-8d87-edbb294adaa9",
-							version = 3,
-						},
-					},
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 370.25754620621,
-				name = "[AutoSim] P2 Kefka 1 HP",
-				timeRange = true,
-				timelineIndex = 72,
-				timerEndOffset = 12,
-				timerStartOffset = -5,
-				uuid = "7aa70ae6-cbca-790c-bf9b-54327e34d3ed",
-				version = 2,
-			},
-		},
-	},
-	[74] = 
-	{
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "22699745-6827-5520-884c-653dfd1247c5",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Hold Action",
-							holdActionDuration = 32,
-							holdActionID = 7489,
-							uuid = "0dbb039c-9afd-584d-917d-c321c045d988",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 381.48132335556,
-				name = "[AutoSim] Hold Higanbana P2 End",
-				timelineIndex = 74,
-				timerOffset = -30,
-				uuid = "a6b57f94-57b6-0173-b225-54fcdf4ccbc3",
-				version = 2,
-			},
-		},
-	},
-	[75] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Meditate",
-							uuid = "1c03ea4a-fceb-a0a8-a504-cbca41d6127b",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				enabled = false,
-				mechanicTime = 386.79737120621,
-				name = "Toggle Meditate",
-				timelineIndex = 75,
-				timerOffset = 2,
-				uuid = "7f45aac1-8d38-d61b-83fb-1e7004e485db",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							gVar = "ACR_TensorWeeb4_Potion",
-							gVarValue = 2,
-							uuid = "19d9f14f-86f3-e04a-885f-43e533dd083c",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				enabled = false,
-				mechanicTime = 386.79737120621,
-				name = "Toggle Potion",
-				timelineIndex = 75,
-				timerOffset = 2,
-				uuid = "d84ad95e-e6ad-411d-9fef-63c5b3fc7aa3",
-				version = 2,
-			},
 		},
 	},
 	[79] = 
@@ -2611,7 +1409,7 @@ local tbl =
 			},
 		},
 	},
-	[95] = 
+	[94] = 
 	{
 		
 		{
@@ -2623,40 +1421,23 @@ local tbl =
 					{
 						data = 
 						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"50913942-b095-d719-81f2-8246e00ffa3b",
-									true,
-								},
-							},
-							gVar = "ACR_TensorWeeb4_Hotbar_Gyoten",
-							uuid = "2209c1fc-f848-dda5-96c1-c01ad5a6e876",
-							variableTogglesType = 2,
+							aType = "Misc",
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetContentID = 6052,
+							targetType = "ContentID",
+							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
 							version = 2.1,
 						},
 					},
 				},
 				conditions = 
 				{
-					
-					{
-						data = 
-						{
-							conditionType = 6,
-							inRangeValue = 3,
-							uuid = "50913942-b095-d719-81f2-8246e00ffa3b",
-							version = 3,
-						},
-					},
 				},
-				mechanicTime = 514.44485832111,
-				name = "Gap Close",
-				timelineIndex = 95,
-				timerOffset = 0.10000000149012,
-				uuid = "ab73a133-f6bb-f8c7-9dc3-baba52488dce",
+				mechanicTime = 513.32988332111,
+				name = "Target Exdeath",
+				timelineIndex = 94,
+				uuid = "bd7338cd-8943-0653-a6e6-857646ab735a",
 				version = 2,
 			},
 		},
@@ -2728,6 +1509,91 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"c7f112b5-7f94-404c-ab83-a9789a9de51a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetType = "Enemy",
+							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							conditionType = 6,
+							inRangeValue = 3,
+							uuid = "c7f112b5-7f94-404c-ab83-a9789a9de51a",
+							version = 3,
+						},
+					},
+				},
+				loop = true,
+				mechanicTime = 521.36069634686,
+				name = "Target Nearest",
+				throttleTime = 500,
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 15,
+				timerOffset = 5,
+				timerStartOffset = 5,
+				uuid = "9666a5bb-893e-5ccb-8c69-b5d4ce923e9f",
+				version = 2,
+			},
+		},
+	},
+	[106] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							acrOptionType = "Hold Action",
+							holdActionDuration = 15,
+							holdActionID = 36962,
+							uuid = "d7a923a2-b0a7-92d2-a55d-e7a6efd3c5eb",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 556.00428210262,
+				name = "Hold Tengetsu - Max",
+				timelineIndex = 106,
+				uuid = "75aab2d4-73ed-ab60-a36d-f6864a37834e",
+				version = 2,
+			},
+		},
 	},
 	[112] = 
 	{
@@ -2796,6 +1662,104 @@ local tbl =
 				version = 2,
 			},
 		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "19e1f26d-48c6-7786-8c86-ffba1a5f6d61",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 608.39401598045,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 122,
+				timerEndOffset = 14.11,
+				timerStartOffset = 11.11,
+				uuid = "b63ec225-658c-6f88-830e-9f8d7ea97199",
+				version = 2,
+			},
+		},
+	},
+	[128] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "c51dd29d-838e-1545-a3c2-75a628a07389",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 652.34305216234,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 128,
+				timerEndOffset = 4.46,
+				timerStartOffset = 1.46,
+				uuid = "dffeed6c-bfc4-046d-a290-3ca875d4b352",
+				version = 2,
+			},
+		},
+	},
+	[129] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "7edaba44-aaa1-0a7b-9020-af5f58b0b4f5",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 671.48837109883,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 129,
+				timerStartOffset = -3,
+				uuid = "f38be4c9-9d07-6591-b3e0-23a66c0667d0",
+				version = 2,
+			},
+		},
 	},
 	[135] = 
 	{
@@ -2837,16 +1801,6 @@ local tbl =
 		{
 			data = 
 			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "4e5606af-bc3d-601b-88f2-04fc384e1e2a",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
 				actions = 
 				{
 					
@@ -2854,10 +1808,9 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							acrOptionType = "Hold Action",
-							holdActionDuration = 90,
-							holdActionID = 7489,
-							uuid = "dc79247a-9ed5-b661-86cf-ea81acc190c0",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "a3ea5098-24da-ac27-adee-03fc854200e3",
+							variableTogglesType = 2,
 							version = 2.1,
 						},
 					},
@@ -2865,11 +1818,13 @@ local tbl =
 				conditions = 
 				{
 				},
-				displayPath = "AutoSim",
 				mechanicTime = 690.41578400282,
-				name = "[AutoSim] Hold Higanbana P3 End",
+				name = "Tengetsu",
+				timeRange = true,
 				timelineIndex = 137,
-				uuid = "661596dc-c498-2b7b-b758-0c2627eb7db9",
+				timerEndOffset = 1.9,
+				timerStartOffset = -1.1,
+				uuid = "ec10ba43-fd91-fe3f-91d7-9b6b9a513c3e",
 				version = 2,
 			},
 		},
@@ -2915,235 +1870,11 @@ local tbl =
 			data = 
 			{
 				displayPath = "",
-				name = "AutoSim",
-				uuid = "456753b4-bdef-5ee2-bff9-d8531f9eaba8",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "1e3a9852-e943-bf6e-f878-0a187282b9e2",
 			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "local state = data.ljAutoSimDmu\nif not state then return end\nif state.phaseThreeDamageLock then\n    self.used = true\n    return\nend\n\nif state.nextBoundary ~= 5 then return end\n\nlocal acr = TensorCore.API.TensorACR\nlocal now = acr.getAutoSimTime()\n-- Chaos and Exdeath are held at 1 HP until P3 start + 290.8 (229 logged pulls reaching P4)\n-- and die on reaching 0 after it, so only the time before that floor is dead time.\n-- Past the floor, damage on the other boss still ends P3.\nlocal endTime = state.boundaries[4].time + 290.8\nif now >= endTime then\n    self.used = true\n    return\nend\n\n-- Remove overlapping AutoSim v5 BossModifier windows before locking.\nif state.trimBossModifiers then\n    state.trimBossModifiers(now, endTime)\nend\nlocal id = acr.addAutoSimPhase(\"BossModifier\", now, endTime, 0)\nif id then\n    state.phaseThreeDamageLock = {\n        id = id,\n        startTime = now,\n        endTime = endTime,\n    }\nend\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"f43b4648-ab17-3d06-9629-f91ad64ec787",
-									true,
-								},
-							},
-							name = "Begin P3 zero damage",
-							uuid = "32c3968e-3c16-f3a4-bf34-13f70a4968f1",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							buffCheckType = 6,
-							buffIDList = 
-							{
-								4192,
-								4194,
-							},
-							category = "Party",
-							comparator = 2,
-							conditionType = 2,
-							hpValue = 1.5,
-							name = "DT: HP <= 1.5% HP",
-							partyTargetType = "Detection Target",
-							uuid = "f42fcf58-4ee4-5d34-b704-a05c40d26263",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							displayPath = "",
-							name = "Chaos",
-							uuid = "3a64edc5-5ef9-7146-8104-4b999eeab983",
-						},
-						objectType = "folder",
-					},
-					
-					{
-						data = 
-						{
-							buffID = 4192,
-							category = "Self",
-							dequeueIfLuaFalse = true,
-							displayPath = "Chaos",
-							name = "Self Buff: Epic Hero",
-							uuid = "2a784f57-39a4-fe9f-a760-b350550ab0a0",
-							version = 3,
-						},
-						inheritedIndex = 3,
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"f42fcf58-4ee4-5d34-b704-a05c40d26263",
-									true,
-								},
-								
-								{
-									"2a784f57-39a4-fe9f-a760-b350550ab0a0",
-									true,
-								},
-							},
-							displayPath = "Chaos",
-							filterTargetType = "ContentID",
-							name = "F - Chaos",
-							partyTargetContentID = 7691,
-							uuid = "e00e76c1-88b7-5366-91be-6fc3ce7dcbbf",
-							version = 3,
-						},
-						inheritedIndex = 4,
-					},
-					
-					{
-						data = 
-						{
-							displayPath = "",
-							name = "Exdeath",
-							uuid = "4dfcfa8d-7554-9a3e-b4ca-403cdb98e06e",
-						},
-						objectType = "folder",
-					},
-					
-					{
-						data = 
-						{
-							buffID = 4194,
-							category = "Self",
-							dequeueIfLuaFalse = true,
-							displayPath = "Exdeath",
-							name = "Self Buff: Fated Hero",
-							uuid = "292450ca-81e9-ecef-acfb-2e2d142109e7",
-							version = 3,
-						},
-						inheritedIndex = 6,
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"f42fcf58-4ee4-5d34-b704-a05c40d26263",
-									true,
-								},
-							},
-							displayPath = "Exdeath",
-							filterTargetType = "ContentID",
-							name = "F - Exdeath",
-							partyTargetContentID = 6052,
-							uuid = "fe78aa2a-6a96-1280-982a-642786129d3c",
-							version = 3,
-						},
-						inheritedIndex = 7,
-					},
-					
-					{
-						data = 
-						{
-							category = "Filter",
-							conditions = 
-							{
-								
-								{
-									"e00e76c1-88b7-5366-91be-6fc3ce7dcbbf",
-									true,
-								},
-								
-								{
-									"fe78aa2a-6a96-1280-982a-642786129d3c",
-									true,
-								},
-							},
-							matchAnyBuff = true,
-							name = "OR Gate: Boss Dying",
-							partyTargetNumber = 0,
-							uuid = "f43b4648-ab17-3d06-9629-f91ad64ec787",
-							version = 3,
-						},
-						inheritedIndex = 8,
-					},
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 715.37264047081,
-				name = "[AutoSim] P3 Boss Dying",
-				timeRange = true,
-				timelineIndex = 148,
-				timerEndOffset = 5.1173596382141,
-				timerStartOffset = -35.372638702393,
-				uuid = "d2d4e44b-2e59-421d-80b8-cae99c10569d",
-				version = 2,
-			},
-		},
-	},
-	[150] = 
-	{
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "5ed686f7-1604-eca0-a2f7-5a51d84185bd",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Reset Hold Actions",
-							uuid = "61115fbe-b8f9-1595-9c41-d88a91d149e0",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 801.88345429349,
-				name = "[AutoSim] Reset Holds P4 Start",
-				timelineIndex = 150,
-				timerOffset = -1,
-				uuid = "53d7cd3a-f106-4671-90c2-8584bbfd56e5",
-				version = 2,
-			},
 		},
 	},
 	[151] = 
@@ -3153,101 +1884,26 @@ local tbl =
 			data = 
 			{
 				displayPath = "",
-				name = "AutoSim",
-				uuid = "91f34e33-b27e-7e56-be8b-2e9dd555b780",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "460a1b08-d6b9-7694-2e56-b25ecf1fb658",
 			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljAutoSimExdeathAura = \"Lie\"\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"2bd7455a-9fc3-f10b-bfd7-6ffb0ff25dd8",
-									true,
-								},
-							},
-							name = "Exdeath Lie",
-							uuid = "3c9c0a97-ead4-1090-9e5c-6f1035dc8a74",
-							version = 2.1,
-						},
-					},
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "data.ljAutoSimExdeathAura = \"Truth\"\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"4116286d-4097-aca3-9f1b-4966bcb0e84a",
-									true,
-								},
-							},
-							name = "Exdeath Truth",
-							uuid = "d4b14664-5348-8957-9644-95a6985d98b7",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Event",
-							comparator = 3,
-							eventArgType = 6,
-							eventIntValue = 2915,
-							name = "Event: Exdeath Lie",
-							uuid = "2bd7455a-9fc3-f10b-bfd7-6ffb0ff25dd8",
-							version = 3,
-						},
-					},
-					
-					{
-						data = 
-						{
-							category = "Event",
-							comparator = 3,
-							eventArgType = 6,
-							eventIntValue = 2916,
-							name = "Event: Exdeath Truth",
-							uuid = "4116286d-4097-aca3-9f1b-4966bcb0e84a",
-							version = 3,
-						},
-					},
-				},
-				displayPath = "AutoSim",
-				eventType = 25,
-				loop = true,
-				mechanicTime = 812.05085714286,
-				name = "[AutoSim] Track Exdeath Truth",
-				timeRange = true,
-				timelineIndex = 151,
-				timerEndOffset = 58,
-				timerStartOffset = 4,
-				uuid = "a2cd3f0d-736a-3e6d-bd0f-442b7c05c2be",
-				version = 2,
-			},
 		},
 	},
 	[153] = 
 	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "523e6f0a-f5f2-e7c6-47e1-c18cd293bf1a",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
 		
 		{
 			data = 
@@ -3276,67 +1932,6 @@ local tbl =
 				timerOffset = -3,
 				timerStartOffset = -3,
 				uuid = "a69c5644-9b82-b4f4-b4de-c96cb8b244a4",
-				version = 2,
-			},
-		},
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "609d3d27-ab5d-5fb3-8cdd-d81367fc7848",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Lua",
-							actionLua = "-- Real Acceleration Bomb: Exdeath showed Truth when the bomb was applied.\n-- Players stop acting 2s before it goes off.\nlocal state = data.ljAutoSimDmu\nlocal aura = data.ljAutoSimExdeathAura\nif not state or not aura then\n    return\nend\nif aura == \"Truth\" then\n    local acr = TensorCore.API.TensorACR\n    local expiry = acr.getAutoSimTime() + TensorCore.getBuff(TensorCore.mGetPlayer(), 5546).duration\n    local phaseID = acr.addAutoSimPhase(\"Stun\", expiry - 2, expiry)\n    if phaseID then\n        -- Registered in state.phases so Targetability and Resync shifts it.\n        state.phases[#state.phases + 1] = { id = phaseID, phaseType = \"Stun\", startTime = expiry - 2, endTime = expiry, value = 1 }\n    end\nend\nself.used = true",
-							conditions = 
-							{
-								
-								{
-									"b2476de4-6cdc-c6f1-a904-e6a56c1d6b5f",
-									true,
-								},
-							},
-							name = "Add Stun For Real Bomb",
-							uuid = "9b41055f-fbae-9ea3-ae06-5d28ad25aabc",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							buffID = 5546,
-							category = "Self",
-							name = "Self: Acceleration Bomb",
-							uuid = "b2476de4-6cdc-c6f1-a904-e6a56c1d6b5f",
-							version = 3,
-						},
-					},
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 826.02524789261,
-				name = "[AutoSim] Accel Bomb Stun",
-				timeRange = true,
-				timelineIndex = 153,
-				timerEndOffset = 22,
-				timerStartOffset = -2,
-				uuid = "994bf34d-0058-59be-a76a-9e259da7b4d3",
 				version = 2,
 			},
 		},
@@ -3382,60 +1977,11 @@ local tbl =
 			data = 
 			{
 				displayPath = "",
-				name = "AutoSim LB",
-				uuid = "e5334e33-d0fb-3dde-ba0d-274df8db00f5",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "72ebb946-d545-9d8a-ae2a-d3202db89dd6",
 			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"b0d684e5-0b5b-ea35-ad70-67dd3b995f22",
-									true,
-								},
-							},
-							gVar = "ACR_TensorWeeb4_Hotbar_LimitBreak",
-							uuid = "da6ab30d-12f2-801c-b8cc-1a963d9b05a6",
-							variableTogglesType = 2,
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return ljAutoSimLbModes.p4 == \"Automatic\"",
-							dequeueIfLuaFalse = true,
-							name = "LB P4 Automatic",
-							uuid = "b0d684e5-0b5b-ea35-ad70-67dd3b995f22",
-							version = 3,
-						},
-					},
-				},
-				displayPath = "AutoSim LB",
-				mechanicTime = 846.19462329432,
-				name = "[AutoSim LB] Use Limit Break P4",
-				timelineIndex = 157,
-				timerOffset = 3.2,
-				uuid = "bfeacea0-7607-6c2a-9ace-bf9bdfe491fd",
-				version = 2,
-			},
 		},
 	},
 	[159] = 
@@ -3506,18 +2052,8 @@ local tbl =
 			},
 		},
 	},
-	[170] = 
+	[165] = 
 	{
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "ae864de3-d082-672b-8bec-49ddda9f5208",
-			},
-			objectType = "folder",
-		},
 		
 		{
 			data = 
@@ -3529,10 +2065,9 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							acrOptionType = "Hold Action",
-							holdActionDuration = 32,
-							holdActionID = 7489,
-							uuid = "c39cd52f-f8b3-f898-981e-8105c973a585",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "818bcd23-fc11-07c8-bbe8-06d00a46b27b",
+							variableTogglesType = 2,
 							version = 2.1,
 						},
 					},
@@ -3540,12 +2075,224 @@ local tbl =
 				conditions = 
 				{
 				},
-				displayPath = "AutoSim",
-				mechanicTime = 934.65552902023,
-				name = "[AutoSim] Hold Higanbana P4 End",
-				timelineIndex = 170,
-				timerOffset = -30,
-				uuid = "34c67bb0-d292-082b-b482-fad479387406",
+				mechanicTime = 895.49672653853,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 165,
+				timerStartOffset = -3,
+				uuid = "6c7be11d-eb47-3861-a683-b62d35f9a873",
+				version = 2,
+			},
+		},
+	},
+	[169] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "4216b6d0-80b6-d97c-89c8-0982c338b921",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 934.65048710577,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 169,
+				timerStartOffset = -3,
+				uuid = "f0279566-90e9-9f18-a34f-56341a810568",
+				version = 2,
+			},
+		},
+	},
+	[171] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "fb22af0e-a059-f8aa-6e3a-e3d88f3b84de",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
+	[173] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "cbe7e587-c229-d59e-929c-7796448b969b",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 973.84072239989,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 173,
+				timerStartOffset = -3,
+				uuid = "28d3bcc6-5bd0-dbb8-aec7-60c1e89eaf50",
+				version = 2,
+			},
+		},
+	},
+	[181] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "74485040-1007-41c5-bb1b-3c35f5a86ad4",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 991.3807442382,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 181,
+				timerStartOffset = -3,
+				uuid = "b1b07160-97c6-001f-83af-dbe7f8e4ac34",
+				version = 2,
+			},
+		},
+	},
+	[191] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "a6dfc2e7-8110-8a2b-b226-35b735593371",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1015.5629742328,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 191,
+				timerStartOffset = -3,
+				uuid = "775e9ee1-42fd-23b1-948b-33489fdc20c9",
+				version = 2,
+			},
+		},
+	},
+	[195] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "b215ad95-e01d-b145-aded-225c3f979017",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1034.3163569005,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 195,
+				timerStartOffset = -3,
+				uuid = "88c701c9-9a62-cb25-8d69-68be845b08ce",
+				version = 2,
+			},
+		},
+	},
+	[204] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "ec4ffb14-3140-94fb-946b-9458b3e38aa8",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1055.6337560913,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 204,
+				timerStartOffset = -3,
+				uuid = "dbe09cf9-ae07-258c-8e66-258f69e3ce87",
 				version = 2,
 			},
 		},
@@ -3556,14 +2303,163 @@ local tbl =
 		{
 			data = 
 			{
-				name = "[Draw] P5 Exaflares",
-				uuid = "2e77dc3f-02e8-65fd-a5f9-ad1bad297dd8",
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "9cc08fc5-7399-0730-b616-f86447c4f7be",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1063.6903949829,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 209,
+				timerEndOffset = 23.45,
+				timerStartOffset = 20.45,
+				uuid = "51b8514f-b671-d111-859a-afa3292dc698",
 				version = 2,
 			},
-			inheritedObjectUUID = "dd6428d9-a7b5-42eb-9c77-49c655a81657",
-			inheritedOverwrites = 
+		},
+	},
+	[216] = 
+	{
+		
+		{
+			data = 
 			{
-				enabled = false,
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "7f195ade-f792-202e-8990-2e7cbf43a25b",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1107.6512243835,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 216,
+				timerStartOffset = -3,
+				uuid = "0c7bc71a-0002-a30c-af06-456ff0bad990",
+				version = 2,
+			},
+		},
+	},
+	[219] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "f69182e0-d4f3-0b2b-987a-36175a3bf8c0",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1125.2071474604,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 219,
+				timerStartOffset = -3,
+				uuid = "1ac2db87-1bdd-3976-a592-cb755a2f855b",
+				version = 2,
+			},
+		},
+	},
+	[222] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "5d63aebe-9acb-b8d8-81ba-d75349e975b7",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1138.4497474604,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 222,
+				timerStartOffset = -3,
+				uuid = "757e53ca-d4dd-5a08-8672-6cfb2a59154c",
+				version = 2,
+			},
+		},
+	},
+	[223] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "e13e82f2-6417-57f4-a457-88093496bfe6",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				mechanicTime = 1141.5122474604,
+				name = "Tengetsu",
+				timeRange = true,
+				timelineIndex = 223,
+				timerStartOffset = -3,
+				uuid = "cffc46f7-d6af-8f84-b55d-8491fac760b3",
+				version = 2,
 			},
 		},
 	},
@@ -3574,9 +2470,10 @@ local tbl =
 			data = 
 			{
 				displayPath = "",
-				name = "AutoSim LB",
-				uuid = "d2ffa222-517c-396d-8da1-9108ddba9f83",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "80acafd3-1e1a-007f-323b-f4b5ed1029e3",
 			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
 		},
 		
@@ -3590,16 +2487,8 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
-							conditions = 
-							{
-								
-								{
-									"815377a6-7b12-2e6b-b095-b4e2f5a690d9",
-									true,
-								},
-							},
-							gVar = "ACR_TensorWeeb4_Hotbar_LimitBreak",
-							uuid = "f13f7f96-8620-d6d1-8d67-d710f7bf19ab",
+							gVar = "ACR_TensorWeeb4_Hotbar_Tengetsu",
+							uuid = "2ef954f1-776f-27d7-aff7-20078b393ed2",
 							variableTogglesType = 2,
 							version = 2.1,
 						},
@@ -3607,75 +2496,20 @@ local tbl =
 				},
 				conditions = 
 				{
-					
-					{
-						data = 
-						{
-							category = "Lua",
-							conditionLua = "return ljAutoSimLbModes.p5 == \"Automatic\"",
-							dequeueIfLuaFalse = true,
-							name = "LB P5 Automatic",
-							uuid = "815377a6-7b12-2e6b-b095-b4e2f5a690d9",
-							version = 3,
-						},
-					},
 				},
-				displayPath = "AutoSim LB",
 				mechanicTime = 1154.7445474604,
-				name = "[AutoSim LB] Use Limit Break P5",
+				name = "Tengetsu",
+				timeRange = true,
 				timelineIndex = 226,
-				timerOffset = -1.1,
-				uuid = "13e47ef4-1f07-394b-b9ec-9a7dc02c413c",
-				version = 2,
-			},
-		},
-	},
-	[227] = 
-	{
-		
-		{
-			data = 
-			{
-				displayPath = "",
-				name = "AutoSim",
-				uuid = "9936ba67-e5a8-92bc-a509-63feb4f3b989",
-			},
-			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "ACR",
-							acrOptionType = "Hold Action",
-							holdActionDuration = 32,
-							holdActionID = 7489,
-							uuid = "c459983b-8f32-5985-82cd-014f1d833153",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				displayPath = "AutoSim",
-				mechanicTime = 1185.8235474604,
-				name = "[AutoSim] Hold Higanbana Kill",
-				timelineIndex = 227,
-				timerOffset = -34.5,
-				uuid = "4ce9c3ed-0939-1c21-a5de-f57bc555d15f",
+				timerStartOffset = -3,
+				uuid = "01d8a4e9-c322-918a-bc73-9f88faa1af80",
 				version = 2,
 			},
 		},
 	},
 	inheritedProfiles = 
 	{
+		"Lj\\umad\\autosimv2.6",
 	},
 	timelineName = "dmu",
 	version = "1.5.5",
