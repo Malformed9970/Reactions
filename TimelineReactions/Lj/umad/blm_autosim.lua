@@ -34,7 +34,12 @@ local tbl =
 								},
 								
 								{
-									"48df2a70-4f13-1b97-808b-fbf7481aa995",
+									"72ef37bf-b158-8431-874d-5dc28f2a700d",
+									true,
+								},
+								
+								{
+									"29682a5c-4f53-02e6-baf4-06d6bded0ae8",
 									true,
 								},
 							},
@@ -142,6 +147,19 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 2,
+							eventCountdownTime = 3.5,
+							name = "<= 3.5s",
+							uuid = "29682a5c-4f53-02e6-baf4-06d6bded0ae8",
+							version = 3,
+						},
+						inheritedIndex = 3,
 					},
 					
 					{
