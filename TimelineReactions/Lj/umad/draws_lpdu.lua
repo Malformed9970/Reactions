@@ -13,7 +13,7 @@ local tbl =
 						data = 
 						{
 							aType = "Lua",
-							actionLua = "local dmu = AnyoneCore.Settings.Reactions.dmu\n\ndmu.p1TeleTrounceStrat = 1\n\ndmu.p2ForsakenStrat = 12\n\ndmu.p3BlackHoleSolverStrategy = 2\n\ndmu.p4HelperEnabled = true\ndmu.p4StackSpreadOrientation = 1\n\ndmu.p5HelperEnabled = true\ndmu.p5MaddeningFacing = 1\ndmu.p5TowerRotation = 1\n\nself.used = true",
+							actionLua = "local dmu = AnyoneCore.Settings.Reactions.dmu\n\ndmu.p1TeleTrounceStrat = 1\n\ndmu.p2ForsakenStrat = 12\n\ndmu.p3BlackHoleSolverStrategy = 2\n\ndmu.p4HelperEnabled = true\ndmu.p4StackSpreadOrientation = 1\n\ndmu.p5HelperEnabled = true\ndmu.p5MaddeningFacing = 1\ndmu.p5TowerRotation = 1\n\nlocal settingsFolder = GetLuaModsPath() .. [[ffxivminion\\\\\\\\Lj\\\\\\\\]]\nlocal settingsPath = settingsFolder .. [[UMADSDrawSettings.lua]]\n\nif not Lj_UMADDRAWS_Settings then\n    Lj_UMADDRAWS_Settings = {}\n    if FileExists(settingsPath) then\n        Lj_UMADDRAWS_Settings = FileLoad(settingsPath) or {}\n    end\nend\n\nlocal settings = Lj_UMADDRAWS_Settings\nsettings.stompies = \"Roles\"\nLj_UMADDRAWS_Stompies = settings.stompies\n\nif not FolderExists(settingsFolder) then\n    FolderCreate(settingsFolder)\nend\nFileSave(settingsPath, settings)\n\nself.used = true",
 							conditions = 
 							{
 								
