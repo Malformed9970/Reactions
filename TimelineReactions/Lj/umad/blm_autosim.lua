@@ -530,6 +530,94 @@ local tbl =
 			objectType = "folder",
 		},
 	},
+	[93] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"e380b775-4787-60c3-ae89-d1e0bf80fee5",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Chaos",
+							setTarget = true,
+							targetContentID = 7691,
+							targetType = "ContentID",
+							uuid = "d14f21ee-fc23-538d-83ff-23c2cc5e0d35",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"fb65221a-9d4e-83df-8537-85f56287d339",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							name = "Exdeath",
+							setTarget = true,
+							targetContentID = 6052,
+							targetType = "ContentID",
+							uuid = "f174764e-68c7-1834-b729-2ac01d91a53e",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							buffID = 1602,
+							category = "Self",
+							dequeueIfLuaFalse = true,
+							name = "Self: Buff Headwind",
+							uuid = "e380b775-4787-60c3-ae89-d1e0bf80fee5",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							buffID = 1603,
+							category = "Self",
+							dequeueIfLuaFalse = true,
+							name = "Self: Buff Tailwind",
+							uuid = "fb65221a-9d4e-83df-8537-85f56287d339",
+							version = 3,
+						},
+					},
+				},
+				mechanicTime = 511.44225832111,
+				name = "Target Correct Boss",
+				timelineIndex = 93,
+				uuid = "1f4aff5f-8487-a430-bba2-bb7cb091c9a3",
+				version = 2,
+			},
+		},
+	},
 	[148] = 
 	{
 		

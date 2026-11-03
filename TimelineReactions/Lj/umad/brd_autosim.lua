@@ -18,7 +18,7 @@ local tbl =
 			data = 
 			{
 				name = "[AutoSim] Initialize DMU",
-				uuid = "1aa25afa-f7cb-f029-9660-70c0b57b2677",
+				uuid = "91a88783-29ad-e580-a3d5-c6724721e545",
 				version = 2,
 			},
 			inheritedObjectUUID = "694542e1-ae1e-876e-8e1c-280acead1235",
@@ -34,13 +34,13 @@ local tbl =
 							data = 
 							{
 								name = "Raid Buffs",
-								uuid = "7aba683b-4a88-df7b-9162-e5919f44937e",
+								uuid = "58ee47bc-37d1-60b2-961c-35c05d69f0f5",
 								version = 2.1,
 							},
 							inheritedObjectUUID = "f8c3e1e2-54a6-0ad6-ad72-d5a73d90a536",
 							inheritedOverwrites = 
 							{
-								actionLua = "-- Raid buff windows for the AutoSim schedule: edit the value and times here.\n-- value is the damage multiplier in every window (1.3 = 30% more damage). A window can set\n-- its own, e.g. { startTime = 1.560, endTime = 21.115, value = 1.2 }.\n-- Times are seconds since pull. Targetability and Resync moves the windows with each pull's\n-- phase timings and keeps each at least 120s after the previous one (the raid buff cooldown).\n-- Runs after Initialize AutoSim Schedule, which creates data.ljAutoSimDmu.\nlocal value = 1.1\nlocal windows = {\n    { startTime = 1.560, endTime = 21.115 }, -- P1\n    { startTime = 122.595, endTime = 142.506 }, -- P1\n    { startTime = 243.152, endTime = 262.214 }, -- P2\n    { startTime = 363.497, endTime = 382.736 }, -- P2\n    { startTime = 484.703, endTime = 502.520 }, -- P3\n    { startTime = 604.734, endTime = 623.706 }, -- P3\n    { startTime = 725.768, endTime = 745.411 }, -- P4\n    { startTime = 845.888, endTime = 865.798 }, -- P4\n    { startTime = 968.340, endTime = 987.002 }, -- P5\n    { startTime = 1088.214, endTime = 1106.098 }, -- P5, to the kill\n}\n\nlocal acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nfor _, window in ipairs(windows) do\n    local windowValue = window.value or value\n    local phaseID = acr.addAutoSimPhase(\"RaidBuff\", window.startTime, window.endTime, windowValue)\n    if phaseID then\n        -- Registered in state.phases so Targetability and Resync shifts it.\n        state.phases[#state.phases + 1] = {\n            id = phaseID,\n            phaseType = \"RaidBuff\",\n            startTime = window.startTime,\n            endTime = window.endTime,\n            value = windowValue,\n        }\n    end\nend\nstate.applyRaidBuffFloor()\nself.used = true",
+								actionLua = "--[[\nRaid buff windows for the AutoSim schedule: edit the value and times here.\nvalue is the damage multiplier in every window (1.3 = 30% more damage). A window can set\nits own, e.g. { startTime = 1.560, endTime = 21.115, value = 1.2 }.\nTimes are seconds since pull. Targetability and Resync moves the windows with each pull's\nphase timings and keeps each at least 120s after the previous one (the raid buff cooldown).\nRuns after Initialize AutoSim Schedule, which creates data.ljAutoSimDmu.\n]]\nlocal value = 1.1\nlocal windows = {\n    { startTime = 1.560, endTime = 21.115 }, -- P1\n    { startTime = 122.595, endTime = 142.506 }, -- P1\n    { startTime = 243.152, endTime = 262.214 }, -- P2\n--    { startTime = 363.497, endTime = 382.736 }, -- P2 Trines\n    { startTime = 484.703, endTime = 502.520 }, -- P3\n    { startTime = 604.734, endTime = 623.706}, -- P3\n    { startTime = 725.768, endTime = 745.411 }, -- P4\n    { startTime = 845.888, endTime = 865.798 }, -- P4\n    { startTime = 968.340, endTime = 987.002 }, -- P5\n    { startTime = 1088.214, endTime = 1106.098 }, -- P5, to the kill\n}\n\nlocal acr = TensorCore.API.TensorACR\nlocal state = data.ljAutoSimDmu\nfor _, window in ipairs(windows) do\n    local windowValue = window.value or value\n    local phaseID = acr.addAutoSimPhase(\"RaidBuff\", window.startTime, window.endTime, windowValue)\n    if phaseID then\n        -- Registered in state.phases so Targetability and Resync shifts it.\n        state.phases[#state.phases + 1] = {\n            id = phaseID,\n            phaseType = \"RaidBuff\",\n            startTime = window.startTime,\n            endTime = window.endTime,\n            value = windowValue,\n        }\n    end\nend\nstate.applyRaidBuffFloor()\nself.used = true",
 							},
 						},
 					},
@@ -70,6 +70,7 @@ local tbl =
 						data = 
 						{
 							aType = "ACR",
+							actionID = 7557,
 							conditions = 
 							{
 								
@@ -87,8 +88,14 @@ local tbl =
 									"8e8a850d-21ea-e5d5-8946-d10c8e668709",
 									true,
 								},
+								
+								{
+									"e0fe4049-bf77-54d5-a5d2-60f5d72d6130",
+									true,
+								},
 							},
 							gVar = "ACR_TensorRequiem4_Hotbar_Peloton",
+							ignoreWeaveRules = true,
 							uuid = "4b869acb-6f83-4567-9fa2-5a40f39343bb",
 							variableTogglesType = 2,
 							version = 2.1,
@@ -278,6 +285,16 @@ local tbl =
 							inCombatType = 2,
 							name = "Not in Combat",
 							uuid = "d2d2b625-f88a-41e1-a3ee-3676b8cbcdfa",
+							version = 3,
+						},
+					},
+					
+					{
+						data = 
+						{
+							category = "Lua",
+							conditionLua = "return false",
+							uuid = "e0fe4049-bf77-54d5-a5d2-60f5d72d6130",
 							version = 3,
 						},
 					},
@@ -482,6 +499,20 @@ local tbl =
 			inheritedIndex = 10,
 		},
 	}, 
+	[3] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "18e44847-7666-cdab-f12d-7185bf103357",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
 	[8] = 
 	{
 		
@@ -550,95 +581,6 @@ local tbl =
 			},
 			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
-		},
-	},
-	[101] = 
-	{
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							conditions = 
-							{
-								
-								{
-									"3b0f0b07-6b44-2fc8-b2f6-72a4135bfe94",
-									true,
-								},
-							},
-							gVar = "ACR_TensorMagnum3_CD",
-							setTarget = true,
-							targetContentID = 7691,
-							targetType = "ContentID",
-							uuid = "baf2eb39-6977-b826-8874-c383a772185a",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-					
-					{
-						data = 
-						{
-							conditionType = 6,
-							inRangeValue = 24,
-							uuid = "3b0f0b07-6b44-2fc8-b2f6-72a4135bfe94",
-							version = 3,
-						},
-					},
-				},
-				mechanicTime = 521.36069634686,
-				name = "Target Chaos",
-				timeRange = true,
-				timelineIndex = 101,
-				timerEndOffset = 4,
-				timerOffset = 2,
-				uuid = "acec5997-1f1b-dc3d-b06c-54a50f1d72f5",
-				version = 2,
-			},
-			inheritedIndex = 1,
-		},
-		
-		{
-			data = 
-			{
-				actions = 
-				{
-					
-					{
-						data = 
-						{
-							aType = "Misc",
-							gVar = "ACR_TensorMagnum3_CD",
-							setTarget = true,
-							targetContentID = 6052,
-							targetType = "ContentID",
-							uuid = "baf2eb39-6977-b826-8874-c383a772185a",
-							version = 2.1,
-						},
-					},
-				},
-				conditions = 
-				{
-				},
-				mechanicTime = 521.36069634686,
-				name = "Target Exdeath",
-				timelineIndex = 101,
-				timerEndOffset = 3,
-				timerOffset = 6,
-				timerStartOffset = -3,
-				uuid = "e510d13f-07f7-6580-87f5-b61ea3581444",
-				version = 2,
-			},
-			inheritedIndex = 2,
 		},
 	},
 	[148] = 

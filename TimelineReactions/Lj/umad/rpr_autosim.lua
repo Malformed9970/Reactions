@@ -495,6 +495,20 @@ local tbl =
 			objectType = "folder",
 		},
 	}, 
+	[3] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "9c91fe8f-9218-c12b-53c0-233df5daad9f",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
 	[7] = 
 	{
 		
@@ -1064,6 +1078,62 @@ local tbl =
 			},
 		},
 	},
+	[101] = 
+	{
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Misc",
+							conditions = 
+							{
+								
+								{
+									"c7f112b5-7f94-404c-ab83-a9789a9de51a",
+									true,
+								},
+							},
+							gVar = "ACR_RikuSGE3_CD",
+							setTarget = true,
+							targetType = "Enemy",
+							uuid = "3aa5bcff-8170-6b18-a612-0315e68df76f",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+					
+					{
+						data = 
+						{
+							conditionType = 6,
+							inRangeValue = 3,
+							uuid = "c7f112b5-7f94-404c-ab83-a9789a9de51a",
+							version = 3,
+						},
+					},
+				},
+				loop = true,
+				mechanicTime = 521.36069634686,
+				name = "Target Nearest",
+				throttleTime = 500,
+				timeRange = true,
+				timelineIndex = 101,
+				timerEndOffset = 15,
+				timerOffset = 5,
+				timerStartOffset = 5,
+				uuid = "91881e4b-33fa-b101-a058-ccfd9648fa3b",
+				version = 2,
+			},
+		},
+	},
 	[106] = 
 	{
 		
@@ -1240,41 +1310,6 @@ local tbl =
 			},
 			inheritanceRoot = "Lj\\umad\\autosimv2.6",
 			objectType = "folder",
-		},
-		
-		{
-			data = 
-			{
-				name = "[AutoSim] P3 Boss Dying",
-				uuid = "52237833-53ea-b8e0-9849-82288998b841",
-				version = 2,
-			},
-			inheritedObjectUUID = "de6b998f-cd15-f018-a589-0b4d717cd523",
-			inheritedOverwrites = 
-			{
-				conditions = 
-				{
-					
-					{
-						type = "add",
-						value = 
-						{
-							data = 
-							{
-								name = "DT: HP <= 1 HP",
-								uuid = "a99f5edc-e2df-f7ba-a689-e0384bdf575e",
-								version = 3,
-							},
-							inheritedObjectUUID = "cd523053-646a-4abc-8cbc-7e9865b98205",
-							inheritedOverwrites = 
-							{
-								hpType = 2,
-								hpValue = 1,
-							},
-						},
-					},
-				},
-			},
 		},
 	},
 	[151] = 

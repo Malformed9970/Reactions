@@ -57,6 +57,36 @@ local tbl =
 								},
 								
 								{
+									"72ef37bf-b158-8431-874d-5dc28f2a700d",
+									true,
+								},
+								
+								{
+									"1307e33a-a2ba-79e1-9f04-13d53b759b20",
+									true,
+								},
+							},
+							gVar = "ACR_TensorWeeb4_Hotbar_Sprint",
+							uuid = "8e661580-7fba-5491-b0f7-842ab344cba8",
+							variableTogglesType = 2,
+							version = 2.1,
+						},
+						inheritedIndex = 3,
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"c30e4e67-cb04-f9d9-a237-599f784648b6",
+									true,
+								},
+								
+								{
 									"48df2a70-4f13-1b97-808b-fbf7481aa995",
 									true,
 								},
@@ -109,7 +139,7 @@ local tbl =
 							uuid = "137bbb74-2529-5b61-b726-b72545691054",
 							version = 2.1,
 						},
-						inheritedIndex = 5,
+						inheritedIndex = 6,
 					},
 					
 					{
@@ -132,6 +162,24 @@ local tbl =
 							},
 							name = "Combat On",
 							uuid = "21ebc89f-61ce-8f61-aa1e-e09a4048794d",
+							version = 2.1,
+						},
+					},
+					
+					{
+						data = 
+						{
+							aType = "ACR",
+							conditions = 
+							{
+								
+								{
+									"81846290-41fb-41c6-9df4-7a8f6151d910",
+									true,
+								},
+							},
+							gVar = "ACR_TensorWeeb4_Enpi",
+							uuid = "4f7a3178-4c29-24b7-94e6-883a50489eba",
 							version = 2.1,
 						},
 					},
@@ -163,6 +211,19 @@ local tbl =
 							version = 3,
 						},
 						inheritedIndex = 2,
+					},
+					
+					{
+						data = 
+						{
+							category = "Event",
+							comparator = 2,
+							eventCountdownTime = 3,
+							name = "<= 3s",
+							uuid = "1307e33a-a2ba-79e1-9f04-13d53b759b20",
+							version = 3,
+						},
+						inheritedIndex = 3,
 					},
 					
 					{
@@ -359,6 +420,7 @@ local tbl =
 						{
 							aType = "ACR",
 							gVar = "ACR_TensorWeeb4_Enpi",
+							gVarValue = 2,
 							uuid = "7424496e-521f-eb2c-9590-f113a3a05961",
 							version = 2.1,
 						},
@@ -492,6 +554,20 @@ local tbl =
 			inheritedIndex = 11,
 		},
 	}, 
+	[3] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "Lj\\umad\\autosimv2.6",
+				uuid = "5d69f784-8b1a-04c8-ffbb-73be053f8d94",
+			},
+			inheritanceRoot = "Lj\\umad\\autosimv2.6",
+			objectType = "folder",
+		},
+	},
 	[6] = 
 	{
 		
