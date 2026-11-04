@@ -646,6 +646,49 @@ local tbl =
 			},
 		},
 	},
+	[102] = 
+	{
+		
+		{
+			data = 
+			{
+				displayPath = "",
+				name = "AutoSim",
+				uuid = "899e1e91-3223-30a4-a752-9ba4b3c9f4e7",
+			},
+			objectType = "folder",
+		},
+		
+		{
+			data = 
+			{
+				actions = 
+				{
+					
+					{
+						data = 
+						{
+							aType = "Lua",
+							actionLua = "if data.ljAutoSimDmu then\n    TensorCore.API.TensorACR.setAutoSimUnexpectedMeleeDowntimePct(0)\nend\nself.used = true\n",
+							name = "Set Unexpected Melee Downtime 0",
+							uuid = "49d5dc80-8c14-381d-bdcd-2a94f32a2ba5",
+							version = 2.1,
+						},
+					},
+				},
+				conditions = 
+				{
+				},
+				displayPath = "AutoSim",
+				mechanicTime = 536.97932260272,
+				name = "[AutoSim] Zero Unexpected Melee Downtime",
+				timelineIndex = 102,
+				timerOffset = -3,
+				uuid = "47827231-26fc-2a8e-919c-878c11abfa0a",
+				version = 2,
+			},
+		},
+	},
 	[148] = 
 	{
 		
